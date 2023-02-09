@@ -1,8 +1,6 @@
 import { computed, reactive } from 'vue'
 import * as Request from '@/api/Requests'
 import { HeroModel } from '../models/HeroModel';
-import { Hero } from '../api/Requests';
-import { UserModel } from '../models/UserModel';
 
 const state = reactive({
     hero: new HeroModel().build()
@@ -15,7 +13,6 @@ const getters = reactive({
 
 const actions = {
     async getHero(id: number) {
-        console.log("getHeroMethod()" + id);
         const hero = await Request.getHero(id);
         if (hero == null) {
             console.log("Hero is not retrieved by Api");
