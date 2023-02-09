@@ -19,7 +19,7 @@
 <script lang="ts">
 import { defineComponent, reactive } from 'vue'
 import userStore from '@/stores/User'
-import heroStats from '@/stores/Hero'
+import hero from '@/stores/Hero'
 
 export default defineComponent({
     setup() {
@@ -32,7 +32,7 @@ export default defineComponent({
             userStore.login(form.username, form.password);
             form.username = "";
             form.password = "";
-            heroStats.getHeroStats();
+            hero.getHero();
         }
 
         return {form, onSubmit, userStore}

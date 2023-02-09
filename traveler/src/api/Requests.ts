@@ -4,9 +4,10 @@ export type Hero = {
     name: string,
     health: number,
     attack: number,
-    diffense: number,
+    defense: number,
     coins: number,
-    available: boolean
+    available: boolean,
+    id: number
 }
 
 export async function login(username: string, password: string) {
@@ -21,7 +22,7 @@ export async function getUser() {
     return user;
 }
 
-export async function getHeroStats() {
+export async function getHero() {
     const request = await fetch('/hero.json');
     const hero: Hero = await request.json();
     return hero;

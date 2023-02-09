@@ -3,7 +3,7 @@ export class HeroModel {
     private heroName = "";
     private heroHealth = 0;
     private heroAttack = 0;
-    private heroDeffense = 0;
+    private heroDefense = 0;
     private heroCoins = 0;
     private heroStats = true;
     private id: number;
@@ -27,8 +27,8 @@ export class HeroModel {
         return this;
     }
 
-    public deffense(deffense: number): HeroModel {
-        this.heroDeffense = deffense;
+    public defense(defense: number): HeroModel {
+        this.heroDefense = defense;
         return this;
     }
 
@@ -42,13 +42,39 @@ export class HeroModel {
         return this;
     }
 
+    public getName(): string {
+        return this.heroName;
+    }
+
+    public getHealth(): number {
+        return this.heroHealth;
+    }
+
+    public getAttack(): number {
+        return this.heroAttack;
+    }
+
+    public getDefense(): number {
+        return this.heroDefense;
+    }
+
+    public getCoins(): number {
+        return this.heroCoins;
+    }
+
+
+
+    public getId(): number {
+        return this.id;
+    }
+
 
     public build(): HeroModel {
         return new HeroModel()
             .name(this.heroName)
             .health(this.heroHealth)
             .attack(this.heroAttack)
-            .deffense(this.heroDeffense)
+            .defense(this.heroDefense)
             .coins(this.heroCoins)
             .stats(this.heroStats);
     }
