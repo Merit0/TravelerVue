@@ -9,7 +9,7 @@ export class HeroModel {
     private id: number;
 
     constructor() {
-        this.id = 1;
+        this.id = 0;
     }
 
     public name(name: string): HeroModel {
@@ -62,12 +62,9 @@ export class HeroModel {
         return this.heroCoins;
     }
 
-
-
     public getId(): number {
         return this.id;
     }
-
 
     public build(): HeroModel {
         return new HeroModel()

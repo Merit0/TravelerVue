@@ -11,7 +11,7 @@
             </div>
         </div>
         <button @click="userStore.logout()" class="logout">Logout</button>
-        <h2 class="heroName">{{ userStore.state.name }}</h2>
+        <h2 class="heroName">{{ userStore.state.user.getName() }}</h2>
     </section>
 </template>
 
@@ -23,6 +23,9 @@ import Hero from '@/stores/Hero'
 export default defineComponent({
     name: "HomePage",
     setup() {
+        const userId: number = userStore.state.user.getId();
+        Hero.getHero(userId);
+            
         return { userStore, Hero };
     },
 })

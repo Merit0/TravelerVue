@@ -1,18 +1,11 @@
 import { computed, reactive } from 'vue'
 import * as Request from '@/api/Requests'
 import { HeroModel } from '../models/HeroModel';
+import { Hero } from '../api/Requests';
+import { UserModel } from '../models/UserModel';
 
 const state = reactive({
-    // name: "",
-    // health: 0,
-    // attack: 0,
-    // diffense: 0,
-    // coins: 0,
-    // heroStats: true,
-    // id: 1
-    hero: new HeroModel()
-        .name("")
-        .build()
+    hero: new HeroModel().build()
 });
 
 
@@ -21,25 +14,21 @@ const getters = reactive({
 });
 
 const actions = {
-    async getHero() {
-        const hero = await Request.getHero();
-        if (!hero.available) {
+    async getHero(id: number) {
+        console.log("getHeroMethod()" + id);
+        const hero = await Request.getHero(id);
+        if (hero == null) {
             console.log("Hero is not retrieved by Api");
             return false;
         }
-        // state.name = hero.name;
-        // state.health = hero.health;
-        // state.attack = hero.attack;
-        // state.diffense = hero.deffense;
-        // state.coins = hero.coins;
-        state.hero = new HeroModel()
+        state.hero
             .name(hero.name)
             .health(hero.health)
             .attack(hero.attack)
             .defense(hero.defense)
             .coins(hero.coins)
-            .stats(true)
-            .build();
+            .stats(true);
+
         return true;
     }
 }
