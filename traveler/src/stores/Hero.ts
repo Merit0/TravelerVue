@@ -1,5 +1,5 @@
 import { computed, reactive } from 'vue'
-import * as Request from '@/stores/Requests'
+import * as Request from '@/api/Requests'
 
 const state = reactive({
     name: "",
