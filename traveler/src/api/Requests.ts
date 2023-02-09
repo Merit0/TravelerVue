@@ -1,13 +1,15 @@
+import { UserModel } from '../models/UserModel';
 export type User = { name: string; username: string, loggedIn: boolean, id: number }
 export type UserList = Array<User & { password: string }>
 export type Hero = {
     name: string,
     health: number,
     attack: number,
-    diffense: number,
+    defense: number,
     coins: number,
-    available: boolean
+    available: boolean,
 }
+export type HeroList = Array<Hero & { id: number }>
 
 export async function login(username: string, password: string) {
     const request = await fetch('/users.json');
@@ -21,8 +23,8 @@ export async function getUser() {
     return user;
 }
 
-export async function getHeroStats() {
-    const request = await fetch('/hero.json');
-    const hero: Hero = await request.json();
-    return hero;
+export async function getHero(id: number) {
+    const request = await fetch('/heroes.json');
+    const heroesJson: HeroList = await request.json();
+    return heroesJson.find(hero => hero.id === id);
 }

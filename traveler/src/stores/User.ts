@@ -1,16 +1,16 @@
 import { computed, reactive } from 'vue'
-import * as Request from '@/stores/Requests'
+import * as Request from '@/api/Requests'
 import router from '@/router/index';
+import { UserModel } from '../models/UserModel';
 
 const state = reactive({
-    name: "",
-    username: "",
+    user: new UserModel().build(),
 
     error: ""
 });
 
 const getters = reactive({
-    isLoggedIn: computed(() => state.username !== "")
+    isLoggedIn: computed(() => state.user.getUsername() !== "")
 });
 
 const actions = {
@@ -20,27 +20,32 @@ const actions = {
             console.log(user.username + " in not logged in");
             return;
         }
-        state.name = user.name;
-        state.username = user.username;
+        state.user
+            .setName(user.name)
+            .setUsername(user.username);
     },
 
     async login(username: string, password: string) {
-        const user = await Request.login(username, password);
-        if (user == null) {
+        const userFromApi = await Request.login(username, password);
+        if (userFromApi == null) {
             state.error = username + " is not found."
             return false;
         }
-
-        state.name = user.name;
-        state.username = user.username;
+        state.user
+            .setName(userFromApi.name)
+            .setUsername(userFromApi.username)
+            .setId(userFromApi.id);
         state.error = "";
         router.push("/home")
         return true;
     },
     async logout() {
-        state.name = "";
-        state.username = "";
-        router.push("/login")
+        state.user
+            .setName("")
+            .setUsername("")
+            .setId(0);
+        await router.push("/login")
+        location.reload();
     }
 }
 
