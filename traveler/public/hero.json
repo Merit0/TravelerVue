@@ -1,0 +1,8 @@
+{
+    "name": "Merito",
+    "health": 100,
+    "attack": 10,
+    "diffense": 0,
+    "coins": 0,
+    "available": true
+}

@@ -5,7 +5,11 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+<<<<<<< HEAD
 import counterStore from '../stores/CounterExample'
+=======
+import counterStore from '../stores/MyCounter'
+>>>>>>> parent of cc3f970 (remove)
 
 export default defineComponent({
     setup() {
