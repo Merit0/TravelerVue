@@ -63,10 +63,6 @@ const actions = {
                 }
             }
         }
-    },
-    async add_item_to_slot() {
-        console.log('no functionality yet!')
-        alert('No functionality yet!')
     }
 }
 
