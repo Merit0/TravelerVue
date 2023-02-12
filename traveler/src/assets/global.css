@@ -11,6 +11,113 @@
 
  }
 
+ .bag {
+    width: 400px;
+    height: 500px;
+    margin-left: 1450px;
+    top: 150px;
+    background-color:rgb(17, 17, 17);
+    position: fixed;
+
+
+ }
+
+ .bag_frame {
+    margin-left: -50px;
+    margin-top: -50px;
+    width: 500px;
+    height: 585px;
+    border-radius: 10%;
+    position: fixed;
+    background-image: url('images/bag_frame.png');
+    background-size: 500px 585px;
+ }
+
+ .bag_inner {
+    margin-top: 90px;
+    margin-left: 80px;
+    width: 340px;
+    height: 430px;
+    position: fixed;
+ }
+
+ .bag_helmet_slot {
+    margin-top: 60px;
+    margin-left: 73px;
+    width: 60px;
+    height: 70px;
+    background-image: url('images/homePage_slotImages/helmet_slot_image.png');
+    background-size: 60px 70px;
+ }
+
+ .bag_armour_slot {
+    margin-top: 10px;
+    margin-left: 20%;
+    width: 70px;
+    height: 70px;
+    background-image: url('images/homePage_slotImages/armor_slot_image.png');
+    background-size: 70px 70px;
+ }
+
+ .bag_sword_slot {
+    margin-top: 10px;
+    margin-left: 20%;
+    width: 70px;
+    height: 70px;
+    background-image: url('images/homePage_slotImages/sword_slot_image.png');
+    background-size: 70px 70px;
+ }
+
+ .bag_shield_slot {
+    margin-top: 10px;
+    margin-left: 20%;
+    width: 70px;
+    height: 70px;
+    background-image: url('images/homePage_slotImages/shield_slot_image.png');
+    background-size: 70px 70px;
+ }
+
+ .item_slot {
+    width: 70px;
+    height: 70px;
+    margin-left: 100px;
+    background-size: 70px 70px;
+    background-image: url('images/homePage_slotImages/item_slot_image.png');
+    position: fixed;
+ }
+
+ .add_item_button {
+    width: 50px;
+    height: 50px;
+    margin-top: 10px;
+    margin-left: 10px;
+    background-size: 50px 50px;
+    background-color: transparent;
+    outline: 0;
+    list-style-type: none;
+    background-image: url('images/homePage_slotImages/plus_button.png');
+ }
+
+ .inventory_showButtonDiv {
+    width: 100px;
+    height: 100px;
+    float: right;
+    margin-top: 100px;
+ }
+
+ .inventory_showButton {
+    width: 100px;
+    height: 100px;
+    background-color:rgba(255, 196, 0, 0.185);
+    outline-color: rgba(0, 0, 0, 0.295);
+    outline-width: 3px;
+    outline-style: solid;
+    border-radius:30%;
+    float: right;
+    background-image: url('images/inventory_image.png');
+    background-size: 100px 100px;
+ }
+
  .rightBar {
     display: flex;
     justify-content: space-between;
@@ -39,6 +146,7 @@
     padding: 1rem;
     display: flex;
     flex-direction: column;
+    background-size: 100% 100%;
     background-image: url('@/assets/images/loginPageBackground.jpg');
 }
 
@@ -49,6 +157,7 @@
     display: flex;
     flex-direction: column;
     background-image: url('@/assets/images/img.jpg');
+    background-size: 100% 100%;
 }
 
 * {
@@ -89,7 +198,7 @@ button:hover {
     font-weight: bold;
     font-size: 2.5em;
     margin: auto;
-    margin-top: -105px;
+    margin-top: -295px;
 }
 
 .loginFormError {
