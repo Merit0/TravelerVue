@@ -16,9 +16,8 @@
     height: 500px;
     margin-left: 1450px;
     top: 150px;
-    background-color:rgb(17, 17, 17);
+    background-color:rgba(44, 0, 0, 0.712);
     position: fixed;
-
 
  }
 
@@ -35,49 +34,30 @@
 
  .bag_inner {
     margin-top: 90px;
-    margin-left: 80px;
+    margin-left: 170px;
     width: 340px;
     height: 430px;
     position: fixed;
+    display: table-column;
  }
 
- .bag_helmet_slot {
-    margin-top: 60px;
-    margin-left: 73px;
-    width: 60px;
-    height: 70px;
-    background-image: url('images/homePage_slotImages/helmet_slot_image.png');
-    background-size: 60px 70px;
+ .img_helmet {
+    content:url('images/homePage_slotImages/helm.png');
  }
 
- .bag_armour_slot {
-    margin-top: 10px;
-    margin-left: 20%;
-    width: 70px;
-    height: 70px;
-    background-image: url('images/homePage_slotImages/armor_slot_image.png');
-    background-size: 70px 70px;
+ .img_armor {
+    content: url('images/homePage_slotImages/armor.png');
  }
 
- .bag_sword_slot {
-    margin-top: 10px;
-    margin-left: 20%;
-    width: 70px;
-    height: 70px;
-    background-image: url('images/homePage_slotImages/sword_slot_image.png');
-    background-size: 70px 70px;
+ .img_sword {
+    content: url('images/homePage_slotImages/sword_slot_image.png');
  }
 
- .bag_shield_slot {
-    margin-top: 10px;
-    margin-left: 20%;
-    width: 70px;
-    height: 70px;
-    background-image: url('images/homePage_slotImages/shield_slot_image.png');
-    background-size: 70px 70px;
+ .img_shield {
+    content: url('images/homePage_slotImages/shield_slot_image.png');
  }
 
- .item_slot {
+ .add_item_slot {
     width: 70px;
     height: 70px;
     margin-left: 100px;
@@ -86,23 +66,21 @@
     position: fixed;
  }
 
+ .item_holder {
+    width: 170px;
+    height: 70px;
+    margin-top: 20px;
+    display: flex;
+    padding: auto;
+ }
+
  .add_item_button {
     width: 50px;
     height: 50px;
     margin-top: 10px;
     margin-left: 10px;
     background-size: 50px 50px;
-    background-color: transparent;
-    outline: 0;
-    list-style-type: none;
     background-image: url('images/homePage_slotImages/plus_button.png');
- }
-
- .inventory_showButtonDiv {
-    width: 100px;
-    height: 100px;
-    float: right;
-    margin-top: 100px;
  }
 
  .inventory_showButton {
@@ -116,6 +94,10 @@
     float: right;
     background-image: url('images/inventory_image.png');
     background-size: 100px 100px;
+    width: 100px;
+    height: 100px;
+    float: right;
+    margin-top: 100px;
  }
 
  .rightBar {

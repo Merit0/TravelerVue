@@ -10,7 +10,7 @@ const state = reactive({
 });
 
 const getters = reactive({
-    isLoggedIn: computed(() => state.user.getUsername() !== "")
+    isLoggedIn: computed(() => state.user.getStatus())
 });
 const actions = {
     async getUser() {
@@ -33,9 +33,10 @@ const actions = {
         state.user
             .setName(userFromApi.name)
             .setUsername(userFromApi.username)
-            .setId(userFromApi.id);
+            .setId(userFromApi.id)
+            .setLoggedIn(true);
         state.error = "";
-        router.push("/home")
+        router.push("/")
         return true;
     },
     async logout() {
@@ -63,10 +64,6 @@ const actions = {
                 }
             }
         }
-    },
-    async add_item_to_slot() {
-        console.log('no functionality yet!')
-        alert('No functionality yet!')
     }
 }
 

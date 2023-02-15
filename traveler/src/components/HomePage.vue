@@ -11,37 +11,39 @@
             </div>
         </div>
         <div>
-            <ul class="inventory_showButtonDiv">
-                <div class="inventory_showButton" id="inventory_openbutton" @click="userStore.open_inventoty()"></div>
-            </ul>
-            <ul class="bag" id="bag" style="visibility: hidden;">
-                <ul class="bag_frame">
-                    <ul class="bag_inner">
-                        <ul class="bag_helmet_slot">
-                            <ul class="item_slot">
-                                <li class="add_item_button" @click="userStore.add_item_to_slot()"></li>
-                            </ul>
-                        </ul>
-                        <ul class="bag_armour_slot">
-                            <ul class="item_slot">
-                                <li class="add_item_button" @click="userStore.add_item_to_slot()"></li>
-                            </ul>
-                        </ul>
-                        <ul class="bag_sword_slot">
-                            <ul class="item_slot">
-                                <li class="add_item_button" @click="userStore.add_item_to_slot()"></li>
-                            </ul>
-                        </ul>
-                        <ul class="bag_shield_slot">
-                            <ul class="item_slot">
-                                <li class="add_item_button" @click="userStore.add_item_to_slot()"></li>
-                            </ul>
-                        </ul>
-                    </ul>
+        <div class="inventory_showButton" id="inventory_openbutton" @click="userStore.open_inventoty()"></div>
+        <div class="bag" id="bag" style="visibility: hidden;">
+            <div class="bag_frame">
+                <ul class="bag_inner">
+                    <li class="item_holder">
+                        <div class="img_helmet"></div>
+                        <div class="add_item_slot">
+                            <div class="add_item_button" @click="add_item_to_slot()"></div>
+                        </div>
+                    </li>
+                    <li class="item_holder">
+                        <div class="img_armor"></div>
+                        <div class="add_item_slot">
+                            <div class="add_item_button" @click="add_item_to_slot()"></div>
+                        </div>
+                    </li>
+                    <li class="item_holder">
+                        <div class="img_sword"></div>
+                        <div class="add_item_slot">
+                            <div class="add_item_button" @click="add_item_to_slot()"></div>
+                        </div>
+                    </li>
+                    <li class="item_holder">
+                        <div class="img_shield"></div>
+                        <div class="add_item_slot">
+                            <div class="add_item_button" @click="add_item_to_slot()"></div>
+                        </div>
+                    </li>
                 </ul>
-            </ul>
+            </div>
         </div>
-        <button @click="userStore.logout()" class="logout">Logout</button>
+        </div>
+        <button @click="userStore.logout()" v-if="userStore.getters.isLoggedIn" class="logout">Logout</button>
         <h2 class="heroName">{{ userStore.state.user.getName() }}</h2>
     </section>
 </template>
@@ -59,5 +61,10 @@ export default defineComponent({
             
         return { userStore, Hero };
     },
+    methods: {
+        async add_item_to_slot() {
+            alert('No functionality yet!')
+        }
+    }
 })
 </script>
