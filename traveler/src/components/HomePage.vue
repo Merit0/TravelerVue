@@ -43,7 +43,7 @@
             </div>
         </div>
         </div>
-        <button @click="userStore.logout()" class="logout">Logout</button>
+        <button @click="userStore.logout()" v-if="userStore.getters.isLoggedIn" class="logout">Logout</button>
         <h2 class="heroName">{{ userStore.state.user.getName() }}</h2>
     </section>
 </template>
