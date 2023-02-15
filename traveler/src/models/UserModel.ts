@@ -78,3 +78,5 @@ export class UserModel {
             .addPassword(this.password);
     }
 }
+
+export default UserModel;

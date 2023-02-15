@@ -1,4 +1,3 @@
-import { UserModel } from '../models/UserModel';
 export type User = { name: string; username: string, loggedIn: boolean, id: number }
 export type UserList = Array<User & { password: string }>
 export type Hero = {
