@@ -39,7 +39,6 @@ export default {
     width: 200px;
     margin: 0.5em;
  }
-
  .heroName {
     color: rgb(255, 192, 192);
     -webkit-text-stroke: 1px rgb(85, 51, 0);

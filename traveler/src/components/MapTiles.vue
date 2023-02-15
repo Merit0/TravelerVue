@@ -31,14 +31,12 @@ export default {
     align-items: center;
     justify-content: center;
 }
-
 .evilLandMap {
     width: 400px;
     height: 400px;
     background-image: url('../assets/images/dungeons/homeButtons/fightFireBtn-removebg-preview.png');
     background-size: 100% 100%;
 }
-
 .mapTile {
     width: 320px;
     height: 330px;

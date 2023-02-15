@@ -45,7 +45,6 @@ export default {
         async add_item_to_slot() {
             alert('No functionality yet!')
         },
-
         async open_inventoty() {
         const element = document.getElementById('bag');
         const button = document.getElementById('inventory_openbutton');
@@ -57,13 +56,13 @@ export default {
 
                 }
             } else {
-                element.style.visibility = 'hidden';
-                if (button != null) {
-                    button.style.backgroundColor = 'rgba(255, 196, 0, 0.185)'
+                    element.style.visibility = 'hidden';
+                    if (button != null) {
+                        button.style.backgroundColor = 'rgba(255, 196, 0, 0.185)'
+                    }
                 }
             }
         }
-    }
     }
 }
 </script>

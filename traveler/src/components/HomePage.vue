@@ -9,7 +9,6 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
 import userStore from '@/stores/User';
 import heroStore from '@/stores/HeroStore'
 import HeroDataBar from './HeroDataBar.vue';
@@ -18,21 +17,11 @@ import MapTiles from './MapTiles.vue';
 
 export default {
     name: "HomePage",
-
     components: { HeroDataBar, BagInventory, MapTiles },
-
     data() {
         const userId: number = userStore.state.user.getId();
         heroStore.getHero(userId);
-            
         return { userStore, heroStore };
-    },
-
-    methods: {
-
     }
 }
 </script>
-<style>
-
-</style>/

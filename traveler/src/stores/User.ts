@@ -5,7 +5,6 @@ import { UserModel } from '../models/UserModel';
 
 const state = reactive({
     user: new UserModel().build(),
-
     error: ""
 });
 
