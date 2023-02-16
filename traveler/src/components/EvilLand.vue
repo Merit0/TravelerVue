@@ -1,7 +1,7 @@
 <template>
     <section class="mapSection">
         <div class="map">
-            <button v-for="tile in tiles" :key="tile" class="tile"></button>
+            <button class="tile" v-for="tile in tiles" :key="tile.id" v-bind:id="'' + tile.id" @click="clearTile(tile)"></button>
         </div>
         <button @click="quitDungeon()">Quit</button>
     </section>
@@ -9,19 +9,28 @@
 
 <script lang="ts">
 import router from '@/router';
+import TileModel from '@/models/TileModel'
 export default {
+
     data() {
-        const tileName = "Tile";
-        let tiles: string[] = new Array<string>(30); // 30 tiles required
-        const size: number = tiles.length;
-        for(let i = 0; i < size; i++) {
-            tiles.push(tileName);
+        let isTileHidden = false;
+        let tiles = new Array<TileModel>(); // 45 tiles required
+        for(let i = 0; i < 48; i++) {
+            tiles.push(new TileModel().setId(i));
         }
-        return { tiles }
+        return { tiles, isTileHidden }
     },
     methods: {
         async quitDungeon() {
             router.push("/");
+        },
+        async clearTile(tile: TileModel) {
+            const el = document.getElementById("" + tile.id);
+            console.log(el);
+            if(el) {
+                el.style.visibility = 'hidden';
+                console.log("hidden");
+            }
         }
     }
 }

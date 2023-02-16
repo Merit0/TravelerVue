@@ -22,7 +22,7 @@ const router = createRouter({
             path: "/evilLand",
             name: "evilLand",
             component: EvilLand,
-            meta: { requiresAuth: true }
+            // meta: { requiresAuth: true }
         },
     ]
 });
