@@ -19,10 +19,10 @@ export default {
     methods: {
         async attackEnemy(tile: TileModel) {
             const el = document.getElementById("" + tile.id);
-            console.log(el);
             if(el) {
-                this.enemyShown = false;
-            }
+                // this.enemyShown = false;
+                    el.style.visibility = 'hidden';
+            } 
         }
     }
 }

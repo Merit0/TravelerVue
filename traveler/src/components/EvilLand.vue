@@ -1,39 +1,33 @@
 <template>
     <section class="mapSection">
-        <div class="map">
-            <button class="tile" v-for="tile in tiles" :key="tile.id" v-bind:id="'' + tile.id" @click="clearTile(tile)"></button>
-        </div>
-        <button @click="quitDungeon()">Quit</button>
+       <GameMap :tiles="evilLandTiles"></GameMap>
     </section>
 </template>
 
 <script lang="ts">
-import router from '@/router';
+import GameMap from './GameMap.vue';
 import TileModel from '@/models/TileModel'
 export default {
-
-    data() {
-        let isTileHidden = false;
-        let tiles = new Array<TileModel>(); // 45 tiles required
-        for(let i = 0; i < 48; i++) {
-            tiles.push(new TileModel().setId(i));
-        }
-        return { tiles, isTileHidden }
-    },
-    methods: {
-        async quitDungeon() {
-            router.push("/");
+    components: { GameMap },
+    data() {    
+        let evilLandTiles = new Array<TileModel>(); 
+                for(let i = 0; i < 48; i++) {
+                    evilLandTiles.push(new TileModel().setId(i));
+                }
+                evilLandTiles.forEach(tile => console.log(tile));
+            return { evilLandTiles }
         },
-        async clearTile(tile: TileModel) {
-            const el = document.getElementById("" + tile.id);
-            console.log(el);
-            if(el) {
-                el.style.visibility = 'hidden';
-                console.log("hidden");
-            }
-        }
+        // methods: { //TODO: need to use this method for tiles ceration!
+        //     async generateTiles() {
+        //         let evilLandTiles = new Array<TileModel>(); 
+        //         for(let i = 0; i < 48; i++) {
+        //             evilLandTiles.push(new TileModel().setId(i));
+        //         }
+        //         evilLandTiles.forEach(tile => console.log(tile));
+        //             return evilLandTiles;
+        //         }
+        // }
     }
-}
 </script>
 
 <style>
@@ -55,18 +49,6 @@ export default {
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-}
-.tile {
-    width: 100px;
-    height: 100px;
-    background: none;
-    border: 2px solid rgb(108, 108, 108);
-    border-radius: 20%;
-    margin-left: 2%;
-    display: inline-flex;
-    align-items: flex-end;
-    background-image: url('../assets/images/homePage_slotImages/tree.png');
-    background-size: 100% 100%;
 }
 
 .map .tile {

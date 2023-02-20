@@ -1,26 +1,28 @@
 <template>
     <div class="heroStats">
-            <div class="heroStats">
-                <div class="item">Health: {{ heroStore.state.hero.getHealth() }}</div>
-                <div class="item">Attack: {{ heroStore.state.hero.getAttack() }}</div>
-            </div>
-            <div class="heroStats">
-                <div class="item">Diffense: {{ heroStore.state.hero.getDefense() }}</div>
-                <div class="item">Coins: {{ heroStore.state.hero.getCoins() }}</div>
-            </div>
+        <!-- <h2 class="heroName">{{ hero.name }}</h2> -->
+        <div class="heroStats">
+            <div class="item">Health: {{ hero.getHealth() }}</div>
+            <div class="item">Attack: {{ hero.getAttack() }}</div>
         </div>
+        <div class="heroStats">
+            <div class="item">Diffense: {{ hero.getDefense() }}</div>
+            <div class="item">Coins: {{ hero.getCoins() }}</div>
+        </div>
+    </div>
 </template>
 
 <script lang="ts">
-import heroStore from '@/stores/HeroStore'
-import userStore from '@/stores/User';
+import { HeroModel } from '@/models/HeroModel';
 
 export default {
-    data() {
-        const userId: number = userStore.state.user.getId();
-        heroStore.getHero(userId);
-
-        return { heroStore}
+    name: "hero-data-bar",
+    props: {
+        hero: {
+            type: HeroModel,
+            required: true
+        }, 
+        heroName: String
     }
 }
 </script>
