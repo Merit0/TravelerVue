@@ -5,7 +5,6 @@ import { UserModel } from '../models/UserModel';
 
 const state = reactive({
     user: new UserModel().build(),
-
     error: ""
 });
 
@@ -46,26 +45,7 @@ const actions = {
             .setId(0);
         await router.push("/login")
         location.reload();
-    },
-    async open_inventoty() {
-        const element = document.getElementById('bag');
-        const button = document.getElementById('inventory_openbutton');
-        if (element != null) {
-            if (element.style.visibility == 'hidden') {
-                element.style.visibility = 'visible';
-                if (button != null) {
-                    button.style.backgroundColor = 'rgba(255, 126, 0, 0.185)'
-
-                }
-            } else {
-                element.style.visibility = 'hidden';
-                if (button != null) {
-                    button.style.backgroundColor = 'rgba(255, 196, 0, 0.185)'
-                }
-            }
-        }
     }
 }
-
 
 export default { state, getters, ...actions }

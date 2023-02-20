@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import LoginForm from '@/components/LoginForm.vue'
 import HomePage from '@/components/HomePage.vue'
 import User from '@/stores/User'
+import EvilLand from '@/components/EvilLand.vue'
 
 const router = createRouter({
     history: createWebHistory(),
@@ -16,6 +17,12 @@ const router = createRouter({
             path: "/login",
             name: "login",
             component: LoginForm
+        },
+        {
+            path: "/evilLand",
+            name: "evilLand",
+            component: EvilLand,
+            // meta: { requiresAuth: true }
         },
     ]
 });
