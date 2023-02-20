@@ -20,7 +20,6 @@ export default {
         async attackEnemy(tile: TileModel) {
             const el = document.getElementById("" + tile.id);
             if(el) {
-                // this.enemyShown = false;
                     el.style.visibility = 'hidden';
             } 
         }
