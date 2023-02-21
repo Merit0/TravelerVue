@@ -76,11 +76,10 @@ export default {
     outline-width: 3px;
     outline-style: solid;
     border-radius:30%;
-    float: right;
     background-image: url('../assets/images/inventory_image.png');
     background-size: 100px 100px;
-    position: fixed;
-    margin-top: 800px;
+    position: relative;
+    margin-top: 400px;
     margin-left: 1750px;
  }
 
@@ -88,7 +87,7 @@ export default {
     width: 400px;
     height: 500px;
     margin-left: 1450px;
-    top: 150px;
+    top: 190px;
     background-color:rgba(44, 0, 0, 0.712);
     position: fixed;
 

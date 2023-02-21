@@ -6,6 +6,7 @@
 <script lang="ts">
 import TileModel from '@/models/TileModel';
 import EnemyTile from '@/components/EnemyTile.vue'
+
 export default {
     name: "map-tile",
     props: {

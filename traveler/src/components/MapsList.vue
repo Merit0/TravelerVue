@@ -24,7 +24,8 @@ export default {
     top: 18%;
     width: 600px;
     height: 400px;
-    position: fixed;
+    position: relative;
+    top: 100px;
     border-radius: 20px;
     background-size: 100% 100%;
     display: flex;

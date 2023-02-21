@@ -24,6 +24,7 @@ const actions = {
             .attack(hero.attack)
             .defense(hero.defense)
             .coins(hero.coins)
+            .kills(hero.kills)
             .stats(true);
 
         return true;

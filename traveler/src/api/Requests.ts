@@ -6,6 +6,7 @@ export type Hero = {
     attack: number,
     defense: number,
     coins: number,
+    kills: number,
     available: boolean,
 }
 export type HeroList = Array<Hero & { id: number }>

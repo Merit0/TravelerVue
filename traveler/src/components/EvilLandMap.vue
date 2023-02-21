@@ -1,5 +1,5 @@
 <template>
-    <section class="mapSection">
+    <section class="page">
        <GameMap :tiles="evilLandTiles"></GameMap>
     </section>
 </template>
@@ -11,10 +11,10 @@ export default {
     components: { GameMap },
     data() {    
         let evilLandTiles = new Array<TileModel>(); 
-                for(let i = 0; i < 48; i++) {
+                for(let i = 0; i < 52; i++) {
                     evilLandTiles.push(new TileModel().setId(i));
                 }
-                evilLandTiles.forEach(tile => console.log(tile));
+
             return { evilLandTiles }
         },
         // methods: { //TODO: need to use this method for tiles ceration!
@@ -29,32 +29,3 @@ export default {
         // }
     }
 </script>
-
-<style>
-.mapSection {
-    padding: 40px;
-    background-color: rgba(0, 0, 0, 0.896);
-}
-.map {
-    width: 1840px;
-    height: 800px;
-    background-image: url('../assets/images/dungeons/lavaLand.jpg');
-    background-size: 100% 100%;
-    border-radius: 2%;
-    border: 1px solid rgb(119, 46, 0);
-    padding: 50px;
-    display: inline-flex;
-  align-items: flex-end;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-.map .tile {
-    vertical-align: text-bottom;
-}
-.quit {
-    position: fixed;
-}
-</style>
