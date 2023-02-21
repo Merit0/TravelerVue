@@ -1,6 +1,5 @@
 <template>
         <HeroDataBar :hero="hero"></HeroDataBar>
-        <!-- <h1 class="title">Evil Land</h1> -->
         <div class="tilesSection">
             <map-tile v-for="mapTile in tiles" :key="mapTile.id" :tile="mapTile"></map-tile>
         </div>

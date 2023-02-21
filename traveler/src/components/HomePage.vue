@@ -38,6 +38,8 @@ export default {
     background-color: black;
     min-height: 100vh;
     padding: 5px;
+    display: flex-direction;
+    align-items :center;
 }
 .content {
     margin-top: 10px;

@@ -1,5 +1,5 @@
 <template>
-    <button v-if="treeTileShown" class="tile" v-bind:id="'' + tile.id" @click="clearTile(tile)"></button>
+    <button v-if="treeTileShown" class="treeTile" v-bind:id="'' + tile.id" @click="clearTile(tile)"></button>
     <enemy-tile :tile="tile" v-if="enemyTileShown" v-bind:id="'' + tile.id"></enemy-tile>
 </template>
 
@@ -37,7 +37,7 @@ export default {
 }
 </script>
 <style>
-.tile {
+.treeTile {
     width: 100px;
     height: 100px;
     background: none;

@@ -4,6 +4,7 @@
 
 <script lang="ts">
 import TileModel from '@/models/TileModel';
+import heroStore from '@/stores/HeroStore'
 export default {
     name: "enemy-tile",
     props: {
@@ -13,14 +14,21 @@ export default {
         }
     },
     data() {
+        const hero = heroStore.state.hero;
             let enemyShown = true;
-            return { enemyShown }
+            return { enemyShown, hero }
         },
     methods: {
         async attackEnemy(tile: TileModel) {
             const el = document.getElementById("" + tile.id);
             if(el) {
+                if(this.hero.getHealth() != 0) {
+                    this.hero.takeDamage(10);
+                    this.hero.addKilled();
                     el.style.visibility = 'hidden';
+                    } else {
+                        return;
+                    }
             } 
         }
     }
