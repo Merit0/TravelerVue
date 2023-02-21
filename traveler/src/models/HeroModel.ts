@@ -6,6 +6,7 @@ export class HeroModel {
     private heroDefense = 0;
     private heroCoins = 0;
     private heroStats = true;
+    private heroKills = 0;
     private id: number;
 
     constructor() {
@@ -29,6 +30,11 @@ export class HeroModel {
 
     public defense(defense: number): HeroModel {
         this.heroDefense = defense;
+        return this;
+    }
+
+    public kills(kills: number): HeroModel {
+        this.heroKills = kills;
         return this;
     }
 
@@ -64,6 +70,14 @@ export class HeroModel {
 
     public getId(): number {
         return this.id;
+    }
+
+    public getEnemiesKilled(): number {
+        return this.heroKills;
+    }
+
+    public addKilled(): void {
+        this.heroKills += 1;
     }
 
     public build(): HeroModel {
