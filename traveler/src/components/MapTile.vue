@@ -7,9 +7,9 @@
 
 <script lang="ts">
 import TileModel from '@/models/TileModel';
-import EnemyTile from './EnemyTile.vue';
-import TreeTile from './TreeTile.vue'
-import EmptyTile from './EmptyTile.vue';
+import EnemyTile from '@/components/EnemyTile.vue';
+import TreeTile from '@/components/TreeTile.vue'
+import EmptyTile from '@/components/EmptyTile.vue';
 
 export default {
     name: "map-tile",
