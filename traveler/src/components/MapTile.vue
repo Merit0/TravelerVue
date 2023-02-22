@@ -1,11 +1,15 @@
 <template>
-    <button v-if="treeTileShown" class="treeTile" v-bind:id="'' + tile.id" @click="clearTile(tile)"></button>
-    <enemy-tile :tile="tile" v-if="enemyTileShown" v-bind:id="'' + tile.id"></enemy-tile>
+    <tree-tile :tile="tile" v-model:treeShown="treeTileShown" @click="clearTile(tile)"></tree-tile>
+    <enemy-tile :tile="tile" v-model:enemyShown="enemyTileShown" v-on:enemy-tile="hideEnemyTile($event)"></enemy-tile>
+    <empty-tile v-model:epmtyTile="emptyTileShown"></empty-tile>
+
 </template>
 
 <script lang="ts">
 import TileModel from '@/models/TileModel';
-import EnemyTile from '@/components/EnemyTile.vue'
+import EnemyTile from './EnemyTile.vue';
+import TreeTile from './TreeTile.vue'
+import EmptyTile from './EmptyTile.vue';
 
 export default {
     name: "map-tile",
@@ -15,23 +19,25 @@ export default {
             required: true
         }
     },
-    components: { EnemyTile },
+    components: { EnemyTile, TreeTile, EmptyTile },
     data() {
             let treeTileShown = true;
             let enemyTileShown = false;
-            return { treeTileShown, enemyTileShown }
+            let emptyTileShown = false;
+            return { treeTileShown, enemyTileShown, emptyTileShown }
         },
     methods: {
         async clearTile(tile: TileModel) {
-           const el = document.getElementById("" + tile.id);
-           if(el) {
+            this.treeTileShown = false;
                if(tile.getEnemy()) {
-                this.treeTileShown = false;
-                this.enemyTileShown = true;
+                    this.enemyTileShown = true;
                } else {
-                    el.style.visibility = 'hidden';
+                    this.emptyTileShown = true;
                }
-           }
+        },
+        async hideEnemyTile(enemyTileStatus: boolean) {
+            this.enemyTileShown = enemyTileStatus;
+            this.emptyTileShown = true;
         }
     }
 }

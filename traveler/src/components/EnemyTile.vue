@@ -1,35 +1,58 @@
 <template>
-    <button class="enemyTile" v-if="enemyShown" @click="attackEnemy(tile)"></button>
+    <button class="enemyTile" @click="attackEnemy(tile)" v-if="enemyShown && enemyAlive"></button>
 </template>
 
 <script lang="ts">
 import TileModel from '@/models/TileModel';
 import heroStore from '@/stores/HeroStore'
+
 export default {
     name: "enemy-tile",
     props: {
         tile: {
             type: TileModel,
             required: true
+        },
+        enemyShown: {
+            type: Boolean,
+            default: false
         }
     },
     data() {
         const hero = heroStore.state.hero;
-            let enemyShown = true;
-            return { enemyShown, hero }
+        let enemyAlive = true;
+        let emptyTileShown = false;
+            return { hero, enemyAlive, emptyTileShown}
         },
     methods: {
-        async attackEnemy(tile: TileModel) {
-            const el = document.getElementById("" + tile.id);
-            if(el) {
-                if(this.hero.getHealth() != 0) {
-                    this.hero.takeDamage(10);
-                    this.hero.addKilled();
-                    el.style.visibility = 'hidden';
-                    } else {
-                        return;
-                    }
-            } 
+        async attackEnemy(tile: TileModel) {  //TODO tile needs to contain Enemy obj for buttle
+            if(this.hero.getHealth() > 0) {
+                this.hero.takeDamage(60);
+                this.hero.addKilled();
+                if(this.hero.getHealth() < 1) {
+                    console.log("Game Over");
+                    return;
+                }
+                this.enemyAlive= false;
+                if(!this.enemyAlive) {
+                    this.$emit("enemy-tile", false);
+                    return;
+                }
+                if(this.hero.getHealth() < 1) {
+                    console.log("Game Over");
+                    return;
+                }
+                if(this.hero.getHealth() < 1) {
+                    console.log("Game Over");
+                    return;
+                }
+                if(this.hero.getHealth() < 1) {
+                    console.log("Game Over");
+                    return;
+                }
+            } else {
+                return console.log("Game Over");
+            }
         }
     }
 }

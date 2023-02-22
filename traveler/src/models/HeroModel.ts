@@ -82,6 +82,9 @@ export class HeroModel {
 
     public takeDamage(damage: number): void {
         this.heroHealth -= damage;
+        if (this.heroHealth < 1) {
+            this.heroHealth = 0;
+        }
     }
 
     public build(): HeroModel {
