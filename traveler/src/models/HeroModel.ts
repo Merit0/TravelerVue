@@ -80,6 +80,13 @@ export class HeroModel {
         this.heroKills += 1;
     }
 
+    public takeDamage(damage: number): void {
+        this.heroHealth -= damage;
+        if (this.heroHealth < 1) {
+            this.heroHealth = 0;
+        }
+    }
+
     public build(): HeroModel {
         return new HeroModel()
             .name(this.heroName)
