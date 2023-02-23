@@ -29,7 +29,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
         //Check if User is Authenticated
-        if (User.getters.isLoggedIn) {
+        if (localStorage.getItem("uStatus") === "true") {
             //User is authenticated
             console.log("User status: " + User.getters.isLoggedIn)
             //TODO: commit to Store that User is authenticated
