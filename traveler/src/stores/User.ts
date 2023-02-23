@@ -9,7 +9,7 @@ const state = reactive({
 });
 
 const getters = reactive({
-    isLoggedIn: computed(() => state.user.getStatus())
+    isLoggedIn: computed(() => localStorage.getItem("uStatus") === "true")
 });
 const actions = {
     async getUser() {
@@ -29,11 +29,16 @@ const actions = {
             state.error = username + " is not found."
             return false;
         }
+        console.log("apiUser : " + userFromApi.id);
         state.user
             .setName(userFromApi.name)
             .setUsername(userFromApi.username)
             .setId(userFromApi.id)
             .setLoggedIn(true);
+
+        localStorage.setItem("uStatus", state.user.getStatus().toString());
+        localStorage.setItem("uId", state.user.getId().toString());
+
         state.error = "";
         router.push("/")
         return true;
@@ -43,6 +48,7 @@ const actions = {
             .setName("")
             .setUsername("")
             .setId(0);
+        localStorage.clear()
         await router.push("/login")
         location.reload();
     }

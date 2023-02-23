@@ -1,5 +1,13 @@
  @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
+ .page {
+    background-color: black;
+    min-height: 100vh;
+    padding: 5px;
+    display: flex-direction;
+    align-items :center;
+}
+
  .loginPage {
     min-height: 100vh;
     color: #fff;

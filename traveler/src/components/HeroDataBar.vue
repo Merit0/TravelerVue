@@ -19,8 +19,7 @@ export default {
         hero: {
             type: HeroModel,
             required: true
-        }, 
-        heroName: String
+        }
     }
 }
 </script>

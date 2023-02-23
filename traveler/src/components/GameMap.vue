@@ -1,9 +1,9 @@
 <template>
         <HeroDataBar :hero="hero"></HeroDataBar>
         <div class="tilesSection">
-            <map-tile v-for="mapTile in tiles" :key="mapTile.id" :tile="mapTile"></map-tile>
+            <map-tile v-for="mapTile in generateTiles(map.getTiles())" :key="mapTile.id" :tile="mapTile"></map-tile>
         </div>
-    <button @click="quitDungeon()" class="quit">Quit</button>
+        <button @click="quitDungeon()" class="quit">Quit</button>   
 </template>
 
 <script lang="ts">
@@ -12,13 +12,15 @@ import MapTile from './MapTile.vue';
 import HeroDataBar from './HeroDataBar.vue';
 import userStore from '@/stores/User';
 import heroStore from '@/stores/HeroStore'
+import TileModel from '../models/TileModel';
+import { MapModel } from '@/models/MapModel';
 
 export default {
-    name: "GameMap",
+    name: "game-map",
     components: { MapTile, HeroDataBar },
     props:  {
-        tiles: {
-            type: Array,
+        map: {
+            type: MapModel,
             required: true
         }
     },
@@ -31,7 +33,15 @@ export default {
     methods: {
         async quitDungeon() {
             router.push("/");
-        }
+        },
+        generateTiles(amount: number) {
+            let evilLandTiles = new Array<TileModel>(); 
+            for(let i = 0; i < amount; i++) {
+                evilLandTiles.push(new TileModel().setId(i));
+            }
+            evilLandTiles.forEach(tile => console.log(tile));
+                return evilLandTiles;
+            }
     }
 }
 </script>
@@ -70,7 +80,7 @@ export default {
     border-radius:10px;
     border: 2px solid rgb(95, 64, 43);
     margin-top: 10px;
-    margin-left: 900px;
-    /* align-self: center; */
+    margin-left: 900px; 
+    align-self: center;
 }
 </style>

@@ -22,9 +22,10 @@ export default {
     name: "HomePage",
     components: { HeroDataBar, BagInventory, MapsList },
     data() {
-        const userId: number = userStore.state.user.getId();
+        const userId: number = JSON.parse(localStorage.getItem("uId"));
         heroStore.getHero(userId);
         const hero = heroStore.state.hero;
+        localStorage.setItem("hero", JSON.stringify(hero));
         return { userStore, hero };
     }
 }
@@ -33,13 +34,6 @@ export default {
 <style>
 .buttons {
     display: flex;
-}
-.page {
-    background-color: black;
-    min-height: 100vh;
-    padding: 5px;
-    display: flex-direction;
-    align-items :center;
 }
 .content {
     margin-top: 10px;

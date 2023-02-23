@@ -1,31 +1,21 @@
 <template>
     <section class="page">
-       <GameMap :tiles="evilLandTiles"></GameMap>
+       <GameMap :map="evilLandMap"></GameMap>
     </section>
 </template>
 
 <script lang="ts">
 import GameMap from './GameMap.vue';
-import TileModel from '@/models/TileModel'
+import MapModel from '@/models/MapModel'
+
 export default {
     components: { GameMap },
     data() {    
-        let evilLandTiles = new Array<TileModel>(); 
-                for(let i = 0; i < 52; i++) {
-                    evilLandTiles.push(new TileModel().setId(i));
-                }
-
-            return { evilLandTiles }
-        },
-        // methods: { //TODO: need to use this method for tiles ceration!
-        //     async generateTiles() {
-        //         let evilLandTiles = new Array<TileModel>(); 
-        //         for(let i = 0; i < 48; i++) {
-        //             evilLandTiles.push(new TileModel().setId(i));
-        //         }
-        //         evilLandTiles.forEach(tile => console.log(tile));
-        //             return evilLandTiles;
-        //         }
-        // }
+        const evilLandMap = new MapModel()
+            .name("Evil Lands")
+            .tiles(52)
+            .build();
+        return { evilLandMap }
+        }
     }
 </script>
