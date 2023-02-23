@@ -24,7 +24,6 @@ export async function getUser() {
 }
 
 export async function getHero(id: number) {
-    console.log(id);
     const request = await fetch('/heroes.json');
     const heroesJson: HeroList = await request.json();
     return heroesJson.find(hero => hero.id === id);
