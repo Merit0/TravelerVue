@@ -5,27 +5,27 @@
             <MapsList></MapsList>
             <div class="buttons">
                 <BagInventory></BagInventory>
-                <button @click="userStore.logout()" v-if="userStore.getters.isLoggedIn" class="logout">Logout</button>
+                <button @click="userStore.logout()" v-if="userStore.isLoggedIn" class="logout">Logout</button>
             </div>
         </section>
     </div>
 </template>
 
 <script lang="ts">
-import userStore from '@/stores/User';
-import heroStore from '@/stores/HeroStore'
+import { useUserStore } from '@/stores/PiniaUserStore';
 import HeroDataBar from './HeroDataBar.vue';
 import BagInventory from './BagInventory.vue';
 import MapsList from './MapsList.vue';
+import { useHeroStore } from '../stores/PiniaHeroStore';
+
 
 export default {
     name: "HomePage",
     components: { HeroDataBar, BagInventory, MapsList },
     data() {
-        const userId: number = JSON.parse(localStorage.getItem("uId"));
-        heroStore.getHero(userId);
-        const hero = heroStore.state.hero;
-        localStorage.setItem("hero", JSON.stringify(hero));
+        const userStore = useUserStore();
+        const heroStore = useHeroStore();
+        const hero = heroStore.hero;
         return { userStore, hero };
     }
 }

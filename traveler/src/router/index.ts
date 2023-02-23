@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import LoginForm from '@/components/LoginForm.vue'
 import HomePage from '@/components/HomePage.vue'
-import User from '@/stores/User'
 import EvilLandMap from '@/components/EvilLandMap.vue'
 
 const router = createRouter({
@@ -31,7 +30,6 @@ router.beforeEach((to, from, next) => {
         //Check if User is Authenticated
         if (localStorage.getItem("uStatus") === "true") {
             //User is authenticated
-            console.log("User status: " + User.getters.isLoggedIn)
             //TODO: commit to Store that User is authenticated
             next();
         } else {
