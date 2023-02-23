@@ -34,13 +34,8 @@
 
 <script lang="ts">
 
-import userStore from '@/stores/User';
-
 export default {
     name: "BagInventory",
-    data() {
-        return { userStore };
-    },
     methods: {
         async add_item_to_slot() {
             alert('No functionality yet!')

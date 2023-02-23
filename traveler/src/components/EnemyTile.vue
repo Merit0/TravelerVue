@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import TileModel from '@/models/TileModel';
-import heroStore from '@/stores/HeroStore'
+import { useHeroStore } from '@/stores/PiniaHeroStore';
 
 export default {
     name: "enemy-tile",
@@ -19,7 +19,8 @@ export default {
         }
     },
     data() {
-        const hero = heroStore.state.hero;
+        const heroStore = useHeroStore();
+        const hero = heroStore.hero;
         let enemyAlive = true;
         let emptyTileShown = false;
             return { hero, enemyAlive, emptyTileShown}

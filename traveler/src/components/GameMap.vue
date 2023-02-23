@@ -10,8 +10,7 @@
 import router from '@/router';
 import MapTile from './MapTile.vue';
 import HeroDataBar from './HeroDataBar.vue';
-import userStore from '@/stores/User';
-import heroStore from '@/stores/HeroStore'
+import { useHeroStore } from '@/stores/PiniaHeroStore';
 import TileModel from '../models/TileModel';
 import { MapModel } from '@/models/MapModel';
 
@@ -25,10 +24,9 @@ export default {
         }
     },
     data() {
-        const userId: number = userStore.state.user.getId();
-        heroStore.getHero(userId);
-        const hero = heroStore.state.hero;
-        return { userStore, hero };
+       const heroStore = useHeroStore();
+        const hero = heroStore.hero;
+        return { hero };
     },
     methods: {
         async quitDungeon() {
