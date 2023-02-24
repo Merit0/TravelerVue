@@ -82,7 +82,9 @@ export class HeroModel {
     }
 
     private expirienceCollector(): void {
-        this.heroAttack = Math.floor(this.heroKills / 5);
+        if ((this.heroKills % 5 === 0)) {
+            this.heroAttack += 1;
+        }
     }
 
     public takeDamage(damage: number): void {
