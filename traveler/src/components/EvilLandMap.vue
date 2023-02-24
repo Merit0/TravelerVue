@@ -1,18 +1,20 @@
 <template>
     <section class="page">
         <HeroDetailsBar :hero="hero"></HeroDetailsBar>
-        <GameMap :mapTiles="evilLandMap.getTiles()"></GameMap>
+        <Tiles :mapTiles="evilLandMap.getTiles()"></Tiles>
+        <button @click="quitMap()" class="quit">Quit</button>  
     </section>
 </template>
 
 <script lang="ts">
-import GameMap from './Tiles.vue';
+import Tiles from './Tiles.vue';
 import HeroDetailsBar from './HeroDetailsBar.vue';
 import MapModel from '@/models/MapModel'
 import { useHeroStore } from '@/stores/HeroStore'
+import router from '@/router';
 
 export default {
-    components: { GameMap, HeroDetailsBar },
+    components: { Tiles, HeroDetailsBar },
     data() {    
             const evilLandMap: MapModel = new MapModel()
                 .name("Evil Lands")
@@ -23,6 +25,11 @@ export default {
             const hero = heroStore.hero;
 
             return { evilLandMap, hero }
+        },
+    methods: {
+        async quitMap() {
+            router.push("/");
         }
     }
+}
 </script>

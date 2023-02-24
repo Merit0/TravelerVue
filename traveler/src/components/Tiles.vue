@@ -2,11 +2,9 @@
         <div class="tilesSection">
             <map-tile v-for="mapTile in mapTiles" :key="mapTile.id" :tile="mapTile"></map-tile>
         </div>
-        <button @click="quitMap()" class="quit">Quit</button>   
 </template>
 
 <script lang="ts">
-import router from '@/router';
 import MapTile from './MapTile.vue';
 
 export default {
@@ -16,11 +14,6 @@ export default {
         mapTiles: {
             type: Array,
             required: true
-        }
-    },
-    methods: {
-        async quitMap() {
-            router.push("/");
         }
     }
 }
