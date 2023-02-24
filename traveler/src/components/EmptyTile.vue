@@ -5,7 +5,7 @@
 <script lang="ts">
 
 export default {
-    name: "tree-tile",
+    name: "empty-tile",
     props: {
         epmtyTile: {
             type: Boolean,

@@ -1,37 +1,27 @@
 <template>
         <div class="tilesSection">
-            <map-tile v-for="mapTile in generateTiles(map.getTiles())" :key="mapTile.id" :tile="mapTile"></map-tile>
+            <map-tile v-for="mapTile in mapTiles" :key="mapTile.id" :tile="mapTile"></map-tile>
         </div>
-        <button @click="quitDungeon()" class="quit">Quit</button>   
+        <button @click="quitMap()" class="quit">Quit</button>   
 </template>
 
 <script lang="ts">
 import router from '@/router';
 import MapTile from './MapTile.vue';
-import TileModel from '../models/TileModel';
-import { MapModel } from '@/models/MapModel';
 
 export default {
     name: "game-map",
     components: { MapTile },
     props:  {
-        map: {
-            type: MapModel,
+        mapTiles: {
+            type: Array,
             required: true
         }
     },
     methods: {
-        async quitDungeon() {
+        async quitMap() {
             router.push("/");
-        },
-        generateTiles(amount: number) {
-            let evilLandTiles = new Array<TileModel>(); 
-            for(let i = 0; i < amount; i++) {
-                evilLandTiles.push(new TileModel().setId(i));
-            }
-            evilLandTiles.forEach(tile => console.log(tile));
-                return evilLandTiles;
-            }
+        }
     }
 }
 </script>

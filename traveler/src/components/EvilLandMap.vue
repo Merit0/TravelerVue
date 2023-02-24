@@ -1,7 +1,7 @@
 <template>
     <section class="page">
         <HeroDataBar :hero="hero"></HeroDataBar>
-        <GameMap :map="evilLandMap"></GameMap>
+        <GameMap :mapTiles="evilLandMap.getTiles()"></GameMap>
     </section>
 </template>
 
@@ -14,15 +14,15 @@ import { useHeroStore } from '@/stores/PiniaHeroStore';
 export default {
     components: { GameMap, HeroDataBar },
     data() {    
-        const evilLandMap = new MapModel()
-            .name("Evil Lands")
-            .tiles(52)
-            .build();
+            const evilLandMap: MapModel = new MapModel()
+                .name("Evil Lands")
+                .numberOfTiles(52)
+                .build();
 
-        const heroStore = useHeroStore();
-        const hero = heroStore.hero;
+            const heroStore = useHeroStore();
+            const hero = heroStore.hero;
 
-        return { evilLandMap, hero }
+            return { evilLandMap, hero }
         }
     }
 </script>
