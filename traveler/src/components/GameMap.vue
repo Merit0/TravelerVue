@@ -1,5 +1,4 @@
 <template>
-        <HeroDataBar :hero="hero"></HeroDataBar>
         <div class="tilesSection">
             <map-tile v-for="mapTile in generateTiles(map.getTiles())" :key="mapTile.id" :tile="mapTile"></map-tile>
         </div>
@@ -9,24 +8,17 @@
 <script lang="ts">
 import router from '@/router';
 import MapTile from './MapTile.vue';
-import HeroDataBar from './HeroDataBar.vue';
-import { useHeroStore } from '@/stores/PiniaHeroStore';
 import TileModel from '../models/TileModel';
 import { MapModel } from '@/models/MapModel';
 
 export default {
     name: "game-map",
-    components: { MapTile, HeroDataBar },
+    components: { MapTile },
     props:  {
         map: {
             type: MapModel,
             required: true
         }
-    },
-    data() {
-       const heroStore = useHeroStore();
-        const hero = heroStore.hero;
-        return { hero };
     },
     methods: {
         async quitDungeon() {
