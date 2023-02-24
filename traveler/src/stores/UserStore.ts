@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import UserModel from "@/models/UserModel";
 import * as Request from '@/api/Requests'
 import router from '@/router/index';
-import { useHeroStore } from '@/stores/PiniaHeroStore'
+import { useHeroStore } from '@/stores/HeroStore'
 
 export const useUserStore = defineStore("user", {
     state: () => {

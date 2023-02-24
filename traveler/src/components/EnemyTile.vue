@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import TileModel from '@/models/TileModel';
-import { useHeroStore } from '@/stores/PiniaHeroStore';
+import { useHeroStore } from '@/stores/HeroStore'
 
 export default {
     name: "enemy-tile",

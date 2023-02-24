@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { HeroModel } from "@/models/HeroModel";
-import { useUserStore } from "./PiniaUserStore";
+import { useUserStore } from "./UserStore";
 import * as Request from '@/api/Requests'
 
 export const useHeroStore = defineStore("hero", {

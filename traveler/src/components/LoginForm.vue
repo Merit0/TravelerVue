@@ -18,7 +18,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive } from 'vue'
-import { useUserStore } from '../stores/PiniaUserStore';
+import { useUserStore } from '../stores/UserStore'
 
 
 export default defineComponent({

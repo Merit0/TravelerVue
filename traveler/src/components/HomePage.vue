@@ -1,6 +1,6 @@
 <template>
     <div class="page">
-        <HeroDataBar :hero="hero"></HeroDataBar>
+        <HeroDetailsBar :hero="hero"></HeroDetailsBar>
         <section class="content">
             <MapsList></MapsList>
             <div class="buttons">
@@ -12,16 +12,16 @@
 </template>
 
 <script lang="ts">
-import { useUserStore } from '@/stores/PiniaUserStore';
-import HeroDataBar from './HeroDataBar.vue';
+import { useUserStore } from '@/stores/UserStore'
+import HeroDetailsBar from './HeroDetailsBar.vue';
 import BagInventory from './BagInventory.vue';
 import MapsList from './MapsList.vue';
-import { useHeroStore } from '../stores/PiniaHeroStore';
+import { useHeroStore } from '../stores/HeroStore'
 
 
 export default {
     name: "HomePage",
-    components: { HeroDataBar, BagInventory, MapsList },
+    components: { HeroDetailsBar, BagInventory, MapsList },
     data() {
         const userStore = useUserStore();
         const heroStore = useHeroStore();

@@ -1,18 +1,18 @@
 <template>
     <section class="page">
-        <HeroDataBar :hero="hero"></HeroDataBar>
+        <HeroDetailsBar :hero="hero"></HeroDetailsBar>
         <GameMap :mapTiles="evilLandMap.getTiles()"></GameMap>
     </section>
 </template>
 
 <script lang="ts">
-import GameMap from './GameMap.vue';
-import HeroDataBar from './HeroDataBar.vue';
+import GameMap from './Tiles.vue';
+import HeroDetailsBar from './HeroDetailsBar.vue';
 import MapModel from '@/models/MapModel'
-import { useHeroStore } from '@/stores/PiniaHeroStore';
+import { useHeroStore } from '@/stores/HeroStore'
 
 export default {
-    components: { GameMap, HeroDataBar },
+    components: { GameMap, HeroDetailsBar },
     data() {    
             const evilLandMap: MapModel = new MapModel()
                 .name("Evil Lands")
