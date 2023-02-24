@@ -8,6 +8,7 @@ export class HeroModel {
     private heroStats = true;
     private heroKills = 0;
     private id: number;
+    private exp = 0;
 
     constructor() {
         this.id = 0;
@@ -78,6 +79,15 @@ export class HeroModel {
 
     public addKilled(): void {
         this.heroKills += 1;
+        this.expirienceCollector();
+    }
+
+    private expirienceCollector(): void {
+        this.exp += 1;
+        if (this.exp === 5) {
+            this.heroAttack += 1;
+            this.exp = 0;
+        }
     }
 
     public takeDamage(damage: number): void {
