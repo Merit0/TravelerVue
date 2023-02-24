@@ -28,10 +28,11 @@ export default {
     methods: {
         async attackEnemy(tile: TileModel) {  //TODO tile needs to contain Enemy obj for buttle
             if(this.hero.getHealth() > 0) {
-                this.hero.takeDamage(1);
+                this.hero.takeDamage(20);
                 this.hero.addKilled();
                 if(this.hero.getHealth() < 1) {
                     console.log("Game Over");
+                    this.$emit("player-dead", false);
                     return;
                 }
                 this.enemyAlive= false;

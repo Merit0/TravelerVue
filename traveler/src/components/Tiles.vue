@@ -8,7 +8,7 @@
 import MapTile from './MapTile.vue';
 
 export default {
-    name: "game-map",
+    name: "map-tiles",
     components: { MapTile },
     props:  {
         mapTiles: {
@@ -39,21 +39,5 @@ export default {
     align-items: center;
     flex-wrap: wrap;
     min-width: 100vh;
-}
-
-.quit{
-    color:#ffb671;
-    position: relative;
-    width: 100px;
-    height: 50px;
-    background-color:rgba(255, 196, 0, 0.185);
-    outline-color: rgba(0, 0, 0, 0.295);
-    outline-width: 3px;
-    outline-style: solid;
-    border-radius:10px;
-    border: 2px solid rgb(95, 64, 43);
-    margin-top: 10px;
-    margin-left: 900px; 
-    align-self: center;
 }
 </style>
