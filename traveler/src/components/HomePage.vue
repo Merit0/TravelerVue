@@ -18,7 +18,6 @@ import BagInventory from './BagInventory.vue';
 import MapsList from './MapsList.vue';
 import { useHeroStore } from '../stores/HeroStore'
 
-
 export default {
     name: "HomePage",
     components: { HeroDetailsBar, BagInventory, MapsList },
@@ -26,7 +25,26 @@ export default {
         const userStore = useUserStore();
         const heroStore = useHeroStore();
         const hero = heroStore.hero;
-        return { userStore, hero };
+        return { userStore, hero, heroStore, time: ''};
+    },
+    methods: {
+        async increaseHealth() { 
+        let count = 0;
+        this.time = setInterval(() => {  
+            if(this.heroStore.hero.getHealth() < 100 && count < 100)     {
+                this.heroStore.hero.healthIncreaser();
+                count++;
+            }else {
+                clearInterval(this.time);
+            }   
+            }, 3000); 
+        },        
+    },
+    mounted() {
+        this.increaseHealth();
+    },
+    unmounted() {
+        clearInterval(this.time);
     }
 }
 </script>

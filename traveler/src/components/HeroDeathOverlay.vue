@@ -4,7 +4,7 @@
             <div class="overlay">
                 <div class="overlayContent">
                     <div class="imgContainer"></div>
-                    <button @click="quitMap()" class="quit">Quit</button>
+                    <button @click="quitMap()" class="quit">Camp</button>
                 </div>
             </div>
         </transition>
@@ -32,7 +32,6 @@ export default {
         z-index: 100;
         position: absolute;
         background-color: rgba(0, 0, 0, 0.404);
-        border: 2px solid greenyellow;
         padding: 40px;
         display: flex-direction;
         align-items :center;
@@ -45,6 +44,7 @@ export default {
         box-shadow: 0px -3px 15px 4px rgba(255, 195, 195, 0.5);
         border-radius: 20px;
         margin: auto;
+        margin-top: 50px;
         padding: 40px;
         display: flex-direction;
         align-items :center;

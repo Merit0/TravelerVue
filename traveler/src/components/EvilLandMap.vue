@@ -1,9 +1,9 @@
 <template>
     <section class="page">
         <HeroDetailsBar :hero="hero" v-on:player-dead="hideTiles($event)"></HeroDetailsBar>
-        <Tiles :mapTiles="evilLandMap.getTiles()" v-if="tilesShown && !isDead()"></Tiles>
-        <HeroDeathOverlay v-if="isDead()"></HeroDeathOverlay>
-        <button @click="quitMap()" class="quit">Quit</button>  
+        <Tiles :mapTiles="evilLandMap.getTiles()" v-if="tilesShown && heroStore.isAlive()"></Tiles>
+        <HeroDeathOverlay v-if="!heroStore.isAlive()"></HeroDeathOverlay>
+        <button @click="quitMap()" class="quit">Escape</button>  
     </section>
 </template>
 
@@ -27,7 +27,7 @@ export default {
         const heroStore = useHeroStore();
         const hero = heroStore.hero;
 
-            return { evilLandMap, hero, tilesShown }
+            return { evilLandMap, hero, tilesShown, heroStore }
         },
     methods: {
         async quitMap() {
@@ -36,9 +36,6 @@ export default {
         async hideTiles(tilesStatus: boolean) {
             console.log("hide");
             this.tilesShown = !tilesStatus;
-        },
-        isDead(): boolean {
-            return this.hero.getHealth() <= 0? true: false;
         }
     }
 }

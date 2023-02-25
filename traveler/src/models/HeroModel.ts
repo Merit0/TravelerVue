@@ -94,6 +94,10 @@ export class HeroModel {
         }
     }
 
+    healthIncreaser() {
+        this.heroHealth += 1;
+    }
+
     public build(): HeroModel {
         return new HeroModel()
             .name(this.heroName)
