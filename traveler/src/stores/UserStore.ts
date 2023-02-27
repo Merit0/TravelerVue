@@ -52,6 +52,9 @@ export const useUserStore = defineStore("user", {
             localStorage.clear();
             await router.push("/login");
             location.reload();
+        },
+        async clearErrorMsg() {
+            this.error = "";
         }
     }
 });

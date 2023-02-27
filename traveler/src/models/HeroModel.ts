@@ -1,71 +1,67 @@
-export class HeroModel {
+export class HeroModel implements IHero {
 
-    private heroName = "";
-    private heroHealth = 0;
-    private heroAttack = 0;
-    private heroDefense = 0;
-    private heroCoins = 0;
-    private heroStats = true;
-    private heroKills = 0;
-    private id: number;
+    name = "";
+    health = 0;
+    attack = 0;
+    defence = 0;
+    coins = 0;
+    stats = true;
+    kills = 0;
+    id = 0;
 
-    constructor() {
-        this.id = 0;
-    }
-
-    public name(name: string): HeroModel {
-        this.heroName = name;
+    public setName(name: string): HeroModel {
+        this.name = name;
         return this;
     }
 
-    public health(health: number): HeroModel {
-        this.heroHealth = health;
+    public setHealth(health: number): HeroModel {
+        this.health = health;
         return this;
     }
 
-    public attack(attack: number): HeroModel {
-        this.heroAttack = attack;
+    public setAttack(attack: number): HeroModel {
+        this.attack = attack;
         return this;
     }
 
-    public defense(defense: number): HeroModel {
-        this.heroDefense = defense;
+    public setDefence(defence: number): HeroModel {
+        this.defence = defence;
         return this;
     }
 
-    public kills(kills: number): HeroModel {
-        this.heroKills = kills;
+    public setKills(kills: number): HeroModel {
+        this.kills = kills;
         return this;
     }
 
-    public coins(coins: number): HeroModel {
-        this.heroCoins = coins;
+    public setCoins(coins: number): HeroModel {
+        this.coins = coins;
         return this;
     }
 
-    public stats(stats: boolean): HeroModel {
-        this.heroStats = stats;
+    public setStats(stats: boolean): HeroModel {
+        this.stats = stats;
         return this;
     }
 
     public getName(): string {
-        return this.heroName;
+        return this.name;
     }
 
     public getHealth(): number {
-        return this.heroHealth;
+        return this.health;
     }
 
     public getAttack(): number {
-        return this.heroAttack;
+        return this.attack;
     }
 
     public getDefense(): number {
-        return this.heroDefense;
+        return this.defence;
     }
 
     public getCoins(): number {
-        return this.heroCoins;
+        return this.coins;
     }
 
     public getId(): number {
@@ -73,38 +69,38 @@ export class HeroModel {
     }
 
     public getEnemiesKilled(): number {
-        return this.heroKills;
+        return this.kills;
     }
 
     public addKilled(): void {
-        this.heroKills += 1;
+        this.kills += 1;
         this.expirienceCollector();
     }
 
     private expirienceCollector(): void {
-        if ((this.heroKills % 5 === 0)) {
-            this.heroAttack += 1;
+        if ((this.kills % 5 === 0)) {
+            this.attack += 1;
         }
     }
 
     public takeDamage(damage: number): void {
-        this.heroHealth -= damage;
-        if (this.heroHealth < 1) {
-            this.heroHealth = 0;
+        this.health -= damage;
+        if (this.health < 1) {
+            this.health = 0;
         }
     }
 
     healthIncreaser() {
-        this.heroHealth += 1;
+        this.health += 1;
     }
 
     public build(): HeroModel {
         return new HeroModel()
-            .name(this.heroName)
-            .health(this.heroHealth)
-            .attack(this.heroAttack)
-            .defense(this.heroDefense)
-            .coins(this.heroCoins)
-            .stats(this.heroStats);
+            .setName(this.name)
+            .setHealth(this.health)
+            .setAttack(this.attack)
+            .setDefence(this.defence)
+            .setCoins(this.coins)
+            .setStats(this.stats);
     }
 }

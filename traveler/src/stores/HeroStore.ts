@@ -16,13 +16,13 @@ export const useHeroStore = defineStore("hero", {
                 return false;
             }
             this.hero
-                .name(hero.name)
-                .health(hero.health)
-                .attack(hero.attack)
-                .defense(hero.defense)
-                .coins(hero.coins)
-                .kills(hero.kills)
-                .stats(true);
+                .setName(hero.name)
+                .setHealth(hero.health)
+                .setAttack(hero.attack)
+                .setDefence(hero.defense)
+                .setCoins(hero.coins)
+                .setKills(hero.kills)
+                .setStats(true);
 
             return true;
         },
