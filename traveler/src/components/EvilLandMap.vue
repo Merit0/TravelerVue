@@ -20,9 +20,9 @@ export default {
     data() {    
         const tilesShown = true;
         const evilLandMap: MapModel = new MapModel()
-        .name("Evil Lands")
-        .numberOfTiles(52)
-        .build();
+            .name("Evil Lands")
+            .numberOfTiles(52)
+            .build();
         
         const heroStore = useHeroStore();
         const hero = heroStore.hero;
