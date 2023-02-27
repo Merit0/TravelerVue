@@ -1,4 +1,4 @@
-interface IHero {
+export interface IHero {
     name: string;
     health: number;
     attack: number;

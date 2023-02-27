@@ -1,3 +1,5 @@
+import { IHero } from "@/abstraction/IHero";
+
 export class HeroModel implements IHero {
 
     name = "";
