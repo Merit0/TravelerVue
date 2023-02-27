@@ -8,7 +8,6 @@ export class HeroModel {
     private heroStats = true;
     private heroKills = 0;
     private id: number;
-    private exp = 0;
 
     constructor() {
         this.id = 0;
@@ -83,10 +82,8 @@ export class HeroModel {
     }
 
     private expirienceCollector(): void {
-        this.exp += 1;
-        if (this.exp === 5) {
+        if ((this.heroKills % 5 === 0)) {
             this.heroAttack += 1;
-            this.exp = 0;
         }
     }
 
@@ -95,6 +92,10 @@ export class HeroModel {
         if (this.heroHealth < 1) {
             this.heroHealth = 0;
         }
+    }
+
+    healthIncreaser() {
+        this.heroHealth += 1;
     }
 
     public build(): HeroModel {

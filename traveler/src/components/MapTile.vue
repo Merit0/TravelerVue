@@ -2,7 +2,6 @@
     <tree-tile :tile="tile" v-model:treeShown="treeTileShown" @click="clearTile(tile)"></tree-tile>
     <enemy-tile :tile="tile" v-model:enemyShown="enemyTileShown" v-on:enemy-tile="hideEnemyTile($event)"></enemy-tile>
     <empty-tile v-model:epmtyTile="emptyTileShown"></empty-tile>
-
 </template>
 
 <script lang="ts">

@@ -25,6 +25,12 @@ export const useHeroStore = defineStore("hero", {
                 .stats(true);
 
             return true;
+        },
+        isAlive(): boolean {
+            return this.hero.getHealth() > 0 ? true : false;
+        },
+        rest() {
+            this.hero.healthIncreaser();
         }
     }
 });

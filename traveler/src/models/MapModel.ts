@@ -25,11 +25,10 @@ export class MapModel {
     }
 
     public generateTiles(): MapModel {
-        // const evilLandTiles = new Array<TileModel>(); 
         for (let i = 0; i < this.tilesNumber; i++) {
             this.mapTiles.push(new TileModel().setId(i));
         }
-        this.mapTiles.forEach(tile => console.log(tile)); //TODO to remove 
+        // this.mapTiles.forEach(tile => console.log(tile)); //TODO to remove 
         return this;
     }
 
