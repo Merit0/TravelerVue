@@ -1,4 +1,3 @@
-interface IDrop extends IGameItem {
-
-    getAmount: () => number;
+export interface IDrop extends IGameItem {
+    name: string;
 }

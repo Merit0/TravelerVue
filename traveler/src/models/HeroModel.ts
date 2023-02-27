@@ -1,15 +1,14 @@
 import { IHero } from "@/abstraction/IHero";
 
 export class HeroModel implements IHero {
-
-    name = "";
-    health = 0;
-    attack = 0;
-    defence = 0;
-    coins = 0;
-    stats = true;
-    kills = 0;
-    id = 0;
+    name: string;
+    health: number;
+    attack: number;
+    defence: number;
+    coins: number;
+    stats: boolean;
+    kills: number;
+    id: number;
 
     public setName(name: string): HeroModel {
         this.name = name;
@@ -92,17 +91,7 @@ export class HeroModel implements IHero {
         }
     }
 
-    healthIncreaser() {
+    public healthIncreaser(): void {
         this.health += 1;
-    }
-
-    public build(): HeroModel {
-        return new HeroModel()
-            .setName(this.name)
-            .setHealth(this.health)
-            .setAttack(this.attack)
-            .setDefence(this.defence)
-            .setCoins(this.coins)
-            .setStats(this.stats);
     }
 }

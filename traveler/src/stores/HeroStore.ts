@@ -5,7 +5,7 @@ import * as Request from '@/api/Requests'
 
 export const useHeroStore = defineStore("hero", {
     state: () => {
-        return { hero: new HeroModel().build() };
+        return { hero: new HeroModel() };
     },
     actions: {
         async getHero() {

@@ -11,7 +11,6 @@
 </template>
 
 <script lang="ts">
-import { HeroModel } from '@/models/HeroModel';
 import { PropType } from 'vue';
 import { IHero } from '../abstraction/IHero';
 

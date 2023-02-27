@@ -40,18 +40,6 @@ export default {
                     this.$emit("enemy-tile", false);
                     return;
                 }
-                if(this.hero.getHealth() < 1) {
-                    console.log("Game Over");
-                    return;
-                }
-                if(this.hero.getHealth() < 1) {
-                    console.log("Game Over");
-                    return;
-                }
-                if(this.hero.getHealth() < 1) {
-                    console.log("Game Over");
-                    return;
-                }
             } else {
                 return console.log("Game Over");
             }
