@@ -43,6 +43,7 @@ export default {
             this.emptyTileShown = true;
         },
         async attackEnemy(tile: TileModel) {
+            this.hero.setTile(tile);
             const enemies = tile.getEnemies();
             if(this.hero.getHealth() > 0) {
                 for(let i=0; i < enemies.length; i++ ) {

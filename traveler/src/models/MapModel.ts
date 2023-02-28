@@ -44,7 +44,7 @@ export class MapModel {
                 tile.addEnemies(createdEnemies);
             }
         })
-        // this.mapTiles.forEach(tile => console.log(tile)); //TODO to remove 
+        this.mapTiles.forEach(tile => console.log(tile)); //TODO to remove 
         return this;
     }
 

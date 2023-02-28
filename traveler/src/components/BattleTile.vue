@@ -1,5 +1,5 @@
 <template>
-    <button class="enemyTile" v-if="enemyShown && enemyAlive"></button>
+    <button class="battleTile" v-if="enemyShown && enemyAlive"></button>
 </template>
 
 <script lang="ts">
@@ -8,13 +8,11 @@ export default {
     props: {
         enemyShown: {
             type: Boolean,
-            default: false,
-            required: true
+            default: false
         },
         enemyAlive: {
             type: Boolean,
-            default: false,
-            required: true
+            default: false
         }
     },
 }

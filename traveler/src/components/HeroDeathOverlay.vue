@@ -1,14 +1,10 @@
 <template>
-    <section>
-        <transition name="fade">
-            <div class="overlay">
-                <div class="overlayContent">
-                    <div class="imgContainer"></div>
-                    <button @click="quitMap()" class="quit">Camp</button>
-                </div>
-            </div>
-        </transition>
-    </section>
+    <div class="overlay">
+        <div class="overlayContent">
+            <div class="imgContainer"></div>
+            <button @click="quitMap()" class="quit">Camp</button>
+        </div>
+    </div>
 </template>
 
 <script lang="ts">
