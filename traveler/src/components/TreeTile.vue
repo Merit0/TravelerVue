@@ -3,15 +3,10 @@
 </template>
 
 <script lang="ts">
-import TileModel from '@/models/TileModel';
 
 export default {
     name: "tree-tile",
     props: {
-        tile: {
-            type: TileModel,
-            required: true
-        },
         treeShown: {
             type: Boolean,
             required: true

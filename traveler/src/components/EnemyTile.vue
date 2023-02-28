@@ -1,54 +1,20 @@
 <template>
-    <button class="enemyTile" @click="attackEnemy(tile)" v-if="enemyShown && enemyAlive"></button>
+    <button class="enemyTile" v-if="enemyShown && enemyAlive"></button>
 </template>
 
 <script lang="ts">
-import TileModel from '@/models/TileModel';
-import { useHeroStore } from '@/stores/HeroStore'
-
 export default {
     name: "enemy-tile",
     props: {
-        tile: {
-            type: TileModel,
-            required: true
-        },
         enemyShown: {
+            type: Boolean,
+            default: false
+        },
+        enemyAlive: {
             type: Boolean,
             default: false
         }
     },
-    data() {
-        const heroStore = useHeroStore();
-        const hero = heroStore.hero;
-        let enemyAlive = true;
-        let emptyTileShown = false;
-            return { hero, enemyAlive, emptyTileShown}
-        },
-    methods: {
-        async attackEnemy(tile: TileModel) {
-            if(this.hero.getHealth() > 0) {
-                tile.getEnemy().takeDamage(this.hero.getAttack()) //TODO can be addded logic who atack first related on speed prop
-                this.hero.takeDamage(tile.getEnemy().getAttack());
-                if(this.hero.getHealth() < 1) {
-                    console.log("Game Over");
-                    this.$emit("player-dead", false);
-                    return;
-                }
-                if(tile.getEnemy().getHealth() <= 0) {
-                    this.hero.addKilled();
-                    this.enemyAlive= false;
-                }
-               
-                if(!this.enemyAlive) {
-                    this.$emit("enemy-tile", false);
-                    return;
-                }
-            } else {
-                return console.log("Game Over");
-            }
-        }
-    }
 }
 </script>
 <style>
