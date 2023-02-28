@@ -2,21 +2,19 @@ import EnemyModel from './EnemyModel';
 export class TileModel {
 
     public id: number;
-    private enemy: EnemyModel;
+    private enemies: EnemyModel[];
     private health: number;
-    private item: boolean;
 
     constructor() {
-        this.id = 0
-        this.item = false;
+        this.id = 0;
     }
 
     public getId(): number {
         return this.id;
     }
 
-    public getEnemy(): EnemyModel {
-        return this.enemy;
+    public getEnemies(): EnemyModel[] {
+        return this.enemies;
     }
 
     public getHealth(): number {
@@ -32,15 +30,8 @@ export class TileModel {
         this.health = health;
     }
 
-    public addEnemy(enemy: EnemyModel): void {
-        this.enemy = enemy;
-        this.setItem();
-    }
-
-    private setItem(): void {
-        if (this.enemy) {
-            this.item == true;
-        }
+    public addEnemies(enemies: EnemyModel[]): void {
+        this.enemies = enemies;
     }
 }
 

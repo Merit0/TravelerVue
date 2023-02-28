@@ -6,13 +6,15 @@
 
 <script lang="ts">
 import MapTile from './MapTile.vue';
+import TileModel from '../models/TileModel';
+import { PropType } from 'vue';
 
 export default {
     name: "map-tiles",
     components: { MapTile },
     props:  {
         mapTiles: {
-            type: Array,
+            type: Array as PropType<TileModel[]>,
             required: true
         }
     }

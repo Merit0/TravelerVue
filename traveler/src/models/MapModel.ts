@@ -36,8 +36,12 @@ export class MapModel {
     public addEnemiesOnTiles(): MapModel {
         this.mapTiles.forEach(tile => {
             const randNumber: number = Math.random();
+            const createdEnemies = new Array<EnemyModel>();
             if (randNumber < 0.2) {
-                tile.addEnemy(new EnemyModel(tile.getId()));
+                for (let i = 0; i < Math.floor(Math.random() * 5) + 1; i++) {
+                    createdEnemies.push(new EnemyModel(tile.getId()))
+                }
+                tile.addEnemies(createdEnemies);
             }
         })
         // this.mapTiles.forEach(tile => console.log(tile)); //TODO to remove 
