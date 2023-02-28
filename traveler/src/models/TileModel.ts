@@ -42,13 +42,6 @@ export class TileModel {
             this.item == true;
         }
     }
-
-    // private generateEnemy() {
-    //     const randNumber: number = Math.random();
-    //     if (randNumber < 0.2) {
-    //         this.addEnemy();
-    //     }
-    // }
 }
 
 export default TileModel;
