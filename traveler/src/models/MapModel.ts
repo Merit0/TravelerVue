@@ -1,4 +1,5 @@
 import TileModel from "./TileModel";
+import EnemyModel from './EnemyModel';
 
 export class MapModel {
     private mapName = "Deafult Name";
@@ -32,11 +33,23 @@ export class MapModel {
         return this;
     }
 
+    public addEnemiesOnTiles(): MapModel {
+        this.mapTiles.forEach(tile => {
+            const randNumber: number = Math.random();
+            if (randNumber < 0.2) {
+                tile.addEnemy(new EnemyModel(tile.getId()));
+            }
+        })
+        // this.mapTiles.forEach(tile => console.log(tile)); //TODO to remove 
+        return this;
+    }
+
     public build(): MapModel {
         return new MapModel()
             .name(this.mapName)
             .numberOfTiles(this.tilesNumber)
-            .generateTiles();
+            .generateTiles()
+            .addEnemiesOnTiles();
     }
 }
 

@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from 'vue'
+import { defineComponent, reactive, onMounted } from 'vue';
 import { useUserStore } from '../stores/UserStore'
 
 
@@ -36,7 +36,9 @@ export default defineComponent({
           form.password = "";
         }
 
+        onMounted(() => userStore.clearErrorMsg());
+
         return {form, onSubmit, userStore}
-    },
+    }
 })
 </script>

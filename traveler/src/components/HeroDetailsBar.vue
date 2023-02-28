@@ -1,23 +1,24 @@
 <template>
     <div class="bar">
         <div class="heroStats">
-            <div class="item">{{ hero.getName() }}</div>
-            <div class="item">Health: {{ hero.getHealth() }}</div>
-            <div class="item">Attack: {{ hero.getAttack() }}</div>
-            <div class="item">Kills: {{ hero.getEnemiesKilled() }}</div>
-            <div class="item">Coins: {{ hero.getCoins() }}</div>
+            <div class="item">{{ hero.name }}</div>
+            <div class="item">Health: {{ hero.health }}</div>
+            <div class="item">Attack: {{ hero.attack }}</div>
+            <div class="item">Kills: {{ hero.kills }}</div>
+            <div class="item">Coins: {{ hero.coins }}</div>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import { HeroModel } from '@/models/HeroModel';
+import { PropType } from 'vue';
+import { IHero } from '../abstraction/IHero';
 
 export default {
     name: "hero-data-bar",
     props: {
         hero: {
-            type: HeroModel,
+            type: Object as PropType<IHero>,
             required: true
         }
     }
