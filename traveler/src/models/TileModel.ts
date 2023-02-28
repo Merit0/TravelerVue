@@ -1,22 +1,21 @@
+import EnemyModel from './EnemyModel';
 export class TileModel {
 
     public id: number;
-    private enemy = false;
+    private enemy: EnemyModel;
     private health: number;
     private item: boolean;
 
     constructor() {
         this.id = 0
-        this.health = 0;
         this.item = false;
-        this.generateEnemy();
     }
 
     public getId(): number {
         return this.id;
     }
 
-    public getEnemy(): boolean {
+    public getEnemy(): EnemyModel {
         return this.enemy;
     }
 
@@ -33,8 +32,8 @@ export class TileModel {
         this.health = health;
     }
 
-    public addEnemy(): void {
-        this.enemy = true;
+    public addEnemy(enemy: EnemyModel): void {
+        this.enemy = enemy;
         this.setItem();
     }
 
@@ -44,12 +43,12 @@ export class TileModel {
         }
     }
 
-    private generateEnemy() {
-        const randNumber: number = Math.random();
-        if (randNumber < 0.2) {
-            this.addEnemy();
-        }
-    }
+    // private generateEnemy() {
+    //     const randNumber: number = Math.random();
+    //     if (randNumber < 0.2) {
+    //         this.addEnemy();
+    //     }
+    // }
 }
 
 export default TileModel;

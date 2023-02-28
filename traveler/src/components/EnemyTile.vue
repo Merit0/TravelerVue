@@ -26,16 +26,20 @@ export default {
             return { hero, enemyAlive, emptyTileShown}
         },
     methods: {
-        async attackEnemy(tile: TileModel) {  //TODO tile needs to contain Enemy obj for buttle
+        async attackEnemy(tile: TileModel) {
             if(this.hero.getHealth() > 0) {
-                this.hero.takeDamage(5);
-                this.hero.addKilled();
+                tile.getEnemy().takeDamage(this.hero.getAttack()) //TODO can be addded logic who atack first related on speed prop
+                this.hero.takeDamage(tile.getEnemy().getAttack());
                 if(this.hero.getHealth() < 1) {
                     console.log("Game Over");
                     this.$emit("player-dead", false);
                     return;
                 }
-                this.enemyAlive= false;
+                if(tile.getEnemy().getHealth() <= 0) {
+                    this.hero.addKilled();
+                    this.enemyAlive= false;
+                }
+               
                 if(!this.enemyAlive) {
                     this.$emit("enemy-tile", false);
                     return;
