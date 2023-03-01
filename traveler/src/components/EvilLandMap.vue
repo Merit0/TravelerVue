@@ -1,10 +1,9 @@
 <template>
     <section class="page">
-        <HeroDetailsBar :hero="hero" v-on:player-dead="hideTiles($event)"></HeroDetailsBar>
+        <HeroDetailsBar :hero="hero"></HeroDetailsBar>
         <Tiles :mapTiles="evilLandMap.getTiles()" v-if="tilesShown && heroStore.isAlive()"></Tiles>
         <HeroDeathOverlay v-if="!heroStore.isAlive()"></HeroDeathOverlay>
         <button @click="quitMap()" class="quit">Escape</button> 
-        <Battlefield v-if="heroStore.inBattle()"></Battlefield> 
     </section>
 </template>
 
@@ -12,13 +11,12 @@
 import Tiles from './Tiles.vue';
 import HeroDetailsBar from './HeroDetailsBar.vue';
 import HeroDeathOverlay from '@/components/HeroDeathOverlay.vue'
-import Battlefield from './Battlefield.vue';
 import MapModel from '@/models/MapModel'
 import { useHeroStore } from '@/stores/HeroStore'
 import router from '@/router';
 
 export default {
-    components: { Tiles, HeroDetailsBar, HeroDeathOverlay, Battlefield },
+    components: { Tiles, HeroDetailsBar, HeroDeathOverlay },
     data() {    
         const tilesShown = true;
         const evilLandMap: MapModel = new MapModel()
@@ -34,10 +32,6 @@ export default {
     methods: {
         async quitMap() {
             router.push("/");
-        },
-        async hideTiles(tilesStatus: boolean) {
-            console.log("hide");
-            this.tilesShown = !tilesStatus;
         }
     }
 }

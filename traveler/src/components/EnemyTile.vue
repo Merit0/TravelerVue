@@ -1,8 +1,9 @@
 <template>
-    <button class="enemyTile" v-if="enemyShown && enemyAlive"></button>
+    <button class="enemyTile" v-if="enemyShown && enemyAlive" @click="$emit('showBattlefield', true)"></button> 
 </template>
 
 <script lang="ts">
+
 export default {
     name: "enemy-tile",
     props: {
@@ -16,7 +17,7 @@ export default {
             default: false,
             required: true
         }
-    },
+    }
 }
 </script>
 <style>
