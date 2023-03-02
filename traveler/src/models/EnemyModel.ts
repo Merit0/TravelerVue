@@ -18,7 +18,8 @@ export default class EnemyModel implements IEnemy {
 
     constructor(id: number) {
         this.id = id;
-        this.type = EnemyType.COMMON;
+        this.type = EnemyType.WARRIOR;
+        this.name = this.type + " Orc" + this.id;
         this.defence = 0;
         this.generateHealth();
         this.generateAttack();
