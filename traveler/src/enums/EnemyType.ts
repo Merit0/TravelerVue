@@ -1,5 +1,5 @@
 export enum EnemyType {
-    BOSS,
-    CHEEF,
-    COMMON
+    BOSS = "Boss",
+    CHEEF = "Cheef",
+    WARRIOR = "Warrior"
 }

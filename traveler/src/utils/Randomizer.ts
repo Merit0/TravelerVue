@@ -11,6 +11,6 @@ export class Randomizer {
         const keys: string[] = Object.keys(EnemyType).filter(k => typeof EnemyType[k as any] === "number");
         const index = this.getRandomInt(keys.length);
 
-        return EnemyType.COMMON;
+        return EnemyType.WARRIOR;
     }
 }

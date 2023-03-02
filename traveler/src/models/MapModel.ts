@@ -39,7 +39,7 @@ export class MapModel {
             const createdEnemies = new Array<EnemyModel>();
             if (randNumber < 0.2) {
                 for (let i = 0; i < Math.floor(Math.random() * 5) + 1; i++) {
-                    createdEnemies.push(new EnemyModel(tile.getId()))
+                    createdEnemies.push(new EnemyModel(tile.getId() + i))
                 }
                 tile.addEnemies(createdEnemies);
             }

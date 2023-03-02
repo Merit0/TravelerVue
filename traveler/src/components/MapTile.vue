@@ -1,8 +1,8 @@
 <template>
     <tree-tile :treeShown="treeTileShown"  @click="clearTile(tile)"></tree-tile>
-    <enemy-tile :enemyShown = "enemyTileShown" :enemyAlive="enemyAlive" @click="attackEnemy(tile)" @showBattlefield="isBattle($event)"></enemy-tile>
+    <enemy-tile :enemyShown = "enemyTileShown" :enemyAlive="enemyAlive" @showBattlefield="isBattle($event)"></enemy-tile>
     <empty-tile v-model:epmtyTile="emptyTileShown"></empty-tile> 
-    <Battlefield :showOverlay="showBattlefield" :tile="tile" @isBattle="isBattle($event)"></Battlefield>
+    <Battlefield :showOverlay="showBattlefield" :tile="tile" @isBattle="isBattle($event)" @emptyTile="hideEnemyTile($event)"></Battlefield>
 </template>
 
 <script lang="ts">
@@ -45,32 +45,8 @@ export default {
         async hideEnemyTile(enemyTileStatus: boolean) {
             this.enemyTileShown = enemyTileStatus;
             this.emptyTileShown = true;
+            this.isBattle(enemyTileStatus);
         },
-        async attackEnemy(tile: TileModel) {
-            this.hero.setTile(tile);
-            const enemies = tile.getEnemies();
-            if(this.hero.getHealth() > 0) {
-                for(let i=0; i < enemies.length; i++ ) {
-                    enemies[i].takeDamage(this.hero.getAttack());
-                    if(enemies[i].getHealth() <= 0) {
-                        this.hero.addKilled();
-                        enemies.splice(i, 1);
-                    } else{
-                        this.hero.takeDamage(enemies[i].getAttack());
-                    }
-                    if(!enemies.length) {
-                        this.enemyAlive= false;
-                    }
-                }
-                if(!this.enemyAlive) {
-                    this.emptyTileShown = true;
-                    return;
-                }
-            } else {
-                return console.log("Game Over");
-            }
-        },
-        
         async isBattle(battlefieldStatus: boolean) {
             this.showBattlefield = battlefieldStatus;
         }
