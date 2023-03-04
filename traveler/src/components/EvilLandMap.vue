@@ -1,7 +1,7 @@
 <template>
     <section class="page">
         <HeroDetailsBar :hero="hero"></HeroDetailsBar>
-        <Tiles :mapTiles="evilLandMap.getTiles()" v-if="tilesShown && heroStore.isAlive()"></Tiles>
+        <Tiles :mapTiles="tiles" v-if="tilesShown && heroStore.isAlive()"></Tiles>
         <HeroDeathOverlay v-if="!heroStore.isAlive()"></HeroDeathOverlay>
         <button @click="quitMap()" class="quit">Escape</button> 
     </section>
@@ -11,23 +11,21 @@
 import Tiles from './Tiles.vue';
 import HeroDetailsBar from './HeroDetailsBar.vue';
 import HeroDeathOverlay from '@/components/HeroDeathOverlay.vue'
-import MapModel from '@/models/MapModel'
 import { useHeroStore } from '@/stores/HeroStore'
 import router from '@/router';
+import { useMapStore } from '../stores/MapStore';
 
 export default {
     components: { Tiles, HeroDetailsBar, HeroDeathOverlay },
     data() {    
         const tilesShown = true;
-        const evilLandMap: MapModel = new MapModel()
-            .name("Evil Lands")
-            .numberOfTiles(52)
-            .build();
-        
+        const mapStore = useMapStore();
+        mapStore.generateTiles(52);
+        const tiles = mapStore.tiles;
         const heroStore = useHeroStore();
         const hero = heroStore.hero;
 
-            return { evilLandMap, hero, tilesShown, heroStore }
+            return { tiles, hero, tilesShown, heroStore, mapStore }
         },
     methods: {
         async quitMap() {

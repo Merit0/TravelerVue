@@ -12,24 +12,24 @@
           <enemy-tile
             :enemyShown="enemyTileShown"
             :enemyAlive="enemyAlive"
-            v-for="enemy in tile.getEnemies()" :key="enemy.getId()">
+            v-for="enemy in tile.enemies" :key="enemy.id">
           </enemy-tile>
         </div>
       </div>
       <div class="battleReporter">
         <h1 style="font-size: 18px; margin-left: 550px; color:maroon">Battle:</h1>
-        <div v-for="enemy in tile.getEnemies()" :key="enemy.getId()">
+        <div v-for="enemy in tile.enemies" :key="enemy.id">
           <p v-if="isAttacked" style="font-size: 15px;">
             =>
             <span class="pHero">{{ hero.getName() }}</span>
               hitted enemy by {{ hero.getAttack() }}
-            <span class="pEnemy">{{ enemy.getName() }}'s</span>
+            <span class="pEnemy">{{ enemy.name }}'s</span>
               [health:
-            <span>{{ enemy.getHealth() }}]. ---  </span>
-            <span class="pEnemy">{{ enemy.getName() }}</span>
+            <span>{{ enemy.health }}]. ---  </span>
+            <span class="pEnemy">{{ enemy.name }}</span>
               hitted 
               <span class="pHero">{{ hero.getName() }}</span>
-              by {{ enemy.getAttack() }}.
+              by {{ enemy.attack }}.
           </p>
         </div>
       </div>
@@ -68,22 +68,22 @@ export default {
   methods: {
     async attackEnemy(tile: TileModel) {
             this.isAttacked = true; 
-            const enemies = tile.getEnemies();
+            const enemies = tile.enemies;
             if(this.hero.getHealth() > 0) {
                 for(let i=0; i < enemies.length; i++ ) {
-                    enemies[i].takeDamage(this.hero.getAttack());
-                    if(enemies[i].getHealth() <= 0) {
+                    enemies[i].health -= this.hero.getAttack();
+                    if(enemies[i].health <= 0) {
                         this.hero.addKilled();
-                        enemies.splice(i, 1);
+                        const enemyIndex = enemies.findIndex(e => e.id === i);
+                        enemies.splice(enemyIndex, 1);
                     } else{
-                        this.hero.takeDamage(enemies[i].getAttack());
+                        this.hero.takeDamage(enemies[i].attack);
                     }
                     if(!enemies.length) {
                         this.enemyAlive= false;
                     }
                 }
                 if(!this.enemyAlive && !enemies.length) {
-                    this.emptyTileShown = true;
                     this.$emit("emptyTile", false);
                     return;
                 }
