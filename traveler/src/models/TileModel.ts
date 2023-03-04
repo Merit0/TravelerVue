@@ -1,12 +1,15 @@
 import EnemyModel from './EnemyModel';
-export class TileModel {
+import { ITile } from '../stores/MapStore';
 
-    public id: number;
-    private enemies: EnemyModel[];
-    private health: number;
+export class TileModel implements ITile {
 
-    constructor() {
-        this.id = 0;
+    id: number;
+    enemies: EnemyModel[];
+    item: IGameItem;
+    isTree: boolean;
+
+    constructor(id: number) {
+        this.id = id;
     }
 
     public getId(): number {
@@ -17,8 +20,8 @@ export class TileModel {
         return this.enemies;
     }
 
-    public getHealth(): number {
-        return this.health;
+    public isATree(): boolean {
+        return this.isTree;
     }
 
     public setId(id: number): TileModel {
@@ -26,12 +29,12 @@ export class TileModel {
         return this;
     }
 
-    public setHealth(health: number): void {
-        this.health = health;
+    public setEnemies(enemies: EnemyModel[]): void {
+        this.enemies = enemies;
     }
 
-    public addEnemies(enemies: EnemyModel[]): void {
-        this.enemies = enemies;
+    public setIsATree(status: boolean): void {
+        this.isTree = status;
     }
 }
 

@@ -27,7 +27,7 @@ export class MapModel {
 
     public generateTiles(): MapModel {
         for (let i = 0; i < this.tilesNumber; i++) {
-            this.mapTiles.push(new TileModel().setId(i));
+            this.mapTiles.push(new TileModel(i).setId(i));
         }
         // this.mapTiles.forEach(tile => console.log(tile)); //TODO to remove 
         return this;
@@ -41,7 +41,7 @@ export class MapModel {
                 for (let i = 0; i < Math.floor(Math.random() * 5) + 1; i++) {
                     createdEnemies.push(new EnemyModel(tile.getId() + i))
                 }
-                tile.addEnemies(createdEnemies);
+                tile.setEnemies(createdEnemies);
             }
         })
         this.mapTiles.forEach(tile => console.log(tile)); //TODO to remove 
