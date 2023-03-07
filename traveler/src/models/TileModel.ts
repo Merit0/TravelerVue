@@ -1,12 +1,14 @@
 import EnemyModel from './EnemyModel';
 import { ITile } from '../stores/MapStore';
+import { HealPortionModel } from './HealPortionModel';
 
 export class TileModel implements ITile {
 
     id: number;
     enemies: EnemyModel[];
-    item: IGameItem;
+    item: HealPortionModel;
     isTree: boolean;
+    isEmpty: boolean;
 
     constructor(id: number) {
         this.id = id;
@@ -16,8 +18,8 @@ export class TileModel implements ITile {
         return this.id;
     }
 
-    public getEnemies(): EnemyModel[] {
-        return this.enemies;
+    public getItem(): HealPortionModel {
+        return this.item;
     }
 
     public isATree(): boolean {
@@ -31,6 +33,10 @@ export class TileModel implements ITile {
 
     public setEnemies(enemies: EnemyModel[]): void {
         this.enemies = enemies;
+    }
+
+    public setItem(item: HealPortionModel): void {
+        this.item = item;
     }
 
     public setIsATree(status: boolean): void {

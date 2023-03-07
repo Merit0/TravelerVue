@@ -1,11 +1,13 @@
+import { HealPortion } from './../enums/HealPortion';
 import { defineStore, storeToRefs } from "pinia";
 import TileModel from "@/models/TileModel";
 import EnemyModel from "@/models/EnemyModel";
+import { HealPortionModel } from "@/models/HealPortionModel";
 
 export interface ITile {
     id: number;
     enemies: EnemyModel[];
-    item: IGameItem;
+    item: HealPortionModel;
     isTree: boolean;
 }
 
@@ -33,6 +35,10 @@ export const useMapStore = defineStore("map", {
                     const tile = new TileModel(i);
                     tile.setIsATree(true);
                     tile.setEnemies(this.generateEnemies(i));
+                    if (tile.enemies.length === 0) {
+                        tile.setItem(this.generateItem());
+                        tile.isEmpty = false;
+                    }
                     this.tiles.push(tile);
                 }
             }
@@ -46,6 +52,13 @@ export const useMapStore = defineStore("map", {
                 }
             }
             return createdEnemies;
+        },
+
+        generateItem(): HealPortionModel {
+            const randNumber: number = Math.random();
+            if (randNumber < 0.5) {
+                return new HealPortionModel(HealPortion.SMALL);
+            }
         }
     }
 });

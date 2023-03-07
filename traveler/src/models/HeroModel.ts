@@ -3,7 +3,8 @@ import TileModel from './TileModel';
 
 export class HeroModel implements IHero {
     name: string;
-    health: number;
+    currentHealth: number;
+    maxHealth: number;
     attack: number;
     defence: number;
     coins: number;
@@ -12,13 +13,22 @@ export class HeroModel implements IHero {
     tile: TileModel;
     id: number;
 
+    constructor() {
+        this.maxHealth = 100;
+    }
+
     public setName(name: string): HeroModel {
         this.name = name;
         return this;
     }
 
+    public setMaxHealth(amount: number): HeroModel {
+        this.maxHealth = amount;
+        return this;
+    }
+
     public setHealth(health: number): HeroModel {
-        this.health = health;
+        this.currentHealth = health;
         return this;
     }
 
@@ -57,7 +67,7 @@ export class HeroModel implements IHero {
     }
 
     public getHealth(): number {
-        return this.health;
+        return this.currentHealth;
     }
 
     public getAttack(): number {
@@ -96,13 +106,13 @@ export class HeroModel implements IHero {
     }
 
     public takeDamage(damage: number): void {
-        this.health -= damage;
-        if (this.health < 1) {
-            this.health = 0;
+        this.currentHealth -= damage;
+        if (this.currentHealth < 1) {
+            this.currentHealth = 0;
         }
     }
 
     public healthIncreaser(): void {
-        this.health += 1;
+        this.currentHealth += 1;
     }
 }
