@@ -14,13 +14,16 @@ import HeroDeathOverlay from '@/components/HeroDeathOverlay.vue'
 import { useHeroStore } from '@/stores/HeroStore'
 import router from '@/router';
 import { useMapStore } from '../stores/MapStore';
+import MapModel from '../models/MapModel';
+import { MapProvider } from '../providers/MapProvider';
 
 export default {
     components: { Tiles, HeroDetailsBar, HeroDeathOverlay },
     data() {    
         const tilesShown = true;
         const mapStore = useMapStore();
-        mapStore.generateTiles(52);
+        const evilLand: MapModel = MapProvider.getEvilLand();
+        mapStore.buildMap(evilLand);
         const tiles = mapStore.tiles;
         const heroStore = useHeroStore();
         const hero = heroStore.hero;

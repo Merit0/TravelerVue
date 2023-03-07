@@ -13,4 +13,16 @@ export class Randomizer {
 
         return EnemyType.WARRIOR;
     }
+
+    static getChance(percentage: number): boolean {
+        const randNumber: number = Math.floor(Math.random() * 100);
+        const val = Math.floor(Math.random() * 100) - percentage;
+        const min = val < 0 ? 0 : val;
+        const max = min + percentage
+        console.log(min + "(min)" + " < " + randNumber + " " + max + "(max)");
+        if (randNumber > min && randNumber < max) {
+            return true;
+        }
+        return false;
+    }
 }

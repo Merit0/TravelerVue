@@ -1,59 +1,37 @@
-import TileModel from "./TileModel";
-import EnemyModel from './EnemyModel';
+import { MapComplexity } from "@/enums/MapComplexity";
 
 export class MapModel {
-    private mapName = "Deafult Name";
-    private tilesNumber = 52;
+
+    private mapName: string;
+    private tilesNumber: number;
     private id: number;
-    private mapTiles: TileModel[] = new Array<TileModel>();
+    private complexity: MapComplexity
 
     constructor() {
         this.id = 1;
     }
 
-    public name(name: string): MapModel {
+    public setMapName(name: string): MapModel {
         this.mapName = name;
         return this;
     }
 
-    public numberOfTiles(amount: number): MapModel {
-        this.tilesNumber = amount;
+    public setNumberOfTiles(numberOfTiles: number): MapModel {
+        this.tilesNumber = numberOfTiles;
         return this;
     }
 
-    public getTiles(): TileModel[] {
-        return this.mapTiles;
-    }
-
-    public generateTiles(): MapModel {
-        for (let i = 0; i < this.tilesNumber; i++) {
-            this.mapTiles.push(new TileModel(i).setId(i));
-        }
-        // this.mapTiles.forEach(tile => console.log(tile)); //TODO to remove 
+    public setComplexity(complexity: MapComplexity): MapModel {
+        this.complexity = complexity;
         return this;
     }
 
-    public addEnemiesOnTiles(): MapModel {
-        this.mapTiles.forEach(tile => {
-            const randNumber: number = Math.random();
-            const createdEnemies = new Array<EnemyModel>();
-            if (randNumber < 0.2) {
-                for (let i = 0; i < Math.floor(Math.random() * 5) + 1; i++) {
-                    createdEnemies.push(new EnemyModel(tile.getId() + i))
-                }
-                tile.setEnemies(createdEnemies);
-            }
-        })
-        this.mapTiles.forEach(tile => console.log(tile)); //TODO to remove 
-        return this;
+    public getName(): string {
+        return this.mapName;
     }
 
-    public build(): MapModel {
-        return new MapModel()
-            .name(this.mapName)
-            .numberOfTiles(this.tilesNumber)
-            .generateTiles()
-            .addEnemiesOnTiles();
+    public getTilesNumber(): number {
+        return this.tilesNumber;
     }
 }
 

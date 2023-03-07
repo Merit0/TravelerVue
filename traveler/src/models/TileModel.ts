@@ -1,11 +1,17 @@
 import EnemyModel from './EnemyModel';
-import { ITile } from '../stores/MapStore';
 import { HealPortionModel } from './HealPortionModel';
+
+export interface ITile {
+    id: number;
+    enemies: EnemyModel[];
+    item: HealPortionModel;
+    isTree: boolean;
+}
 
 export class TileModel implements ITile {
 
     id: number;
-    enemies: EnemyModel[];
+    enemies: EnemyModel[] = [];
     item: HealPortionModel;
     isTree: boolean;
     isEmpty: boolean;
