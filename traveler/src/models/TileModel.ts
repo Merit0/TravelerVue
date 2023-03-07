@@ -6,6 +6,7 @@ export interface ITile {
     enemies: EnemyModel[];
     item: HealPortionModel;
     isTree: boolean;
+    isEmpty: boolean;
 }
 
 export class TileModel implements ITile {
@@ -28,6 +29,10 @@ export class TileModel implements ITile {
         return this.item;
     }
 
+    public getIsEmpty(): boolean {
+        return this.isEmpty;
+    }
+
     public isATree(): boolean {
         return this.isTree;
     }
@@ -47,6 +52,10 @@ export class TileModel implements ITile {
 
     public setIsATree(status: boolean): void {
         this.isTree = status;
+    }
+
+    public setIsEmpty(status: boolean): void {
+        this.isEmpty = status;
     }
 }
 

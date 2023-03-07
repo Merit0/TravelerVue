@@ -1,9 +1,9 @@
 <template>
-    <tree-tile :treeShown="tile.isTree"  @click="clearTile(tile)"></tree-tile>
+    <tree-tile :tile="tile"></tree-tile>
     <enemy-tile :enemyShown = "(!tile.isTree) && (tile.enemies.length > 0)" :enemyAlive="enemyAlive" @showBattlefield="isBattle($event)"></enemy-tile>
-    <empty-tile :epmtyTile="(!tile.isTree) && (tile.enemies.length === 0) && (!tile.item)"></empty-tile> 
-    <heal-portion-tile :tile="tile" v-if="(!tile.isTree) && (tile.enemies.length === 0) && (tile.item)"></heal-portion-tile>
-    <Battlefield :showOverlay="showBattlefield" :tile="tile" @isBattle="isBattle($event)" @emptyTile="hideEnemyTile($event)"></Battlefield>
+    <empty-tile :epmtyTile="tile.isEmpty"></empty-tile>
+    <heal-portion-tile :tile="tile" ></heal-portion-tile>
+    <Battlefield :showOverlay="showBattlefield" :tile="tile" @isBattle="isBattle($event)" @emptyTile="hideEnemyTile($event, tile)"></Battlefield>
 </template>
 
 <script lang="ts">
@@ -33,13 +33,11 @@ export default {
             return { enemyAlive, hero, showBattlefield }
         },
     methods: {
-        async clearTile(tile: TileModel) {
-            tile.isTree = false;
-        },
-        async hideEnemyTile(enemyTileStatus: boolean) {
+        async hideEnemyTile(enemyTileStatus: boolean, tile: TileModel) {
             this.enemyTileShown = enemyTileStatus;
-            this.emptyTileShown = true;
             this.isBattle(enemyTileStatus);
+            this.emptyTileShown = true;
+            tile.isEmpty = true;
         },
         async isBattle(battlefieldStatus: boolean) {
             this.showBattlefield = battlefieldStatus;

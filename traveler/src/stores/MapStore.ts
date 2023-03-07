@@ -11,7 +11,8 @@ export const useMapStore = defineStore("map", {
         return {
             mapName: "",
             tiles: [],
-            tile: null
+            tile: null,
+            tilesCleared: 0
         };
     },
 
@@ -21,7 +22,8 @@ export const useMapStore = defineStore("map", {
             for (let i = 0; i < state.tiles.length; i++) {
                 console.log(state.tiles[i]);
             }
-        }
+        },
+        clearTile: (state) => state.tilesCleared += 1
     },
     actions: {
         async buildMap(map: MapModel) {
