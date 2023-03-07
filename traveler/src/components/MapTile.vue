@@ -1,7 +1,8 @@
 <template>
     <tree-tile :treeShown="tile.isTree"  @click="clearTile(tile)"></tree-tile>
     <enemy-tile :enemyShown = "(!tile.isTree) && (tile.enemies.length > 0)" :enemyAlive="enemyAlive" @showBattlefield="isBattle($event)"></enemy-tile>
-    <empty-tile :epmtyTile="(!tile.isTree) && (tile.enemies.length === 0)"></empty-tile> 
+    <empty-tile :epmtyTile="(!tile.isTree) && (tile.enemies.length === 0) && (!tile.item)"></empty-tile> 
+    <heal-portion-tile :tile="tile" v-if="(!tile.isTree) && (tile.enemies.length === 0) && (tile.item)"></heal-portion-tile>
     <Battlefield :showOverlay="showBattlefield" :tile="tile" @isBattle="isBattle($event)" @emptyTile="hideEnemyTile($event)"></Battlefield>
 </template>
 
@@ -10,6 +11,7 @@ import TileModel from '@/models/TileModel';
 import EnemyTile from '@/components/EnemyTile.vue';
 import TreeTile from '@/components/TreeTile.vue'
 import EmptyTile from '@/components/EmptyTile.vue';
+import HealPortionTile from './HealPortionTile.vue';
 import Battlefield from '@/components/Battlefield.vue';
 import { useHeroStore } from '@/stores/HeroStore'
 
@@ -22,7 +24,7 @@ export default {
             required: true
         }
     },
-    components: { EnemyTile, TreeTile, EmptyTile, Battlefield },
+    components: { EnemyTile, TreeTile, EmptyTile, Battlefield, HealPortionTile },
     data() {
         const heroStore = useHeroStore();
         const hero = heroStore.hero;

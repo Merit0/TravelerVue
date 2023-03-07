@@ -2,7 +2,7 @@
     <div class="bar">
         <div class="heroStats">
             <div class="item">{{ hero.name }}</div>
-            <div class="item">Health: {{ hero.health }}</div>
+            <div class="item">Health: {{ hero.currentHealth }}</div>
             <div class="item">Attack: {{ hero.attack }}</div>
             <div class="item">Kills: {{ hero.kills }}</div>
             <div class="item">Coins: {{ hero.coins }}</div>

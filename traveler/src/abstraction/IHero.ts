@@ -1,6 +1,6 @@
 export interface IHero {
     name: string;
-    health: number;
+    currentHealth: number;
     attack: number;
     defence: number;
     coins: number;

@@ -34,6 +34,9 @@ export const useHeroStore = defineStore("hero", {
         },
         rest() {
             this.hero.healthIncreaser();
+        },
+        healHero(health: number) {
+            this.hero.health += health;
         }
     }
 });
