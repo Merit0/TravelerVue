@@ -1,15 +1,16 @@
 <template>
-    <button class="enemyTile" v-if="enemyShown && enemyAlive" @click="$emit('showBattlefield', true)"></button> 
+    <button class="enemyTile" v-if="(!tile.isTree) && tile.enemies.length != 0 && enemyAlive" :enemyAlive="enemyAlive" @click="$emit('showBattlefield', true)"></button> 
 </template>
 
 <script lang="ts">
+import TileModel from '@/models/TileModel';
+
 
 export default {
     name: "enemy-tile",
     props: {
-        enemyShown: {
-            type: Boolean,
-            default: false,
+        tile: {
+            type: TileModel,
             required: true
         },
         enemyAlive: {

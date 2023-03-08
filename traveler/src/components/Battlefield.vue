@@ -9,7 +9,7 @@
             <button class="attackButton activeBtn" @click="attackEnemy(tile)"></button>
         </div>
         <div class="enemySide">
-          <enemy-tile
+          <enemy-tile :tile="tile"
             :enemyShown="enemyTileShown"
             :enemyAlive="enemyAlive"
             v-for="enemy in tile.enemies" :key="enemy.id">
@@ -80,11 +80,12 @@ export default {
                         this.hero.takeDamage(enemies[i].attack);
                     }
                     if(!enemies.length) {
-                        this.enemyAlive= false;
+                        this.enemyAlive = false;
                     }
                 }
                 if(!this.enemyAlive && !enemies.length) {
-                    this.$emit("emptyTile", false);
+                  tile.isEmpty = true;
+                  this.$emit("isBattle", false);
                     return;
                 }
             }

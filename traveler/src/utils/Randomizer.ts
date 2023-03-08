@@ -19,7 +19,6 @@ export class Randomizer {
         const val = Math.floor(Math.random() * 100) - percentage;
         const min = val < 0 ? 0 : val;
         const max = min + percentage
-        console.log(min + "(min)" + " < " + randNumber + " " + max + "(max)");
         if (randNumber > min && randNumber < max) {
             return true;
         }
