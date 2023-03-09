@@ -1,6 +1,11 @@
 <template>
     <div class="evilLandMap" v-if="!isEmpty">
-        <button @click="startDungeon()" class="buttonArea"></button>
+        <button @click="startDungeon()" class="buttonMap" :disabled="mapStore.isMapCleared"></button>
+        <div class="resetBtnBackground" v-if="mapStore.isMapCleared">
+            <div class="resetImg">
+                <button class="btnReset" @click="resetMap()"></button>
+            </div>
+        </div>
     </div>
     <EmptyMapSlot v-if="isEmpty"></EmptyMapSlot>
 </template>
@@ -8,6 +13,7 @@
 <script lang="ts">
 import router from '@/router/index';
 import EmptyMapSlot from './EmptyMapSlot.vue';
+import { useMapStore } from '../stores/MapStore';
 
 export default {
     name: "dungeon-tile",
@@ -18,9 +24,22 @@ export default {
             required: true
         }
     },
+    data() {
+        const mapStore = useMapStore();
+        let isDisabled = false;
+
+        return { isDisabled, mapStore };
+    },
     methods: {
         async startDungeon() {
             router.push("/evilLand");
+        },
+        async resetMap() {
+            if(JSON.parse(localStorage.getItem("map"))) {
+                console.log("reset map");
+                this.mapStore.resetMap;
+            }
+
         }
     }
 }
@@ -28,17 +47,44 @@ export default {
 
 <style>
 .evilLandMap {
-    width: 200px;
-    height: 200px;
+    width: 190px;
+    height: 190px;
     background-image: url('../assets/images/dungeons/homeButtons/fightFireBtn-removebg-preview.png');
-    background-size: 100% 100%;
+    background-size: 100%;
+    display: flex;
+    align-items:center;
+    justify-content: center;
+    border-radius:30px;
 }
-.buttonArea {
+.buttonMap {
     width: 160px;
     height: 170px;
     background: transparent;
     margin-top: 10%;
     margin-left: 11%;
     border: none;
+}
+.resetBtnBackground {
+    width:200px;
+    height: 200px;
+    background-color: rgba(168, 25, 0, 0.438);
+    position: fixed;
+    border-radius:30px;
+    display: flex;
+    justify-content: center;
+    align-items:center;
+}
+.resetImg {
+    width:65px;
+    height: 65px;
+    background-image: url('../assets/images/dungeons/mapButtons/SeekPng.com_refresh-icon-png_2047982.png');
+    background-size: 100%;
+}
+.btnReset {
+    width:65px;
+    height: 65px;
+    border:none;
+    border-radius: 100%;
+    background:none;
 }
 </style>
