@@ -11,4 +11,5 @@ export interface IEnemy {
     id: number;
     type: EnemyType;
     chest: DropChestModel;
+    imgPath: string
 }

@@ -11,7 +11,8 @@ export const useMapStore = defineStore("map", {
         return {
             mapName: "",
             tiles: [],
-            tile: null
+            tile: null,
+            isCleared: false
         };
     },
 
@@ -21,14 +22,24 @@ export const useMapStore = defineStore("map", {
             for (let i = 0; i < state.tiles.length; i++) {
                 console.log(state.tiles[i]);
             }
+        },
+        isMapCleared: (state) => {
+            console.log(state.isCleared);
+            return state.tiles.filter(tile => tile.isEmpty == true).length === state.tiles.length && state.tiles.length !== 0;
+        },
+        resetMap: (state) => {
+            state.mapName = "";
+            state.tiles = [];
+            state.isCleared = true;
         }
     },
     actions: {
         async buildMap(map: MapModel) {
-            if (!JSON.parse(localStorage.getItem("map"))) {
+            if (!JSON.parse(localStorage.getItem("map")) || this.isCleared) {
                 this.mapName = map.getName();
                 this.generateTiles(map.getTilesNumber());
                 this.addEnemies();
+                this.isCleared = false;
             }
         },
 

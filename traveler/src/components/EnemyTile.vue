@@ -1,15 +1,16 @@
 <template>
-    <button class="enemyTile" v-if="enemyShown && enemyAlive" @click="$emit('showBattlefield', true)"></button> 
+    <button class="enemyTile" :style="{ backgroundImage: 'url(' + require('@/assets/images/' + tile.enemies[0].imgPath) + ')'}" v-if="(!tile.isTree) && tile.enemies.length != 0 && enemyAlive" :enemyAlive="enemyAlive" @click="$emit('showBattlefield', true)"></button> 
 </template>
 
 <script lang="ts">
+import TileModel from '@/models/TileModel';
+
 
 export default {
     name: "enemy-tile",
     props: {
-        enemyShown: {
-            type: Boolean,
-            default: false,
+        tile: {
+            type: TileModel,
             required: true
         },
         enemyAlive: {
@@ -30,7 +31,6 @@ export default {
     margin-left: 2%;
     display: inline-flex;
     align-items: flex-end;
-    background-image: url('../assets/images/enemies/twoEnemies.png');
     background-size: 100% 100%;
 }
 </style>

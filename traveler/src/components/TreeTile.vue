@@ -1,15 +1,25 @@
 <template>
-    <button v-if="treeShown" class="treeTile"></button>
+    <button v-if="tile.isTree" class="treeTile" @click="cutTree(tile)"></button>
 </template>
 
 <script lang="ts">
+import TileModel from '@/models/TileModel';
+
 
 export default {
     name: "tree-tile",
     props: {
-        treeShown: {
-            type: Boolean,
+        tile: {
+            type: TileModel,
             required: true
+        }
+    },
+    methods: {
+        async cutTree(tile: TileModel) {
+            tile.isTree = false;
+            if(tile.enemies.length === 0 && !tile.item) {
+                tile.isEmpty = true;
+            }
         }
     }
 }

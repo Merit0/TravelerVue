@@ -2,12 +2,14 @@ export type User = { name: string; username: string, loggedIn: boolean, id: numb
 export type UserList = Array<User & { password: string }>
 export type Hero = {
     name: string,
-    health: number,
+    currentHealth: number,
+    maxHealth: number,
     attack: number,
     defense: number,
     coins: number,
     kills: number,
     available: boolean,
+    stats: boolean,
 }
 export type HeroList = Array<Hero & { id: number }>
 

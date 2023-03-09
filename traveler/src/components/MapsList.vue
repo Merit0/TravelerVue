@@ -1,49 +1,38 @@
 <template>
-    <div class="mapTiles">
-            <div class="evilLandMap">
-                <button @click="startDungeon()" class="mapTile"></button>
-            </div>
+        <div class="mapTiles">
+            <DungeonTile :isEmpty="false"></DungeonTile>
+            <DungeonTile :isEmpty="true"></DungeonTile>
+            <DungeonTile :isEmpty="true"></DungeonTile>
+            <DungeonTile :isEmpty="true"></DungeonTile>
+            <DungeonTile :isEmpty="true"></DungeonTile>
+            <DungeonTile :isEmpty="true"></DungeonTile>
         </div>
 </template>
 
 <script lang="ts">
-import router from '@/router/index';
+import DungeonTile from './DungeonTile.vue';
 
 export default {
     name: "MapTiles",
-    methods: {
-        async startDungeon() {
-            router.push("/evilLand");
-        }
-    }
+    components: { DungeonTile }
 }
 </script>
 
 <style>
 .mapTiles {
-    top: 18%;
-    width: 600px;
-    height: 400px;
+    max-width: 650px;
+    height: 500px;
     position: relative;
-    top: 100px;
-    border-radius: 20px;
+    margin-left: 20px;
+    border-radius: 50px 0 50px 0;
+    border: 1px solid rgba(54, 2, 2, 0.795);
     background-size: 100% 100%;
+    align-items: flex-end;
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-}
-.evilLandMap {
-    width: 400px;
-    height: 400px;
-    background-image: url('../assets/images/dungeons/homeButtons/fightFireBtn-removebg-preview.png');
-    background-size: 100% 100%;
-}
-.mapTile {
-    width: 320px;
-    height: 330px;
-    background: transparent;
-    margin-top: 11%;
-    margin-left: 11%;
-    border: none;
+    flex-wrap: wrap;
+    background-color: rgba(54, 2, 2, 0.274);
+    padding: 5px;
 }
 </style>
