@@ -3,7 +3,7 @@
     <div class="battlefieldOverlay">
       <div class="battleArea">
         <div class="heroSide">
-            <button class="escapeButton" @click="$emit('isBattle', false)">X</button>
+            <button class="escapeButton" @click="closeBattlefield(tile)">X</button>
         </div>
         <div class="attackButtonContainer">
             <button class="attackButton activeBtn" @click="attackEnemy(tile)"></button>
@@ -68,6 +68,7 @@ export default {
   methods: {
     async attackEnemy(tile: TileModel) {
             this.isAttacked = true; 
+            tile.inBattle = true;
             const enemies = tile.enemies;
             if(this.hero.getHealth() > 0) {
                 for(let i=0; i < enemies.length; i++ ) {
@@ -86,10 +87,16 @@ export default {
                 if(!this.enemyAlive && !enemies.length) {
                   tile.isEmpty = true;
                   this.$emit("isBattle", false);
+                  tile.inBattle = false;
                     return;
                 }
             }
         },
+        async closeBattlefield(tile: TileModel) {
+            this.$emit('isBattle', false)
+            tile.inBattle = false;
+            
+        }
   }
 };
 </script>

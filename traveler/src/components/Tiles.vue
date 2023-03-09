@@ -17,11 +17,6 @@ export default {
             type: Array as PropType<TileModel[]>,
             required: true
         }
-    },
-    methods: {
-        async startBattle(battlefieldStatus: boolean) {
-            this.showBattlefield = battlefieldStatus;
-        }
     }
 }
 </script>

@@ -7,6 +7,7 @@ export interface ITile {
     item: HealPortionModel;
     isTree: boolean;
     isEmpty: boolean;
+    inBattle: boolean;
 }
 
 export class TileModel implements ITile {
@@ -16,6 +17,7 @@ export class TileModel implements ITile {
     item: HealPortionModel;
     isTree: boolean;
     isEmpty: boolean;
+    inBattle: boolean;
 
     constructor(id: number) {
         this.id = id;
@@ -56,6 +58,10 @@ export class TileModel implements ITile {
 
     public setIsEmpty(status: boolean): void {
         this.isEmpty = status;
+    }
+
+    public setInBattle(status: boolean): void {
+        this.inBattle = status;
     }
 }
 

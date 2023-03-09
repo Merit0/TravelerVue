@@ -3,7 +3,7 @@
     <enemy-tile :tile="tile" :enemyAlive="enemyAlive" @showBattlefield="isBattle($event)"></enemy-tile>
     <empty-tile :epmtyTile="tile.isEmpty"></empty-tile>
     <heal-portion-tile :tile="tile" ></heal-portion-tile>
-    <Battlefield :showOverlay="showBattlefield" :tile="tile" @isBattle="isBattle($event)"></Battlefield>
+    <Battlefield :showOverlay="tile.inBattle" :tile="tile" @isBattle="isBattle($event)"></Battlefield>
 </template>
 
 <script lang="ts">
@@ -17,7 +17,6 @@ import { useHeroStore } from '@/stores/HeroStore'
 
 export default {
     name: "map-tile",
-    // emits: ["change"], $emit("change", true)
     props: {
         tile: {
             type: TileModel,
