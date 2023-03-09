@@ -15,9 +15,11 @@ export default class EnemyModel implements IEnemy {
     defence: number;
     id: number;
     chest: DropChestModel;
+    imgPath: string;
 
     constructor(id: number) {
         this.id = id;
+        this.imgPath = 'enemies/twoEnemies.png';
         this.type = EnemyType.WARRIOR;
         this.name = this.type + " Orc" + this.id;
         this.defence = 0;
@@ -47,6 +49,10 @@ export default class EnemyModel implements IEnemy {
     }
     public getChest(): DropChestModel {
         return this.chest;
+    }
+
+    public getImgPath(): string {
+        return this.imgPath;
     }
 
     public setId(id: number) {

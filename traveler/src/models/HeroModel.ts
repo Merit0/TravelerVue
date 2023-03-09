@@ -10,7 +10,7 @@ export class HeroModel implements IHero {
     coins: number;
     stats: boolean;
     kills: number;
-    tile: TileModel;
+    available: boolean;
     id: number;
 
     constructor() {
@@ -57,11 +57,6 @@ export class HeroModel implements IHero {
         return this;
     }
 
-    public setTile(tile: TileModel): HeroModel {
-        this.tile = tile;
-        return this;
-    }
-
     public getName(): string {
         return this.name;
     }
@@ -88,10 +83,6 @@ export class HeroModel implements IHero {
 
     public getEnemiesKilled(): number {
         return this.kills;
-    }
-
-    public getTile(): TileModel {
-        return this.tile;
     }
 
     public addKilled(): void {

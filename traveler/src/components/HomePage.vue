@@ -32,7 +32,7 @@ export default {
         async increaseHealth() { 
         let count = 0;
         this.time = setInterval(() => {  
-            if(this.heroStore.hero.getHealth() < 100 && count < 100)     {
+            if(this.heroStore.hero.getHealth() < this.heroStore.hero.maxHealth && count < this.heroStore.hero.maxHealth)     {
                 this.heroStore.hero.healthIncreaser();
                 count++;
             }else {

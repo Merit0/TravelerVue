@@ -19,5 +19,12 @@
         "password": "qwerty",
         "id": 3,
         "loggedIn": false
+    },
+    {
+        "name": "Ostap",
+        "username": "ostap",
+        "password": "1111",
+        "id": 4,
+        "loggedIn": false
     }
 ]
