@@ -17,11 +17,7 @@ export default class EnemyModel implements IEnemy {
     chest: DropChestModel;
     imgPath: string;
 
-    constructor(id: number) {
-        this.id = id;
-        this.imgPath = 'enemies/twoEnemies.png';
-        this.type = EnemyType.WARRIOR;
-        this.name = this.type + " Orc" + this.id;
+    constructor() {
         this.defence = 0;
         this.generateHealth();
         this.generateAttack();
@@ -55,24 +51,26 @@ export default class EnemyModel implements IEnemy {
         return this.imgPath;
     }
 
-    public setId(id: number) {
+    public setId(id: number): EnemyModel {
         this.id = id;
+        this.name += " " + this.id;
+        return this;
+    }
+
+    public setName(name: string): void {
+        this.name = name;
+    }
+
+    public setImage(imagePath: string): void {
+        this.imgPath = imagePath;
+    }
+
+    setEnemyType(enemyType: EnemyType): void {
+        this.type = enemyType;
     }
 
     public takeDamage(damage: number): void {
         this.health -= damage;
-    }
-
-    private setMinHealth() {
-        this.minHealth = Math.floor(this.maxHealth / 3);
-    }
-
-    private setHealth(randomHealth: number) {
-        if (randomHealth >= this.maxHealth) {
-            this.health = this.maxHealth;
-        } else {
-            this.health = randomHealth + this.minHealth;
-        }
     }
 
     private generateHealth() {
@@ -90,6 +88,18 @@ export default class EnemyModel implements IEnemy {
             this.attack = 50;
         } else {
             this.attack = 5;
+        }
+    }
+
+    private setMinHealth() {
+        this.minHealth = Math.floor(this.maxHealth / 3);
+    }
+
+    private setHealth(randomHealth: number) {
+        if (randomHealth >= this.maxHealth) {
+            this.health = this.maxHealth;
+        } else {
+            this.health = randomHealth + this.minHealth;
         }
     }
 

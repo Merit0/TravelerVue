@@ -5,7 +5,7 @@ export class MapProvider {
 
     static getEvilLand(): MapModel {
         return MapBuilder
-            .tilesNumber(52)
+            .tilesNumber(40)
             .mapName("EvilLand")
             .complexity(MapComplexity.EASY)
             .build();

@@ -1,6 +1,6 @@
 import { useHeroStore } from '../stores/HeroStore';
 <template>
-    <button class="healPortion" @click="useHeal(tile)" v-if="(!tile.isTree) && (tile.enemies.length === 0) && (tile.item)"></button> 
+    <button class="healPortion mapTile" @click="useHeal(tile)" v-if="(!tile.isTree) && (tile.enemies.length === 0) && (tile.item)"></button> 
 </template>
 
 <script lang="ts">
@@ -35,14 +35,9 @@ export default {
 </script>
 <style>
 .healPortion {
-    width: 100px;
-    height: 100px;
     background: none;
     border: 2px solid rgb(117, 117, 117);
     border-radius: 20%;
-    margin-left: 2%;
-    display: inline-flex;
-    align-items: flex-end;
     background-image: url('../assets/images/items/healSmall.png');
     background-size: 100% 100%;
 }

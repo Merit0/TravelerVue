@@ -1,5 +1,5 @@
 <template>
-    <div class="epmtyTile" v-if="epmtyTile"></div>
+    <div class="mapTile" v-if="epmtyTile"></div>
 </template>
 
 <script lang="ts">
@@ -14,12 +14,3 @@ export default {
     }
 }
 </script>
-<style>
-.epmtyTile {
-    width: 100px;
-    height: 100px;
-    margin-left: 2%;
-    display: inline-flex;
-    align-items: flex-end;
-}
-</style>

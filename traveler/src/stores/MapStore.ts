@@ -5,6 +5,7 @@ import EnemyModel from "@/models/EnemyModel";
 import { HealPortionModel } from "@/models/HealPortionModel";
 import { Randomizer } from '../utils/Randomizer';
 import MapModel from '../models/MapModel';
+import { EnemyProvider } from '../providers/EnemyProvider';
 
 export const useMapStore = defineStore("map", {
     state: () => {
@@ -64,7 +65,9 @@ export const useMapStore = defineStore("map", {
             const createdEnemies = new Array<EnemyModel>();
             if (Randomizer.getChance(20)) {
                 for (let i = 0; i < Math.floor(Math.random() * 5) + 1; i++) {
-                    createdEnemies.push(new EnemyModel(id + i))
+                    let enemy = EnemyProvider.getDemon().setId(id + i);
+                    createdEnemies.push(enemy);
+                    enemy = null;
                 }
             }
             return createdEnemies;

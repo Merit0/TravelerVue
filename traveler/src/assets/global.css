@@ -113,3 +113,11 @@ button:hover,
 button:focus {
     color: rgb(255, 123, 0);
 }
+
+.mapTile {
+    width: 150px;
+    height: 150px;
+    margin-left: 2%;
+    display: inline-flex;
+    align-items: flex-end;
+}
