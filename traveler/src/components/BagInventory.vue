@@ -67,15 +67,13 @@ export default {
     width: 100px;
     height: 100px;
     background-color:rgba(255, 196, 0, 0.185);
-    outline-color: rgba(0, 0, 0, 0.295);
-    outline-width: 3px;
+    outline-color: rgba(56, 0, 0, 0.603);
+    outline-width: 1px;
     outline-style: solid;
     border-radius:30%;
     background-image: url('../assets/images/inventory_image.png');
     background-size: 100px 100px;
     position: relative;
-    margin-top: 400px;
-    margin-left: 1750px;
  }
 
  .bag {

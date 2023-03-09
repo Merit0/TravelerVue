@@ -1,6 +1,6 @@
 <template>
     <tree-tile :tile="tile"></tree-tile>
-    <enemy-tile :tile="tile"  :enemyAlive="enemyAlive" @showBattlefield="isBattle($event)"></enemy-tile>
+    <enemy-tile :tile="tile" :enemyAlive="enemyAlive" @showBattlefield="isBattle($event)"></enemy-tile>
     <empty-tile :epmtyTile="tile.isEmpty"></empty-tile>
     <heal-portion-tile :tile="tile" ></heal-portion-tile>
     <Battlefield :showOverlay="showBattlefield" :tile="tile" @isBattle="isBattle($event)"></Battlefield>

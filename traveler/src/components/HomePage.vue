@@ -1,9 +1,9 @@
 <template>
     <div class="page">
         <HeroDetailsBar :hero="hero"></HeroDetailsBar>
-        <section class="content">
+        <section class="homeContent">
             <MapsList></MapsList>
-            <div class="buttons">
+            <div class="homeButtons">
                 <BagInventory></BagInventory>
                 <button @click="userStore.logout()" v-if="userStore.isLoggedIn" class="logout">Logout</button>
             </div>
@@ -51,31 +51,34 @@ export default {
 </script>
 
 <style>
-.buttons {
+.homeButtons {
+    width: 220px;
+    height: 120px;
+    margin-top: 270px;
+    margin-left: 1800px;
     display: flex;
+    justify-content:space-between;
+    align-items: center;
 }
-.content {
+.homeContent {
     margin-top: 10px;
     min-height: 90vh;
     border-radius: 20px;
     border: 2px solid rgb(95, 64, 43);
     background-image: url('@/assets/images/img.jpg');
-    background-size: flex-direction;
+    background-size: 100%;
 }
 
 .logout {
-    color:#ffb671;
+    color:#630000;
     position: relative;
     width: 100px;
     height: 100px;
-    background-color:rgba(255, 196, 0, 0.185);
-    outline-color: rgba(0, 0, 0, 0.295);
-    outline-width: 3px;
-    outline-style: solid;
+    background-color:rgba(202, 155, 0, 0.185);
+    border: 1px solid rgba(56, 0, 0, 0.603);
+    outline-color: rgba(56, 0, 0, 0.603);
     border-radius:30%;
     background-size: 100px 100px;
-    margin-top: 400px;
-    margin-left: 50px;
  }
 </style>
       
