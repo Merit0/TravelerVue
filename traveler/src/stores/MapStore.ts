@@ -63,9 +63,9 @@ export const useMapStore = defineStore("map", {
 
         generateEnemies(id: number): EnemyModel[] {
             const createdEnemies = new Array<EnemyModel>();
-            if (Randomizer.getChance(20)) {
+            if (Randomizer.getChance(10)) {
                 for (let i = 0; i < Math.floor(Math.random() * 5) + 1; i++) {
-                    let enemy = EnemyProvider.getDemon().setId(id + i);
+                    let enemy = Randomizer.getRandomEnemy(EnemyProvider.getEvilLandsEnemies()).setId(id + i);
                     createdEnemies.push(enemy);
                     enemy = null;
                 }

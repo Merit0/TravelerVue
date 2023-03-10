@@ -1,3 +1,4 @@
+import EnemyModel from '@/models/EnemyModel';
 import { EnemyType } from '../enums/EnemyType';
 
 
@@ -23,5 +24,10 @@ export class Randomizer {
             return true;
         }
         return false;
+    }
+
+    static getRandomEnemy(enemies: EnemyModel[]): EnemyModel {
+        const randIndex: number = Math.floor(Math.random() * enemies.length);
+        return enemies[randIndex];
     }
 }
