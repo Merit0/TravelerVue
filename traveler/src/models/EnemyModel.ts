@@ -16,6 +16,7 @@ export default class EnemyModel implements IEnemy {
     id: number;
     chest: DropChestModel;
     imgPath: string;
+    enemyFrameColor: string;
 
     constructor() {
         this.defence = 0;
@@ -67,6 +68,10 @@ export default class EnemyModel implements IEnemy {
 
     setEnemyType(enemyType: EnemyType): void {
         this.type = enemyType;
+    }
+
+    setEnemyFrameColor(frameColor: string): void {
+        this.enemyFrameColor = frameColor;
     }
 
     public takeDamage(damage: number): void {

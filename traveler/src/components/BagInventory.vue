@@ -1,30 +1,29 @@
 <template>
-    <div id="openInventoryBtn" @click="open_inventoty()"></div>
-    <div class="bag" id="bag" style="visibility: hidden;">
+    <div class="bag" id="bag">
             <div class="bag_frame">
                 <ul class="bag_inner">
                     <li class="item_holder">
                         <div class="img_helmet"></div>
                         <div class="add_item_slot">
-                            <div class="add_item_button" @click="add_item_to_slot()"></div>
+                            <div class="add_item_button" @click="add_item_to_slot(hero)"></div>
                         </div>
                     </li>
                     <li class="item_holder">
                         <div class="img_armor"></div>
                         <div class="add_item_slot">
-                            <div class="add_item_button" @click="add_item_to_slot()"></div>
+                            <div class="add_item_button" @click="add_item_to_slot(hero)"></div>
                         </div>
                     </li>
                     <li class="item_holder">
                         <div class="img_sword"></div>
                         <div class="add_item_slot">
-                            <div class="add_item_button" @click="add_item_to_slot()"></div>
+                            <div class="add_item_button" @click="add_item_to_slot(hero)"></div>
                         </div>
                     </li>
                     <li class="item_holder">
                         <div class="img_shield"></div>
                         <div class="add_item_slot">
-                            <div class="add_item_button" @click="add_item_to_slot()"></div>
+                            <div class="add_item_button" @click="add_item_to_slot(hero)"></div>
                         </div>
                     </li>
                 </ul>
@@ -33,30 +32,20 @@
 </template>
 
 <script lang="ts">
+import { HeroModel } from '../models/HeroBuilder';
+
 
 export default {
     name: "BagInventory",
+    props: {
+        hero: {
+            type: HeroModel,
+            required: true
+        }
+    },
     methods: {
-        async add_item_to_slot() {
-            alert('No functionality yet!')
-        },
-        async open_inventoty() {
-        const element = document.getElementById('bag');
-        const button = document.getElementById('inventory_openbutton');
-        if (element != null) {
-            if (element.style.visibility == 'hidden') {
-                element.style.visibility = 'visible';
-                if (button != null) {
-                    button.style.backgroundColor = 'rgba(255, 126, 0, 0.185)'
-
-                }
-            } else {
-                    element.style.visibility = 'hidden';
-                    if (button != null) {
-                        button.style.backgroundColor = 'rgba(255, 196, 0, 0.185)'
-                    }
-                }
-            }
+        async add_item_to_slot(hero: HeroModel) {
+            alert(hero.name);
         }
     }
 }

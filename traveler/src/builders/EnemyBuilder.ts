@@ -19,6 +19,11 @@ export class EnemyBuilder {
         return this;
     }
 
+    public enemyBorderFrame(frameColor: string): EnemyBuilder {
+        this.enemy.setEnemyFrameColor(frameColor);
+        return this;
+    }
+
     public build(): EnemyModel {
         return this.enemy;
     }

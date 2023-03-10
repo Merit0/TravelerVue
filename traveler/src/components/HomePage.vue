@@ -4,9 +4,10 @@
         <section class="homeContent">
             <MapsList></MapsList>
             <div class="homeButtons">
-                <BagInventory></BagInventory>
+                <button id="openInventoryBtn" @click="inventory()"></button>
                 <button @click="userStore.logout()" v-if="userStore.isLoggedIn" class="logout">Logout</button>
             </div>
+            <BagInventory :hero="hero" v-if="showInventory"></BagInventory>
         </section>
     </div>
 </template>
@@ -26,20 +27,28 @@ export default {
         const userStore = useUserStore();
         const heroStore = useHeroStore();
         const hero: IHero = heroStore.hero;
-        return { userStore, hero, heroStore, time: ''};
+        let showInventory = false;
+        return { userStore, hero, heroStore, time: '', showInventory};
     },
     methods: {
         async increaseHealth() { 
-        let count = 0;
-        this.time = setInterval(() => {  
-            if(this.heroStore.hero.getHealth() < this.heroStore.hero.maxHealth && count < this.heroStore.hero.maxHealth)     {
-                this.heroStore.hero.healthIncreaser();
-                count++;
-            }else {
-                clearInterval(this.time);
-            }   
-            }, 3000); 
-        },        
+            let count = 0;
+            this.time = setInterval(() => {  
+                if(this.heroStore.hero.getHealth() < this.heroStore.hero.maxHealth && count < this.heroStore.hero.maxHealth)     {
+                    this.heroStore.hero.healthIncreaser();
+                    count++;
+                }else {
+                    clearInterval(this.time);
+                }   
+                }, 3000); 
+        },    
+        async inventory() {
+            if (!this.showInventory) {
+                this.showInventory = true;
+            } else {
+                this.showInventory = false;
+            }
+        }
     },
     mounted() {
         this.increaseHealth();
