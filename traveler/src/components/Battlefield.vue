@@ -9,7 +9,8 @@
             <button class="attackButton activeBtn" @click="attackEnemy(tile)"></button>
         </div>
         <div class="enemySide">
-          <enemy-tile :tile="tile"
+          <enemy-tile 
+            :tile="tile"
             :enemyShown="enemyTileShown"
             :enemyAlive="enemyAlive"
             v-for="enemy in tile.enemies" :key="enemy.id">

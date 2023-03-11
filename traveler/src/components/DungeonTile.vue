@@ -3,7 +3,7 @@
         <button @click="startDungeon()" class="buttonMap" :disabled="mapStore.isMapCleared"></button>
         <div class="resetBtnBackground" v-if="mapStore.isMapCleared">
             <div class="resetImg">
-                <button class="btnReset" @click="resetMap()"></button>
+                <button class="btnReset" @click="mapReset()"></button>
             </div>
         </div>
     </div>
@@ -34,10 +34,9 @@ export default {
         async startDungeon() {
             router.push("/evilLand");
         },
-        async resetMap() {
+        async mapReset() {
             if(JSON.parse(localStorage.getItem("map"))) {
-                console.log("reset map");
-                this.mapStore.resetMap;
+                this.mapStore.tiles = [];
             }
 
         }

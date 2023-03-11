@@ -32,6 +32,9 @@ export default {
         },
     methods: {
         async quitMap() {
+            if(this.mapStore.isMapCleared) {
+                this.mapStore.isCleared = this.mapStore.isMapCleared;
+            }
             router.push("/");
         }
     }

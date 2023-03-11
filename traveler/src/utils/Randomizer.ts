@@ -25,9 +25,4 @@ export class Randomizer {
         }
         return false;
     }
-
-    static getRandomEnemy(enemies: EnemyModel[]): EnemyModel {
-        const randIndex: number = Math.floor(Math.random() * enemies.length);
-        return enemies[randIndex];
-    }
 }

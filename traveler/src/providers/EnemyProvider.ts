@@ -57,6 +57,33 @@ export class EnemyProvider {
             .build();
     }
 
+    public static getSkeletonTank(): EnemyModel {
+        return new EnemyBuilder()
+            .enemyName("Steal Bones")
+            .enemyType(EnemyType.WARRIOR)
+            .enemyImgPath("enemies_150_150/skeleton_warior.png")
+            .enemyBorderFrame('rgb(0,255,127)')
+            .build();
+    }
+
+    public static getSkeletonMage(): EnemyModel {
+        return new EnemyBuilder()
+            .enemyName("Magic Bones")
+            .enemyType(EnemyType.WARRIOR)
+            .enemyImgPath("enemies_150_150/skeleton_mage.png")
+            .enemyBorderFrame('rgb(0,255,127)')
+            .build();
+    }
+
+    public static getSkeletonBerserk(): EnemyModel {
+        return new EnemyBuilder()
+            .enemyName("Mad Bones")
+            .enemyType(EnemyType.WARRIOR)
+            .enemyImgPath("enemies_150_150/skeleton_berserk.png")
+            .enemyBorderFrame('rgb(0,255,127)')
+            .build();
+    }
+
     public static getFireDragon(): EnemyModel {
         return new EnemyBuilder()
             .enemyName("Fire Dragon")
@@ -66,7 +93,11 @@ export class EnemyProvider {
             .build();
     }
 
-    public static getEvilLandsEnemies(): EnemyModel[] {
+    public static getBosses(): EnemyModel[] {
         return Array.of(this.getOrcMale(), this.getDemon(), this.getOrcMage(), this.getOrcBowMale(), this.getZombies(), this.getBullTank(), this.getFireDragon());
+    }
+
+    public static getEvilLandsEnemies(): EnemyModel[] {
+        return Array.of(this.getSkeletonBerserk(), this.getSkeletonMage(), this.getSkeletonTank());
     }
 }
