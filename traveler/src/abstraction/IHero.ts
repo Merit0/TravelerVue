@@ -7,4 +7,5 @@ export interface IHero {
     stats: boolean;
     kills: number;
     id: number;
+    imgPath: string;
 }

@@ -7,6 +7,8 @@ import { Randomizer } from '../utils/Randomizer';
 import MapModel from '../models/MapModel';
 import { EnemyProvider } from '../providers/EnemyProvider';
 import { BossProvider } from '../providers/BossProvider';
+import { IHero } from '../abstraction/IHero';
+import { HeroModel } from '../models/HeroModel';
 
 export const useMapStore = defineStore("map", {
     state: () => {
@@ -15,7 +17,7 @@ export const useMapStore = defineStore("map", {
             tiles: [],
             tile: null,
             isCleared: false,
-            mapBoss: BossProvider.getSkeletonBoss()
+            boss: BossProvider.getSkeletonBoss()
         };
     },
 
@@ -41,12 +43,12 @@ export const useMapStore = defineStore("map", {
             if (!JSON.parse(localStorage.getItem("map")) || this.tiles.length === 0) {
                 this.mapName = map.getName();
                 this.generateTiles(map.getTilesNumber());
+                this.addHero(map.getHero());
                 this.addEnemies();
                 this.addItems();
                 this.isCleared = false;
             }
         },
-
         async generateTiles(tilesNumber: number) {
             for (let i = 0; i < tilesNumber; i++) {
                 const tile = new TileModel(i);
@@ -54,17 +56,40 @@ export const useMapStore = defineStore("map", {
                 this.tiles.push(tile);
             }
         },
-        async addEnemies() {
-            const randIndex: number = Math.floor(Math.random() * this.tiles.length);
+
+        async addHero(hero: IHero) {
+            this.tiles[0].hero = hero;
+            this.removeAllItemsFromTile(this.tiles[0]);
+        },
+
+        async moveHero(nextTile: TileModel) {
             for (let i = 0; i < this.tiles.length; i++) {
-                this.tiles[i].setEnemies(this.generateEnemies(i));
+                const tile: TileModel = this.tiles[i];
+                if (tile.hero) {
+                    const hero: HeroModel = this.tiles[i].hero;
+                    tile.hero = null;
+                    tile.isEmpty = true;
+                    nextTile.hero = hero;
+                    this.removeAllItemsFromTile(nextTile);
+                    return;
+                }
             }
-            this.tiles[randIndex].setEnemies(Array.of(this.mapBoss));
+        },
+
+        async addEnemies() {
+            const randNumber: number = Math.floor(Math.random() * this.tiles.length) + 1;
+            for (let i = 1; i < this.tiles.length; i++) {
+                if (!this.tiles[i].hero) {
+                    this.tiles[i].setEnemies(this.generateEnemies(i));
+                }
+            }
+            const bossIndex = randNumber < this.tiles.length ? randNumber : this.tiles.length;
+            this.tiles[bossIndex].setEnemies(Array.of(this.boss));
         },
 
         async addItems() {
             for (let i = 0; i < this.tiles.length; i++) {
-                if (this.tiles[i].enemies.length === 0) {
+                if (this.tiles[i].enemies.length === 0 && !this.tiles[i].hero) {
                     this.tiles[i].setItem(this.generateItem());
                     this.tiles[i].isEmpty = false;
                 }
@@ -89,6 +114,12 @@ export const useMapStore = defineStore("map", {
             if (Randomizer.getChance(5)) {
                 return new HealPortionModel(HealPortion.SMALL);
             }
+        },
+
+        removeAllItemsFromTile(tile: TileModel): void {
+            tile.isEmpty = false;
+            tile.isTree = false;
+            tile.item = null;
         }
     }
 });

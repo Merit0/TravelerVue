@@ -32,7 +32,7 @@
 </template>
 
 <script lang="ts">
-import { HeroModel } from '../models/HeroBuilder';
+import { HeroModel } from '@/models/HeroModel';
 
 
 export default {

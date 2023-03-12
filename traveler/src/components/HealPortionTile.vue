@@ -1,12 +1,13 @@
 import { useHeroStore } from '../stores/HeroStore';
 <template>
-    <button class="healPortion mapTile" @click="useHeal(tile)" v-if="(!tile.isTree) && (tile.enemies.length === 0) && (tile.item)"></button> 
+    <button class="healPortion mapTile" @click="useHeal(tile)" v-if="(!tile.isTree && !tile.hero) && (tile.enemies.length === 0) && (tile.item)"></button> 
 </template>
 
 <script lang="ts">
 
 import TileModel from '@/models/TileModel';
 import { useHeroStore } from '@/stores/HeroStore';
+import { useMapStore } from '@/stores/MapStore';
 
 export default {
     name: "heal-portion-tile",
@@ -17,10 +18,11 @@ export default {
         }
     },
     data() {
+        const mapStore = useMapStore();
         const heroStore = useHeroStore();
         const hero = heroStore.hero;
         const itemShown = true;
-        return { hero, itemShown };
+        return { hero, itemShown, mapStore };
     },
     methods: {
         async useHeal(tile: TileModel) {
@@ -28,7 +30,8 @@ export default {
             this.hero.currentHealth = this.hero.currentHealth > this.hero.maxHealth ? this.hero.maxHealth : this.hero.currentHealth;
             this.heal = false;
             tile.item = null;
-            tile.isEmpty = true;
+            this.mapStore.moveHero(tile);
+            // tile.isEmpty = true;
         }
     }
 }
