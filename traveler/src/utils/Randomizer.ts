@@ -1,4 +1,3 @@
-import EnemyModel from '@/models/EnemyModel';
 import { EnemyType } from '../enums/EnemyType';
 
 
@@ -6,6 +5,10 @@ export class Randomizer {
 
     static getRandomInt(max: number): number {
         return Math.floor(Math.random() * max);
+    }
+
+    static getRandomIntInRange(min: number, max: number): number {
+        return Math.floor(Math.random() * max) + min;
     }
 
     static getRandomEnemyType(): EnemyType {

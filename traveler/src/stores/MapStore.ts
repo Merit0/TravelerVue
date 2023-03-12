@@ -6,6 +6,7 @@ import { HealPortionModel } from "@/models/HealPortionModel";
 import { Randomizer } from '../utils/Randomizer';
 import MapModel from '../models/MapModel';
 import { EnemyProvider } from '../providers/EnemyProvider';
+import { BossProvider } from '../providers/BossProvider';
 
 export const useMapStore = defineStore("map", {
     state: () => {
@@ -13,7 +14,8 @@ export const useMapStore = defineStore("map", {
             mapName: "",
             tiles: [],
             tile: null,
-            isCleared: false
+            isCleared: false,
+            mapBoss: BossProvider.getSkeletonBoss()
         };
     },
 
@@ -40,6 +42,7 @@ export const useMapStore = defineStore("map", {
                 this.mapName = map.getName();
                 this.generateTiles(map.getTilesNumber());
                 this.addEnemies();
+                this.addItems();
                 this.isCleared = false;
             }
         },
@@ -52,8 +55,15 @@ export const useMapStore = defineStore("map", {
             }
         },
         async addEnemies() {
+            const randIndex: number = Math.floor(Math.random() * this.tiles.length);
             for (let i = 0; i < this.tiles.length; i++) {
                 this.tiles[i].setEnemies(this.generateEnemies(i));
+            }
+            this.tiles[randIndex].setEnemies(Array.of(this.mapBoss));
+        },
+
+        async addItems() {
+            for (let i = 0; i < this.tiles.length; i++) {
                 if (this.tiles[i].enemies.length === 0) {
                     this.tiles[i].setItem(this.generateItem());
                     this.tiles[i].isEmpty = false;

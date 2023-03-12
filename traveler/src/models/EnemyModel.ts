@@ -7,7 +7,7 @@ import { Randomizer } from '@/utils/Randomizer'
 export default class EnemyModel implements IEnemy {
 
     name: string;
-    type: EnemyType;
+    enemyType: EnemyType;
     maxHealth: number;
     minHealth: number;
     health: number;
@@ -19,10 +19,8 @@ export default class EnemyModel implements IEnemy {
     enemyFrameColor: string;
 
     constructor() {
+        this.id = 1;
         this.defence = 0;
-        this.generateHealth();
-        this.generateAttack();
-        this.setHealth(Randomizer.getRandomInt(this.maxHealth));
         this.attack = Randomizer.getRandomInt(this.attack) + 1;
     }
 
@@ -30,7 +28,7 @@ export default class EnemyModel implements IEnemy {
         return this.name;
     }
     public getType(): EnemyType {
-        return this.type;
+        return this.enemyType;
     }
     public getHealth(): number {
         return this.health;
@@ -66,11 +64,11 @@ export default class EnemyModel implements IEnemy {
         this.imgPath = imagePath;
     }
 
-    setEnemyType(enemyType: EnemyType): void {
-        this.type = enemyType;
+    public setEnemyType(enemyType: EnemyType): void {
+        this.enemyType = enemyType;
     }
 
-    setEnemyFrameColor(frameColor: string): void {
+    public setEnemyFrameColor(frameColor: string): void {
         this.enemyFrameColor = frameColor;
     }
 
@@ -78,34 +76,22 @@ export default class EnemyModel implements IEnemy {
         this.health -= damage;
     }
 
-    private generateHealth() {
-        if (this.type === EnemyType.BOSS) {
+    public generateHealth() {
+        if (this.enemyType === EnemyType.BOSS) {
             this.maxHealth = 300;
-            this.setMinHealth();
         } else {
             this.maxHealth = 50;
-            this.setMinHealth();
         }
+        this.minHealth = Math.floor(this.maxHealth / 3);
+        const randomAttack = Randomizer.getRandomIntInRange(this.minHealth, this.maxHealth);
+        this.health = randomAttack < this.maxHealth ? randomAttack : this.maxHealth;
     }
 
-    private generateAttack() {
-        if (this.type === EnemyType.BOSS) {
+    public generateAttack() {
+        if (this.enemyType === EnemyType.BOSS) {
             this.attack = 50;
         } else {
             this.attack = 5;
         }
     }
-
-    private setMinHealth() {
-        this.minHealth = Math.floor(this.maxHealth / 3);
-    }
-
-    private setHealth(randomHealth: number) {
-        if (randomHealth >= this.maxHealth) {
-            this.health = this.maxHealth;
-        } else {
-            this.health = randomHealth + this.minHealth;
-        }
-    }
-
 }
