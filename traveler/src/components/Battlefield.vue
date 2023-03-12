@@ -43,6 +43,7 @@ import EnemyTile from "./EnemyTile.vue";
 import { PropType } from "vue";
 import TileModel from "../models/TileModel";
 import { useHeroStore } from "@/stores/HeroStore";
+import { useMapStore } from '../stores/MapStore';
 
 export default {
   name: "battle-field",
@@ -59,12 +60,13 @@ export default {
     }
   },
   data() {
+    const mapStore = useMapStore();
     const heroStore = useHeroStore();
     const hero = heroStore.hero;
     let enemyTileShown = true;
     let enemyAlive = true;
     let isAttacked = false;
-    return { enemyTileShown, enemyAlive, hero, isAttacked};
+    return { enemyTileShown, enemyAlive, hero, isAttacked, mapStore };
   },
   methods: {
     async attackEnemy(tile: TileModel) {
@@ -86,7 +88,7 @@ export default {
                     }
                 }
                 if(!this.enemyAlive && !enemies.length) {
-                  tile.isEmpty = true;
+                  this.mapStore.moveHero(tile);
                   this.$emit("isBattle", false);
                   tile.inBattle = false;
                     return;
