@@ -1,5 +1,9 @@
 <template>
-    <div class="heroTile mapTile" :style="getStyle(tile)" v-if="tile.hero && showHero" @click="showDetails(tile.hero)"></div>
+    <div class="mapTile" v-if="tile.hero && showHero">
+        <div class="heroTile mapTile" :style="getStyle(tile)" @click="showDetails(tile.hero)">
+            <button class="heroBag"></button>
+        </div>
+    </div>
 </template>
 
 <script lang="ts">
@@ -36,7 +40,25 @@ export default {
 <style>
 .heroTile {
     background: none;
-    border-radius: 50%;
+    border-radius: 20%;
     background-size: 100% 100%;
+    display: flex;
+    display: inline;
 }
+.heroBag {
+    width: 30px;
+    height: 30px;
+    background-color: rgba(255, 217, 0, 0);
+    position: top;
+    background-image: url("@/assets/images/simple_bag.png");
+    background-size: 110% 110%;
+    border: 1px solid rgba(53, 53, 53, 0);
+    border-radius: 50%;
+    margin-left: 1px;
+}
+
+.heroBag:active {
+            box-shadow: 1px 1px 14px 1px rgba(0, 0, 0, 0.24);
+            transform: translateY(1px);
+        }
 </style>
