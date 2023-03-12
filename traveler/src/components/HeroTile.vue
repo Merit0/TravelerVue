@@ -1,7 +1,7 @@
 <template>
     <div class="mapTile" v-if="tile.hero && showHero">
-        <div class="heroTile mapTile" :style="getStyle(tile)" @click="showDetails(tile.hero)">
-            <button class="heroBag"></button>
+        <div class="heroTile mapTile" :style="getStyle(tile)">
+            <button class="heroBag" @click="openInventory()"></button>
         </div>
     </div>
 </template>
@@ -9,6 +9,7 @@
 <script lang="ts">
 import TileModel from '@/models/TileModel';
 import { IHero } from '../abstraction/IHero';
+import { useHeroStore } from '../stores/HeroStore';
 
 
 export default {
@@ -23,6 +24,11 @@ export default {
             required: true
         }
     },
+    data() {
+        const heroStore = useHeroStore();
+
+        return { heroStore }
+    },
     methods: {
         async showDetails(hero: IHero) {
             console.log(hero.name);
@@ -33,6 +39,9 @@ export default {
                 border: '2px solid rgb(127, 0, 255)'
             }
             return tileStyle;
+        },
+        async openInventory() {
+            this.heroStore.inventoryShown = true;
         }
     }
 }

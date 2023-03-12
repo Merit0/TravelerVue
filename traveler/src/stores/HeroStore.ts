@@ -5,7 +5,10 @@ import * as Request from '@/api/Requests'
 
 export const useHeroStore = defineStore("hero", {
     state: () => {
-        return { hero: new HeroModel() };
+        return {
+            hero: new HeroModel(),
+            inventoryShown: false
+        };
     },
     actions: {
         async getHero() {
@@ -35,6 +38,7 @@ export const useHeroStore = defineStore("hero", {
         },
         healHero(health: number) {
             this.hero.health += health;
-        }
+        },
+        showInventory(status: boolean) { this.inventoryShown = status }
     }
 });
