@@ -1,8 +1,24 @@
 import EnemyModel from '../models/EnemyModel';
 import { EnemyType } from '../enums/EnemyType';
-export class EnemyBuilder {
 
-    private enemy: EnemyModel = new EnemyModel();
+interface IEnemyBuilder {
+    enemyName(name: string): void;
+    enemyType(enemyType: EnemyType): void;
+    enemyImgPath(imgPath: string): void;
+    enemyBorderFrame(frameColor: string): void;
+}
+
+export class EnemyBuilder implements IEnemyBuilder {
+
+    private enemy: EnemyModel;
+
+    constructor() {
+        this.reset();
+    }
+
+    private reset(): void {
+        this.enemy = new EnemyModel();
+    }
 
     public enemyName(name: string): EnemyBuilder {
         this.enemy.setName(name);
@@ -14,8 +30,8 @@ export class EnemyBuilder {
         return this;
     }
 
-    public enemyImgPath(path: string): EnemyBuilder {
-        this.enemy.setImage(path);
+    public enemyImgPath(imgPath: string): EnemyBuilder {
+        this.enemy.setImage(imgPath);
         return this;
     }
 
@@ -25,8 +41,10 @@ export class EnemyBuilder {
     }
 
     public build(): EnemyModel {
-        this.enemy.generateAttack();
-        this.enemy.generateHealth();
-        return this.enemy;
+        const enemy = this.enemy;
+        this.reset();
+        enemy.generateAttack();
+        enemy.generateHealth();
+        return enemy;
     }
 }
