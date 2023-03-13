@@ -70,13 +70,6 @@ export class TileModel implements ITile {
     public setInBattle(status: boolean): void {
         this.inBattle = status;
     }
-
-    // public addHero(hero: HeroModel) {
-    //     this.hero = hero;
-    //     this.isEmpty = false;
-    //     this.isTree = false;
-    //     this.item = null;
-    // }
 }
 
 export default TileModel;
