@@ -1,25 +1,50 @@
 import EnemyModel from '../models/EnemyModel';
 import { EnemyType } from '../enums/EnemyType';
-export class EnemyBuilder {
 
-    private enemy: EnemyModel = new EnemyModel().setId(1);
+interface IEnemyBuilder {
+    enemyName(name: string): EnemyBuilder;
+    enemyType(enemyType: EnemyType): EnemyBuilder;
+    enemyImgPath(imgPath: string): EnemyBuilder;
+    enemyBorderFrame(frameColor: string): EnemyBuilder;
+}
+
+export class EnemyBuilder implements IEnemyBuilder {
+
+    private enemy: EnemyModel;
+
+    constructor() {
+        this.reset();
+    }
+
+    private reset(): void {
+        this.enemy = new EnemyModel();
+    }
 
     public enemyName(name: string): EnemyBuilder {
         this.enemy.setName(name);
         return this;
     }
 
-    public enemyType(type: EnemyType): EnemyBuilder {
-        this.enemy.setEnemyType(type);
+    public enemyType(enemyType: EnemyType): EnemyBuilder {
+        this.enemy.setEnemyType(enemyType);
         return this;
     }
 
-    public enemyImgPath(path: string): EnemyBuilder {
-        this.enemy.setImage(path);
+    public enemyImgPath(imgPath: string): EnemyBuilder {
+        this.enemy.setImage(imgPath);
+        return this;
+    }
+
+    public enemyBorderFrame(frameColor: string): EnemyBuilder {
+        this.enemy.setEnemyFrameColor(frameColor);
         return this;
     }
 
     public build(): EnemyModel {
-        return this.enemy;
+        const enemy = this.enemy;
+        this.reset();
+        enemy.generateAttack();
+        enemy.generateHealth();
+        return enemy;
     }
 }

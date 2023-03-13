@@ -4,6 +4,7 @@
 
 <script lang="ts">
 import TileModel from '@/models/TileModel';
+import { useMapStore } from '../stores/MapStore';
 
 
 export default {
@@ -14,11 +15,15 @@ export default {
             required: true
         }
     },
+    data() {
+        const mapStore = useMapStore();
+        return { mapStore };
+    },
     methods: {
         async cutTree(tile: TileModel) {
             tile.isTree = false;
             if(tile.enemies.length === 0 && !tile.item) {
-                tile.isEmpty = true;
+                this.mapStore.moveHero(tile);
             }
         }
     }

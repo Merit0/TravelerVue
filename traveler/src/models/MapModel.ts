@@ -1,4 +1,5 @@
 import { MapComplexity } from "@/enums/MapComplexity";
+import { IHero } from '../abstraction/IHero';
 
 export class MapModel {
 
@@ -6,6 +7,7 @@ export class MapModel {
     private tilesNumber: number;
     private id: number;
     private complexity: MapComplexity
+    private hero: IHero;
 
     constructor() {
         this.id = 1;
@@ -26,8 +28,16 @@ export class MapModel {
         return this;
     }
 
+    public setHero(hero: IHero): void {
+        this.hero = hero;
+    }
+
     public getName(): string {
         return this.mapName;
+    }
+
+    public getHero(): IHero {
+        return this.hero;
     }
 
     public getTilesNumber(): number {

@@ -20,18 +20,22 @@ import { MapProvider } from '../providers/MapProvider';
 export default {
     components: { Tiles, HeroDetailsBar, HeroDeathOverlay },
     data() {    
+        const heroStore = useHeroStore();
+        const hero = heroStore.hero;
         const tilesShown = true;
         const mapStore = useMapStore();
         const evilLand: MapModel = MapProvider.getEvilLand();
+        evilLand.setHero(hero);
         mapStore.buildMap(evilLand);
         const tiles = mapStore.tiles;
-        const heroStore = useHeroStore();
-        const hero = heroStore.hero;
 
             return { tiles, hero, tilesShown, heroStore, mapStore }
         },
     methods: {
         async quitMap() {
+            if(this.mapStore.isMapCleared) {
+                this.mapStore.isCleared = this.mapStore.isMapCleared;
+            }
             router.push("/");
         }
     }

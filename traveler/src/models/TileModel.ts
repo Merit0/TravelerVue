@@ -1,5 +1,6 @@
 import EnemyModel from './EnemyModel';
 import { HealPortionModel } from './HealPortionModel';
+import { HeroModel } from './HeroModel';
 
 export interface ITile {
     id: number;
@@ -8,6 +9,7 @@ export interface ITile {
     isTree: boolean;
     isEmpty: boolean;
     inBattle: boolean;
+    hero: HeroModel;
 }
 
 export class TileModel implements ITile {
@@ -18,6 +20,7 @@ export class TileModel implements ITile {
     isTree: boolean;
     isEmpty: boolean;
     inBattle: boolean;
+    hero: HeroModel;
 
     constructor(id: number) {
         this.id = id;
@@ -33,6 +36,10 @@ export class TileModel implements ITile {
 
     public getIsEmpty(): boolean {
         return this.isEmpty;
+    }
+
+    public getHero(): HeroModel {
+        return this.hero;
     }
 
     public isATree(): boolean {

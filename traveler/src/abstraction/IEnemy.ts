@@ -9,7 +9,7 @@ export interface IEnemy {
     attack: number;
     defence: number;
     id: number;
-    type: EnemyType;
+    enemyType: EnemyType;
     chest: DropChestModel;
     imgPath: string
 }

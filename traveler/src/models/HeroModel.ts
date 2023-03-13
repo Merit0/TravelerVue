@@ -1,5 +1,4 @@
 import { IHero } from "@/abstraction/IHero";
-import TileModel from './TileModel';
 
 export class HeroModel implements IHero {
     name: string;
@@ -12,6 +11,8 @@ export class HeroModel implements IHero {
     kills: number;
     available: boolean;
     id: number;
+    imgPath = "heroes/hero_ass1.png";
+
 
     constructor() {
         this.maxHealth = 100;
