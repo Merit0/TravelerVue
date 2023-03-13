@@ -1,26 +1,45 @@
 import MapModel from '../models/MapModel';
 import { MapComplexity } from '../enums/MapComplexity';
+
+interface IMapBuilder {
+
+    mapName(name: string): MapBuilder;
+    tilesNumber(num: number): MapBuilder;
+    complexity(complexityLevel: MapComplexity): MapBuilder;
+
+}
+
 export class MapBuilder {
 
-    private static map: MapModel = new MapModel();
+    private map: MapModel;
 
-    public static mapName(name: string): typeof MapBuilder {
+    constructor() {
+        this.reset();
+    }
+
+    private reset(): void {
+        this.map = new MapModel();
+    }
+
+    public mapName(name: string): MapBuilder {
         this.map.setMapName(name);
         return this;
     }
 
-    public static tilesNumber(num: number): typeof MapBuilder {
+    public tilesNumber(num: number): MapBuilder {
         this.map.setNumberOfTiles(num);
         return this;
     }
 
-    public static complexity(complexityLevel: MapComplexity): typeof MapBuilder {
+    public complexity(complexityLevel: MapComplexity): MapBuilder {
         this.map.setComplexity(complexityLevel);
         return this;
     }
 
-    public static build(): MapModel {
-        return this.map;
+    public build(): MapModel {
+        const createdMap = this.map;
+        this.reset();
+        return createdMap;
     }
 
 }

@@ -4,7 +4,7 @@ import { MapComplexity } from '../enums/MapComplexity';
 export class MapProvider {
 
     static getEvilLand(): MapModel {
-        return MapBuilder
+        return new MapBuilder()
             .tilesNumber(40)
             .mapName("EvilLand")
             .complexity(MapComplexity.EASY)

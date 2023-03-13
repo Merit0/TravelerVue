@@ -2,10 +2,10 @@ import EnemyModel from '../models/EnemyModel';
 import { EnemyType } from '../enums/EnemyType';
 
 interface IEnemyBuilder {
-    enemyName(name: string): void;
-    enemyType(enemyType: EnemyType): void;
-    enemyImgPath(imgPath: string): void;
-    enemyBorderFrame(frameColor: string): void;
+    enemyName(name: string): EnemyBuilder;
+    enemyType(enemyType: EnemyType): EnemyBuilder;
+    enemyImgPath(imgPath: string): EnemyBuilder;
+    enemyBorderFrame(frameColor: string): EnemyBuilder;
 }
 
 export class EnemyBuilder implements IEnemyBuilder {
