@@ -9,5 +9,6 @@ export interface IHeroItem {
     borderFrame: string;
     itemType: ItemType;
     rarity: Rarity;
+    id: number;
 
 }

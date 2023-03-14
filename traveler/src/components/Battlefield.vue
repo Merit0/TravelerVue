@@ -77,8 +77,7 @@ export default {
                 for(let i=0; i < enemies.length; i++ ) {
                     enemies[i].health -= this.hero.getAttack();
                     if(enemies[i].health <= 0) {
-                        this.hero.addKilled();
-                        tile.chest.items.push(enemies[i].loot);
+                      await this.hero.addKilled();
                         const enemyIndex = enemies.findIndex(e => e.id === i);
                         enemies.splice(enemyIndex, 1);
                     } else{

@@ -87,8 +87,10 @@ export const useMapStore = defineStore("map", {
                     if (enemies.length > 0) {
                         const chest: ChestModel = new ChestModel();
                         for (let i = 0; i < enemies.length; i++) {
-                            chest.items.push(enemies[i].loot)
-                            enemies[i].loot = null;
+                            if (Randomizer.getChance(95)) {
+                                chest.items.unshift(enemies[i].loot)
+                                chest.items.pop();
+                            }
                         }
                         this.tiles[i].setChest(chest);
                     }
@@ -113,7 +115,9 @@ export const useMapStore = defineStore("map", {
                 let randIndex: number = Math.floor(Math.random() * EnemyProvider.getEvilLandsEnemies().length);
                 for (let i = 0; i < Math.floor(Math.random() * 5) + 1; i++) {
                     let enemy: EnemyModel = EnemyProvider.getEvilLandsEnemies()[randIndex].setId(id + i);
-                    enemy.setLoot(SwordProvider.getRipper());
+                    const loot = SwordProvider.getRipper();
+                    loot.id = enemy.id;
+                    enemy.setLoot(loot);
                     createdEnemies.push(enemy);
                     enemy = null;
                 }

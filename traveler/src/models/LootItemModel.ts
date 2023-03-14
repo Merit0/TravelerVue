@@ -10,5 +10,5 @@ export class LootItemModel implements IHeroItem {
     borderFrame: string;
     itemType: ItemType;
     rarity: Rarity;
-
+    id = 0;
 }

@@ -7,7 +7,7 @@
     <chest-tile :tile="tile"  @chestInventory="openChestInventory($event)"></chest-tile>
     <Battlefield :showOverlay="tile.inBattle" :tile="tile" @isBattle="isBattle($event)"></Battlefield>
     <hero-inventory :tile="tile" :show-inventory="heroStore.inventoryShown" @heroInventory="closeInventory($event)"></hero-inventory>
-    <chest-inventory :tile="tile" :show-chest-inventory="showChestInventory" @chestInventory="closeChestInventory($event)"></chest-inventory>
+    <chest-inventory :chest="tile.chest" :show-chest-inventory="showChestInventory" @chestInventory="closeChestInventory(tile, $event)"></chest-inventory>
 </template>
 
 <script lang="ts">
@@ -22,6 +22,7 @@ import HeroTile from './HeroTile.vue';
 import HeroInventory from '@/components/HeroInventory.vue'
 import ChestTile from './ChestTile.vue';
 import ChestInventory from './ChestInventory.vue';
+import { useMapStore } from '../stores/MapStore';
 
 export default {
     name: "map-tile",
@@ -34,12 +35,13 @@ export default {
     components: { EnemyTile, TreeTile, EmptyTile, Battlefield, HealPortionTile, HeroTile, HeroInventory, ChestTile, ChestInventory},
     data() {
         const heroStore = useHeroStore();
+        const mapStore = useMapStore();
         const hero = heroStore.hero;
             let enemyAlive = true;
             let showBattlefield = false;
             let showHero = true;
             let showChestInventory = false;
-            return { enemyAlive, hero, showBattlefield, showHero, heroStore, showChestInventory }
+            return { enemyAlive, hero, showBattlefield, showHero, heroStore, showChestInventory, mapStore }
         },
     methods: {
         async isBattle(battlefieldStatus: boolean) {
@@ -48,8 +50,10 @@ export default {
         async closeInventory(invenoryStatus: boolean) {
             this.heroStore.showInventory(invenoryStatus);
         },
-        async closeChestInventory(s: boolean) {
+        async closeChestInventory(tile: TileModel, s: boolean) {
             this.showChestInventory = s;
+            tile.chest = null;
+            this.mapStore.moveHero(tile);
         },
         async openChestInventory(s: boolean) {
             this.showChestInventory = s;

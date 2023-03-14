@@ -1,7 +1,7 @@
 import { LootItemModel } from '../models/LootItemModel';
 <template>
     <div class="chestItemArea">
-        <button class="chestItemImg"></button>
+        <button class="chestItemImg" v-if="lootItem.imgPath" :style="getItemStyle(lootItem)" @click="takeItem(lootItem)"></button>
     </div>
 </template>
 
@@ -18,8 +18,19 @@ export default {
         }
     },
     data() {
-        console.log(this.lootItem.rarity);
         return {};
+    },
+
+    methods: {
+        getItemStyle(lootItem: LootItemModel) {
+            const tileStyle = {
+                backgroundImage: 'url(' + require('@/assets/images/' + lootItem.imgPath) + ')',
+            }
+            return tileStyle;
+        },
+        async takeItem(item: LootItemModel) {
+            item.imgPath = "";
+        }
     }
 }
 
@@ -41,7 +52,6 @@ export default {
     width: 84px;
     height: 84px;
     background: none;
-    background-image: url("@/assets/images/weapons/sword_soul_ripper.png");
     background-size: 100% 100%;
     border-radius: 13%;
     margin-left: 12px;

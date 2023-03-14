@@ -1,6 +1,6 @@
 import { useHeroStore } from '../stores/HeroStore';
 <template>
-    <button class="chestTile mapTile" :style="getStyle()" @click="$emit('chestInventory', true)" v-if="(!tile.isTree && !tile.hero) && (tile.enemies.length === 0) && (!tile.item) && tile.chest"></button> 
+    <button class="chestTile mapTile" @click="$emit('chestInventory', true)" :style="getStyle()" v-if="(!tile.isTree && !tile.hero) && (tile.enemies.length === 0) && (!tile.item) && tile.chest"></button> 
 </template>
 
 <script lang="ts">
@@ -16,9 +16,6 @@ export default {
         }
     },
     methods: {
-        async openChest(tile: TileModel) {
-           console.log("open chest : ");
-        },
         getStyle() {
             const tileStyle = {
                 backgroundImage: 'url(' + require('@/assets/images/' + 'chests/map_chest.png') + ')',
