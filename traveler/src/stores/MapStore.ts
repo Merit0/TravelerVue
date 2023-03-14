@@ -87,7 +87,7 @@ export const useMapStore = defineStore("map", {
                     if (enemies.length > 0) {
                         const chest: ChestModel = new ChestModel();
                         for (let i = 0; i < enemies.length; i++) {
-                            if (Randomizer.getChance(95)) {
+                            if (Randomizer.getChance(15)) {
                                 chest.items.unshift(enemies[i].loot)
                                 chest.items.pop();
                             }
