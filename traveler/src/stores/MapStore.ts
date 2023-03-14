@@ -9,6 +9,8 @@ import { EnemyProvider } from '../providers/EnemyProvider';
 import { BossProvider } from '../providers/BossProvider';
 import { IHero } from '../abstraction/IHero';
 import { HeroModel } from '../models/HeroModel';
+import { SwordProvider } from '../providers/SwordProvider';
+import { ChestModel } from '../models/ChestModel';
 
 export const useMapStore = defineStore("map", {
     state: () => {
@@ -80,7 +82,16 @@ export const useMapStore = defineStore("map", {
             const randNumber: number = Math.floor(Math.random() * this.tiles.length) + 1;
             for (let i = 1; i < this.tiles.length; i++) {
                 if (!this.tiles[i].hero) {
-                    this.tiles[i].setEnemies(this.generateEnemies(i));
+                    const enemies = this.generateEnemies(i);
+                    this.tiles[i].setEnemies(enemies);
+                    if (enemies.length > 0) {
+                        const chest: ChestModel = new ChestModel();
+                        for (let i = 0; i < enemies.length; i++) {
+                            chest.items.push(enemies[i].loot)
+                            enemies[i].loot = null;
+                        }
+                        this.tiles[i].setChest(chest);
+                    }
                 }
             }
             const bossIndex = randNumber < this.tiles.length ? randNumber : this.tiles.length;
@@ -102,6 +113,7 @@ export const useMapStore = defineStore("map", {
                 let randIndex: number = Math.floor(Math.random() * EnemyProvider.getEvilLandsEnemies().length);
                 for (let i = 0; i < Math.floor(Math.random() * 5) + 1; i++) {
                     let enemy: EnemyModel = EnemyProvider.getEvilLandsEnemies()[randIndex].setId(id + i);
+                    enemy.setLoot(SwordProvider.getRipper());
                     createdEnemies.push(enemy);
                     enemy = null;
                 }

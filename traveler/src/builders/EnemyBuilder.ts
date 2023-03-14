@@ -1,9 +1,11 @@
 import EnemyModel from '../models/EnemyModel';
 import { EnemyType } from '../enums/EnemyType';
+import { LootItemModel } from '../models/LootItemModel';
 
 interface IEnemyBuilder {
     enemyName(name: string): EnemyBuilder;
     enemyType(enemyType: EnemyType): EnemyBuilder;
+    enemyLoot(enemyLootItem: LootItemModel): EnemyBuilder;
     enemyImgPath(imgPath: string): EnemyBuilder;
     enemyBorderFrame(frameColor: string): EnemyBuilder;
 }
@@ -37,6 +39,11 @@ export class EnemyBuilder implements IEnemyBuilder {
 
     public enemyBorderFrame(frameColor: string): EnemyBuilder {
         this.enemy.setEnemyFrameColor(frameColor);
+        return this;
+    }
+
+    public enemyLoot(enemyLootItem: LootItemModel): EnemyBuilder {
+        this.enemy.setLoot(enemyLootItem);
         return this;
     }
 

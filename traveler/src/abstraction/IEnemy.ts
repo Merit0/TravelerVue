@@ -1,5 +1,5 @@
-import { DropChestModel } from '@/models/DropChestModel';
 import { EnemyType } from '../enums/EnemyType';
+import { LootItemModel } from '../models/LootItemModel';
 
 export interface IEnemy {
     name: string;
@@ -10,6 +10,6 @@ export interface IEnemy {
     defence: number;
     id: number;
     enemyType: EnemyType;
-    chest: DropChestModel;
     imgPath: string
+    loot: LootItemModel;
 }

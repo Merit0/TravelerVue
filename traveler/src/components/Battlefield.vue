@@ -78,6 +78,7 @@ export default {
                     enemies[i].health -= this.hero.getAttack();
                     if(enemies[i].health <= 0) {
                         this.hero.addKilled();
+                        tile.chest.items.push(enemies[i].loot);
                         const enemyIndex = enemies.findIndex(e => e.id === i);
                         enemies.splice(enemyIndex, 1);
                     } else{
@@ -88,7 +89,6 @@ export default {
                     }
                 }
                 if(!this.enemyAlive && !enemies.length) {
-                  this.mapStore.moveHero(tile);
                   this.$emit("isBattle", false);
                   tile.inBattle = false;
                     return;

@@ -1,7 +1,7 @@
 import { EnemyType } from '@/enums/EnemyType';
 import { IEnemy } from '../abstraction/IEnemy';
-import { DropChestModel } from './DropChestModel';
 import { Randomizer } from '@/utils/Randomizer'
+import { LootItemModel } from './LootItemModel';
 
 
 export default class EnemyModel implements IEnemy {
@@ -14,9 +14,9 @@ export default class EnemyModel implements IEnemy {
     attack: number;
     defence: number;
     id: number;
-    chest: DropChestModel;
     imgPath: string;
     enemyFrameColor: string;
+    loot: LootItemModel;
 
     constructor() {
         this.id = 1;
@@ -42,8 +42,9 @@ export default class EnemyModel implements IEnemy {
     public getId(): number {
         return this.id;
     }
-    public getChest(): DropChestModel {
-        return this.chest;
+
+    public getLoot(): LootItemModel {
+        return this.loot;
     }
 
     public getImgPath(): string {
@@ -70,6 +71,10 @@ export default class EnemyModel implements IEnemy {
 
     public setEnemyFrameColor(frameColor: string): void {
         this.enemyFrameColor = frameColor;
+    }
+
+    public setLoot(lootItem: LootItemModel): void {
+        this.loot = lootItem;
     }
 
     public takeDamage(damage: number): void {
