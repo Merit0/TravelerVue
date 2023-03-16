@@ -89,8 +89,12 @@ export default {
                 }
                 if(!this.enemyAlive && !enemies.length) {
                   this.$emit("isBattle", false);
+                  if(!tile.chest) {
+                    tile.isEmpty = true;
+                    this.mapStore.moveHero(tile);
+                  }
                   tile.inBattle = false;
-                    return;
+                  return;
                 }
             }
         },
