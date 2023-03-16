@@ -31,7 +31,6 @@ export default {
             this.heal = false;
             tile.item = null;
             this.mapStore.moveHero(tile);
-            // tile.isEmpty = true;
         }
     }
 }

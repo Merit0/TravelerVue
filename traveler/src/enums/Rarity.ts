@@ -1,4 +1,4 @@
-enum Rarity {
+export enum Rarity {
     COMMON,
     RARE,
     LEGEND,

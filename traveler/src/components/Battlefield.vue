@@ -77,7 +77,7 @@ export default {
                 for(let i=0; i < enemies.length; i++ ) {
                     enemies[i].health -= this.hero.getAttack();
                     if(enemies[i].health <= 0) {
-                        this.hero.addKilled();
+                      await this.hero.addKilled();
                         const enemyIndex = enemies.findIndex(e => e.id === i);
                         enemies.splice(enemyIndex, 1);
                     } else{
@@ -88,10 +88,13 @@ export default {
                     }
                 }
                 if(!this.enemyAlive && !enemies.length) {
-                  this.mapStore.moveHero(tile);
                   this.$emit("isBattle", false);
+                  if(!tile.chest) {
+                    tile.isEmpty = true;
+                    this.mapStore.moveHero(tile);
+                  }
                   tile.inBattle = false;
-                    return;
+                  return;
                 }
             }
         },

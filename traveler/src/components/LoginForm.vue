@@ -1,8 +1,9 @@
 <template>
+  <title>Login</title>
 <section class="loginPage">
 <div v-if="userStore.error" class="loginFormError"> {{userStore.error}} </div>
 <div class="loginContainer">
-      <h1 class="loginPageTitle" id="loginTitle">Traveler</h1>
+      <h1 class="loginPageTitle" id="loginTitle" title="Traveler">Traveler</h1>
       <div class="loginForm">
       <form @submit.prevent="onSubmit" id="itemEntryForm">
         <input v-model="form.username" class="loginSection__input" id="username" type="text" maxlength="40" autocomplete="off" placeholder="Username"/>

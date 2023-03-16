@@ -1,4 +1,5 @@
 <template>
+    <title>Home</title>
     <div class="page">
         <HeroDetailsBar :hero="hero"></HeroDetailsBar>
         <section class="homeContent">

@@ -1,5 +1,6 @@
 <template>
     <section class="page">
+        <title>EvilLand</title>
         <HeroDetailsBar :hero="hero"></HeroDetailsBar>
         <Tiles :mapTiles="tiles" v-if="tilesShown && heroStore.isAlive()"></Tiles>
         <HeroDeathOverlay v-if="!heroStore.isAlive()"></HeroDeathOverlay>

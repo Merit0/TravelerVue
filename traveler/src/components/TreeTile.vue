@@ -32,9 +32,9 @@ export default {
 <style>
 .treeTile {
     background: none;
-    border: 2px solid rgb(108, 108, 108);
     border-radius: 20%;
     background-image: url('../assets/images/homePage_slotImages/tree.png');
-    background-size: 100%;
+    border: 2px solid rgb(108, 108, 108);
+    background-size: 100% 100%;
 }
 </style>
