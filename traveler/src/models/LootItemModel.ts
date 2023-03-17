@@ -1,6 +1,7 @@
 import { IHeroItem } from "@/abstraction/IHeroItem";
 import { ItemType } from "@/enums/ItemType";
 import { Rarity } from "@/enums/Rarity";
+import { v4 as uuidv4 } from "uuid";
 
 export class LootItemModel implements IHeroItem {
   name: string;
@@ -9,11 +10,6 @@ export class LootItemModel implements IHeroItem {
   borderFrame: string;
   itemType: ItemType;
   rarity: Rarity;
-  id = 0;
+  id = uuidv4();
   chance: boolean;
-  static counter = 0;
-
-  constructor() {
-    this.id = ++LootItemModel.counter;
-  }
 }

@@ -56,7 +56,7 @@ export const useMapStore = defineStore("map", {
     },
     async generateTiles(tilesNumber: number) {
       for (let i = 0; i < tilesNumber; i++) {
-        const tile = new TileModel(i);
+        const tile: TileModel = new TileModel(i);
         tile.setIsATree(true);
         this.tiles.push(tile);
       }
