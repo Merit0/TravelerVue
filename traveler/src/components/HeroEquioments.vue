@@ -1,7 +1,8 @@
 <template>            
     <div class="heroItemsContainer empty">
         <div class="equipmentItemArea">
-            <div class="equipmentItemImg" ></div>
+            <div class="equipmentItemImg" v-if="equipment.sword == null"></div>
+            <button class="equipmentItemImg" :style="getItemStyle(equipment.sword)" v-if="equipment.sword != null" @click="takeOffEquipment(equipment.sword)"></button>
         </div>
         <div class="equipmentItemArea">
             <div class="equipmentItemImg" ></div>
@@ -19,15 +20,25 @@
 </template>
 
 <script lang="ts">
+import { Equipment } from '@/models/Equipment';
 import { LootItemModel } from '@/models/LootItemModel';
 import { useBagStore } from '@/stores/BagStore';
+import { useHeroStore } from '@/stores/HeroStore';
 
 
 export default {
     name: "hero-equipment-tile",
+    props: {
+        equipment: {
+            type: Equipment,
+            required: true
+        }
+    },
     data() {
         const bagStore = useBagStore();
-        return { bagStore };
+        const heroStore = useHeroStore();
+        const hero = heroStore.hero;
+        return { bagStore, hero };
     },
     methods: {
         getItemStyle(equipment: LootItemModel) {
@@ -37,7 +48,9 @@ export default {
             return tileStyle;
         },
         async takeOffEquipment(item: LootItemModel) {
-            this.bagStore.removeItem(item);
+            this.bagStore.putIn(item);
+            this.hero.attack -= this.hero.equipment.sword.value;
+            this.hero.equipment.sword = null;
         }
     }
 }

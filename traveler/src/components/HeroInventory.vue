@@ -5,7 +5,7 @@
             <div class="inventoryItemsContainer">
                 <BagItemTile v-for="bagItem in bagItems" :key="bagItem.id" :lootItem="bagItem"/>
             </div>
-            <HeroEquioments/>
+            <HeroEquioments :equipment="hero.equipment"/>
         </div>
     </div>
 </template>
@@ -15,6 +15,7 @@ import { LootItemModel } from '@/models/LootItemModel';
 import BagItemTile from '@/components/BagItemTile.vue';
 import { useBagStore } from '@/stores/BagStore';
 import HeroEquioments from '@/components/HeroEquioments.vue'
+import { useHeroStore } from '@/stores/HeroStore';
 
 
 export default {
@@ -27,10 +28,12 @@ export default {
         }
     },
     data() {
+        const heroStore = useHeroStore();
+        const hero = heroStore.hero;
         const bagStore = useBagStore();
         const bagItems: LootItemModel[] = bagStore.bagItems;
 
-        return { bagItems };
+        return { bagItems, hero };
     }
 }
 </script>

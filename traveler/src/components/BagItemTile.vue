@@ -7,6 +7,7 @@
 <script lang="ts">
 import { LootItemModel } from '@/models/LootItemModel';
 import { useBagStore } from '@/stores/BagStore';
+import { useHeroStore } from '@/stores/HeroStore';
 
 
 export default {
@@ -19,7 +20,8 @@ export default {
     },
     data() {
         const bagStore = useBagStore();
-        return { bagStore };
+        const hero = useHeroStore().hero;
+        return { bagStore, hero };
     },
     methods: {
         getItemStyle(lootItem: LootItemModel) {
@@ -30,6 +32,14 @@ export default {
         },
         async wearItem(item: LootItemModel) {
             this.bagStore.removeItem(item);
+            if(this.hero.equipment.sword) {
+                this.hero.attack -= this.hero.equipment.sword.value;
+                this.bagStore.putIn(this.hero.equipment.sword);
+                this.hero.equipment.sword = item;
+            } else {
+                this.hero.equipment.sword = item;
+            }
+            this.hero.attack += this.hero.equipment.sword.value;
         }
     }
 }

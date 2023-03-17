@@ -10,7 +10,7 @@ export class SwordProvider {
       .lootItemName("Soul Reaper")
       .lootValue(10)
       .itemType(ItemType.SWORD)
-      .lootRarity(Rarity.COMMON)
+      .lootRarity(Rarity.LEGEND)
       .lootItemImgPath("weapons/sword_soul_ripper.png")
       .dropChance(Randomizer.getChance(50))
       .build();
