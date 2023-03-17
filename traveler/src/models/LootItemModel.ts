@@ -10,6 +10,7 @@ export class LootItemModel implements IHeroItem {
   itemType: ItemType;
   rarity: Rarity;
   id = 0;
+  chance: boolean;
   static counter = 0;
 
   constructor() {

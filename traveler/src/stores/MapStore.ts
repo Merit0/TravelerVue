@@ -101,11 +101,8 @@ export const useMapStore = defineStore("map", {
     generateChest(enemies: EnemyModel[]): ChestModel {
       const chest: ChestModel = new ChestModel();
       for (let i = 0; i < enemies.length; i++) {
-        if (enemies[i].loot) {
-          if (Randomizer.getChance(10)) {
-            chest.items.unshift(enemies[i].loot);
-            chest.items.pop();
-          }
+        if (enemies[i].loot.chance) {
+          chest.addLoot(enemies[i].loot);
         }
       }
       return chest.items.find((item) => item.name) != null ? chest : null;

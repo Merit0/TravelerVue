@@ -10,4 +10,9 @@ export class ChestModel {
   public getLootItems(): LootItemModel[] {
     return this.items;
   }
+
+  public addLoot(lootItem: LootItemModel): void {
+    this.items.unshift(lootItem);
+    this.items.pop();
+  }
 }
