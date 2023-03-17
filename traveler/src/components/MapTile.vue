@@ -6,7 +6,6 @@
     <hero-tile :tile="tile" :show-hero="showHero"></hero-tile>
     <chest-tile :tile="tile"  @chestInventory="openChestInventory($event)"></chest-tile>
     <Battlefield :showOverlay="tile.inBattle" :tile="tile" @isBattle="isBattle($event)"></Battlefield>
-    <hero-inventory :tile="tile" :show-inventory="heroStore.inventoryShown" @heroInventory="closeInventory($event)"></hero-inventory>
     <chest-inventory :chest="tile.chest" :show-chest-inventory="showChestInventory" @chestInventory="closeChestInventory(tile, $event)"></chest-inventory>
 </template>
 
@@ -19,7 +18,6 @@ import HealPortionTile from './HealPortionTile.vue';
 import Battlefield from '@/components/Battlefield.vue';
 import { useHeroStore } from '@/stores/HeroStore'
 import HeroTile from './HeroTile.vue';
-import HeroInventory from '@/components/HeroInventory.vue'
 import ChestTile from './ChestTile.vue';
 import ChestInventory from './ChestInventory.vue';
 import { useMapStore } from '../stores/MapStore';
@@ -32,7 +30,7 @@ export default {
             required: true
         }
     },
-    components: { EnemyTile, TreeTile, EmptyTile, Battlefield, HealPortionTile, HeroTile, HeroInventory, ChestTile, ChestInventory},
+    components: { EnemyTile, TreeTile, EmptyTile, Battlefield, HealPortionTile, HeroTile, ChestTile, ChestInventory},
     data() {
         const heroStore = useHeroStore();
         const mapStore = useMapStore();
@@ -46,9 +44,6 @@ export default {
     methods: {
         async isBattle(battlefieldStatus: boolean) {
             this.showBattlefield = battlefieldStatus;
-        },
-        async closeInventory(invenoryStatus: boolean) {
-            this.heroStore.showInventory(invenoryStatus);
         },
         async closeChestInventory(tile: TileModel, s: boolean) {
             this.showChestInventory = s;

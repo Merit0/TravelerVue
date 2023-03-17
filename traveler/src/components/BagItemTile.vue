@@ -1,6 +1,6 @@
 <template>
-    <div class="chestItemArea">
-        <button class="chestItemImg" v-if="lootItem.imgPath" :style="getItemStyle(lootItem)" @click="takeItem(lootItem)"></button>
+    <div class="bagItemArea">
+        <button class="bagItemImg" :style="getItemStyle(lootItem)" @click="wearItem(lootItem)"></button>
     </div>
 </template>
 
@@ -10,7 +10,7 @@ import { useBagStore } from '@/stores/BagStore';
 
 
 export default {
-    name: "chest-item-tile",
+    name: "bag-item-tile",
     props: {
         lootItem: {
             type: LootItemModel,
@@ -18,10 +18,9 @@ export default {
         }
     },
     data() {
-        const bagStore = useBagStore(); 
+        const bagStore = useBagStore();
         return { bagStore };
     },
-
     methods: {
         getItemStyle(lootItem: LootItemModel) {
             const tileStyle = {
@@ -29,8 +28,8 @@ export default {
             }
             return tileStyle;
         },
-        async takeItem(item: LootItemModel) {
-            this.bagStore.putIn(item);
+        async wearItem(item: LootItemModel) {
+            this.bagStore.removeItem(item);
         }
     }
 }
@@ -38,23 +37,20 @@ export default {
 </script>
 
 <style>
-.chestItemArea {
-    width: 110px;
-    height: 110px;
-    margin: auto;
+.bagItemArea {
+    width: 85px;
+    height: 85px;
+    margin-left: 1%;
+    margin-top: 0.1%;
     display: flex;
     align-items: center;
-    background-image: url("@/assets/images/chests/chest_item_area_orange.png");
-    background-size: 100% 100%;
 }
 
-.chestItemImg {
+.bagItemImg {
     position: relative;
-    width: 84px;
-    height: 84px;
-    background: none;
+    width: 80px;
+    height: 80px;
     background-size: 100% 100%;
-    border-radius: 13%;
-    margin-left: 12px;
+    border-radius: 10%;
 }
 </style>

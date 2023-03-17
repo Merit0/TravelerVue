@@ -31,7 +31,6 @@ export const useMapStore = defineStore("map", {
       }
     },
     isMapCleared: (state) => {
-      console.log(state.isCleared);
       return (
         state.tiles.filter((tile) => tile.isEmpty == true).length ===
           state.tiles.length - 1 && state.tiles.length !== 0

@@ -4,6 +4,7 @@
         <HeroDetailsBar :hero="hero"></HeroDetailsBar>
         <Tiles :mapTiles="tiles" v-if="tilesShown && heroStore.isAlive()"></Tiles>
         <HeroDeathOverlay v-if="!heroStore.isAlive()"></HeroDeathOverlay>
+        <hero-inventory :show-inventory="heroStore.inventoryShown" @heroInventory="closeInventory($event)"></hero-inventory>
         <button @click="quitMap()" class="quit">Escape</button> 
     </section>
 </template>
@@ -16,10 +17,11 @@ import { useHeroStore } from '@/stores/HeroStore'
 import router from '@/router';
 import { useMapStore } from '../stores/MapStore';
 import MapModel from '../models/MapModel';
+import HeroInventory from './HeroInventory.vue';
 import { MapProvider } from '../providers/MapProvider';
 
 export default {
-    components: { Tiles, HeroDetailsBar, HeroDeathOverlay },
+    components: { Tiles, HeroDetailsBar, HeroDeathOverlay, HeroInventory },
     data() {    
         const heroStore = useHeroStore();
         const hero = heroStore.hero;
@@ -38,7 +40,10 @@ export default {
                 this.mapStore.isCleared = this.mapStore.isMapCleared;
             }
             router.push("/");
-        }
+        },
+        async closeInventory(invenoryStatus: boolean) {
+            this.heroStore.showInventory(invenoryStatus);
+        },
     }
 }
 </script>
