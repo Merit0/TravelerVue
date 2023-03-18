@@ -27,6 +27,11 @@ export default {
             type: Boolean,
             required: true
         }
+    },
+    methods: {
+        async closeChest() {
+            this.$emit('chestInventory', false)
+        }
     }
 }
 </script>

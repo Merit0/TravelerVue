@@ -1,11 +1,12 @@
 <template>            
     <div class="heroItemsContainer empty">
         <div class="equipmentItemArea">
-            <div class="equipmentItemImg" v-if="equipment.sword == null"></div>
-            <button class="equipmentItemImg" :style="getItemStyle(equipment.sword)" v-if="equipment.sword != null" @click="takeOffEquipment(equipment.sword)"></button>
+            <div class="equipmentItemImg" v-if="equipment.weapon == null"></div>
+            <button class="equipmentItemImg" :style="getItemStyle(equipment.weapon)" v-if="equipment.weapon != null" @click="takeOffEquipment(equipment.weapon)"></button>
         </div>
         <div class="equipmentItemArea">
             <div class="equipmentItemImg" ></div>
+            <button class="equipmentItemImg" :style="getItemStyle(equipment.armor)" v-if="equipment.armor != null" @click="takeOffEquipment(equipment.armor)"></button>
         </div>
         <div class="equipmentItemArea">
             <div class="equipmentItemImg" ></div>
@@ -20,6 +21,7 @@
 </template>
 
 <script lang="ts">
+import { ItemType } from '@/enums/ItemType';
 import { Equipment } from '@/models/Equipment';
 import { LootItemModel } from '@/models/LootItemModel';
 import { useBagStore } from '@/stores/BagStore';
@@ -48,9 +50,11 @@ export default {
             return tileStyle;
         },
         async takeOffEquipment(item: LootItemModel) {
-            this.bagStore.putIn(item);
-            this.hero.attack -= this.hero.equipment.sword.value;
-            this.hero.equipment.sword = null;
+            if(item.itemType === ItemType.WEAPON) {
+                this.bagStore.putIn(item);
+                this.hero.attack -= this.hero.equipment.weapon.value;
+                this.hero.equipment.weapon = null;
+            }
         }
     }
 }

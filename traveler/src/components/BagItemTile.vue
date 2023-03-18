@@ -5,6 +5,7 @@
 </template>
 
 <script lang="ts">
+import { ItemType } from '@/enums/ItemType';
 import { LootItemModel } from '@/models/LootItemModel';
 import { useBagStore } from '@/stores/BagStore';
 import { useHeroStore } from '@/stores/HeroStore';
@@ -31,15 +32,21 @@ export default {
             return tileStyle;
         },
         async wearItem(item: LootItemModel) {
-            this.bagStore.removeItem(item);
-            if(this.hero.equipment.sword) {
-                this.hero.attack -= this.hero.equipment.sword.value;
-                this.bagStore.putIn(this.hero.equipment.sword);
-                this.hero.equipment.sword = item;
-            } else {
-                this.hero.equipment.sword = item;
+            if(item.itemType === ItemType.WEAPON) {
+                if(this.hero.equipment.weapon != null) {
+                    this.bagStore.removeItem(item);
+                    this.hero.attack -= this.hero.equipment.weapon.value;
+                    this.bagStore.putIn(this.hero.equipment.weapon);
+                    this.hero.equipment.weapon = item;
+                    this.hero.attack += this.hero.equipment.weapon.value;
+                    return true;
+                } else if (this.hero.equipment.sword == null) {
+                    this.bagStore.removeItem(item);
+                    this.hero.equipment.weapon = item;
+                    this.hero.attack += this.hero.equipment.weapon.value;
+                    return true;
+                }
             }
-            this.hero.attack += this.hero.equipment.sword.value;
         }
     }
 }

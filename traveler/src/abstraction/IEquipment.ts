@@ -2,7 +2,7 @@ import { ItemType } from "@/enums/ItemType";
 import { LootItemModel } from "@/models/LootItemModel";
 
 export interface IEquipment {
-  sword: LootItemModel & { itemType: ItemType.SWORD };
+  weapon: LootItemModel & { itemType: ItemType.WEAPON };
   shield: LootItemModel;
   helm: LootItemModel;
   armor: LootItemModel;

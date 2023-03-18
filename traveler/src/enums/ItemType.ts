@@ -1,10 +1,10 @@
 export enum ItemType {
-    SWORD,
-    ARMOR,
-    HELM,
-    SHIELD,
-    BOOTS,
-    GLOWS,
-    RING,
-    NECKLACE
+  WEAPON,
+  ARMOR,
+  HELM,
+  SHIELD,
+  BOOTS,
+  GLOWS,
+  RING,
+  NECKLACE,
 }
