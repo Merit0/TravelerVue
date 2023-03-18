@@ -104,6 +104,7 @@ export const useMapStore = defineStore("map", {
       const chest: ChestModel = new ChestModel();
       for (let i = 0; i < enemies.length; i++) {
         if (enemies[i].loot.chance) {
+          enemies[i].loot.location = "Chest";
           chest.addLoot(enemies[i].loot);
         }
       }
