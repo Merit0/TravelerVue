@@ -27,7 +27,8 @@ export const useHeroStore = defineStore("hero", {
         .setCoins(hero.coins)
         .setKills(hero.kills)
         .setStats(hero.available)
-        .setEquipment(hero.equipment);
+        .setEquipment(hero.equipment)
+        .setHeroLocation(hero.heroLocation);
 
       return true;
     },

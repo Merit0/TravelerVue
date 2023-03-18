@@ -1,31 +1,25 @@
 import { defineStore } from "pinia";
 import { LootItemModel } from "@/models/LootItemModel";
+import { ChestModel } from "@/models/ChestModel";
 
 export const useChestStore = defineStore("chest", {
   state: () => {
     return {
       chestItems: [],
       isShown: false,
-      bagCapacity: 6,
     };
   },
   getters: {
     showChest: (state) => {
       state.isShown = true;
     },
-    clearChest: (state) => (state.chestItems = []),
+    clearChest: (state) => {
+      state.chestItems = [];
+    },
   },
   actions: {
-    async addItems(items: LootItemModel[]) {
-      for (let i = 0; i < items.length; i++) {
-        this.putIn(items[i]);
-      }
-    },
-    async putIn(lootItem: LootItemModel) {
-      if (this.chestCapacity > 0) {
-        this.chestItems.unshift(lootItem);
-        this.chestCapacity -= 1;
-      }
+    async addItem(lootItem: LootItemModel) {
+      this.chestItems.unshift(lootItem);
     },
     async removeItem(lootItem: LootItemModel) {
       const itemIndex = this.chestItems.findIndex(

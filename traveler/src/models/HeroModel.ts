@@ -1,5 +1,6 @@
 import { IHero } from "@/abstraction/IHero";
 import { Equipment } from "./Equipment";
+import TileModel from "./TileModel";
 
 export class HeroModel implements IHero {
   name: string;
@@ -14,6 +15,7 @@ export class HeroModel implements IHero {
   id: number;
   imgPath = "heroes/hero_ass1.png";
   equipment: Equipment;
+  heroLocation: TileModel;
 
   constructor() {
     this.maxHealth = 100;
@@ -21,6 +23,11 @@ export class HeroModel implements IHero {
 
   public setName(name: string): HeroModel {
     this.name = name;
+    return this;
+  }
+
+  public setHeroLocation(tile: TileModel): HeroModel {
+    this.heroLocation = tile;
     return this;
   }
 

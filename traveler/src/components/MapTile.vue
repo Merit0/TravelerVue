@@ -35,11 +35,12 @@ export default {
         const heroStore = useHeroStore();
         const mapStore = useMapStore();
         const hero = heroStore.hero;
-            let enemyAlive = true;
-            let showBattlefield = false;
-            let showHero = true;
-            let showChestInventory = false;
-            return { enemyAlive, hero, showBattlefield, showHero, heroStore, showChestInventory, mapStore }
+        let enemyAlive = true;
+        let showBattlefield = false;
+        let showHero = true;
+        let showChestInventory = false;
+        
+        return { enemyAlive, hero, showBattlefield, showHero, showChestInventory, mapStore }
         },
     methods: {
         async isBattle(battlefieldStatus: boolean) {

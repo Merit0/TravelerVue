@@ -7,6 +7,7 @@
 <script lang="ts">
 import { LootItemModel } from '@/models/LootItemModel';
 import { useBagStore } from '@/stores/BagStore';
+import { useChestStore } from '@/stores/ChestStore';
 
 
 export default {
@@ -19,6 +20,8 @@ export default {
     },
     data() {
         const bagStore = useBagStore(); 
+        const chestStore = useChestStore();
+        chestStore.addItem(this.lootItem);
         return { bagStore };
     },
 

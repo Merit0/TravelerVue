@@ -1,4 +1,5 @@
 import { Equipment } from "@/models/Equipment";
+import TileModel from "@/models/TileModel";
 
 export type User = {
   name: string;
@@ -18,6 +19,7 @@ export type Hero = {
   available: boolean;
   stats: boolean;
   equipment: Equipment;
+  heroLocation: TileModel;
 };
 export type HeroList = Array<Hero & { id: number }>;
 

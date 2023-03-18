@@ -15,7 +15,8 @@
             "helm": null,
             "armor": null,
             "ring": null
-        }
+        },
+        "heroLocation": null
     },
     {
         "name": "Demon",
