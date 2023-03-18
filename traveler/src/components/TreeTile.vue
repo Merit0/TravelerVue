@@ -4,6 +4,7 @@
 
 <script lang="ts">
 import TileModel from '@/models/TileModel';
+import { useHeroStore } from '@/stores/HeroStore';
 import { useMapStore } from '../stores/MapStore';
 
 
@@ -17,7 +18,8 @@ export default {
     },
     data() {
         const mapStore = useMapStore();
-        return { mapStore };
+        const heroStore = useHeroStore();
+        return { mapStore, heroStore };
     },
     methods: {
         async cutTree(tile: TileModel) {

@@ -11,6 +11,7 @@ import { IHero } from "../abstraction/IHero";
 import { HeroModel } from "../models/HeroModel";
 import { SwordProvider } from "../providers/SwordProvider";
 import { ChestModel } from "../models/ChestModel";
+import { useHeroStore } from "./HeroStore";
 
 export const useMapStore = defineStore("map", {
   state: () => {
@@ -67,6 +68,7 @@ export const useMapStore = defineStore("map", {
     },
 
     async moveHero(nextTile: TileModel) {
+      const heroStore = useHeroStore();
       for (let i = 0; i < this.tiles.length; i++) {
         const tile: TileModel = this.tiles[i];
         if (tile.hero) {
@@ -74,6 +76,7 @@ export const useMapStore = defineStore("map", {
           tile.hero = null;
           tile.isEmpty = true;
           nextTile.hero = hero;
+          heroStore.setLocation(nextTile);
           this.removeAllItemsFromTile(nextTile);
           return;
         }

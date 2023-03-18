@@ -2,12 +2,14 @@ import { defineStore } from "pinia";
 import { HeroModel } from "@/models/HeroModel";
 import { useUserStore } from "./UserStore";
 import * as Request from "@/api/Requests";
+import TileModel from "@/models/TileModel";
 
 export const useHeroStore = defineStore("hero", {
   state: () => {
     return {
       hero: new HeroModel(),
       inventoryShown: false,
+      location: null,
     };
   },
   actions: {
@@ -43,6 +45,9 @@ export const useHeroStore = defineStore("hero", {
     },
     showInventory(status: boolean) {
       this.inventoryShown = status;
+    },
+    setLocation(tile: TileModel) {
+      this.location = tile;
     },
   },
 });
