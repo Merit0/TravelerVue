@@ -30,9 +30,6 @@ export default {
         return { heroStore }
     },
     methods: {
-        async showDetails(hero: IHero) {
-            console.log(hero.name);
-        },
         getStyle(tile: TileModel) {
             const tileStyle = {
                 backgroundImage: 'url(' + require('@/assets/images/' + tile.hero.imgPath) + ')',
