@@ -19,7 +19,6 @@ import HeroDetailsBar from './HeroDetailsBar.vue';
 import BagInventory from './BagInventory.vue';
 import MapsList from './MapsList.vue';
 import { useHeroStore } from '../stores/HeroStore'
-import { IHero } from '@/abstraction/IHero'
 
 export default {
     name: "HomePage",
@@ -27,7 +26,7 @@ export default {
     data() {
         const userStore = useUserStore();
         const heroStore = useHeroStore();
-        const hero: IHero = heroStore.hero;
+        const hero = heroStore.hero;
         let showInventory = false;
         return { userStore, hero, heroStore, time: '', showInventory};
     },

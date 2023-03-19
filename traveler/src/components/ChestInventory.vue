@@ -1,7 +1,7 @@
 <template>
     <div class="chestOverlay" v-if="showChestInventory">
         <div class="chestContent">
-        <button class="closeChestInventoryBtn" @click="$emit('chestInventory', false)">X</button>    
+        <button class="closeChestInventoryBtn" @click="closeChestInventory()">X</button>    
             <h1 class="title">CHEST</h1>
             <div class="chestItemsContainer">
                 <chest-item-tile v-for="item in chest.items" :key="item.id" :lootItem="item"></chest-item-tile>
@@ -13,6 +13,7 @@
 <script lang="ts">
 import ChestItemTile from './ChestItemTile.vue';
 import { ChestModel } from '../models/ChestModel';
+import { useChestStore } from '@/stores/ChestStore';
 
 
 export default {
@@ -26,6 +27,19 @@ export default {
         showChestInventory: {
             type: Boolean,
             required: true
+        }
+    },
+    data() {
+        const chestStore = useChestStore();
+        chestStore.isShown = true;
+        return { chestStore }
+    },
+    methods: {
+        async closeChestInventory() {
+            this.$emit('chestInventory', false)
+            this.chestStore.clearChest;
+            this.chestStore.isShown = false;
+
         }
     }
 }

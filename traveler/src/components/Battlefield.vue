@@ -75,14 +75,13 @@ export default {
             const enemies = tile.enemies;
             if(this.hero.getHealth() > 0) {
                 for(let i=0; i < enemies.length; i++ ) {
+                    this.hero.takeDamage(enemies[i].attack);
                     enemies[i].health -= this.hero.getAttack();
                     if(enemies[i].health <= 0) {
                       await this.hero.addKilled();
                         const enemyIndex = enemies.findIndex(e => e.id === i);
                         enemies.splice(enemyIndex, 1);
-                    } else{
-                        this.hero.takeDamage(enemies[i].attack);
-                    }
+                    } 
                     if(!enemies.length) {
                         this.enemyAlive = false;
                     }

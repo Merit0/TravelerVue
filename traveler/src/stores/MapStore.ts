@@ -9,8 +9,10 @@ import { EnemyProvider } from "../providers/EnemyProvider";
 import { BossProvider } from "../providers/BossProvider";
 import { IHero } from "../abstraction/IHero";
 import { HeroModel } from "../models/HeroModel";
-import { SwordProvider } from "../providers/SwordProvider";
 import { ChestModel } from "../models/ChestModel";
+import { useHeroStore } from "./HeroStore";
+import { WeaponProvider } from "@/providers/WeaponProvider";
+import { LootItemModel } from "@/models/LootItemModel";
 
 export const useMapStore = defineStore("map", {
   state: () => {
@@ -31,7 +33,6 @@ export const useMapStore = defineStore("map", {
       }
     },
     isMapCleared: (state) => {
-      console.log(state.isCleared);
       return (
         state.tiles.filter((tile) => tile.isEmpty == true).length ===
           state.tiles.length - 1 && state.tiles.length !== 0
@@ -50,13 +51,12 @@ export const useMapStore = defineStore("map", {
         this.generateTiles(map.getTilesNumber());
         this.addHero(map.getHero());
         this.addEnemies();
-        this.addItems();
         this.isCleared = false;
       }
     },
     async generateTiles(tilesNumber: number) {
       for (let i = 0; i < tilesNumber; i++) {
-        const tile = new TileModel(i);
+        const tile: TileModel = new TileModel(i);
         tile.setIsATree(true);
         this.tiles.push(tile);
       }
@@ -68,6 +68,7 @@ export const useMapStore = defineStore("map", {
     },
 
     async moveHero(nextTile: TileModel) {
+      const heroStore = useHeroStore();
       for (let i = 0; i < this.tiles.length; i++) {
         const tile: TileModel = this.tiles[i];
         if (tile.hero) {
@@ -75,6 +76,7 @@ export const useMapStore = defineStore("map", {
           tile.hero = null;
           tile.isEmpty = true;
           nextTile.hero = hero;
+          heroStore.setLocation(nextTile);
           this.removeAllItemsFromTile(nextTile);
           return;
         }
@@ -102,24 +104,16 @@ export const useMapStore = defineStore("map", {
       const chest: ChestModel = new ChestModel();
       for (let i = 0; i < enemies.length; i++) {
         if (enemies[i].loot.chance) {
+          enemies[i].loot.location = "Chest";
           chest.addLoot(enemies[i].loot);
         }
       }
       return chest.items.find((item) => item.name) != null ? chest : null;
     },
 
-    async addItems() {
-      for (let i = 0; i < this.tiles.length; i++) {
-        if (this.tiles[i].enemies.length === 0 && !this.tiles[i].hero) {
-          this.tiles[i].setItem(this.generateItem());
-          this.tiles[i].isEmpty = false;
-        }
-      }
-    },
-
     generateEnemies(id: number): EnemyModel[] {
       const createdEnemies = new Array<EnemyModel>();
-      if (Randomizer.getChance(10)) {
+      if (Randomizer.getChance(20)) {
         let randIndex: number = Math.floor(
           Math.random() * EnemyProvider.getEvilLandsEnemies().length
         );
@@ -127,7 +121,9 @@ export const useMapStore = defineStore("map", {
           let enemy: EnemyModel = EnemyProvider.getEvilLandsEnemies()[
             randIndex
           ].setId(id + i);
-          const loot = SwordProvider.getRipper();
+          const loot = Randomizer.getRandomEquipment(
+            WeaponProvider.getEquipmentList()
+          );
           enemy.setLoot(loot);
           createdEnemies.push(enemy);
           enemy = null;
@@ -137,16 +133,9 @@ export const useMapStore = defineStore("map", {
       return createdEnemies;
     },
 
-    generateItem(): HealPortionModel {
-      if (Randomizer.getChance(5)) {
-        return new HealPortionModel(HealPortion.SMALL);
-      }
-    },
-
     removeAllItemsFromTile(tile: TileModel): void {
       tile.isEmpty = false;
       tile.isTree = false;
-      tile.item = null;
     },
   },
 });

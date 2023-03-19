@@ -3,76 +3,56 @@
         <div class="inventoryContent">
             <button class="closeInventoryBtn" @click="$emit('heroInventory', false)">X</button>    
             <div class="inventoryItemsContainer">
-                <div class="itemArea">
-                    <div class="itemImg"></div>
-                </div>
-                <div class="itemArea">
-                    <div class="itemImg"></div>
-                </div>
-                <div class="itemArea">
-                    <div class="itemImg"></div>
-                </div>
-                <div class="itemArea">
-                    <div class="itemImg"></div>
-                </div>
-                <div class="itemArea">
-                    <div class="itemImg"></div>
-                </div>
-                <div class="itemArea">
-                    <div class="itemImg"></div>
-                </div>
-                <div class="itemArea">
-                    <div class="itemImg"></div>
-                </div>
-                <div class="itemArea">
-                    <div class="itemImg"></div>
-                </div>
-                <div class="itemArea">
-                    <div class="itemImg"></div>
-                </div>
-                <div class="itemArea">
-                    <div class="itemImg"></div>
-                </div>
-                <div class="itemArea">
-                    <div class="itemImg"></div>
-                </div>
-                <div class="itemArea">
-                    <div class="itemImg"></div>
-                </div>
-                <div class="itemArea">
-                    <div class="itemImg"></div>
-                </div>
-                <div class="itemArea">
-                    <div class="itemImg"></div>
-                </div>
-                <div class="itemArea">
-                    <div class="itemImg"></div>
-                </div>
+                <BagItemTile v-for="bagItem in bagItems" :key="bagItem.id" :lootItem="bagItem"/>
             </div>
+            <HeroEquioments :equipment="hero.equipment"/>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import TileModel from '@/models/TileModel';
+import { LootItemModel } from '@/models/LootItemModel';
+import BagItemTile from '@/components/BagItemTile.vue';
+import { useBagStore } from '@/stores/BagStore';
+import HeroEquioments from '@/components/HeroEquioments.vue'
+import { useHeroStore } from '@/stores/HeroStore';
 
 
 export default {
     name: "hero-inventory",
+    components: { BagItemTile, HeroEquioments },
     props: {
-        tile: {
-            type: TileModel,
-            required: true
-        },
         showInventory: {
             type: Boolean,
             required: true
         }
+    },
+    data() {
+        const heroStore = useHeroStore();
+        const hero = heroStore.hero;
+        const bagStore = useBagStore();
+        const bagItems: LootItemModel[] = bagStore.bagItems;
+
+        return { bagItems, hero };
     }
 }
 </script>
 
 <style>
+.heroItemsContainer {
+    margin-top: 40px;
+    position: relative;
+    width: 510px;
+    height: 110px;
+    background-color: rgba(255, 251, 0, 0.16);
+    top: 100px;
+    left: 80px;
+    align-items: flex-end;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
 .inventoryContent {
     width: 1000px;
     height: 700px;
@@ -106,24 +86,6 @@ export default {
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-}
-
-.itemArea {
-    width: 85px;
-    height: 85px;
-    margin-left: 1%;
-    margin-top: 0.1%;
-    display: flex;
-    align-items: center;
-}
-
-.itemImg {
-    position: relative;
-    width: 80px;
-    height: 80px;
-    background-image: url("@/assets/images/weapons/sword_soul_ripper.png");
-    background-size: 100% 100%;
-    border-radius: 10%;
 }
 
 .closeInventoryBtn {

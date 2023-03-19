@@ -1,12 +1,13 @@
-import { LootItemModel } from '../models/LootItemModel';
 <template>
     <div class="chestItemArea">
-        <button class="chestItemImg" v-if="lootItem.imgPath" :style="getItemStyle(lootItem)" @click="takeItem(lootItem)"></button>
+        <button class="chestItemImg" v-if="lootItem.location === 'Chest'" :style="getItemStyle(lootItem)" @click="takeItem(lootItem)"></button>
     </div>
 </template>
 
 <script lang="ts">
 import { LootItemModel } from '@/models/LootItemModel';
+import { useBagStore } from '@/stores/BagStore';
+import { useChestStore } from '@/stores/ChestStore';
 
 
 export default {
@@ -18,7 +19,10 @@ export default {
         }
     },
     data() {
-        return {};
+        const bagStore = useBagStore(); 
+        const chestStore = useChestStore();
+        chestStore.addItem(this.lootItem);
+        return { bagStore };
     },
 
     methods: {
@@ -29,7 +33,8 @@ export default {
             return tileStyle;
         },
         async takeItem(item: LootItemModel) {
-            item.imgPath = "";
+            this.bagStore.putIn(item);
+            item.location = "Bag";
         }
     }
 }
