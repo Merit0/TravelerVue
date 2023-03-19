@@ -40,7 +40,7 @@ export default {
                     this.hero.equipment.weapon = item;
                     this.hero.attack += this.hero.equipment.weapon.value;
                     return true;
-                } else if (this.hero.equipment.sword == null) {
+                } else if (this.hero.equipment.weapon == null) {
                     this.bagStore.removeItem(item);
                     this.hero.equipment.weapon = item;
                     this.hero.attack += this.hero.equipment.weapon.value;
