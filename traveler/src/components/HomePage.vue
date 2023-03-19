@@ -27,7 +27,7 @@ export default {
     data() {
         const userStore = useUserStore();
         const heroStore = useHeroStore();
-        const hero: IHero = heroStore.hero;
+        const hero = heroStore.hero;
         let showInventory = false;
         return { userStore, hero, heroStore, time: '', showInventory};
     },

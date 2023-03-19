@@ -9,9 +9,9 @@ import { EnemyProvider } from "../providers/EnemyProvider";
 import { BossProvider } from "../providers/BossProvider";
 import { IHero } from "../abstraction/IHero";
 import { HeroModel } from "../models/HeroModel";
-import { SwordProvider } from "../providers/SwordProvider";
 import { ChestModel } from "../models/ChestModel";
 import { useHeroStore } from "./HeroStore";
+import { WeaponProvider } from "@/providers/WeaponProvider";
 
 export const useMapStore = defineStore("map", {
   state: () => {
@@ -130,7 +130,7 @@ export const useMapStore = defineStore("map", {
           let enemy: EnemyModel = EnemyProvider.getEvilLandsEnemies()[
             randIndex
           ].setId(id + i);
-          const loot = SwordProvider.getRipper();
+          const loot = WeaponProvider.getRipper();
           enemy.setLoot(loot);
           createdEnemies.push(enemy);
           enemy = null;
