@@ -1,3 +1,5 @@
+import { Equipment } from "@/models/Equipment";
+import { LootItemModel } from "@/models/LootItemModel";
 import { EnemyType } from "../enums/EnemyType";
 
 export class Randomizer {
@@ -16,6 +18,12 @@ export class Randomizer {
     const index = this.getRandomInt(keys.length);
 
     return EnemyType.WARRIOR;
+  }
+
+  static getRandomEquipment(equipmentList: LootItemModel[]): LootItemModel {
+    const index = this.getRandomInt(equipmentList.length);
+
+    return equipmentList[index];
   }
 
   static getChance(percentage: number): boolean {

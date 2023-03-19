@@ -5,11 +5,12 @@
             <button class="equipmentItemImg" :style="getItemStyle(equipment.weapon)" v-if="equipment.weapon != null" @click="takeOffEquipment(equipment.weapon)"></button>
         </div>
         <div class="equipmentItemArea">
-            <div class="equipmentItemImg" ></div>
+            <div class="equipmentItemImg" v-if="equipment.armor == null"></div>
             <button class="equipmentItemImg" :style="getItemStyle(equipment.armor)" v-if="equipment.armor != null" @click="takeOffEquipment(equipment.armor)"></button>
         </div>
         <div class="equipmentItemArea">
-            <div class="equipmentItemImg" ></div>
+            <div class="equipmentItemImg" v-if="equipment.helm == null"></div>
+            <button class="equipmentItemImg" :style="getItemStyle(equipment.helm)" v-if="equipment.helm != null" @click="takeOffEquipment(equipment.helm)"></button>
         </div>
         <div class="equipmentItemArea">
             <div class="equipmentItemImg" ></div>
@@ -50,10 +51,20 @@ export default {
             return tileStyle;
         },
         async takeOffEquipment(item: LootItemModel) {
-            if(item.itemType === ItemType.WEAPON) {
+            if( item.itemType === ItemType.WEAPON ) {
                 this.bagStore.putIn(item);
                 this.hero.attack -= this.hero.equipment.weapon.value;
                 this.hero.equipment.weapon = null;
+            } else if( item.itemType === ItemType.ARMOR ) {
+                this.bagStore.putIn(item);
+                this.hero.maxHealth -= this.hero.equipment.armor.value;
+                this.hero.currentHealth -= this.hero.equipment.armor.value;
+                this.hero.equipment.armor = null;
+            } else if( item.itemType === ItemType.HELM ) {
+                this.bagStore.putIn(item);
+                this.hero.maxHealth -= this.hero.equipment.helm.value;
+                this.hero.currentHealth -= this.hero.equipment.helm.value;
+                this.hero.equipment.helm = null;
             }
         }
     }

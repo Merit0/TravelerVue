@@ -7,4 +7,5 @@ export enum ItemType {
   GLOWS,
   RING,
   NECKLACE,
+  HEAL,
 }

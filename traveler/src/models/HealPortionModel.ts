@@ -1,13 +1,13 @@
-import { HealPortion } from './../enums/HealPortion';
+import { HealPortion } from "./../enums/HealPortion";
 export class HealPortionModel {
+  name = "Heal Potion";
+  amount: number;
 
-    amount: number;
-
-    constructor(portionType: HealPortion) {
-        if (portionType === HealPortion.SMALL) {
-            this.amount = 10;
-        } else {
-            this.amount = 50;
-        }
+  constructor(portionType: HealPortion) {
+    if (portionType === HealPortion.SMALL) {
+      this.amount = 10;
+    } else {
+      this.amount = 50;
     }
+  }
 }

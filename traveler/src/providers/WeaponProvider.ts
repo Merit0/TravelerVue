@@ -42,10 +42,21 @@ export class WeaponProvider {
     return new LootItemBuilder()
       .lootItemName("Executor")
       .lootValue(50)
-      .itemType(ItemType.ARMOR)
+      .itemType(ItemType.HELM)
       .lootRarity(Rarity.LEGEND)
       .lootItemImgPath("equipment/executor_helm.png")
       .dropChance(Randomizer.getChance(50))
+      .build();
+  }
+
+  public static getHealPotion(): LootItemModel {
+    return new LootItemBuilder()
+      .lootItemName("Heal Potion")
+      .lootValue(10)
+      .itemType(ItemType.HEAL)
+      .lootRarity(Rarity.COMMON)
+      .lootItemImgPath("items/healSmall.png")
+      .dropChance(Randomizer.getChance(100))
       .build();
   }
 
@@ -53,12 +64,13 @@ export class WeaponProvider {
     return new LootItemBuilder().lootItemName("Empty").build();
   }
 
-  public static getEquipment(): LootItemModel[] {
+  public static getEquipmentList(): LootItemModel[] {
     return Array.of(
       this.getRipper(),
       this.getProtector(),
       this.getExecutor(),
-      this.getSlasher()
+      this.getSlasher(),
+      this.getHealPotion()
     );
   }
 }

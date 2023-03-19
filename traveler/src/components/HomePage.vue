@@ -19,7 +19,6 @@ import HeroDetailsBar from './HeroDetailsBar.vue';
 import BagInventory from './BagInventory.vue';
 import MapsList from './MapsList.vue';
 import { useHeroStore } from '../stores/HeroStore'
-import { IHero } from '@/abstraction/IHero'
 
 export default {
     name: "HomePage",

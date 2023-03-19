@@ -12,6 +12,7 @@ import { HeroModel } from "../models/HeroModel";
 import { ChestModel } from "../models/ChestModel";
 import { useHeroStore } from "./HeroStore";
 import { WeaponProvider } from "@/providers/WeaponProvider";
+import { LootItemModel } from "@/models/LootItemModel";
 
 export const useMapStore = defineStore("map", {
   state: () => {
@@ -122,7 +123,7 @@ export const useMapStore = defineStore("map", {
 
     generateEnemies(id: number): EnemyModel[] {
       const createdEnemies = new Array<EnemyModel>();
-      if (Randomizer.getChance(10)) {
+      if (Randomizer.getChance(20)) {
         let randIndex: number = Math.floor(
           Math.random() * EnemyProvider.getEvilLandsEnemies().length
         );
@@ -130,7 +131,9 @@ export const useMapStore = defineStore("map", {
           let enemy: EnemyModel = EnemyProvider.getEvilLandsEnemies()[
             randIndex
           ].setId(id + i);
-          const loot = WeaponProvider.getRipper();
+          const loot = Randomizer.getRandomEquipment(
+            WeaponProvider.getEquipmentList()
+          );
           enemy.setLoot(loot);
           createdEnemies.push(enemy);
           enemy = null;
@@ -141,7 +144,7 @@ export const useMapStore = defineStore("map", {
     },
 
     generateItem(): HealPortionModel {
-      if (Randomizer.getChance(5)) {
+      if (Randomizer.getChance(10)) {
         return new HealPortionModel(HealPortion.SMALL);
       }
     },
