@@ -51,7 +51,6 @@ export const useMapStore = defineStore("map", {
         this.generateTiles(map.getTilesNumber());
         this.addHero(map.getHero());
         this.addEnemies();
-        this.addItems();
         this.isCleared = false;
       }
     },
@@ -112,15 +111,6 @@ export const useMapStore = defineStore("map", {
       return chest.items.find((item) => item.name) != null ? chest : null;
     },
 
-    async addItems() {
-      for (let i = 0; i < this.tiles.length; i++) {
-        if (this.tiles[i].enemies.length === 0 && !this.tiles[i].hero) {
-          this.tiles[i].setItem(this.generateItem());
-          this.tiles[i].isEmpty = false;
-        }
-      }
-    },
-
     generateEnemies(id: number): EnemyModel[] {
       const createdEnemies = new Array<EnemyModel>();
       if (Randomizer.getChance(20)) {
@@ -143,16 +133,9 @@ export const useMapStore = defineStore("map", {
       return createdEnemies;
     },
 
-    generateItem(): HealPortionModel {
-      if (Randomizer.getChance(10)) {
-        return new HealPortionModel(HealPortion.SMALL);
-      }
-    },
-
     removeAllItemsFromTile(tile: TileModel): void {
       tile.isEmpty = false;
       tile.isTree = false;
-      tile.item = null;
     },
   },
 });

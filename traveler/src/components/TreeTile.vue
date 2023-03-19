@@ -24,7 +24,7 @@ export default {
     methods: {
         async cutTree(tile: TileModel) {
             tile.isTree = false;
-            if(tile.enemies.length === 0 && !tile.item) {
+            if( tile.enemies.length === 0 ) {
                 this.mapStore.moveHero(tile);
             }
         }
