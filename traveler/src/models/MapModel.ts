@@ -1,6 +1,5 @@
 import { MapComplexity } from "@/enums/MapComplexity";
 import { IHero } from "../abstraction/IHero";
-import { HeroModel } from "./HeroModel";
 
 export class MapModel {
   private mapName: string;
@@ -28,7 +27,7 @@ export class MapModel {
     return this;
   }
 
-  public setHero(hero: HeroModel): void {
+  public setHero(hero: IHero): void {
     this.hero = hero;
   }
 

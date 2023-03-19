@@ -1,5 +1,4 @@
-import { Equipment } from "@/models/Equipment";
-import TileModel from "@/models/TileModel";
+import { IHero } from "@/abstraction/IHero";
 
 export type User = {
   name: string;
@@ -8,20 +7,7 @@ export type User = {
   id: number;
 };
 export type UserList = Array<User & { password: string }>;
-export type Hero = {
-  name: string;
-  currentHealth: number;
-  maxHealth: number;
-  attack: number;
-  defense: number;
-  coins: number;
-  kills: number;
-  available: boolean;
-  stats: boolean;
-  equipment: Equipment;
-  heroLocation: TileModel;
-};
-export type HeroList = Array<Hero & { id: number }>;
+export type HeroList = Array<IHero>;
 
 export async function login(username: string, password: string) {
   const request = await fetch("/users.json");

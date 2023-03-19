@@ -104,7 +104,7 @@ export class HeroModel implements IHero {
     this.expirienceCollector();
   }
 
-  private expirienceCollector(): void {
+  public expirienceCollector(): void {
     if (this.kills % 5 === 0) {
       this.attack += 1;
     }

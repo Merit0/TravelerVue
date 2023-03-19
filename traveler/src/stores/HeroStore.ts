@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import { HeroModel } from "@/models/HeroModel";
 import { useUserStore } from "./UserStore";
 import * as Request from "@/api/Requests";
+import { IHero } from "@/abstraction/IHero";
 import TileModel from "@/models/TileModel";
 
 export const useHeroStore = defineStore("hero", {
@@ -9,28 +10,27 @@ export const useHeroStore = defineStore("hero", {
     return {
       hero: new HeroModel(),
       inventoryShown: false,
-      location: null,
     };
   },
   actions: {
     async getHero() {
       const userStore = useUserStore();
-      const hero = await Request.getHero(userStore.user.getId());
+      const hero: IHero = await Request.getHero(userStore.user.getId());
       if (hero == null) {
         console.log("Hero is not retrieved by Api");
         return false;
       }
+
       this.hero
         .setName(hero.name)
         .setHealth(hero.currentHealth)
         .setMaxHealth(hero.maxHealth)
         .setAttack(hero.attack)
-        .setDefence(hero.defense)
+        .setDefence(hero.defence)
         .setCoins(hero.coins)
         .setKills(hero.kills)
         .setStats(hero.available)
-        .setEquipment(hero.equipment)
-        .setHeroLocation(hero.heroLocation);
+        .setEquipment(hero.equipment);
 
       return true;
     },
