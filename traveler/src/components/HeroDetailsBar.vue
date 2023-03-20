@@ -2,22 +2,22 @@
     <div class="bar">
         <div class="heroStats">
             <div class="item">
-                <p class="heroDetailsText"> {{ hero.name }} </p>
+                <p class="heroDetailsText" label="heroName"> {{ hero.name }} </p>
             </div>
             <div class="item">
                 <div class="iconImg heart"></div>
-                <p class="heroDetailsText">{{ hero.currentHealth }} / {{ hero.maxHealth }}</p>
+                <p class="heroDetailsText" label="heroHealth">{{ hero.currentHealth }} / {{ hero.maxHealth }}</p>
             </div>
             <div class="item">
-                <div class="iconImg doubleSword"></div>
+                <div class="iconImg doubleSword" label="heroAttack"></div>
                 <p class="heroDetailsText">{{ hero.attack }}</p>
             </div>
             <div class="item">
-                <div class="iconImg skull"></div>
+                <div class="iconImg skull" label="heroKills"></div>
                 <p class="heroDetailsText">{{ hero.kills }}</p>
             </div>
             <div class="item">
-                <div class="iconImg coin"></div>
+                <div class="iconImg coin" label="heroCoins"></div>
                 <p class="heroDetailsText">{{ hero.coins }}</p>
             </div>
         </div>
