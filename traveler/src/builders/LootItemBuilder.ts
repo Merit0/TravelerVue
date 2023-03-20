@@ -1,6 +1,7 @@
 import { LootItemModel } from "../models/LootItemModel";
 import { Rarity } from "../enums/Rarity";
 import { ItemType } from "@/enums/ItemType";
+import { Randomizer } from "@/utils/Randomizer";
 
 interface ILootItemBuilder {
   lootItemName(name: string): LootItemBuilder;
@@ -55,6 +56,13 @@ export class LootItemBuilder implements ILootItemBuilder {
 
   public dropChance(chance: boolean): LootItemBuilder {
     this.loot.chance = chance;
+    return this;
+  }
+
+  public generateAmount(): LootItemBuilder {
+    if (this.loot.rarity === Rarity.COMMON) {
+      this.loot.value = Randomizer.getRandomIntInRange(1, 10);
+    }
     return this;
   }
 

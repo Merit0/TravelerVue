@@ -13,6 +13,7 @@ import { ChestModel } from "../models/ChestModel";
 import { useHeroStore } from "./HeroStore";
 import { WeaponProvider } from "@/providers/WeaponProvider";
 import { LootItemModel } from "@/models/LootItemModel";
+import { EnemyType } from "@/enums/EnemyType";
 
 export const useMapStore = defineStore("map", {
   state: () => {
@@ -121,9 +122,16 @@ export const useMapStore = defineStore("map", {
           let enemy: EnemyModel = EnemyProvider.getEvilLandsEnemies()[
             randIndex
           ].setId(id + i);
-          const loot = Randomizer.getRandomEquipment(
-            WeaponProvider.getEquipmentList()
-          );
+          let loot = null;
+          if (enemy.enemyType === EnemyType.WARRIOR) {
+            if (Randomizer.getChance(5)) {
+              loot = Randomizer.getRandomEquipment(WeaponProvider.getLegends());
+            } else {
+              loot = Randomizer.getRandomEquipment(WeaponProvider.getCommon());
+            }
+          } else {
+            loot = Randomizer.getRandomEquipment(WeaponProvider.getLegends());
+          }
           enemy.setLoot(loot);
           createdEnemies.push(enemy);
           enemy = null;
