@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
-import LoginForm from "@/components/LoginForm.vue";
-import HomePage from "@/components/HomePage.vue";
-import EvilLandMap from "@/components/EvilLandMap.vue";
+import LoginForm from "@/pages/LoginForm.vue";
+import HomePage from "@/pages/HomePage.vue";
+import EvilLandMap from "@/pages/EvilLandMap.vue";
 
 const router = createRouter({
   history: createWebHistory(),

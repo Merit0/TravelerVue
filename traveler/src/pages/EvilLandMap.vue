@@ -9,43 +9,41 @@
     </section>
 </template>
 
-<script lang="ts">
-import Tiles from './Tiles.vue';
-import HeroDetailsBar from './HeroDetailsBar.vue';
+<script setup lang="ts">
+
+import Tiles from '../components/Tiles.vue';
+import HeroDetailsBar from '../components/HeroDetailsBar.vue';
 import HeroDeathOverlay from '@/components/HeroDeathOverlay.vue'
 import { useHeroStore } from '@/stores/HeroStore'
 import router from '@/router';
 import { useMapStore } from '../stores/MapStore';
 import MapModel from '../models/MapModel';
-import HeroInventory from './HeroInventory.vue';
+import HeroInventory from '../components/HeroInventory.vue';
 import { MapProvider } from '../providers/MapProvider';
 
-export default {
-    components: { Tiles, HeroDetailsBar, HeroDeathOverlay, HeroInventory },
-    data() {    
-        const heroStore = useHeroStore();
-        const hero = heroStore.hero;
-        const tilesShown = true;
-        const mapStore = useMapStore();
-        const evilLand: MapModel = MapProvider.getEvilLand();
-        evilLand.setHero(hero);
-        mapStore.buildMap(evilLand);
-        const tiles = mapStore.tiles;
+import { ref } from 'vue';
 
-            return { tiles, hero, tilesShown, heroStore, mapStore }
-        },
-    methods: {
-        async quitMap() {
-            if(this.mapStore.isMapCleared) {
-                this.mapStore.isCleared = this.mapStore.isMapCleared;
-            }
-            router.push("/");
-        },
-        async closeInventory(invenoryStatus: boolean) {
-            this.heroStore.showInventory(invenoryStatus);
-        },
+const heroStore = useHeroStore();
+const hero = heroStore.hero;
+const tilesShown = ref<boolean>(true);
+const mapStore = useMapStore();
+const evilLand: MapModel = MapProvider.getEvilLand();
+
+evilLand.setHero(hero);
+mapStore.buildMap(evilLand);
+
+const tiles = mapStore.tiles;
+
+async function quitMap() {
+    if(mapStore.isMapCleared) {
+        mapStore.isCleared = mapStore.isMapCleared;
     }
+    router.push("/");
 }
+async function closeInventory(invenoryStatus: boolean) {
+    heroStore.showInventory(invenoryStatus);
+}
+
 </script>
 
 <style>

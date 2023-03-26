@@ -1,0 +1,78 @@
+<template>
+    <title>Home</title>
+    <div class="page">
+        <HeroDetailsBar :hero="hero"></HeroDetailsBar>
+        <section class="homeContent">
+            <MapsList></MapsList>
+            <div class="homeButtons">
+                <button id="openInventoryBtn" @click="toggleInventory()"></button>
+                <button @click="userStore.logout()" v-if="userStore.isLoggedIn" class="logout">Logout</button>
+            </div>
+            <BagInventory :hero="hero" v-if="showInventory"></BagInventory>
+        </section>
+    </div>
+</template>
+
+<script setup lang="ts">
+
+import { useUserStore } from '../stores/UserStore'
+import HeroDetailsBar from '../components/HeroDetailsBar.vue';
+import BagInventory from '../components/BagInventory.vue';
+import MapsList from '../components/MapsList.vue';
+import { useHeroStore } from '../stores/HeroStore'
+
+import { onMounted, onUnmounted, ref } from 'vue';
+
+const userStore = useUserStore();
+const heroStore = useHeroStore();
+const hero = heroStore.hero;
+const showInventory = ref<boolean>(false);
+let regenerateHealth: number | null = null
+
+const toggleInventory = () => showInventory.value = !showInventory.value
+
+onMounted(() => {
+    regenerateHealth = setInterval(() => {  
+        if(heroStore.hero.getHealth() < heroStore.hero.maxHealth) heroStore.hero.healthIncreaser();
+        else clearInterval(this);
+        }, 3000); 
+})
+
+onUnmounted(() => {
+    regenerateHealth ? clearInterval(regenerateHealth) : null
+})
+
+</script>
+
+<style>
+.homeButtons {
+    width: 220px;
+    height: 120px;
+    margin-top: 270px;
+    margin-left: 1800px;
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+}
+.homeContent {
+    margin-top: 10px;
+    min-height: 90vh;
+    border-radius: 20px;
+    border: 2px solid rgb(95, 64, 43);
+    background-image: url('@/assets/images/img.jpg');
+    background-size: 100%;
+}
+
+.logout {
+    color:#630000;
+    position: relative;
+    width: 100px;
+    height: 100px;
+    background-color:rgba(202, 155, 0, 0.185);
+    border: 1px solid rgba(56, 0, 0, 0.603);
+    outline-color: rgba(56, 0, 0, 0.603);
+    border-radius:30%;
+    background-size: 100px 100px;
+ }
+</style>
+      

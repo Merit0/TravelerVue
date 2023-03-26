@@ -118,6 +118,6 @@ export class HeroModel implements IHero {
   }
 
   public healthIncreaser(): void {
-    this.currentHealth += 1;
+    this.currentHealth++;
   }
 }
