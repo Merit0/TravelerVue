@@ -12,7 +12,7 @@ import { useHeroStore } from '@/stores/HeroStore';
 
 
 export default {
-    name: "bag-item-tile",
+    name: "BagItemTile",
     props: {
         lootItem: {
             type: LootItemModel,

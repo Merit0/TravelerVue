@@ -6,10 +6,9 @@ interface IMapBuilder {
     mapName(name: string): MapBuilder;
     tilesNumber(num: number): MapBuilder;
     complexity(complexityLevel: MapComplexity): MapBuilder;
-
 }
 
-export class MapBuilder {
+export class MapBuilder implements IMapBuilder {
 
     private map: MapModel;
 

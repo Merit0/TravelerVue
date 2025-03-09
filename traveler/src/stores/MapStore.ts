@@ -1,8 +1,6 @@
-import { HealPortion } from "./../enums/HealPortion";
 import { defineStore } from "pinia";
 import TileModel from "@/models/TileModel";
 import EnemyModel from "@/models/EnemyModel";
-import { HealPortionModel } from "@/models/HealPortionModel";
 import { Randomizer } from "../utils/Randomizer";
 import MapModel from "../models/MapModel";
 import { EnemyProvider } from "../providers/EnemyProvider";
@@ -12,7 +10,6 @@ import { HeroModel } from "../models/HeroModel";
 import { ChestModel } from "../models/ChestModel";
 import { useHeroStore } from "./HeroStore";
 import { WeaponProvider } from "@/providers/WeaponProvider";
-import { LootItemModel } from "@/models/LootItemModel";
 import { EnemyType } from "@/enums/EnemyType";
 
 export const useMapStore = defineStore("map", {

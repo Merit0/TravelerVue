@@ -12,7 +12,7 @@
 
 <script lang="ts">
 import { LootItemModel } from '@/models/LootItemModel';
-import BagItemTile from '@/components/BagItemTile.vue';
+import BagItemTile from '@/components/bag/bag-item-tile.vue';
 import { useBagStore } from '@/stores/BagStore';
 import HeroEquioments from '@/components/HeroEquioments.vue'
 import { useHeroStore } from '@/stores/HeroStore';

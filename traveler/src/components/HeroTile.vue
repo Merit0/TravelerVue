@@ -8,7 +8,6 @@
 
 <script lang="ts">
 import TileModel from '@/models/TileModel';
-import { IHero } from '../abstraction/IHero';
 import { useHeroStore } from '../stores/HeroStore';
 
 
