@@ -1,11 +1,25 @@
 <template>
     <div class="bar">
         <div class="heroStats">
-            <div class="item">{{ hero.name }}</div>
-            <div class="item">Health: {{ hero.currentHealth }}</div>
-            <div class="item">Attack: {{ hero.attack }}</div>
-            <div class="item">Kills: {{ hero.kills }}</div>
-            <div class="item">Coins: {{ hero.coins }}</div>
+            <div class="item">
+                <p class="heroDetailsText" label="heroName"> {{ hero.name }} </p>
+            </div>
+            <div class="item">
+                <div class="iconImg heart"></div>
+                <p class="heroDetailsText" label="heroHealth">{{ hero.currentHealth }} / {{ hero.maxHealth }}</p>
+            </div>
+            <div class="item">
+                <div class="iconImg doubleSword" label="heroAttack"></div>
+                <p class="heroDetailsText">{{ hero.attack }}</p>
+            </div>
+            <div class="item">
+                <div class="iconImg skull" label="heroKills"></div>
+                <p class="heroDetailsText">{{ hero.kills }}</p>
+            </div>
+            <div class="item">
+                <div class="iconImg coin" label="heroCoins"></div>
+                <p class="heroDetailsText">{{ hero.coins }}</p>
+            </div>
         </div>
     </div>
 </template>
@@ -37,15 +51,44 @@ export default {
     justify-content: space-between;
  }
  .item {
-    background-color:rgb(252, 195, 8);
-    text-align: center;
-    font-size: 25px;
+    background-color:rgb(255, 233, 222);
     border: 2px solid rgb(140, 45, 18);
     border-radius: 5px;
     width: 200px;
     margin: 0.5em;
+    display: flex;
+    justify-content: center;
+ }
+
+ .heroDetailsText {
+    text-align: center;
+    font-size: 25px;
     color: rgb(173, 64, 0);
     -webkit-text-stroke: 1px rgb(100, 60, 0);
     font-weight: solid;
+    margin-left: 10px;
+ }
+ .iconImg {
+    width: 35px;
+    height: 35px;
+    background-size: 100%, 100%;
+ }
+
+ .heart {
+    background-image: url("@/assets/images/items/heart_icon.png");
+ }
+
+ .doubleSword {
+    background-image: url("@/assets/images/items/double_sword.png");
+ }
+
+ .skull {
+    background-image: url("@/assets/images/items/skull.png");
+    background-size: 110%, 110%;
+    border-radius: 100%;
+ }
+
+ .coin {
+    background-image: url("@/assets/images/items/coin.png");
  }
 </style>

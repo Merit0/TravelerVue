@@ -58,12 +58,10 @@ export default {
             } else if( item.itemType === ItemType.ARMOR ) {
                 this.bagStore.putIn(item);
                 this.hero.maxHealth -= this.hero.equipment.armor.value;
-                this.hero.currentHealth -= this.hero.equipment.armor.value;
                 this.hero.equipment.armor = null;
             } else if( item.itemType === ItemType.HELM ) {
                 this.bagStore.putIn(item);
                 this.hero.maxHealth -= this.hero.equipment.helm.value;
-                this.hero.currentHealth -= this.hero.equipment.helm.value;
                 this.hero.equipment.helm = null;
             }
         }

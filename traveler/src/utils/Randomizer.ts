@@ -1,6 +1,4 @@
-import { Equipment } from "@/models/Equipment";
 import { LootItemModel } from "@/models/LootItemModel";
-import { EnemyType } from "../enums/EnemyType";
 
 export class Randomizer {
   static getRandomInt(max: number): number {
@@ -9,15 +7,6 @@ export class Randomizer {
 
   static getRandomIntInRange(min: number, max: number): number {
     return Math.floor(Math.random() * max) + min;
-  }
-
-  static getRandomEnemyType(): EnemyType {
-    const keys: string[] = Object.keys(EnemyType).filter(
-      (k) => typeof EnemyType[k as any] === "number"
-    );
-    const index = this.getRandomInt(keys.length);
-
-    return EnemyType.WARRIOR;
   }
 
   static getRandomEquipment(equipmentList: LootItemModel[]): LootItemModel {

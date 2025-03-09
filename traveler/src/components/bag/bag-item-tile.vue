@@ -12,7 +12,7 @@ import { useHeroStore } from '@/stores/HeroStore';
 
 
 export default {
-    name: "bag-item-tile",
+    name: "BagItemTile",
     props: {
         lootItem: {
             type: LootItemModel,
@@ -40,7 +40,7 @@ export default {
                     this.hero.equipment.weapon = item;
                     this.hero.attack += this.hero.equipment.weapon.value;
                     return true;
-                } else if (this.hero.equipment.sword == null) {
+                } else if (this.hero.equipment.weapon == null) {
                     this.bagStore.removeItem(item);
                     this.hero.equipment.weapon = item;
                     this.hero.attack += this.hero.equipment.weapon.value;
@@ -50,18 +50,15 @@ export default {
                 if(this.hero.equipment.armor != null) {
                     this.bagStore.removeItem(item);
                     this.hero.maxHealth -= this.hero.equipment.armor.value;
-                    this.hero.currentHealth -= this.hero.equipment.armor.value;
                     this.bagStore.putIn(this.hero.equipment.armor);
                     this.hero.equipment.armor = item;
                     this.hero.maxHealth += this.hero.equipment.armor.value;
-                    this.hero.currentHealth += this.hero.equipment.armor.value;
                     
                     return true;
                 } else if (this.hero.equipment.armor == null) {
                     this.bagStore.removeItem(item);
                     this.hero.equipment.armor = item;
                     this.hero.maxHealth += this.hero.equipment.armor.value;
-                    this.hero.currentHealth += this.hero.equipment.armor.value;
                     return true;
                 }
             } else if( item.itemType === ItemType.HEAL ) {
@@ -75,18 +72,15 @@ export default {
                 if(this.hero.equipment.helm != null) {
                     this.bagStore.removeItem(item);
                     this.hero.maxHealth -= this.hero.equipment.helm.value;
-                    this.hero.currentHealth -= this.hero.equipment.helm.value;
                     this.bagStore.putIn(this.hero.equipment.helm);
                     this.hero.equipment.helm = item;
                     this.hero.maxHealth += this.hero.equipment.helm.value;
-                    this.hero.currentHealth += this.hero.equipment.helm.value;
                     
                     return true;
                 } else if (this.hero.equipment.helm == null) {
                     this.bagStore.removeItem(item);
                     this.hero.equipment.helm = item;
                     this.hero.maxHealth += this.hero.equipment.helm.value;
-                    this.hero.currentHealth += this.hero.equipment.helm.value;
                     return true;
                 }
             }

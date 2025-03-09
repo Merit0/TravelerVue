@@ -8,7 +8,6 @@
 
 <script lang="ts">
 import TileModel from '@/models/TileModel';
-import { IHero } from '../abstraction/IHero';
 import { useHeroStore } from '../stores/HeroStore';
 
 
@@ -33,7 +32,9 @@ export default {
         getStyle(tile: TileModel) {
             const tileStyle = {
                 backgroundImage: 'url(' + require('@/assets/images/' + tile.hero.imgPath) + ')',
-                border: '2px solid rgb(127, 0, 255)'
+                border: '2px solid rgb(127, 0, 255)',
+                outline: 'none',
+                boxShadow: '0 0 10px rgb(127, 0, 255)'
             }
             return tileStyle;
         },

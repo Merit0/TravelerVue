@@ -1,6 +1,5 @@
 import { defineStore } from "pinia";
 import { LootItemModel } from "@/models/LootItemModel";
-import { ChestModel } from "@/models/ChestModel";
 
 export const useChestStore = defineStore("chest", {
   state: () => {

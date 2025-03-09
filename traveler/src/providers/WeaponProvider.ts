@@ -12,7 +12,18 @@ export class WeaponProvider {
       .itemType(ItemType.WEAPON)
       .lootRarity(Rarity.LEGEND)
       .lootItemImgPath("equipment/sword_soul_ripper.png")
+      .dropChance(Randomizer.getChance(5))
+      .build();
+  }
+
+  public static getAxe(): LootItemModel {
+    return new LootItemBuilder()
+      .lootItemName("Wood Axe")
+      .itemType(ItemType.WEAPON)
+      .lootRarity(Rarity.COMMON)
+      .lootItemImgPath("equipment/common_axe.png")
       .dropChance(Randomizer.getChance(50))
+      .generateAmount()
       .build();
   }
 
@@ -23,7 +34,7 @@ export class WeaponProvider {
       .itemType(ItemType.WEAPON)
       .lootRarity(Rarity.LEGEND)
       .lootItemImgPath("equipment/slasher_axe.png")
-      .dropChance(Randomizer.getChance(50))
+      .dropChance(Randomizer.getChance(5))
       .build();
   }
 
@@ -34,7 +45,7 @@ export class WeaponProvider {
       .itemType(ItemType.ARMOR)
       .lootRarity(Rarity.LEGEND)
       .lootItemImgPath("equipment/protector_armor.png")
-      .dropChance(Randomizer.getChance(50))
+      .dropChance(Randomizer.getChance(5))
       .build();
   }
 
@@ -45,14 +56,14 @@ export class WeaponProvider {
       .itemType(ItemType.HELM)
       .lootRarity(Rarity.LEGEND)
       .lootItemImgPath("equipment/executor_helm.png")
-      .dropChance(Randomizer.getChance(50))
+      .dropChance(Randomizer.getChance(5))
       .build();
   }
 
   public static getHealPotion(): LootItemModel {
     return new LootItemBuilder()
       .lootItemName("Heal Potion")
-      .lootValue(10)
+      .lootValue(50)
       .itemType(ItemType.HEAL)
       .lootRarity(Rarity.COMMON)
       .lootItemImgPath("items/healSmall.png")
@@ -64,13 +75,16 @@ export class WeaponProvider {
     return new LootItemBuilder().lootItemName("Empty").build();
   }
 
-  public static getEquipmentList(): LootItemModel[] {
+  public static getCommon(): LootItemModel[] {
+    return Array.of(this.getHealPotion(), this.getAxe());
+  }
+
+  public static getLegends(): LootItemModel[] {
     return Array.of(
       this.getRipper(),
       this.getProtector(),
       this.getExecutor(),
-      this.getSlasher(),
-      this.getHealPotion()
+      this.getSlasher()
     );
   }
 }

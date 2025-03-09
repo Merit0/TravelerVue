@@ -16,7 +16,7 @@
 <script lang="ts">
 import { useUserStore } from '@/stores/UserStore'
 import HeroDetailsBar from './HeroDetailsBar.vue';
-import BagInventory from './BagInventory.vue';
+import BagInventory from './bag/bag-inventory.vue';
 import MapsList from './MapsList.vue';
 import { useHeroStore } from '../stores/HeroStore'
 

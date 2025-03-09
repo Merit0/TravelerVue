@@ -6,7 +6,7 @@ export interface IHero {
   currentHealth: number;
   maxHealth: number;
   attack: number;
-  defence: number;
+  defense: number;
   coins: number;
   stats: boolean;
   kills: number;
@@ -15,5 +15,5 @@ export interface IHero {
   available: boolean;
   equipment: Equipment;
   heroLocation: TileModel;
-  expirienceCollector(): void;
+  experienceCollector(): void;
 }

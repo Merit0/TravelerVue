@@ -7,7 +7,7 @@ export class HeroModel implements IHero {
   currentHealth: number;
   maxHealth: number;
   attack: number;
-  defence: number;
+  defense: number;
   coins: number;
   stats: boolean;
   kills: number;
@@ -46,8 +46,8 @@ export class HeroModel implements IHero {
     return this;
   }
 
-  public setDefence(defence: number): HeroModel {
-    this.defence = defence;
+  public setDefense(defense: number): HeroModel {
+    this.defense = defense;
     return this;
   }
 
@@ -84,7 +84,7 @@ export class HeroModel implements IHero {
   }
 
   public getDefense(): number {
-    return this.defence;
+    return this.defense;
   }
 
   public getCoins(): number {
@@ -101,10 +101,10 @@ export class HeroModel implements IHero {
 
   public addKilled(): void {
     this.kills += 1;
-    this.expirienceCollector();
+    this.experienceCollector();
   }
 
-  public expirienceCollector(): void {
+  public experienceCollector(): void {
     if (this.kills % 5 === 0) {
       this.attack += 1;
     }

@@ -12,7 +12,7 @@
 
 <script lang="ts">
 import { LootItemModel } from '@/models/LootItemModel';
-import BagItemTile from '@/components/BagItemTile.vue';
+import BagItemTile from '@/components/bag/bag-item-tile.vue';
 import { useBagStore } from '@/stores/BagStore';
 import HeroEquioments from '@/components/HeroEquioments.vue'
 import { useHeroStore } from '@/stores/HeroStore';
@@ -77,15 +77,16 @@ export default {
 
 .inventoryItemsContainer {
     position: relative;
-    width: 510px;
     height: 305px;
     top: 100px;
     left: 80px;
-    align-items: flex-end;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
+    display: grid;
+    grid-gap: 1px;
+    grid-template-columns: repeat(5, minmax(100px, 110px));
+    grid-template-rows: repeat(3, minmax(100px, 100px));
+    gap: 5px;
+    max-width: 520px;
+    padding: 6px;
 }
 
 .closeInventoryBtn {
