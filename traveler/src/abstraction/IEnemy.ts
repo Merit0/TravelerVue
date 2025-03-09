@@ -7,7 +7,7 @@ export interface IEnemy {
   maxHealth: number;
   minHealth: number;
   attack: number;
-  defence: number;
+  defense: number;
   id: number;
   enemyType: EnemyType;
   imgPath: string;

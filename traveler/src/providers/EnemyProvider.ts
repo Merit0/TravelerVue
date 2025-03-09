@@ -77,7 +77,7 @@ export class EnemyProvider {
   public static getSkeletonBerserk(): EnemyModel {
     return new EnemyBuilder()
       .enemyName("Mad Bones")
-      .enemyType(EnemyType.BOSS)
+      .enemyType(EnemyType.WARRIOR)
       .enemyImgPath("enemies_150_150/skeleton_berserk.png")
       .enemyBorderFrame("rgb(0,255,127)")
       .build();
