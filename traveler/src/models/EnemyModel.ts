@@ -10,7 +10,7 @@ export default class EnemyModel implements IEnemy {
   minHealth: number;
   health: number;
   attack: number;
-  defence: number;
+  defense: number;
   id: number;
   imgPath: string;
   enemyFrameColor: string;
@@ -18,7 +18,7 @@ export default class EnemyModel implements IEnemy {
 
   constructor() {
     this.id = 1;
-    this.defence = 0;
+    this.defense = 0;
     this.attack = Randomizer.getRandomInt(this.attack) + 1;
   }
 
@@ -34,8 +34,8 @@ export default class EnemyModel implements IEnemy {
   public getAttack(): number {
     return this.attack;
   }
-  public getDefence(): number {
-    return this.defence;
+  public getDefense(): number {
+    return this.defense;
   }
   public getId(): number {
     return this.id;

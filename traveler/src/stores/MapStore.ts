@@ -111,12 +111,13 @@ export const useMapStore = defineStore("map", {
 
     generateEnemies(id: number): EnemyModel[] {
       const createdEnemies = new Array<EnemyModel>();
+      const enemiesList: EnemyModel[] = EnemyProvider.getEvilLandsEnemies();
       if (Randomizer.getChance(20)) {
         let randIndex: number = Math.floor(
-          Math.random() * EnemyProvider.getEvilLandsEnemies().length
+          Math.random() * enemiesList.length
         );
         for (let i = 0; i < Math.floor(Math.random() * 5) + 1; i++) {
-          let enemy: EnemyModel = EnemyProvider.getEvilLandsEnemies()[
+          let enemy: EnemyModel = enemiesList[
             randIndex
           ].setId(id + i);
           let loot = null;
