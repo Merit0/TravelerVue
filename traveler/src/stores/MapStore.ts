@@ -6,11 +6,11 @@ import MapModel from "../models/MapModel";
 import { EnemyProvider } from "../providers/EnemyProvider";
 import { BossProvider } from "../providers/BossProvider";
 import { IHero } from "../abstraction/IHero";
-import { HeroModel } from "../models/HeroModel";
 import { ChestModel } from "../models/ChestModel";
 import { useHeroStore } from "./HeroStore";
 import { WeaponProvider } from "@/providers/WeaponProvider";
 import { EnemyType } from "@/enums/EnemyType";
+import { EnemyBuilder } from "@/builders/EnemyBuilder";
 
 export const useMapStore = defineStore("map", {
   state: () => {
@@ -35,14 +35,14 @@ export const useMapStore = defineStore("map", {
         state.tiles.filter((tile) => tile.isEmpty == true).length ===
         state.tiles.length - 1 && state.tiles.length !== 0
       );
-    },
-    resetMap: (state) => {
-      state.mapName = "";
-      state.tiles = [];
-      state.isCleared = false;
-    },
+    }
   },
   actions: {
+    resetMap() {
+      this.mapName = "";
+      this.tiles = [];
+      this.isCleared = false;
+    },
     async buildMap(map: MapModel) {
       if (!JSON.parse(localStorage.getItem("map")) || this.tiles.length === 0) {
         this.mapName = map.getName();
@@ -53,47 +53,47 @@ export const useMapStore = defineStore("map", {
       }
     },
     async generateTiles(tilesNumber: number) {
-      for (let i = 0; i < tilesNumber; i++) {
-        const tile: TileModel = new TileModel(i);
+      this.tiles = Array.from({ length: tilesNumber }, (_, i) => {
+        const tile = new TileModel(i);
         tile.setIsATree(true);
-        this.tiles.push(tile);
-      }
+        return tile;
+      });
     },
 
-    async addHero(hero: IHero) {
+    addHero(hero: IHero) {
+      if (!this.tiles.length) return;
       this.tiles[0].hero = hero;
       this.removeAllItemsFromTile(this.tiles[0]);
     },
 
-    async moveHero(nextTile: TileModel) {
+    moveHero(nextTile: TileModel) {
       const heroStore = useHeroStore();
-      for (let i = 0; i < this.tiles.length; i++) {
-        const tile: TileModel = this.tiles[i];
-        if (tile.hero) {
-          const hero: HeroModel = this.tiles[i].hero;
-          tile.hero = null;
-          tile.isEmpty = true;
-          nextTile.hero = hero;
-          heroStore.setLocation(nextTile);
-          this.removeAllItemsFromTile(nextTile);
-          return;
-        }
-      }
+      const currentTile = this.tiles.find((tile: TileModel) => tile.hero);
+
+      if (!currentTile) return;
+
+      const hero = currentTile.hero;
+      currentTile.hero = null;
+      currentTile.isEmpty = true;
+
+      nextTile.hero = hero;
+      heroStore.setLocation(nextTile);
+      this.removeAllItemsFromTile(nextTile);
     },
 
-    async addEnemies() {
+    addEnemies() {
       if (!this.tiles.length) return;
       const randNumber: number = Math.floor(Math.random() * this.tiles.length);
-      for (let i = 1; i < this.tiles.length; i++) {
-        if (!this.tiles[i].hero) {
-          const enemies = this.generateEnemies(i);
-          this.tiles[i].setEnemies(enemies);
+      this.tiles.forEach((tile: TileModel, index: number) => {
+        if (index === 0 || tile.hero) return;
 
-          if (enemies.length > 0) {
-            this.tiles[i].setChest(this.generateChest(enemies));
-          }
+        const enemies = this.generateEnemies(index);
+        tile.setEnemies(enemies);
+
+        if (enemies.length > 0) {
+          tile.setChest(this.generateChest(enemies));
         }
-      }
+      });
       if (randNumber < this.tiles.length) {
         this.tiles[randNumber].setEnemies([this.boss]);
       }
@@ -111,18 +111,19 @@ export const useMapStore = defineStore("map", {
     },
 
     generateEnemies(id: number): EnemyModel[] {
+      if (!Randomizer.getChance(20)) return [];
       const createdEnemies: EnemyModel[] = [];
       const enemiesList = EnemyProvider.getEvilLandsEnemies();
-
-      if (!enemiesList.length || !Randomizer.getChance(20)) {
-        return createdEnemies;
-      }
-
-      for (let i = 0; i < Math.floor(Math.random() * 5) + 1; i++) {
+      if (!enemiesList.length) return createdEnemies;
+      const numberOfEnemies = Math.floor(Math.random() * 5) + 1;
+      for (let i = 0; i < numberOfEnemies; i++) {
         const randIndex = Math.floor(Math.random() * enemiesList.length);
-        const enemy = enemiesList[randIndex];
-
-        if (!enemy) continue;
+        const enemy = new EnemyBuilder()
+          .enemyName(enemiesList[randIndex].name)
+          .enemyType(enemiesList[randIndex].enemyType)
+          .enemyImgPath(enemiesList[randIndex].imgPath)
+          .enemyBorderFrame(enemiesList[randIndex].enemyFrameColor)
+          .build();
 
         enemy.setId(id + i);
 
