@@ -19,7 +19,7 @@ export default class EnemyModel implements IEnemy {
   constructor() {
     this.id = 1;
     this.defense = 0;
-    this.attack = Randomizer.getRandomInt(this.attack) + 1;
+    this.attack = Randomizer.getRandomInt(5) + 1;
   }
 
   public getName(): string {
@@ -51,7 +51,7 @@ export default class EnemyModel implements IEnemy {
 
   public setId(id: number): EnemyModel {
     this.id = id;
-    this.name += " " + this.id;
+    this.name += " " + id;
     return this;
   }
 

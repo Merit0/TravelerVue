@@ -1,7 +1,13 @@
 <template>
     <div class="battleEnemyTile" :style="getStyle(enemy)" v-if="enemyShown && enemyAlive">
         <div class="infoBlock">
-            <span class="tooltip-text">I am</span>
+            i
+            <span class="tooltipText">
+                <h3>Info:</h3>
+                <p>ID = {{ enemy.id }}</p>
+                <p>Health = {{ enemy.health }}</p>
+                <p>Attack = {{ enemy.attack }}</p>
+            </span>
         </div>
     </div>
 </template>
@@ -13,7 +19,7 @@ export default {
     name: "battle-enemy-tile",
     props: {
         enemy: {
-            type: EnemyModel,
+            type: Object,
             required: true
         },
         enemyShown: {
@@ -27,11 +33,17 @@ export default {
     },
     methods: {
         getStyle(enemy: EnemyModel) {
-            const tileStyle = {
-                backgroundImage: 'url(' + require('@/assets/images/' + enemy.imgPath) + ')',
-                border: '2px solid ' + enemy.enemyFrameColor
+            if (!enemy || !enemy.imgPath) throw new Error('Enemy props missing');
+
+            try {
+                return {
+                    backgroundImage: 'url(' + require('@/assets/images/' + enemy.imgPath) + ')',
+                    border: `2px solid ${enemy.enemyFrameColor || 'black'}`
+                };
+            } catch (e) {
+                console.error("Loading image error:", e);
+                return {};
             }
-            return tileStyle;
         }
     }
 }
@@ -45,30 +57,29 @@ export default {
     background: none;
     border-radius: 50%;
     background-size: 100% 100%;
+    position: relative;
 }
 
-.infoBlock:hover{
-    width: 100px;
-    height: 100px;
-    visibility: hidden;
-    background-color: rgba(0, 0, 0, 0.8);
-    opacity: 1;
-}
-
-.tooltip-text {
-    width: 100px;
-    height: 100px;
+.infoBlock:hover .tooltipText {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
     visibility: visible;
+    background-color: rgba(255, 255, 255, 0.8);
     opacity: 1;
-    background-color: rgba(0, 0, 0, 0.8);
-    color: white;
+}
+
+.tooltipText {
+    visibility: hidden;
+    font-weight: bold;
+    opacity: 1;
+    color: rgb(90, 66, 0);
     text-align: center;
     padding: 5px 10px;
     border-radius: 4px;
     position: absolute;
     z-index: 1;
-    bottom: 125%;
-    /* Position above the infoBlock */
+    bottom: 0%;
     left: 50%;
     transform: translateX(-50%);
     transition: opacity 0.2s;

@@ -33,7 +33,7 @@ export const useMapStore = defineStore("map", {
     isMapCleared: (state) => {
       return (
         state.tiles.filter((tile) => tile.isEmpty == true).length ===
-          state.tiles.length - 1 && state.tiles.length !== 0
+        state.tiles.length - 1 && state.tiles.length !== 0
       );
     },
     resetMap: (state) => {
@@ -82,20 +82,21 @@ export const useMapStore = defineStore("map", {
     },
 
     async addEnemies() {
-      const randNumber: number =
-        Math.floor(Math.random() * this.tiles.length) + 1;
+      if (!this.tiles.length) return;
+      const randNumber: number = Math.floor(Math.random() * this.tiles.length);
       for (let i = 1; i < this.tiles.length; i++) {
         if (!this.tiles[i].hero) {
           const enemies = this.generateEnemies(i);
           this.tiles[i].setEnemies(enemies);
+
           if (enemies.length > 0) {
             this.tiles[i].setChest(this.generateChest(enemies));
           }
         }
       }
-      const bossIndex =
-        randNumber < this.tiles.length ? randNumber : this.tiles.length;
-      this.tiles[bossIndex].setEnemies(Array.of(this.boss));
+      if (randNumber < this.tiles.length) {
+        this.tiles[randNumber].setEnemies([this.boss]);
+      }
     },
 
     generateChest(enemies: EnemyModel[]): ChestModel {
@@ -110,32 +111,34 @@ export const useMapStore = defineStore("map", {
     },
 
     generateEnemies(id: number): EnemyModel[] {
-      const createdEnemies = new Array<EnemyModel>();
-      const enemiesList: EnemyModel[] = EnemyProvider.getEvilLandsEnemies();
-      if (Randomizer.getChance(20)) {
-        let randIndex: number = Math.floor(
-          Math.random() * enemiesList.length
-        );
-        for (let i = 0; i < Math.floor(Math.random() * 5) + 1; i++) {
-          let enemy: EnemyModel = enemiesList[
-            randIndex
-          ].setId(id + i);
-          let loot = null;
-          if (enemy.enemyType === EnemyType.WARRIOR) {
-            if (Randomizer.getChance(5)) {
-              loot = Randomizer.getRandomEquipment(WeaponProvider.getLegends());
-            } else {
-              loot = Randomizer.getRandomEquipment(WeaponProvider.getCommon());
-            }
-          } else {
-            loot = Randomizer.getRandomEquipment(WeaponProvider.getLegends());
-          }
-          enemy.setLoot(loot);
-          createdEnemies.push(enemy);
-          enemy = null;
-        }
-        randIndex = 0;
+      const createdEnemies: EnemyModel[] = [];
+      const enemiesList = EnemyProvider.getEvilLandsEnemies();
+
+      if (!enemiesList.length || !Randomizer.getChance(20)) {
+        return createdEnemies;
       }
+
+      for (let i = 0; i < Math.floor(Math.random() * 5) + 1; i++) {
+        const randIndex = Math.floor(Math.random() * enemiesList.length);
+        const enemy = enemiesList[randIndex];
+
+        if (!enemy) continue;
+
+        enemy.setId(id + i);
+
+        let loot = null;
+        if (enemy.enemyType === EnemyType.WARRIOR) {
+          loot = Randomizer.getChance(5)
+            ? Randomizer.getRandomEquipment(WeaponProvider.getLegends())
+            : Randomizer.getRandomEquipment(WeaponProvider.getCommon());
+        } else {
+          loot = Randomizer.getRandomEquipment(WeaponProvider.getLegends());
+        }
+
+        enemy.setLoot(loot);
+        createdEnemies.push(enemy);
+      }
+
       return createdEnemies;
     },
 
