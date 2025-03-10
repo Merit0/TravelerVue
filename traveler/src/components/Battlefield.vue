@@ -9,12 +9,12 @@
             <button class="attackButton activeBtn" @click="attackEnemy(tile)"></button>
         </div>
         <div class="enemySide">
-          <enemy-tile 
-            :tile="tile"
+          <battle-enemy-tile 
+            :enemy="enemy"
             :enemyShown="enemyTileShown"
             :enemyAlive="enemyAlive"
             v-for="enemy in tile.enemies" :key="enemy.id">
-          </enemy-tile>
+          </battle-enemy-tile>
         </div>
       </div>
       <div class="battleReporter">
@@ -23,12 +23,12 @@
           <p v-if="isAttacked" style="font-size: 15px;">
             =>
             <span class="pHero">{{ hero.getName() }}</span>
-              hitted enemy by {{ hero.getAttack() }}
+              hit enemy by {{ hero.getAttack() }}
             <span class="pEnemy">{{ enemy.name }}'s</span>
               [health:
             <span>{{ enemy.health }}]. ---  </span>
             <span class="pEnemy">{{ enemy.name }}</span>
-              hitted 
+              hit 
               <span class="pHero">{{ hero.getName() }}</span>
               by {{ enemy.attack }}.
           </p>
@@ -39,7 +39,7 @@
 </template>
 
 <script lang="ts">
-import EnemyTile from "./EnemyTile.vue";
+import BattleEnemyTile from "./battle-enemy-tile.vue";
 import { PropType } from "vue";
 import TileModel from "../models/TileModel";
 import { useHeroStore } from "@/stores/HeroStore";
@@ -47,7 +47,7 @@ import { useMapStore } from '../stores/MapStore';
 
 export default {
   name: "battle-field",
-  components: { EnemyTile },
+  components: { BattleEnemyTile },
   props: {
     tile: {
       type: Object as PropType<TileModel>,
@@ -63,30 +63,30 @@ export default {
     const mapStore = useMapStore();
     const heroStore = useHeroStore();
     const hero = heroStore.hero;
+    const enemies = this.tile.enemies;
     let enemyTileShown = true;
     let enemyAlive = true;
     let isAttacked = false;
-    return { enemyTileShown, enemyAlive, hero, isAttacked, mapStore };
+    return { enemyTileShown, enemyAlive, hero, isAttacked, mapStore, enemies };
   },
   methods: {
     async attackEnemy(tile: TileModel) {
             this.isAttacked = true; 
             tile.inBattle = true;
-            const enemies = tile.enemies;
             if(this.hero.getHealth() > 0) {
-                for(let i=0; i < enemies.length; i++ ) {
-                    this.hero.takeDamage(enemies[i].attack);
-                    enemies[i].health -= this.hero.getAttack();
-                    if(enemies[i].health <= 0) {
+                for(let i=0; i < this.enemies.length; i++ ) {
+                    this.hero.takeDamage(this.enemies[i].attack);
+                    this.enemies[i].health -= this.hero.getAttack();
+                    if(this.enemies[i].health <= 0) {
                       await this.hero.addKilled();
-                        const enemyIndex = enemies.findIndex(e => e.id === i);
-                        enemies.splice(enemyIndex, 1);
+                        const enemyIndex = this.enemies.findIndex(e => e.id === i);
+                        this.enemies.splice(enemyIndex, 1);
                     } 
-                    if(!enemies.length) {
+                    if(!this.enemies.length) {
                         this.enemyAlive = false;
                     }
                 }
-                if(!this.enemyAlive && !enemies.length) {
+                if(!this.enemyAlive && !this.enemies.length) {
                   this.$emit("isBattle", false);
                   if(!tile.chest) {
                     tile.isEmpty = true;
@@ -141,7 +141,7 @@ export default {
   position: relative;
   width: 200px;
   height: 200px;
-  background-image: url("@/assets/images/battlefield/crossedSwordsBtn.png");
+  background-image: url('@/assets/images/battlefield/crossedSwordsBtn.png');
   outline-width: 1px;
   outline-style: solid;
   outline-color: rgba(0, 0, 0, 0.295);
@@ -165,7 +165,7 @@ export default {
 .heroSide {
   height: 600px;
   width: 500px;
-  background-image: url("@/assets/images/battlefield/HeroBody500_600.png");
+  background-image: url('@/assets/images/battlefield/HeroBody500_600.png');
   background-size: flex-direction;
   border-radius: 20px;
   padding: 10px;
@@ -194,7 +194,7 @@ export default {
 .battlefieldOverlay {
   width: 1200px;
   height: 750px;
-  background-image: url("../assets/images/dungeons/lavaLand.jpg");
+  background-image: url('@/assets/images/dungeons/lavaLand.jpg');
   background-color:black;
   box-shadow: 0px -3px 15px 4px rgba(255, 195, 195, 0.5);
   border-radius: 20px;

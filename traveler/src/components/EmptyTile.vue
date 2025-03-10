@@ -1,5 +1,5 @@
 <template>
-    <div class="mapTile" v-if="epmtyTile"></div>
+    <div class="mapTile" v-if="emptyTile"></div>
 </template>
 
 <script lang="ts">
@@ -7,7 +7,7 @@
 export default {
     name: "empty-tile",
     props: {
-        epmtyTile: {
+        emptyTile: {
             type: Boolean,
             default: false
         }
