@@ -41,8 +41,8 @@ export default {
             }
             router.push("/");
         },
-        async closeInventory(invenoryStatus: boolean) {
-            this.heroStore.showInventory(invenoryStatus);
+        async closeInventory(inventoryStatus: boolean) {
+            this.heroStore.showInventory(inventoryStatus);
         },
     }
 }
