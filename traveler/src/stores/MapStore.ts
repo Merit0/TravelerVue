@@ -19,7 +19,7 @@ export const useMapStore = defineStore("map", {
       tiles: [],
       tile: null,
       isCleared: false,
-      boss: BossProvider.getSkeletonBoss(),
+      boss: null,
     };
   },
 
@@ -95,6 +95,7 @@ export const useMapStore = defineStore("map", {
         }
       });
       if (randNumber < this.tiles.length) {
+        this.resetBoss();
         this.tiles[randNumber].setEnemies([this.boss]);
       }
     },
@@ -129,7 +130,7 @@ export const useMapStore = defineStore("map", {
 
         let loot = null;
         if (enemy.enemyType === EnemyType.WARRIOR) {
-          loot = Randomizer.getChance(100)
+          loot = Randomizer.getChance(5)
             ? Randomizer.getRandomEquipment(WeaponProvider.getLegends())
             : Randomizer.getRandomEquipment(WeaponProvider.getCommon());
         } else {
@@ -146,6 +147,10 @@ export const useMapStore = defineStore("map", {
     removeAllItemsFromTile(tile: TileModel): void {
       tile.isEmpty = false;
       tile.isTree = false;
+    },
+
+    resetBoss() {
+      this.boss = BossProvider.getSkeletonBoss();
     },
   },
 });

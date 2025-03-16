@@ -81,21 +81,21 @@ export default class EnemyModel implements IEnemy {
 
   public generateHealth() {
     if (this.enemyType === EnemyType.BOSS) {
-      this.maxHealth = 300;
+      this.maxHealth = 30;
     } else {
       this.maxHealth = 50;
     }
     this.minHealth = Math.floor(this.maxHealth / 3);
-    const randomAttack = Randomizer.getRandomIntInRange(
+    const randomHealth = Randomizer.getRandomIntInRange(
       this.minHealth,
       this.maxHealth
     );
-    this.health = randomAttack < this.maxHealth ? randomAttack : this.maxHealth;
+    this.health = randomHealth < this.maxHealth ? randomHealth : this.maxHealth;
   }
 
   public generateAttack() {
     if (this.enemyType === EnemyType.BOSS) {
-      this.attack = 50;
+      this.attack = 5;
     } else {
       this.attack = 5;
     }
