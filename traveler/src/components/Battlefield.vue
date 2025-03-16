@@ -40,9 +40,9 @@
 import BattleEnemyTile from "./battle-enemy-tile.vue";
 import { PropType } from "vue";
 import TileModel from "../models/TileModel";
-import { useHeroStore } from "@/stores/HeroStore";
+import { useHeroStore } from "../stores/HeroStore";
 import { useMapStore } from '../stores/MapStore';
-import EnemyModel from "@/models/EnemyModel";
+import EnemyModel from "../models/EnemyModel";
 
 export default {
   name: "battle-field",
