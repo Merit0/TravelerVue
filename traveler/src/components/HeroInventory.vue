@@ -2,10 +2,10 @@
     <div class="inventoryOverlay" v-if="showInventory">
         <div class="inventoryContent">
             <button class="closeInventoryBtn" @click="$emit('heroInventory', false)">X</button>    
+            <HeroEquipmentHolder :equipment="hero.equipment"/>
             <div class="inventoryItemsContainer">
                 <BagItemTile v-for="bagItem in bagItems" :key="bagItem.id" :lootItem="bagItem"/>
             </div>
-            <HeroEquioments :equipment="hero.equipment"/>
         </div>
     </div>
 </template>
@@ -14,13 +14,13 @@
 import { LootItemModel } from '@/models/LootItemModel';
 import BagItemTile from '@/components/bag/bag-item-tile.vue';
 import { useBagStore } from '@/stores/BagStore';
-import HeroEquioments from '@/components/HeroEquioments.vue'
+import HeroEquipmentHolder from '@/components/hero-equipment-holder.vue'
 import { useHeroStore } from '@/stores/HeroStore';
 
 
 export default {
     name: "hero-inventory",
-    components: { BagItemTile, HeroEquioments },
+    components: { BagItemTile, HeroEquipmentHolder },
     props: {
         showInventory: {
             type: Boolean,
@@ -39,25 +39,13 @@ export default {
 </script>
 
 <style>
-.heroItemsContainer {
-    margin-top: 40px;
-    position: relative;
-    width: 510px;
-    height: 110px;
-    background-color: rgba(255, 251, 0, 0.16);
-    top: 100px;
-    left: 80px;
-    align-items: flex-end;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-}
 .inventoryContent {
+    position: relative;
     width: 1000px;
     height: 700px;
     border-radius: 20px;
     margin: auto;
+    /* background-color: rgb(9, 255, 0); */
     background-image: url("../assets/images/items_inventory.png");
     background-size: 100%, 100%;
     margin-top: 50px;
@@ -76,17 +64,18 @@ export default {
 }
 
 .inventoryItemsContainer {
-    position: relative;
-    height: 305px;
     top: 100px;
-    left: 80px;
+    position: absolute;
+    height: 490px;
+    top: 133px;
+    left: 80px;  
     display: grid;
     grid-gap: 1px;
-    grid-template-columns: repeat(5, minmax(100px, 110px));
-    grid-template-rows: repeat(3, minmax(100px, 100px));
+    grid-template-columns: repeat(5, minmax(99px, 115px));
+    grid-template-rows: repeat(3, minmax(93px, 93px));
     gap: 5px;
     max-width: 520px;
-    padding: 6px;
+    padding: 8px;
 }
 
 .closeInventoryBtn {
