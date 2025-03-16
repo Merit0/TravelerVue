@@ -6,7 +6,7 @@ export const useBagStore = defineStore("bag", {
     return {
       bagItems: [],
       isShown: false,
-      bagCapacity: 15,
+      bagCapacity: 25,
     };
   },
   getters: {

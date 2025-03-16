@@ -103,7 +103,7 @@ export const useMapStore = defineStore("map", {
       const chest: ChestModel = new ChestModel();
       for (let i = 0; i < enemies.length; i++) {
         if (enemies[i].loot.chance) {
-          enemies[i].loot.location = "Chest";
+          enemies[i].loot.place = "Chest";
           chest.addLoot(enemies[i].loot);
         }
       }
@@ -129,7 +129,7 @@ export const useMapStore = defineStore("map", {
 
         let loot = null;
         if (enemy.enemyType === EnemyType.WARRIOR) {
-          loot = Randomizer.getChance(5)
+          loot = Randomizer.getChance(100)
             ? Randomizer.getRandomEquipment(WeaponProvider.getLegends())
             : Randomizer.getRandomEquipment(WeaponProvider.getCommon());
         } else {

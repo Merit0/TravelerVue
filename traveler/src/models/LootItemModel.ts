@@ -1,7 +1,7 @@
 import { IHeroItem } from "@/abstraction/IHeroItem";
 import { ItemType } from "@/enums/ItemType";
 import { Rarity } from "@/enums/Rarity";
-import { v4 as uuidv4 } from "uuid";
+import { v4 as uuid } from "uuid";
 
 export class LootItemModel implements IHeroItem {
   name: string;
@@ -10,7 +10,7 @@ export class LootItemModel implements IHeroItem {
   borderFrame: string;
   itemType: ItemType;
   rarity: Rarity;
-  id = uuidv4();
+  id = uuid();
   chance: boolean;
-  location: "Bag" | "Chest";
+  place: "Bag" | "Chest";
 }
