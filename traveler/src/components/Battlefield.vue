@@ -38,15 +38,15 @@
 
 <script lang="ts">
 import BattleEnemyTile from "./battle-enemy-tile.vue";
-import { PropType } from "vue";
+import {PropType} from "vue";
 import TileModel from "../models/TileModel";
-import { useHeroStore } from "../stores/HeroStore";
-import { useMapStore } from '../stores/MapStore';
+import {useHeroStore} from "@/stores/HeroStore";
+import {useMapStore} from '@/stores/MapStore';
 import EnemyModel from "../models/EnemyModel";
 
 export default {
   name: "battle-field",
-  components: { BattleEnemyTile },
+  components: {BattleEnemyTile},
   props: {
     tile: {
       type: Object as PropType<TileModel>,
@@ -66,7 +66,7 @@ export default {
     let enemyTileShown = true;
     let enemyAlive = true;
     let isAttacked = false;
-    return { enemyTileShown, enemyAlive, hero, isAttacked, mapStore, enemies };
+    return {enemyTileShown, enemyAlive, hero, isAttacked, mapStore, enemies};
   },
   methods: {
     async attackEnemy(tile: TileModel) {

@@ -1,16 +1,17 @@
 import { defineStore } from "pinia";
 import TileModel from "@/models/TileModel";
 import EnemyModel from "@/models/EnemyModel";
-import { Randomizer } from "../utils/Randomizer";
+import { Randomizer } from "@/utils/Randomizer";
 import MapModel from "../models/MapModel";
-import { EnemyProvider } from "../providers/EnemyProvider";
-import { BossProvider } from "../providers/BossProvider";
-import { IHero } from "../abstraction/IHero";
-import { ChestModel } from "../models/ChestModel";
+import { EnemyProvider } from "@/providers/EnemyProvider";
+import { BossProvider } from "@/providers/BossProvider";
+import { IHero } from "@/abstraction/IHero";
+import { ChestModel } from "@/models/ChestModel";
 import { useHeroStore } from "./HeroStore";
 import { WeaponProvider } from "@/providers/WeaponProvider";
 import { EnemyType } from "@/enums/EnemyType";
 import { EnemyBuilder } from "@/builders/EnemyBuilder";
+import {EquipmentGroupProvider} from "@/providers/equipment-group-provider";
 
 export const useMapStore = defineStore("map", {
   state: () => {
@@ -41,7 +42,10 @@ export const useMapStore = defineStore("map", {
     resetMap() {
       this.mapName = "";
       this.tiles = [];
+      this.tile = null;
       this.isCleared = false;
+      this.boss = null;
+      localStorage.removeItem("map");
     },
     async buildMap(map: MapModel) {
       if (!JSON.parse(localStorage.getItem("map")) || this.tiles.length === 0) {
@@ -132,7 +136,7 @@ export const useMapStore = defineStore("map", {
         if (enemy.enemyType === EnemyType.WARRIOR) {
           loot = Randomizer.getChance(5)
             ? Randomizer.getRandomEquipment(WeaponProvider.getLegends())
-            : Randomizer.getRandomEquipment(WeaponProvider.getCommon());
+            : Randomizer.getRandomEquipment(EquipmentGroupProvider.getCommonEquipment());
         } else {
           loot = Randomizer.getRandomEquipment(WeaponProvider.getLegends());
         }
