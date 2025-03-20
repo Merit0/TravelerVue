@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import LoginForm from "@/components/LoginForm.vue";
+import LoginPage from "@/components/login-page.vue";
 import HomePage from "@/components/HomePage.vue";
 import EvilLandMap from "@/components/EvilLandMap.vue";
 
@@ -15,13 +15,12 @@ const router = createRouter({
     {
       path: "/login",
       name: "login",
-      component: LoginForm,
+      component: LoginPage,
     },
     {
       path: "/evilLand",
       name: "evilLand",
       component: EvilLandMap,
-      // meta: { requiresAuth: true }
     },
   ],
 });

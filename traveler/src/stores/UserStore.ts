@@ -50,7 +50,7 @@ export const useUserStore = defineStore("user", {
         },
         async logout() {
             localStorage.clear();
-            await router.push("/login");
+            router.push("/login");
             location.reload();
         },
         async clearErrorMsg() {
