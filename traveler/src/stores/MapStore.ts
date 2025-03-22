@@ -16,19 +16,17 @@ import {EquipmentGroupProvider} from "@/providers/equipment-group-provider";
 interface MapState {
     mapName: string;
     tiles: TileModel[];
-    tile: TileModel | null;
     isCleared: boolean;
-    boss: EnemyModel | null;
+    boss: EnemyModel | undefined;
 }
 
 export const useMapStore = defineStore("map", {
-    state: ():MapState => {
+    state: (): MapState => {
         return {
             mapName: "",
             tiles: [],
-            tile: null,
             isCleared: false,
-            boss: null,
+            boss: undefined,
         };
     },
 
@@ -49,9 +47,8 @@ export const useMapStore = defineStore("map", {
             console.log('Resetting map state');
             this.mapName = '';
             this.tiles = [];
-            this.tile = null;
             this.isCleared = false;
-            this.boss = null;
+            this.boss = "";
             localStorage.removeItem("map");
             console.log('Map state after reset:', this.$state);
         },

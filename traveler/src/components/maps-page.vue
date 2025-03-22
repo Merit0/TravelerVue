@@ -1,6 +1,41 @@
 <template>
+  <title>Maps</title>
+  <HeroDetailsBar :hero="hero"></HeroDetailsBar>
   <div class="mapTiles">
     <DungeonTile :isEmpty="false"></DungeonTile>
+    <DungeonTile :isEmpty="true"></DungeonTile>
+    <DungeonTile :isEmpty="true"></DungeonTile>
+    <DungeonTile :isEmpty="true"></DungeonTile>
+    <DungeonTile :isEmpty="true"></DungeonTile>
+    <DungeonTile :isEmpty="true"></DungeonTile>
+    <DungeonTile :isEmpty="true"></DungeonTile>
+    <DungeonTile :isEmpty="true"></DungeonTile>
+    <DungeonTile :isEmpty="true"></DungeonTile>
+    <DungeonTile :isEmpty="true"></DungeonTile>
+    <DungeonTile :isEmpty="true"></DungeonTile>
+    <DungeonTile :isEmpty="true"></DungeonTile>
+    <DungeonTile :isEmpty="true"></DungeonTile>
+    <DungeonTile :isEmpty="true"></DungeonTile>
+    <DungeonTile :isEmpty="true"></DungeonTile>
+    <DungeonTile :isEmpty="true"></DungeonTile>
+    <DungeonTile :isEmpty="true"></DungeonTile>
+    <DungeonTile :isEmpty="true"></DungeonTile>
+    <DungeonTile :isEmpty="true"></DungeonTile>
+    <DungeonTile :isEmpty="true"></DungeonTile>
+    <DungeonTile :isEmpty="true"></DungeonTile>
+    <DungeonTile :isEmpty="true"></DungeonTile>
+    <DungeonTile :isEmpty="true"></DungeonTile>
+    <DungeonTile :isEmpty="true"></DungeonTile>
+    <DungeonTile :isEmpty="true"></DungeonTile>
+    <DungeonTile :isEmpty="true"></DungeonTile>
+    <DungeonTile :isEmpty="true"></DungeonTile>
+    <DungeonTile :isEmpty="true"></DungeonTile>
+    <DungeonTile :isEmpty="true"></DungeonTile>
+    <DungeonTile :isEmpty="true"></DungeonTile>
+    <DungeonTile :isEmpty="true"></DungeonTile>
+    <DungeonTile :isEmpty="true"></DungeonTile>
+    <DungeonTile :isEmpty="true"></DungeonTile>
+    <DungeonTile :isEmpty="true"></DungeonTile>
     <DungeonTile :isEmpty="true"></DungeonTile>
     <DungeonTile :isEmpty="true"></DungeonTile>
     <DungeonTile :isEmpty="true"></DungeonTile>
@@ -11,17 +46,24 @@
 
 <script lang="ts">
 import DungeonTile from './DungeonTile.vue';
+import HeroDetailsBar from "@/components/HeroDetailsBar.vue";
+import {useHeroStore} from "@/stores/HeroStore";
 
 export default {
   name: "MapTiles",
-  components: {DungeonTile}
+  components: {HeroDetailsBar, DungeonTile},
+  data() {
+    const heroStore = useHeroStore();
+    const hero = heroStore.hero;
+    return {hero};
+  },
 }
 </script>
 
 <style>
 .mapTiles {
-  max-width: 650px;
-  height: 500px;
+  max-width: 100%;
+  max-height: 100%;
   position: relative;
   margin-left: 20px;
   border-radius: 50px 0 50px 0;

@@ -3,6 +3,7 @@ import LoginPage from "@/components/login-page.vue";
 import HomePage from "@/components/home-page.vue";
 import OldForestMap from "@/components/old-forest-map.vue";
 import MapsPage from "@/components/maps-page.vue";
+import CampPage from "@/components/camp-page.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -27,6 +28,11 @@ const router = createRouter({
       path: "/maps",
       name: "maps",
       component: MapsPage,
+    },
+    {
+      path: "/camping",
+      name: "camping",
+      component: CampPage,
     },
   ],
 });

@@ -31,8 +31,12 @@ export default {
     const tilesShown = true;
     const mapStore = useMapStore();
     const oldForest: MapModel = MapProvider.getOldForest();
-    oldForest.setHero(hero);
-    mapStore.buildMap(oldForest);
+    if (userStore.isLoggedIn) {
+      oldForest.setHero(hero);
+      mapStore.buildMap(oldForest);
+    } else {
+      router.push('/login');
+    }
 
     return {hero, tilesShown, heroStore, mapStore, userStore}
   },
@@ -41,8 +45,9 @@ export default {
       if (this.mapStore.isMapCleared) {
         this.mapStore.isCleared = this.mapStore.isMapCleared;
       }
-      await this.mapStore.resetMap();
-      router.push("/maps");
+      await this.mapStore.resetMap().then(() => {
+        router.push("/maps");
+      });
     },
     async closeInventory(inventoryStatus: boolean) {
       this.heroStore.showInventory(inventoryStatus);

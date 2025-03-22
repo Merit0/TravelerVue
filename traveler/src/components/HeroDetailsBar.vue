@@ -21,6 +21,7 @@
         <p class="heroDetailsText">{{ hero.coins }}</p>
       </div>
     </div>
+    <button class="homeBtn" @click="goCamp()">Home</button>
     <button @click="userStore.logout()" v-if="userStore.isLoggedIn" class="logout">Logout</button>
   </div>
 </template>
@@ -30,6 +31,7 @@ import {PropType} from 'vue';
 import {IHero} from '@/abstraction/IHero';
 import {useUserStore} from '@/stores/UserStore'
 import {useMapStore} from '@/stores/MapStore'
+import router from "@/router";
 
 export default {
   name: "hero-data-bar",
@@ -44,6 +46,12 @@ export default {
     const mapStore = useMapStore();
     return {userStore, mapStore};
   },
+
+  methods: {
+    goCamp() {
+      router.push('/camping');
+    }
+  }
 }
 </script>
 

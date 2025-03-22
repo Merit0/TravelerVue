@@ -1,9 +1,9 @@
 <template>
   <title>Home</title>
   <section class="homeContent">
-  <HeroDetailsBar :hero="hero"></HeroDetailsBar>
+    <HeroDetailsBar :hero="hero"></HeroDetailsBar>
     <div class="gameModesContent">
-      <div class="gameMode campMode"></div>
+      <div class="gameMode campMode" @click="openCamping()"></div>
       <div class="gameMode arenaMode"></div>
       <div class="gameMode dungeonsMode" @click="openMaps()"></div>
     </div>
@@ -18,27 +18,19 @@ import router from "@/router";
 
 export default {
   name: "HomePage",
-  components: { HeroDetailsBar},
+  components: {HeroDetailsBar},
   data() {
     const userStore = useUserStore();
     const heroStore = useHeroStore();
     const hero = heroStore.hero;
-    return {userStore, hero, heroStore, time: ''};
+    return {userStore, hero, heroStore};
   },
   methods: {
-    async increaseHealth() {
-      let count = 0;
-      this.time = setInterval(() => {
-        if (this.heroStore.hero.getHealth() < this.heroStore.hero.maxHealth && count < this.heroStore.hero.maxHealth) {
-          this.heroStore.hero.healthIncreaser();
-          count++;
-        } else {
-          clearInterval(this.time);
-        }
-      }, 3000);
-    },
-    async openMaps() {
+    async openMaps(): Promise<void> {
       router.push('/maps');
+    },
+    async openCamping(): Promise<void> {
+      router.push('/camping');
     },
   },
 }
