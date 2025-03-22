@@ -44,7 +44,7 @@ export const useUserStore = defineStore("user", {
             heroStore.getHero();
 
             this.error = "";
-            router.push("/")
+            router.push("/home")
 
             return true;
         },

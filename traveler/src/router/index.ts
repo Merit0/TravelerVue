@@ -1,13 +1,13 @@
 import { createRouter, createWebHistory } from "vue-router";
 import LoginPage from "@/components/login-page.vue";
-import HomePage from "@/components/HomePage.vue";
-import EvilLandMap from "@/components/EvilLandMap.vue";
+import HomePage from "@/components/home-page.vue";
+import OldForestMap from "@/components/old-forest-map.vue";
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
     {
-      path: "/",
+      path: "/home",
       name: "home",
       component: HomePage,
       meta: { requiresAuth: true },
@@ -18,9 +18,9 @@ const router = createRouter({
       component: LoginPage,
     },
     {
-      path: "/evilLand",
-      name: "evilLand",
-      component: EvilLandMap,
+      path: "/old-forest",
+      name: "old-forest",
+      component: OldForestMap,
     },
   ],
 });
