@@ -1,5 +1,5 @@
 <template>
-  <div class="evilLandMap" v-if="!isEmpty">
+  <div class="dungeonTile" v-if="!isEmpty">
     <button @click="startDungeon()" class="buttonMap" :disabled="mapStore.isMapCleared"></button>
     <div class="resetBtnBackground" v-if="mapStore.isMapCleared">
       <div class="resetImg">
@@ -31,14 +31,14 @@ export default {
   },
   methods: {
     async startDungeon() {
-      router.push("/evilLand");
+      router.push("/old-forest");
     }
   }
 }
 </script>
 
 <style>
-.evilLandMap {
+.dungeonTile {
   width: 190px;
   height: 190px;
   background-image: url('../assets/images/dungeons/homeButtons/fightFireBtn-removebg-preview.png');

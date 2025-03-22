@@ -6,16 +6,6 @@
     <DungeonTile :isEmpty="true"></DungeonTile>
     <DungeonTile :isEmpty="true"></DungeonTile>
     <DungeonTile :isEmpty="true"></DungeonTile>
-    <DungeonTile :isEmpty="false"></DungeonTile>
-    <DungeonTile :isEmpty="true"></DungeonTile>
-    <DungeonTile :isEmpty="true"></DungeonTile>
-    <DungeonTile :isEmpty="true"></DungeonTile>
-    <DungeonTile :isEmpty="true"></DungeonTile>
-    <DungeonTile :isEmpty="true"></DungeonTile>
-    <DungeonTile :isEmpty="true"></DungeonTile>
-    <DungeonTile :isEmpty="true"></DungeonTile>
-    <DungeonTile :isEmpty="true"></DungeonTile>
-    <DungeonTile :isEmpty="true"></DungeonTile>
   </div>
 </template>
 

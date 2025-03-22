@@ -1,31 +1,27 @@
-import { defineStore } from "pinia";
+import {defineStore} from "pinia";
 import UserModel from "@/models/UserModel";
 import * as Request from '@/api/Requests'
 import router from '@/router/index';
-import { useHeroStore } from '@/stores/HeroStore'
+import {useHeroStore} from '@/stores/HeroStore'
+import {useBagStore} from '@/stores/BagStore'
+import {useMapStore} from '@/stores/MapStore'
 
 export const useUserStore = defineStore("user", {
+
     state: () => {
+        const mapStore = useMapStore();
+        const bagStore = useBagStore();
         return {
             user: new UserModel().build(),
-            error: ""
+            error: "",
+            mapStore,
+            bagStore
         };
     },
     getters: {
         isLoggedIn: (() => localStorage.getItem("uStatus") === "true")
     },
     actions: {
-        async getUser() {
-            const apiUser = await Request.getUser();
-            if (!apiUser.loggedIn) {
-                console.log(apiUser.username + " in not logged in");
-                return;
-            }
-            this.user
-                .setName(apiUser.name)
-                .setUsername(apiUser.username);
-        },
-
         async login(username: string, password: string) {
             const userFromApi = await Request.login(username, password);
             if (userFromApi == null) {
@@ -48,10 +44,15 @@ export const useUserStore = defineStore("user", {
 
             return true;
         },
-        async logout() {
-            localStorage.clear();
-            router.push("/login");
-            location.reload();
+        async logout(): Promise<void> {
+            console.log('Logout initiated');
+            await this.mapStore.resetMap().then(async () => {
+                await this.bagStore.resetBag().then(() => {
+                    localStorage.removeItem("map");
+                    localStorage.clear();
+                    router.push("/login");
+                });
+            });
         },
         async clearErrorMsg() {
             this.error = "";

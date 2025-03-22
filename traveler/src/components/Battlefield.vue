@@ -125,7 +125,6 @@ export default {
   width: 1200px;
   height: 150px;
   margin: auto;
-  display: flex-direction;
   background-color: rgb(218, 218, 218);
   border-radius: 20px;
   padding: 4px;
@@ -155,9 +154,7 @@ export default {
   width: 30px;
   height: 30px;
   background-color: rgb(255, 0, 0);
-  outline-color: rgba(255, 0, 0, 0.589);
-  outline-width: 2px;
-  outline-style: solid;
+  outline: rgba(255, 0, 0, 0.589) solid 2px;
   border-radius: 100%;
 }
 
@@ -165,7 +162,7 @@ export default {
   height: 600px;
   width: 500px;
   background-image: url('@/assets/images/battlefield/HeroBody500_600.png');
-  background-size: flex-direction;
+  background-size: cover;
   border-radius: 20px;
   padding: 10px;
 }
@@ -173,7 +170,6 @@ export default {
 .enemySide {
   height: 600px;
   width: 500px;
-  align-items: flex-end;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -201,6 +197,5 @@ export default {
   box-shadow: 0px -3px 15px 4px rgba(255, 195, 195, 0.5);
   border-radius: 20px;
   margin: auto;
-  margin-top: 50px;
 }
 </style>

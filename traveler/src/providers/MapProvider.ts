@@ -1,12 +1,12 @@
 import MapModel from '../models/MapModel';
-import { MapBuilder } from '../builders/MapBuilder';
-import { MapComplexity } from '../enums/MapComplexity';
+import { MapBuilder } from '@/builders/MapBuilder';
+import { MapComplexity } from '@/enums/MapComplexity';
 export class MapProvider {
 
-    static getEvilLand(): MapModel {
+    static getOldForest(): MapModel {
         return new MapBuilder()
             .tilesNumber(40)
-            .mapName("EvilLand")
+            .mapName("Old Forest")
             .complexity(MapComplexity.EASY)
             .build();
     }

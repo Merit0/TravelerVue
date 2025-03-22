@@ -5,7 +5,7 @@
     <div class="gameModesContent">
       <div class="gameMode campMode"></div>
       <div class="gameMode arenaMode"></div>
-      <div class="gameMode dungeonsMode" @click=""></div>
+      <div class="gameMode dungeonsMode" @click="openMaps()"></div>
     </div>
   </section>
 </template>
@@ -14,6 +14,7 @@
 import {useUserStore} from '@/stores/UserStore'
 import HeroDetailsBar from './HeroDetailsBar.vue';
 import {useHeroStore} from '@/stores/HeroStore'
+import router from "@/router";
 
 export default {
   name: "HomePage",
@@ -35,6 +36,9 @@ export default {
           clearInterval(this.time);
         }
       }, 3000);
+    },
+    async openMaps() {
+      router.push('/maps');
     },
   },
 }

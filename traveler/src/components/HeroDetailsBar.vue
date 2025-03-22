@@ -29,6 +29,7 @@
 import {PropType} from 'vue';
 import {IHero} from '@/abstraction/IHero';
 import {useUserStore} from '@/stores/UserStore'
+import {useMapStore} from '@/stores/MapStore'
 
 export default {
   name: "hero-data-bar",
@@ -40,7 +41,8 @@ export default {
   },
   data() {
     const userStore = useUserStore();
-    return {userStore};
+    const mapStore = useMapStore();
+    return {userStore, mapStore};
   },
 }
 </script>

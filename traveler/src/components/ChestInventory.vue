@@ -12,7 +12,7 @@
 
 <script lang="ts">
 import ChestItemTile from './ChestItemTile.vue';
-import { ChestModel } from '../models/ChestModel';
+import { ChestModel } from '@/models/ChestModel';
 import { useChestStore } from '@/stores/ChestStore';
 
 

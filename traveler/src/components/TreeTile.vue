@@ -5,7 +5,7 @@
 <script lang="ts">
 import TileModel from '@/models/TileModel';
 import { useHeroStore } from '@/stores/HeroStore';
-import { useMapStore } from '../stores/MapStore';
+import { useMapStore } from '@/stores/MapStore';
 
 
 export default {
@@ -33,7 +33,6 @@ export default {
 </script>
 <style>
 .treeTile {
-    background: none;
     border-radius: 20%;
     background-image: url('../assets/images/homePage_slotImages/tree.png');
     border: 2px solid rgb(108, 108, 108);

@@ -2,8 +2,8 @@
   <section class="page">
     <title>Old Forest</title>
     <HeroDetailsBar :hero="hero"></HeroDetailsBar>
-    <Tiles :mapTiles="tiles" v-if="tilesShown && heroStore.isAlive()"></Tiles>
-    <HeroDeathOverlay v-if="!heroStore.isAlive()"></HeroDeathOverlay>
+    <Tiles :mapTiles="mapStore.tiles" v-if="tilesShown && heroStore.isAlive()"></Tiles>
+    <HeroDeathOverlay v-if="!heroStore.isAlive() && userStore.isLoggedIn"></HeroDeathOverlay>
     <hero-inventory :show-inventory="heroStore.inventoryShown" @heroInventory="closeInventory($event)"></hero-inventory>
     <button @click="quitMap()" class="escapeBtn">Escape</button>
   </section>
@@ -19,28 +19,30 @@ import {useMapStore} from '@/stores/MapStore';
 import MapModel from '../models/MapModel';
 import HeroInventory from './HeroInventory.vue';
 import {MapProvider} from '@/providers/MapProvider';
+import {useUserStore} from '@/stores/UserStore';
 
 export default {
-  name: "EvilLandMap",
+  name: "OldForest",
   components: {Tiles, HeroDetailsBar, HeroDeathOverlay, HeroInventory},
   data() {
     const heroStore = useHeroStore();
+    const userStore = useUserStore();
     const hero = heroStore.hero;
     const tilesShown = true;
     const mapStore = useMapStore();
-    const evilLand: MapModel = MapProvider.getEvilLand();
-    evilLand.setHero(hero);
-    mapStore.buildMap(evilLand);
-    const tiles = mapStore.tiles;
+    const oldForest: MapModel = MapProvider.getOldForest();
+    oldForest.setHero(hero);
+    mapStore.buildMap(oldForest);
 
-    return {tiles, hero, tilesShown, heroStore, mapStore}
+    return {hero, tilesShown, heroStore, mapStore, userStore}
   },
   methods: {
     async quitMap() {
       if (this.mapStore.isMapCleared) {
         this.mapStore.isCleared = this.mapStore.isMapCleared;
       }
-      router.push("/");
+      await this.mapStore.resetMap();
+      router.push("/maps");
     },
     async closeInventory(inventoryStatus: boolean) {
       this.heroStore.showInventory(inventoryStatus);
