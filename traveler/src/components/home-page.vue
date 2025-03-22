@@ -3,8 +3,8 @@
   <section class="homeContent">
   <HeroDetailsBar :hero="hero"></HeroDetailsBar>
     <div class="gameModesContent">
-      <div class="gameMode"></div>
-      <div class="gameMode"></div>
+      <div class="gameMode campMode"></div>
+      <div class="gameMode arenaMode"></div>
       <div class="gameMode dungeonsMode"></div>
     </div>
   </section>

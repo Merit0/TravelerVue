@@ -50,8 +50,20 @@
 
 .dungeonsMode {
     background-image: url('@/assets/images/background/dungeons-mode-entrance-background.png');
-    background-size: contain;
+    background-size: cover;
     background-repeat: no-repeat;
+}
+
+.arenaMode {
+    background-image: url('@/assets/images/background/arena-mode-background.png');
+    background-size: cover;
+    background-repeat: repeat;
+}
+
+.campMode {
+    background-image: url('@/assets/images/background/camp-mode-background.png');
+    background-size: cover;
+    background-repeat: repeat;
 }
 
 .gameMode:hover {

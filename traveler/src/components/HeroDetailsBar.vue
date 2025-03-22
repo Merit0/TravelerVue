@@ -20,8 +20,8 @@
         <div class="iconImg coin" label="heroCoins"></div>
         <p class="heroDetailsText">{{ hero.coins }}</p>
       </div>
-      <button @click="userStore.logout()" v-if="userStore.isLoggedIn" class="logout">Logout</button>
     </div>
+    <button @click="userStore.logout()" v-if="userStore.isLoggedIn" class="logout">Logout</button>
   </div>
 </template>
 
@@ -49,11 +49,17 @@ export default {
 .bar {
   position: relative;
   width: 100%;
+  height: auto;
+  min-height: 1vh;
+  max-height: 20vh;
   margin-top: 2px;
-  min-width: 100vh;
   background: linear-gradient(135deg, rgba(55, 21, 0, 0.83), #401b01);
   border-radius: 10px;
   border: 1px solid rgba(96, 75, 61, 0.83);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between; /* Distributes items evenly (adjust as needed) */
+  align-items: center;
 }
 
 .heroStats {
