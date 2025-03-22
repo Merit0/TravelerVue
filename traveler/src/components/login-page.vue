@@ -81,7 +81,6 @@ export default defineComponent({
       try {
         isLoading.value = true;
         await userStore.login(form.username, form.password);
-        // Reset form only on successful login
         form.username = '';
         form.password = '';
       } catch (error) {

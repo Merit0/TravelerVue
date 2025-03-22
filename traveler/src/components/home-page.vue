@@ -5,7 +5,7 @@
     <div class="gameModesContent">
       <div class="gameMode campMode"></div>
       <div class="gameMode arenaMode"></div>
-      <div class="gameMode dungeonsMode"></div>
+      <div class="gameMode dungeonsMode" @click=""></div>
     </div>
   </section>
 </template>
@@ -22,8 +22,7 @@ export default {
     const userStore = useUserStore();
     const heroStore = useHeroStore();
     const hero = heroStore.hero;
-    let showInventory = false;
-    return {userStore, hero, heroStore, time: '', showInventory};
+    return {userStore, hero, heroStore, time: ''};
   },
   methods: {
     async increaseHealth() {
@@ -37,16 +36,7 @@ export default {
         }
       }, 3000);
     },
-    async inventory() {
-      this.showInventory = !this.showInventory;
-    }
   },
-  mounted() {
-    this.increaseHealth();
-  },
-  unmounted() {
-    clearInterval(this.time);
-  }
 }
 </script>
 <style>

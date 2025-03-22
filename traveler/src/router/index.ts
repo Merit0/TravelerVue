@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import LoginPage from "@/components/login-page.vue";
 import HomePage from "@/components/home-page.vue";
 import OldForestMap from "@/components/old-forest-map.vue";
+import MapsPage from "@/components/maps-page.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -21,6 +22,11 @@ const router = createRouter({
       path: "/old-forest",
       name: "old-forest",
       component: OldForestMap,
+    },
+    {
+      path: "/maps",
+      name: "maps",
+      component: MapsPage,
     },
   ],
 });
