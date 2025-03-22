@@ -5,9 +5,10 @@
     margin-top: 270px;
     margin-left: 1800px;
     display: flex;
-    justify-content:space-between;
+    justify-content: space-between;
     align-items: center;
 }
+
 .homeContent {
     background: linear-gradient(to bottom, #3C2F2F, #5C4033);
     border: 2px double #1A120B;
@@ -20,6 +21,7 @@
     align-items: center;
     flex-direction: column;
 }
+
 .gameModesContent {
     position: relative;
     margin: auto;
@@ -31,19 +33,27 @@
     align-items: center;
     gap: 1vh;
 }
+
 .gameMode {
     position: relative;
     width: 100%;
     max-width: 660px;
     min-height: 90vh;
-    background-color: #22ff00;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
     border-radius: 10px;
     transition: transform 0.2s ease;
+    overflow: hidden;
 }
+
+.dungeonsMode {
+    background-image: url('@/assets/images/background/dungeons-mode-entrance-background.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
 .gameMode:hover {
     transform: scale(1.02);
 }

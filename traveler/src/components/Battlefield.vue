@@ -144,11 +144,7 @@ export default {
   width: 200px;
   height: 200px;
   background-image: url('@/assets/images/battlefield/crossedSwordsBtn.png');
-  outline-width: 1px;
-  outline-style: solid;
-  outline-color: rgba(0, 0, 0, 0.295);
-  outline-width: 3px;
-
+  outline: rgba(0, 0, 0, 0.295) solid 3px;
   border-radius: 30%;
   transition: 0.2s all;
 

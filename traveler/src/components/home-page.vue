@@ -5,7 +5,7 @@
     <div class="gameModesContent">
       <div class="gameMode"></div>
       <div class="gameMode"></div>
-      <div class="gameMode"></div>
+      <div class="gameMode dungeonsMode"></div>
     </div>
   </section>
 </template>
