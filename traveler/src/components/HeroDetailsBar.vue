@@ -111,10 +111,13 @@ export default {
 
 .logout {
   width: 60px;
-  color: #ffc400;
+  height: 40px;
+  color: rgb(96, 57, 0);
+  font-size: 15px;
   position: relative;
-  background-color: rgba(228, 175, 1, 0.18);
-  border: 5px solid rgba(56, 0, 0, 0.603);
-  outline-color: rgba(56, 0, 0, 0.603);
+  background-color: rgb(255, 204, 186);
+  border: 2px solid rgba(56, 0, 0, 0.603);
+  border-radius: 20px;
+  margin-right: 5px;
 }
 </style>
