@@ -24,18 +24,17 @@
 </template>
 
 <script lang="ts">
-import { ItemType } from '@/enums/ItemType';
-import { Equipment } from '@/models/Equipment';
-import { LootItemModel } from '@/models/LootItemModel';
-import { useBagStore } from '@/stores/BagStore';
-import { useHeroStore } from '@/stores/HeroStore';
+import {ItemType} from '@/enums/ItemType';
+import {LootItemModel} from '@/models/LootItemModel';
+import {useBagStore} from '@/stores/BagStore';
+import {useHeroStore} from '@/stores/HeroStore';
 
 
 export default {
     name: "hero-equipment-tile",
     props: {
         equipment: {
-            type: Equipment,
+            type: Object,
             required: true
         }
     },
@@ -47,22 +46,21 @@ export default {
     },
     methods: {
         getItemStyle(equipment: LootItemModel) {
-            const tileStyle = {
-                backgroundImage: 'url(' + require('@/assets/images/' + equipment.imgPath) + ')',
-            }
-            return tileStyle;
+          return {
+              backgroundImage: 'url(' + require('@/assets/images/' + equipment.imgPath) + ')',
+            };
         },
         async takeOffEquipment(item: LootItemModel) {
             if (item.itemType === ItemType.WEAPON) {
-                this.bagStore.putIn(item);
+                await this.bagStore.putIn(item);
                 this.hero.attack -= this.hero.equipment.weapon.value;
                 this.hero.equipment.weapon = null;
             } else if (item.itemType === ItemType.ARMOR) {
-                this.bagStore.putIn(item);
+                await this.bagStore.putIn(item);
                 this.hero.maxHealth -= this.hero.equipment.armor.value;
                 this.hero.equipment.armor = null;
             } else if (item.itemType === ItemType.HELM) {
-                this.bagStore.putIn(item);
+                await this.bagStore.putIn(item);
                 this.hero.maxHealth -= this.hero.equipment.helm.value;
                 this.hero.equipment.helm = null;
             }

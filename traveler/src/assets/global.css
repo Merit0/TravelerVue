@@ -1,21 +1,9 @@
  @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
  .page {
-    background-color: black;
+    /*background-color: black;*/
     min-height: 100vh;
-    padding: 5px;
-    display: flex-direction;
     align-items :center;
-}
-
- .loginPage {
-    min-height: 100vh;
-    color: #fff;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    background-size: 100% 100%;
-    background-image: url('@/assets/images/loginPageBackground.jpg');
 }
 
 * {
@@ -28,11 +16,6 @@ html {
     font-family: 'Poppins', sans-serif;
 }
 
-input, 
-button {
-    font: inherit;
-}
-
 .activeBtn:active {
     transform: scale(0.98);
     /* Scaling button to 0.98 to its original size */
@@ -40,73 +23,8 @@ button {
     /* Lowering the shadow */
 }
 
-form {
-    display: table;
-}
-
 button:hover {
     cursor: pointer;
-}
-
-.loginPageTitle {
-    color: rgb(255, 196, 154);
-    -webkit-text-stroke: 1px rgb(85, 51, 0);
-    text-align: center;
-    font-size: 60px;
-    margin-top: 50px;
-}
-
-.loginFormError {
-    color: rgb(255, 0, 0);
-    width: 500px;
-    background-color:rgb(255, 255, 255);
-    text-align: center;
-    font-size: 25px;
-    border: 1px solid rgb(255, 0, 0);
-    border-radius: 5px;
-    position: fixed;
-    top: 50px;
-    margin-left: 690px;
-
-}
-
-
-.loginForm {
-    margin: auto;
-    max-width: 500px;
-    background-color: rgba(255, 228, 187, 0.3);
-    border: 2px solid rgba(255, 216, 150, 0.348);
-    border-radius: 30px;
-    
-}
-
-.loginContainer {
-    position: relative;
-    top: 150px;
-}
-
-.loginSection__input {                     
-    width: calc(100% - (0.25rem + 15px));
-    flex-grow: 1;
-    border: 1px solid rgb(151, 134, 117);
-    background-color : #fbecd9; 
-    border-radius: 10px;
-    padding: 0.5em;
-    margin: 0.4em;
-    font-size: 1.5em;
-}
-
-
-.loginSection_button {
-    background-color: rgb(108, 56, 0);
-    color: rgb(255, 177, 104);
-    border: 2px solid rgb(255, 212, 120);
-    border-radius: 15px;
-    padding: 0.3em;
-    margin-left: 9em;
-    margin-bottom: 5px;
-    font-size: 1.5em;
-    font-weight : bold;
 }
 
 button:hover,

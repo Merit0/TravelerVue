@@ -5,7 +5,7 @@
     <hero-tile :tile="tile" :show-hero="showHero"></hero-tile>
     <chest-tile :tile="tile"  @chestInventory="openChestInventory($event)"></chest-tile>
     <Battlefield :showOverlay="tile.inBattle" :tile="tile" @isBattle="isBattle($event)"></Battlefield>
-    <chest-inventory :chest="tile.chest" :show-chest-inventory="showChestInventory" @chestInventory="closeChestInventory(tile, $event)"></chest-inventory>
+    <chest-inventory v-if="tile.chest" :chest="tile.chest" :show-chest-inventory="showChestInventory" @chestInventory="closeChestInventory(tile, $event)"></chest-inventory>
 </template>
 
 <script lang="ts">
@@ -18,7 +18,7 @@ import { useHeroStore } from '@/stores/HeroStore'
 import HeroTile from './HeroTile.vue';
 import ChestTile from './ChestTile.vue';
 import ChestInventory from './ChestInventory.vue';
-import { useMapStore } from '../stores/MapStore';
+import { useMapStore } from '@/stores/MapStore';
 
 export default {
     name: "map-tile",

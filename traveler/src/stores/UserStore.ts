@@ -1,31 +1,23 @@
-import { defineStore } from "pinia";
+import {defineStore} from "pinia";
 import UserModel from "@/models/UserModel";
 import * as Request from '@/api/Requests'
 import router from '@/router/index';
-import { useHeroStore } from '@/stores/HeroStore'
+import {useHeroStore} from '@/stores/HeroStore'
+import {useBagStore} from '@/stores/BagStore'
+import {useMapStore} from '@/stores/MapStore'
 
 export const useUserStore = defineStore("user", {
+
     state: () => {
         return {
             user: new UserModel().build(),
-            error: ""
+            error: "",
         };
     },
     getters: {
         isLoggedIn: (() => localStorage.getItem("uStatus") === "true")
     },
     actions: {
-        async getUser() {
-            const apiUser = await Request.getUser();
-            if (!apiUser.loggedIn) {
-                console.log(apiUser.username + " in not logged in");
-                return;
-            }
-            this.user
-                .setName(apiUser.name)
-                .setUsername(apiUser.username);
-        },
-
         async login(username: string, password: string) {
             const userFromApi = await Request.login(username, password);
             if (userFromApi == null) {
@@ -43,15 +35,27 @@ export const useUserStore = defineStore("user", {
             const heroStore = useHeroStore();
             heroStore.getHero();
 
+            const mapStore = useMapStore();
+            await mapStore.resetMap(); // Reset map on login
+
+            const bagStore = useBagStore();
+            await bagStore.resetBag();
             this.error = "";
-            router.push("/")
+            router.push("/home")
 
             return true;
         },
-        async logout() {
-            localStorage.clear();
-            await router.push("/login");
-            location.reload();
+        async logout(): Promise<void> {
+            console.log('Logout initiated');
+            const mapStore = useMapStore();
+            const bagStore = useBagStore();
+            await mapStore.resetMap().then(async () => {
+                await bagStore.resetBag().then(() => {
+                    localStorage.removeItem("map");
+                    localStorage.clear();
+                    router.push("/login");
+                });
+            });
         },
         async clearErrorMsg() {
             this.error = "";
