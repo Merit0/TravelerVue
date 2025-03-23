@@ -5,9 +5,9 @@
       Your browser does not support the video tag.
     </video>
     <div class="video-overlay"></div>
-        <header class="title-block">
-          <h1 class="login-page-title" title="Traveler">Traveler</h1>
-        </header>
+    <header class="title-block">
+      <h1 class="login-page-title" title="Traveler">Traveler</h1>
+    </header>
     <main class="login-container">
       <form class="login-form" @submit.prevent="onSubmit" novalidate>
         <div class="form-field">
@@ -102,6 +102,7 @@ export default defineComponent({
 
     onMounted(() => {
       userStore.clearErrorMsg();
+      userStore.logout()
       document.title = 'Traveler - Login';
     });
 
