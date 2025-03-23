@@ -9,13 +9,9 @@ import {useMapStore} from '@/stores/MapStore'
 export const useUserStore = defineStore("user", {
 
     state: () => {
-        const mapStore = useMapStore();
-        const bagStore = useBagStore();
         return {
             user: new UserModel().build(),
             error: "",
-            mapStore,
-            bagStore
         };
     },
     getters: {
@@ -39,6 +35,11 @@ export const useUserStore = defineStore("user", {
             const heroStore = useHeroStore();
             heroStore.getHero();
 
+            const mapStore = useMapStore();
+            await mapStore.resetMap(); // Reset map on login
+
+            const bagStore = useBagStore();
+            await bagStore.resetBag();
             this.error = "";
             router.push("/home")
 
@@ -46,8 +47,10 @@ export const useUserStore = defineStore("user", {
         },
         async logout(): Promise<void> {
             console.log('Logout initiated');
-            await this.mapStore.resetMap().then(async () => {
-                await this.bagStore.resetBag().then(() => {
+            const mapStore = useMapStore();
+            const bagStore = useBagStore();
+            await mapStore.resetMap().then(async () => {
+                await bagStore.resetBag().then(() => {
                     localStorage.removeItem("map");
                     localStorage.clear();
                     router.push("/login");
