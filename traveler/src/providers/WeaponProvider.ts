@@ -75,7 +75,7 @@ export class WeaponProvider {
     return new LootItemBuilder().lootItemName("Empty").build();
   }
 
-  public static getCommon(): LootItemModel[] {
+  public static getCommonWeaponsList(): LootItemModel[] {
     return Array.of(this.getHealPotion(), this.getWoodCopperAxe());
   }
 
