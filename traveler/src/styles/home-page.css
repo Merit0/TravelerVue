@@ -52,18 +52,46 @@
     background-image: url('@/assets/images/background/dungeons-mode-entrance-background.png');
     background-size: cover;
     background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
 }
 
 .arenaMode {
     background-image: url('@/assets/images/background/arena-mode-background.png');
     background-size: cover;
     background-repeat: repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
 }
 
 .campMode {
     background-image: url('@/assets/images/background/camp-mode-background.png');
     background-size: cover;
     background-repeat: repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+}
+
+.shiny-banner-box {
+    width: 35%;
+    margin: 15px auto;
+    background-color: rgba(62, 43, 30, 0.7);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5), inset 0 0 5px rgba(255, 255, 255, 0.3);
+    border-image: linear-gradient(45deg, #8b5a2b, #3e2b1e, #5a381e) 1;
+}
+
+.shiny-banner-title {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    color: #f5f5f5;
+    margin: 0;
+    border-top: 3px solid #d5b689;
+    border-bottom: 3px solid #d5b689;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
 }
 
 .gameMode:hover {
