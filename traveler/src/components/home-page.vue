@@ -23,19 +23,16 @@
 </template>
 
 <script lang="ts">
-import {useUserStore} from '@/stores/UserStore'
-import HeroDetailsBar from './HeroDetailsBar.vue';
 import {useHeroStore} from '@/stores/HeroStore'
 import router from "@/router";
+import HeroDetailsBar from "@/components/HeroDetailsBar.vue";
 
 export default {
-  name: "HomePage",
+  name: "home-page",
   components: {HeroDetailsBar},
   data() {
-    const userStore = useUserStore();
-    const heroStore = useHeroStore();
-    const hero = heroStore.hero;
-    return {userStore, hero, heroStore};
+    const hero = useHeroStore().hero;
+    return {hero};
   },
   methods: {
     async openMaps(): Promise<void> {

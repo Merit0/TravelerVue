@@ -10,19 +10,17 @@
 </template>
 
 <script lang="ts">
-import {useUserStore} from '@/stores/UserStore'
 import HeroDetailsBar from './HeroDetailsBar.vue';
 import {useHeroStore} from '@/stores/HeroStore';
 import router from "@/router";
 
 export default {
-  name: "CampPage",
+  name: "camping-page",
   components: {HeroDetailsBar},
   data() {
-    const userStore = useUserStore();
     const heroStore = useHeroStore();
     const hero = heroStore.hero;
-    return {userStore, hero, heroStore, time: '',};
+    return {hero, heroStore, time: '',};
   },
   methods: {
     async increaseHealth() {

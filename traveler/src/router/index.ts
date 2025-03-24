@@ -10,12 +10,11 @@ const routes = [
     {path: '/', component: LoginPage},
     {
         path: '/login',
-        name: "login",
         component: LoginPage
     },
     {
         path: "/home",
-        name: "home",
+        name: "home-page",
         component: HomePage,
         meta: {requiresAuth: true},
     },
@@ -26,19 +25,15 @@ const routes = [
     },
     {
         path: "/maps",
-        name: "maps",
+        name: "maps-page",
         component: MapsPage,
+        meta: {requiresAuth: true}
     },
-    {
-        path: "/camping",
-        name: "camping",
-        component: CampPage,
-    },
-
     {
         path: "/old-forest",
         name: "old-forest",
         component: OldForestMap,
+        meta: {requiresAuth: true}
     },
 ];
 
@@ -49,7 +44,9 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
     const userStore = useUserStore();
-    if (to.meta.requiresAuth && !userStore.isLoggedIn) {
+    console.log('Navigating to:', to.path, 'Logged in:', userStore.loggedIn);
+    if (to.meta.requiresAuth && !userStore.loggedIn) {
+        console.log('back to login');
         next('/login');
     } else {
         next();

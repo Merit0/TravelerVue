@@ -19,26 +19,22 @@ import {useMapStore} from '@/stores/MapStore';
 import MapModel from '../models/MapModel';
 import HeroInventory from './HeroInventory.vue';
 import {MapProvider} from '@/providers/MapProvider';
-import {useUserStore} from '@/stores/UserStore';
+import {useUserStore} from "@/stores/UserStore";
 
 export default {
-  name: "OldForest",
+  name: "old-forest",
   components: {Tiles, HeroDetailsBar, HeroDeathOverlay, HeroInventory},
   data() {
     const heroStore = useHeroStore();
-    const userStore = useUserStore();
+    const useStore = useUserStore();
     const hero = heroStore.hero;
     const tilesShown = true;
     const mapStore = useMapStore();
     const oldForest: MapModel = MapProvider.getOldForest();
-    if (userStore.isLoggedIn) {
-      oldForest.setHero(hero);
-      mapStore.buildMap(oldForest);
-    } else {
-      router.push('/login');
-    }
+    oldForest.setHero(hero);
+    mapStore.buildMap(oldForest);
 
-    return {hero, tilesShown, heroStore, mapStore, userStore}
+    return {hero, tilesShown, heroStore, mapStore, useStore}
   },
   methods: {
     async quitMap() {
