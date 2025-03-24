@@ -44,8 +44,8 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
     const userStore = useUserStore();
-    console.log('Navigating to:', to.path, 'Logged in:', userStore.loggedIn);
-    if (to.meta.requiresAuth && !userStore.loggedIn) {
+    console.log('Navigating to:', to.path, 'Logged in:', userStore.isUserLoggedIn);
+    if (to.meta.requiresAuth && !userStore.isUserLoggedIn) {
         console.log('back to login');
         next('/login');
     } else {

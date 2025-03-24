@@ -13,8 +13,8 @@ export const useUserStore = defineStore('user', {
         error: '',
     }),
     getters: {
-        isLoggedIn: () => localStorage.getItem('uStatus') === 'true',
-        loggedIn(): boolean {
+        isLoggedIn: ():boolean => localStorage.getItem('uStatus') === 'true',
+        isUserLoggedIn(): boolean {
             return this.user.getStatus();
         }
     },

@@ -3,7 +3,7 @@
     <title>Old Forest</title>
     <HeroDetailsBar :hero="hero"></HeroDetailsBar>
     <Tiles :mapTiles="mapStore.tiles" v-if="tilesShown && heroStore.isAlive()"></Tiles>
-    <HeroDeathOverlay v-if="!heroStore.isAlive() && userStore.isLoggedIn"></HeroDeathOverlay>
+    <HeroDeathOverlay v-if="!heroStore.isAlive() && userStore.isUserLoggedIn"></HeroDeathOverlay>
     <hero-inventory :show-inventory="heroStore.inventoryShown" @heroInventory="closeInventory($event)"></hero-inventory>
     <button @click="quitMap()" class="escapeBtn">Escape</button>
   </section>
@@ -26,7 +26,7 @@ export default {
   components: {Tiles, HeroDetailsBar, HeroDeathOverlay, HeroInventory},
   data() {
     const heroStore = useHeroStore();
-    const useStore = useUserStore();
+    const userStore = useUserStore();
     const hero = heroStore.hero;
     const tilesShown = true;
     const mapStore = useMapStore();
@@ -34,7 +34,7 @@ export default {
     oldForest.setHero(hero);
     mapStore.buildMap(oldForest);
 
-    return {hero, tilesShown, heroStore, mapStore, useStore}
+    return {hero, tilesShown, heroStore, mapStore, userStore}
   },
   methods: {
     async quitMap() {

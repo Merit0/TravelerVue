@@ -13,7 +13,7 @@ import router from '@/router';
 export default {
   methods: {
     async quitMap() {
-      router.push("/home"); //TODO: should be changed to 'hero-camp'
+      router.push("/camping");
     }
   }
 }
