@@ -44,21 +44,21 @@
 }
 
 .heart {
-    background-image: url("../../public/images/top-bar-items/heart-icon.png");
+    background-image: url("/images/top-bar-items/heart-icon.png");
 }
 
 .doubleSword {
-    background-image: url("../../public/images/top-bar-items/crossed-swords-icon.png");
+    background-image: url("/images/top-bar-items/crossed-swords-icon.png");
 }
 
 .skull {
-    background-image: url("../../public/images/top-bar-items/skull-icon.png");
+    background-image: url("/images/top-bar-items/skull-icon.png");
     background-size: 110%, 110%;
     border-radius: 100%;
 }
 
 .coin {
-    background-image: url("../../public/images/top-bar-items/coin-icon.png");
+    background-image: url("/images/top-bar-items/coin-icon.png");
 }
 
 .logout {

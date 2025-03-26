@@ -49,7 +49,7 @@
 }
 
 .dungeonsMode {
-    background-image: url('../../public/images/select-mode-page/dungeons-mode-entrance-background.png');
+    background-image: url('/images/select-mode-page/dungeons-mode-entrance-background.png');
     background-size: cover;
     background-repeat: no-repeat;
     display: flex;
@@ -58,7 +58,7 @@
 }
 
 .arenaMode {
-    background-image: url('../../public/images/select-mode-page/arena-mode-background.png');
+    background-image: url('/images/select-mode-page/arena-mode-background.png');
     background-size: cover;
     background-repeat: repeat;
     display: flex;
@@ -67,7 +67,7 @@
 }
 
 .campMode {
-    background-image: url('../../public/images/select-mode-page/camp-mode-background.png');
+    background-image: url('/images/select-mode-page/camp-mode-background.png');
     background-size: cover;
     background-repeat: repeat;
     display: flex;

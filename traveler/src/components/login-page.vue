@@ -1,7 +1,7 @@
 <template>
   <section class="login-page">
     <video class="background-video" autoplay muted loop playsinline>
-      <source src="../../public/videos/login-page/login-page-video.mp4" type="video/mp4">
+      <source src="/videos/login-page/login-page-video.mp4" type="video/mp4">
       Your browser does not support the video tag.
     </video>
     <div class="video-overlay"></div>
