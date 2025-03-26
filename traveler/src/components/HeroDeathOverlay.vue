@@ -51,7 +51,7 @@ export default {
   height: 550px;
   border-radius: 20px;
   margin: auto;
-  background-image: url("../assets/images/deathOverlayBackground.jpg");
+  background-image: url("/images/overlays/hero-death/hero-death-overlay-background.png");
   margin-top: 5px;
 }
 

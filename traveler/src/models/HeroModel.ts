@@ -13,7 +13,7 @@ export class HeroModel implements IHero {
   kills: number;
   available: boolean;
   id: number;
-  imgPath = "heroes/hero_ass1.png";
+  imgPath = "hero_ass1.png";
   equipment: Equipment;
   heroLocation: TileModel;
 

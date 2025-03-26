@@ -19,7 +19,7 @@ export default {
         }
     },
     data() {
-        const bagStore = useBagStore(); 
+        const bagStore = useBagStore();
         const chestStore = useChestStore();
         chestStore.addItem(this.lootItem);
         return { bagStore };
@@ -27,10 +27,9 @@ export default {
 
     methods: {
         getItemStyle(lootItem: LootItemModel) {
-            const tileStyle = {
-                backgroundImage: 'url(' + require('@/assets/images/' + lootItem.imgPath) + ')',
+            return {
+              backgroundImage: `url(${lootItem.imgPath})`,
             }
-            return tileStyle;
         },
         async takeItem(item: LootItemModel) {
             this.bagStore.putIn(item);
@@ -48,7 +47,7 @@ export default {
     margin: auto;
     display: flex;
     align-items: center;
-    background-image: url("@/assets/images/chests/chest_item_area_orange.png");
+    background-image: url("/images/chests/chest_item_area_orange.png");
     background-size: 100% 100%;
 }
 

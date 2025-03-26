@@ -1,18 +1,19 @@
-import { LootItemModel } from "../models/LootItemModel";
-import { LootItemBuilder } from "../builders/LootItemBuilder";
+import { LootItemModel } from "@/models/LootItemModel";
+import { LootItemBuilder } from "@/builders/LootItemBuilder";
 import { Rarity } from "@/enums/Rarity";
 import { ItemType } from "@/enums/ItemType";
 import { Randomizer } from "@/utils/Randomizer";
 
 export class WeaponProvider {
+  private static heroWeaponsFolderPath = "images/hero-equipment/weapons/";
   public static getSoulRipper(): LootItemModel {
     return new LootItemBuilder()
       .lootItemName("Soul Reaper")
       .lootValue(Randomizer.getRandomIntInRange(20, 50))
       .itemType(ItemType.WEAPON)
       .lootRarity(Rarity.LEGEND)
-      .lootItemImgPath("hero-equipment/weapons/knives/legend-type/sword_soul_ripper.png")
-      .dropChance(Randomizer.getChance(55))
+      .lootItemImgPath(this.heroWeaponsFolderPath + "knives/legend-type/sword_soul_ripper.png")
+      .dropChance(Randomizer.getChance(100))
       .build();
   }
 
@@ -21,7 +22,7 @@ export class WeaponProvider {
       .lootItemName("Wood Axe")
       .itemType(ItemType.WEAPON)
       .lootRarity(Rarity.COMMON)
-      .lootItemImgPath("hero-equipment/weapons/axes/common-type/common_axe.png")
+      .lootItemImgPath(this.heroWeaponsFolderPath + "axes/common-type/common_axe.png")
       .dropChance(Randomizer.getChance(100))
       .generateAmount()
       .build();
@@ -33,8 +34,8 @@ export class WeaponProvider {
       .lootValue(50)
       .itemType(ItemType.WEAPON)
       .lootRarity(Rarity.LEGEND)
-      .lootItemImgPath("hero-equipment/weapons/axes/legend-type/slasher_axe.png")
-      .dropChance(Randomizer.getChance(55))
+      .lootItemImgPath(this.heroWeaponsFolderPath + "axes/legend-type/slasher_axe.png")
+      .dropChance(Randomizer.getChance(100))
       .build();
   }
 
@@ -44,8 +45,8 @@ export class WeaponProvider {
       .lootValue(50)
       .itemType(ItemType.ARMOR)
       .lootRarity(Rarity.LEGEND)
-      .lootItemImgPath("hero-equipment/armor/legend-type/protector_armor.png")
-      .dropChance(Randomizer.getChance(55))
+      .lootItemImgPath("images/hero-equipment/armor/legend-type/protector_armor.png")
+      .dropChance(Randomizer.getChance(100))
       .build();
   }
 
@@ -55,8 +56,8 @@ export class WeaponProvider {
       .lootValue(50)
       .itemType(ItemType.HELM)
       .lootRarity(Rarity.LEGEND)
-      .lootItemImgPath("hero-equipment/helmets/legend-type/executor_helm.png")
-      .dropChance(Randomizer.getChance(55))
+      .lootItemImgPath("images/hero-equipment/helmets/legend-type/executor_helm.png")
+      .dropChance(Randomizer.getChance(100))
       .build();
   }
 
@@ -66,8 +67,8 @@ export class WeaponProvider {
       .lootValue(50)
       .itemType(ItemType.HEAL)
       .lootRarity(Rarity.COMMON)
-      .lootItemImgPath("items/healSmall.png")
-      .dropChance(Randomizer.getChance(100))
+      .lootItemImgPath("images/healing-items/healSmall.png")
+      .dropChance(Randomizer.getChance(55))
       .build();
   }
 

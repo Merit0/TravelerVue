@@ -45,8 +45,7 @@ export default {
     height: 700px;
     border-radius: 20px;
     margin: auto;
-    /* background-color: rgb(9, 255, 0); */
-    background-image: url("../assets/images/items_inventory.png");
+    background-image: url("/images/bag/bag-background.png");
     background-size: 100%, 100%;
     margin-top: 50px;
 }

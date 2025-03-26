@@ -59,7 +59,7 @@ export default {
     outline-width: 1px;
     outline-style: solid;
     border-radius:30%;
-    background-image: url('@/assets/images/inventory_image.png');
+    background-image: url('/images/bag/inventory_image.png');
     background-size: 100px 100px;
     position: relative;
  }
@@ -81,7 +81,7 @@ export default {
     height: 585px;
     border-radius: 10%;
     position: fixed;
-    background-image: url('@/assets/images/bag_frame.png');
+    background-image: url('/images/overlays/bag_frame.png');
     background-size: 500px 585px;
  }
 
@@ -94,28 +94,12 @@ export default {
     display: table-column;
  }
 
- .img_helmet {
-    content:url('@/assets/images/homePage_slotImages/helm.png');
- }
-
- .img_armor {
-    content: url('@/assets/images/homePage_slotImages/armor.png');
- }
-
- .img_sword {
-    content: url('@/assets/images/homePage_slotImages/sword_slot_image.png');
- }
-
- .img_shield {
-    content: url('@/assets/images/homePage_slotImages/shield_slot_image.png');
- }
-
  .add_item_slot {
     width: 70px;
     height: 70px;
     margin-left: 100px;
     background-size: 70px 70px;
-    background-image: url('@/assets/images/homePage_slotImages/item_slot_image.png');
+    background-image: url('/images/homePage_slotImages/item_slot_image.png');
     position: fixed;
  }
 
@@ -133,6 +117,6 @@ export default {
     margin-top: 10px;
     margin-left: 10px;
     background-size: 50px 50px;
-    background-image: url('@/assets/images/homePage_slotImages/plus_button.png');
+    background-image: url('/images/homePage_slotImages/plus_button.png');
  }
 </style>

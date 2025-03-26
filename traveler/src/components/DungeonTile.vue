@@ -41,7 +41,7 @@ export default {
 .dungeonTile {
   width: 190px;
   height: 190px;
-  background-image: url('../assets/images/dungeons/homeButtons/fightFireBtn-removebg-preview.png');
+  background-image: url('/images/maps-page/maps-tiles/evil-land-map-icon.png');
   background-size: 100%;
   display: flex;
   align-items: center;
@@ -72,7 +72,7 @@ export default {
 .resetImg {
   width: 65px;
   height: 65px;
-  background-image: url('../assets/images/dungeons/mapButtons/SeekPng.com_refresh-icon-png_2047982.png');
+  background-image: url('/images/maps-page/refresh-map-icon.png');
   background-size: 100%;
 }
 

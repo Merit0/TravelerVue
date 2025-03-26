@@ -30,7 +30,7 @@ export default {
 .plusImg {
     width: 150px;
     height: 150px;
-    background-image: url('../assets/images/homePage_slotImages/plus_button.png');
+    background-image: url('/images/maps-page/empty-map-placeholder.png');
     background-size: 100%;
     margin-left: 6px;
     display: flex;

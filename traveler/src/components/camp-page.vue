@@ -53,7 +53,7 @@ export default {
   min-height: 90vh;
   border-radius: 20px;
   border: 2px solid rgb(95, 64, 43);
-  background-image: url('@/assets/images/img.jpg');
+  background-image: url("/images/page-background/camping-page.jpg");
   background-size: 100%;
 }
 
