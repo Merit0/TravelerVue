@@ -33,7 +33,7 @@ export class EnemyBuilder implements IEnemyBuilder {
     }
 
     public enemyImgPath(imgPath: string): EnemyBuilder {
-        this.enemy.setImage(imgPath);
+        this.enemy.setImageName(imgPath);
         return this;
     }
 

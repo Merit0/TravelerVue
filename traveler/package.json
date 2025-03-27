@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve --port 3000",
-    "build": "vue-cli-service build",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -17,9 +19,11 @@
     "vue-router": "^4.1.6"
   },
   "devDependencies": {
+    "@achrinza/node-ipc": "^10.1.11",
     "@types/uuid": "^9.0.1",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
+    "@vitejs/plugin-vue": "^5.2.3",
     "@volar-plugins/vetur": "latest",
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-eslint": "~5.0.0",
@@ -28,6 +32,7 @@
     "@vue/eslint-config-typescript": "^9.1.0",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
-    "typescript": "~4.5.5"
+    "typescript": "~4.5.5",
+    "vite": "^6.2.3"
   }
 }

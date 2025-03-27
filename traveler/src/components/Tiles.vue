@@ -30,7 +30,7 @@ export default {
 .tilesSection {
     margin-top: 10px;
     height: 850px;
-    background-image: url('../assets/images/dungeons/lavaLand.jpg');
+    background-image: url('/images/maps/lost-forest/lava-ground-background.jpg');
     background-size: 100% 100%;
     border-radius: 20px;
     border: 2px solid rgb(95, 64, 43);

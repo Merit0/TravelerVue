@@ -28,7 +28,7 @@ export default {
     margin: auto;
     display: flex;
     align-items: center;
-    background-image: url("@/assets/images/chests/chest_item_area_orange.png");
+    background-image: url("/images/chests/chest_item_area_orange.png");
     background-size: 100% 100%;
 }
 </style>

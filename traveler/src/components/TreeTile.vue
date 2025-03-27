@@ -34,7 +34,7 @@ export default {
 <style>
 .treeTile {
     border-radius: 20%;
-    background-image: url('../assets/images/homePage_slotImages/tree.png');
+    background-image: url('/images/maps/lost-forest/tree-tile.png');
     border: 2px solid rgb(108, 108, 108);
     background-size: 100% 100%;
 }

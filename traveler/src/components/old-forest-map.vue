@@ -3,7 +3,7 @@
     <title>Old Forest</title>
     <HeroDetailsBar :hero="hero"></HeroDetailsBar>
     <Tiles :mapTiles="mapStore.tiles" v-if="tilesShown && heroStore.isAlive()"></Tiles>
-    <HeroDeathOverlay v-if="!heroStore.isAlive() && userStore.isLoggedIn"></HeroDeathOverlay>
+    <HeroDeathOverlay v-if="!heroStore.isAlive() && userStore.isUserLoggedIn"></HeroDeathOverlay>
     <hero-inventory :show-inventory="heroStore.inventoryShown" @heroInventory="closeInventory($event)"></hero-inventory>
     <button @click="quitMap()" class="escapeBtn">Escape</button>
   </section>
@@ -19,10 +19,10 @@ import {useMapStore} from '@/stores/MapStore';
 import MapModel from '../models/MapModel';
 import HeroInventory from './HeroInventory.vue';
 import {MapProvider} from '@/providers/MapProvider';
-import {useUserStore} from '@/stores/UserStore';
+import {useUserStore} from "@/stores/UserStore";
 
 export default {
-  name: "OldForest",
+  name: "old-forest",
   components: {Tiles, HeroDetailsBar, HeroDeathOverlay, HeroInventory},
   data() {
     const heroStore = useHeroStore();
@@ -31,12 +31,8 @@ export default {
     const tilesShown = true;
     const mapStore = useMapStore();
     const oldForest: MapModel = MapProvider.getOldForest();
-    if (userStore.isLoggedIn) {
-      oldForest.setHero(hero);
-      mapStore.buildMap(oldForest);
-    } else {
-      router.push('/login');
-    }
+    oldForest.setHero(hero);
+    mapStore.buildMap(oldForest);
 
     return {hero, tilesShown, heroStore, mapStore, userStore}
   },

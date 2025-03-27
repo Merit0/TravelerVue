@@ -6,41 +6,6 @@
     <DungeonTile :isEmpty="true"></DungeonTile>
     <DungeonTile :isEmpty="true"></DungeonTile>
     <DungeonTile :isEmpty="true"></DungeonTile>
-    <DungeonTile :isEmpty="true"></DungeonTile>
-    <DungeonTile :isEmpty="true"></DungeonTile>
-    <DungeonTile :isEmpty="true"></DungeonTile>
-    <DungeonTile :isEmpty="true"></DungeonTile>
-    <DungeonTile :isEmpty="true"></DungeonTile>
-    <DungeonTile :isEmpty="true"></DungeonTile>
-    <DungeonTile :isEmpty="true"></DungeonTile>
-    <DungeonTile :isEmpty="true"></DungeonTile>
-    <DungeonTile :isEmpty="true"></DungeonTile>
-    <DungeonTile :isEmpty="true"></DungeonTile>
-    <DungeonTile :isEmpty="true"></DungeonTile>
-    <DungeonTile :isEmpty="true"></DungeonTile>
-    <DungeonTile :isEmpty="true"></DungeonTile>
-    <DungeonTile :isEmpty="true"></DungeonTile>
-    <DungeonTile :isEmpty="true"></DungeonTile>
-    <DungeonTile :isEmpty="true"></DungeonTile>
-    <DungeonTile :isEmpty="true"></DungeonTile>
-    <DungeonTile :isEmpty="true"></DungeonTile>
-    <DungeonTile :isEmpty="true"></DungeonTile>
-    <DungeonTile :isEmpty="true"></DungeonTile>
-    <DungeonTile :isEmpty="true"></DungeonTile>
-    <DungeonTile :isEmpty="true"></DungeonTile>
-    <DungeonTile :isEmpty="true"></DungeonTile>
-    <DungeonTile :isEmpty="true"></DungeonTile>
-    <DungeonTile :isEmpty="true"></DungeonTile>
-    <DungeonTile :isEmpty="true"></DungeonTile>
-    <DungeonTile :isEmpty="true"></DungeonTile>
-    <DungeonTile :isEmpty="true"></DungeonTile>
-    <DungeonTile :isEmpty="true"></DungeonTile>
-    <DungeonTile :isEmpty="true"></DungeonTile>
-    <DungeonTile :isEmpty="true"></DungeonTile>
-    <DungeonTile :isEmpty="true"></DungeonTile>
-    <DungeonTile :isEmpty="true"></DungeonTile>
-    <DungeonTile :isEmpty="true"></DungeonTile>
-    <DungeonTile :isEmpty="true"></DungeonTile>
   </div>
 </template>
 
@@ -50,7 +15,7 @@ import HeroDetailsBar from "@/components/HeroDetailsBar.vue";
 import {useHeroStore} from "@/stores/HeroStore";
 
 export default {
-  name: "MapTiles",
+  name: "maps-page",
   components: {HeroDetailsBar, DungeonTile},
   data() {
     const heroStore = useHeroStore();

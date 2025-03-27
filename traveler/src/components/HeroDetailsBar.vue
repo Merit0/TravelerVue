@@ -22,37 +22,30 @@
       </div>
     </div>
     <button class="homeBtn" @click="goCamp()">Home</button>
-    <button @click="userStore.logout()" v-if="userStore.isLoggedIn" class="logout">Logout</button>
+    <button @click="logout()" class="logout">Logout</button>
   </div>
 </template>
 
-<script lang="ts">
-import {PropType} from 'vue';
-import {IHero} from '@/abstraction/IHero';
-import {useUserStore} from '@/stores/UserStore'
-import {useMapStore} from '@/stores/MapStore'
-import router from "@/router";
+<script setup lang="ts">
+import { defineProps } from 'vue';
+import { useRouter } from 'vue-router';
+import { useUserStore } from '@/stores/UserStore';
+import { IHero } from '@/abstraction/IHero';
 
-export default {
-  name: "hero-data-bar",
-  props: {
-    hero: {
-      type: Object as PropType<IHero>,
-      required: true
-    }
-  },
-  data() {
-    const userStore = useUserStore();
-    const mapStore = useMapStore();
-    return {userStore, mapStore};
-  },
+defineProps<{
+  hero: IHero;
+}>();
 
-  methods: {
-    goCamp() {
-      router.push('/camping');
-    }
-  }
-}
+const router = useRouter();
+const userStore = useUserStore();
+
+const goCamp = () => {
+  router.push('/camping');
+};
+
+const logout = () => {
+  userStore.logout();
+};
 </script>
 
 <style>

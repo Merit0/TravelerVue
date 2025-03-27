@@ -58,7 +58,7 @@ export default {
     height: 400px;
     border-radius: 20px;
     margin: auto;
-    background-image: url("../assets/images/chests/chest_items_area.png");
+    background-image: url("/images/chests/chest_items_area.png");
     background-size: 100%, 100%;
     margin-top: 150px;
 
