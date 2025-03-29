@@ -1,4 +1,4 @@
-export enum MapComplexity {
+export enum Complexity {
     EVIL,
     HARD,
     NORMAL,

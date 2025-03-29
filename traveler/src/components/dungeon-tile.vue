@@ -14,7 +14,7 @@ import router from '@/router/index';
 import {useMapStore} from '@/stores/MapStore';
 
 export default {
-  name: "dungeon-tile",
+  name: "DungeonTile",
   props: {
     isEmpty: {
       type: Boolean,

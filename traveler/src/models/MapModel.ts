@@ -1,47 +1,52 @@
-import { MapComplexity } from "@/enums/MapComplexity";
-import { IHero } from "../abstraction/IHero";
+import {DungeonModel} from "@/models/DungeonModel";
 
-export class MapModel {
-  private mapName: string;
-  private tilesNumber: number;
-  private id: number;
-  private complexity: MapComplexity;
-  private hero: IHero;
+import {Complexity} from "@/enums/complexity";
+import {v4 as uuid} from "uuid";
 
-  constructor() {
-    this.id = 1;
-  }
+interface IMap {
+    readonly name: string;
+    readonly dungeons: DungeonModel[];
+    readonly uuid: string;
+    readonly complexity: Complexity;
+}
 
-  public setMapName(name: string): MapModel {
-    this.mapName = name;
-    return this;
-  }
+export class MapModel implements IMap {
+    private _mapName: string;
+    private _dungeonsList: DungeonModel[];
+    private readonly _mapId: string;
+    private _mapComplexity: Complexity;
 
-  public setNumberOfTiles(numberOfTiles: number): MapModel {
-    this.tilesNumber = numberOfTiles;
-    return this;
-  }
+    constructor() {
+        this._mapId = uuid();
+    }
 
-  public setComplexity(complexity: MapComplexity): MapModel {
-    this.complexity = complexity;
-    return this;
-  }
+    get uuid(): string {
+        return this._mapId
+    }
 
-  public setHero(hero: IHero): void {
-    this.hero = hero;
-  }
+    get name(): string {
+        return this._mapName;
+    }
 
-  public getName(): string {
-    return this.mapName;
-  }
+    set name(mapName: string) {
+        this._mapName = mapName;
+    }
 
-  public getHero(): IHero {
-    return this.hero;
-  }
+    get dungeons(): DungeonModel[] {
+        return this._dungeonsList;
+    }
 
-  public getTilesNumber(): number {
-    return this.tilesNumber;
-  }
+    setDungeons(dungeons: DungeonModel[]) {
+        this._dungeonsList = dungeons;
+    }
+
+    get complexity(): Complexity {
+        return this._mapComplexity;
+    }
+
+    set complexity(complexity: Complexity) {
+        this._mapComplexity = complexity;
+    }
 }
 
 export default MapModel;

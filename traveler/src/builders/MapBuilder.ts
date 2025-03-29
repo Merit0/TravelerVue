@@ -1,15 +1,14 @@
 import MapModel from '../models/MapModel';
-import { MapComplexity } from '../enums/MapComplexity';
+import {DungeonModel} from "@/models/DungeonModel";
+import {Complexity} from "@/enums/complexity";
 
 interface IMapBuilder {
-
-    mapName(name: string): MapBuilder;
-    tilesNumber(num: number): MapBuilder;
-    complexity(complexityLevel: MapComplexity): MapBuilder;
+    name(name: string): this;
+    dungeons(dungeonsList: DungeonModel[]): this;
+    complexity(complexityLevel: Complexity): this;
 }
 
 export class MapBuilder implements IMapBuilder {
-
     private map: MapModel;
 
     constructor() {
@@ -20,18 +19,18 @@ export class MapBuilder implements IMapBuilder {
         this.map = new MapModel();
     }
 
-    public mapName(name: string): MapBuilder {
-        this.map.setMapName(name);
+    public name(name: string): this {
+        this.map.name = name;
         return this;
     }
 
-    public tilesNumber(num: number): MapBuilder {
-        this.map.setNumberOfTiles(num);
+    public dungeons(dungeonsList: DungeonModel[]): this {
+        this.map.setDungeons(dungeonsList);
         return this;
     }
 
-    public complexity(complexityLevel: MapComplexity): MapBuilder {
-        this.map.setComplexity(complexityLevel);
+    public complexity(complexityLevel: Complexity): this {
+        this.map.complexity = complexityLevel;
         return this;
     }
 
