@@ -1,6 +1,7 @@
 import {Complexity} from "@/enums/complexity";
 import {IHero} from "@/abstraction/IHero";
 import {v4 as uuid} from "uuid";
+import {IPosition} from "@/interfaces/el-position-interface";
 
 export interface IDungeon {
     readonly name: string;
@@ -8,6 +9,7 @@ export interface IDungeon {
     readonly uuid: string;
     readonly complexity: Complexity;
     readonly hero: IHero;
+    readonly position: IPosition
 }
 
 export class DungeonModel implements IDungeon {
@@ -15,6 +17,8 @@ export class DungeonModel implements IDungeon {
     private _tilesNumber: number;
     private readonly _id: string;
     private _complexity: Complexity;
+    private _position: IPosition;
+
     private _hero: IHero;
 
     constructor() {
@@ -55,5 +59,13 @@ export class DungeonModel implements IDungeon {
 
     set complexity(complexityValue: Complexity) {
         this._complexity = complexityValue;
+    }
+
+    get position(): IPosition {
+        return this._position;
+    }
+
+    set position(position: IPosition) {
+        this._position = position;
     }
 }

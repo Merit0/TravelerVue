@@ -1,5 +1,5 @@
 <template>
-  <div class="dungeonTile dungeon-point pulsing" v-if="!isEmpty">
+  <div class="dungeonSpot pulsing" :style="getDungeonPosition(dungeon.position)">
     <button @click="startDungeon()" class="buttonMap" :disabled="mapStore.isMapCleared"></button>
     <div class="resetBtnBackground" v-if="mapStore.isMapCleared">
       <div class="resetImg">
@@ -12,13 +12,15 @@
 <script lang="ts">
 import router from '@/router/index';
 import {useMapStore} from '@/stores/MapStore';
+import {IPosition} from "@/interfaces/el-position-interface";
+import {PropType} from "vue";
+import {DungeonModel} from "@/models/DungeonModel";
 
 export default {
-  name: "DungeonTile",
+  name: "DungeonSpot",
   props: {
-    isEmpty: {
-      type: Boolean,
-      required: true
+    dungeon: {
+      type: Object as PropType<DungeonModel>,
     }
   },
   data() {
@@ -29,6 +31,15 @@ export default {
   methods: {
     async startDungeon() {
       router.push("/old-forest");
+    },
+
+    getDungeonPosition(spotPosition: IPosition) {
+      return {
+        top: spotPosition.top ? spotPosition.top : 0,
+        bottom: spotPosition.bottom ? spotPosition.bottom : 0,
+        left: spotPosition.left ? spotPosition.left : 0,
+        right: spotPosition.right ? spotPosition.right : 0,
+      }
     }
   }
 }

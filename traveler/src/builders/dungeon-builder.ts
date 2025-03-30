@@ -1,10 +1,12 @@
 import { Complexity } from '@/enums/complexity';
 import {DungeonModel} from "@/models/DungeonModel";
+import {IPosition} from "@/interfaces/el-position-interface";
 
 interface IDungeonBuilder {
-    name(name: string): DungeonBuilder;
-    tilesNumber(num: number): DungeonBuilder;
-    complexity(complexityLevel: Complexity): DungeonBuilder;
+    name(name: string): this;
+    tilesNumber(num: number): this;
+    complexity(complexityLevel: Complexity): this;
+    position(position: IPosition): this;
     build(): DungeonModel;
 }
 
@@ -31,6 +33,11 @@ export class DungeonBuilder implements IDungeonBuilder {
 
     public complexity(complexityLevel: Complexity): this {
         this._dungeon.complexity = complexityLevel;
+        return this;
+    }
+
+    public position(position: IPosition): this {
+        this._dungeon.position = position;
         return this;
     }
 

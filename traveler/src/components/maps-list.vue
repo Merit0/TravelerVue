@@ -9,7 +9,7 @@ import { PropType } from 'vue';
 import MapModel from "@/models/MapModel";
 
 export default {
-  name: "MapsPage",
+  name: "MapsList",
   props:  {
     maps: {
       type: Array as PropType<MapModel[]>,

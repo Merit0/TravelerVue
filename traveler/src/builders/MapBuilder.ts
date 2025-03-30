@@ -6,6 +6,8 @@ interface IMapBuilder {
     name(name: string): this;
     dungeons(dungeonsList: DungeonModel[]): this;
     complexity(complexityLevel: Complexity): this;
+    isLocked(status: boolean): this;
+    imagePath(path: string): this;
 }
 
 export class MapBuilder implements IMapBuilder {
@@ -31,6 +33,16 @@ export class MapBuilder implements IMapBuilder {
 
     public complexity(complexityLevel: Complexity): this {
         this.map.complexity = complexityLevel;
+        return this;
+    }
+
+    public imagePath(path: string): this {
+        this.map.imgPath = path;
+        return this;
+    }
+
+    public isLocked(status: boolean): this {
+        this.map.isLocked = status;
         return this;
     }
 

@@ -18,7 +18,6 @@ export default {
   methods: {
     getStyle() {
       return {
-        // backgroundImage: `url(${tile.enemies[0].imgPath})`,
         backgroundImage: 'url(/images/chests/map_chest.png)'
       }
     }

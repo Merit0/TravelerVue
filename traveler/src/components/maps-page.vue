@@ -3,33 +3,26 @@
   <HeroDetailsBar :hero="hero"></HeroDetailsBar>
   <div class="mapsViewPort">
     <button class="mapNavigationButton"></button>
-<!--    <Map>-->
-    <div class="map old-forest-map">
-      <DungeonTile :isEmpty="false"></DungeonTile>
-      <div class="map-name">Старий Ліс</div>
-    </div>
-    <div class="map evil-tree">
-      <div class="map-name">Прокляте Дерево</div>
-    </div>
-    <div class="map magic-circle">
-      <div class="map-name">Магічне Коло</div>
-    </div>
+    <MapView v-for="map in mapsList" :key="map.id" :map="map"></MapView>
     <button class="mapNavigationButton"></button>
   </div>
 </template>
 
 <script lang="ts">
-import DungeonTile from './dungeon-tile.vue';
 import HeroDetailsBar from "@/components/HeroDetailsBar.vue";
 import {useHeroStore} from "@/stores/HeroStore";
+import MapView from "@/components/map-view.vue";
+import MapModel from "@/models/MapModel";
+import {MapProvider} from "@/providers/MapProvider";
 
 export default {
   name: "maps-page",
-  components: {HeroDetailsBar, DungeonTile},
+  components: {MapView, HeroDetailsBar},
   data() {
     const heroStore = useHeroStore();
+    const mapsList: MapModel[] = [MapProvider.getOldForest(), MapProvider.getEvilTree(), MapProvider.getMagicCircle()];
     const hero = heroStore.hero;
-    return {hero};
+    return {hero, mapsList};
   },
 }
 </script>
@@ -67,35 +60,8 @@ export default {
   justify-content: end;
 }
 
-.evil-tree {
-  background-image: url('/images/maps-page/map-2-evil-tree.png');
-  background-size: cover;
-  background-repeat: repeat;
-  display: flex;
-  flex-direction: column;
-  justify-content: end;
-}
-
-.magic-circle {
-  background-image: url('/images/maps-page/map-3-magic-circle.png');
-  background-size: cover;
-  background-repeat: repeat;
-  display: flex;
-  flex-direction: column;
-  justify-content: end;
-}
-
-.mapNavigationButton {
-  min-width: 1vw;
-  min-height: 94vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: end;
-  background-color: rgba(43, 0, 0, 0.94);
-}
-
 .map-name {
-  position: absolute; /* Ensures it stays in a fixed place */
+  position: absolute;
   top: 1vh;
   left: 50%;
   transform: translateX(-50%);
@@ -107,8 +73,17 @@ export default {
   padding: 1vh 2vw;
   border-radius: 8px;
   border: 1px solid rgba(255, 215, 0, 0.8);
-  font-family: 'Cinzel', serif; /* Medieval-style font */
+  font-family: 'Cinzel', serif;
   text-align: center;
   white-space: nowrap;
+}
+
+.mapNavigationButton {
+  min-width: 1vw;
+  min-height: 94vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  background-color: rgba(43, 0, 0, 0.94);
 }
 </style>
