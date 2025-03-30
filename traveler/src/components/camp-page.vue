@@ -1,8 +1,8 @@
 <template>
   <title>Camp</title>
   <div class="page">
-    <HeroDetailsBar :hero="hero"></HeroDetailsBar>
     <section class="campContent">
+      <HeroDetailsBar :hero="hero"></HeroDetailsBar>
       <div class="camping"></div>
       <button class="homeBtn" @click="goFight()">Fight</button>
     </section>
@@ -49,16 +49,9 @@ export default {
 
 <style>
 .campContent {
-  margin-top: 10px;
-  min-height: 90vh;
-  border-radius: 20px;
-  border: 2px solid rgb(95, 64, 43);
-  background-image: url("/images/page-background/camping-page.jpg");
-  background-size: 100%;
-}
-
-.camping {
-  margin-top: 10px;
+  min-height: 100vh;
+  background-size: 100% 100%;
+  background-image: url("/images/camping-place/knight-camping-fire-place.png");
 }
 
 .homeBtn {

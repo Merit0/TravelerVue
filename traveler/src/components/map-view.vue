@@ -1,6 +1,6 @@
 <template>
   <div class="map" :style="getMapBackground(map.imgPath)" v-if="!map.isLocked">
-    <DungeonSpot v-for="dungeon in map.dungeons" :key="dungeon.uuid" :dungeon="dungeon"></DungeonSpot>
+    <dungeon-spot v-for="dungeon in map.dungeons" :key="dungeon.uuid" :dungeon="dungeon"></dungeon-spot>
     <div class="map-name">{{ map.name }}</div>
   </div>
   <div class="map" :style="getMapBackground(map.imgPath)" v-if="map.isLocked">
@@ -65,11 +65,11 @@ export default {
 }
 
 .map-overlay {
-  pointer-events: all; /* Prevent clicks on anything below */
+  pointer-events: all;
 }
 
 .map-name {
-  position: absolute; /* Ensures it stays in a fixed place */
+  position: absolute;
   top: 1vh;
   left: 50%;
   transform: translateX(-50%);

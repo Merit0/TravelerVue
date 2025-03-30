@@ -10,14 +10,14 @@
 </template>
 
 <script lang="ts">
-import Tiles from './Tiles.vue';
-import HeroDetailsBar from './HeroDetailsBar.vue';
+import Tiles from '../dungeon-tiles-list.vue';
+import HeroDetailsBar from '../HeroDetailsBar.vue';
 import HeroDeathOverlay from '@/components/HeroDeathOverlay.vue'
 import {useHeroStore} from '@/stores/HeroStore'
 import router from '@/router';
 import {useMapStore} from '@/stores/MapStore';
-import MapModel from '../models/MapModel';
-import HeroInventory from './HeroInventory.vue';
+import MapModel from '../../models/MapModel';
+import HeroInventory from '../HeroInventory.vue';
 import {MapProvider} from '@/providers/MapProvider';
 import {useUserStore} from "@/stores/UserStore";
 

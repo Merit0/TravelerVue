@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import Tiles from './Tiles.vue';
+import Tiles from 'dungeon-tiles-list.vue'
 import HeroDetailsBar from './HeroDetailsBar.vue';
 import HeroDeathOverlay from '@/components/HeroDeathOverlay.vue'
 import {useHeroStore} from '@/stores/HeroStore'

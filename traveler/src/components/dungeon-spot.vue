@@ -17,7 +17,7 @@ import {PropType} from "vue";
 import {DungeonModel} from "@/models/DungeonModel";
 
 export default {
-  name: "DungeonSpot",
+  name: "dungeon-spot",
   props: {
     dungeon: {
       type: Object as PropType<DungeonModel>,

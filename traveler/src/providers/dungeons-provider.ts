@@ -11,36 +11,36 @@ export class DungeonProvider {
             {
                 name: 'Forest Entrance',
                 position: {
-                    top: "20%",
-                    left: "50%"
+                    top: "15%",
+                    left: "35%"
                 }
             },
             {
                 name: 'Mountain Hill',
                 position: {
-                    top: "33%",
-                    left: "90%"
+                    top: "30%",
+                    left: "65%"
                 }
             },
             {
                 name: 'Forest Peak',
                 position: {
-                    top: "50%",
-                    left: "30%"
+                    top: "45%",
+                    left: "20%"
                 }
             },
             {
                 name: 'Forest Cave',
                 position: {
-                    top: "72%",
-                    left: "75%"
+                    top: "62%",
+                    left: "58%"
                 }
             },
             {
                 name: 'Forest Entrance',
                 position: {
-                    top: "95%",
-                    left: "60%"
+                    top: "90%",
+                    left: "40%"
                 }
             }
         ];

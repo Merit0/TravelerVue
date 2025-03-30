@@ -2,8 +2,6 @@
     position: absolute;
     width: 5vw;
     height: 5vw;
-    /*top: 42%;*/
-    /*left: 68%;*/
     transform: translate(-50%, -50%);
     max-width: 60px;
     max-height: 60px;
@@ -19,13 +17,12 @@
     height: 100%;
     border: none;
     border-radius: 50%;
-    background-image: url('/images/overlays/battlefield/attack-btn.png');
+    background-image: url('/images/dungeons/icons/dungeon-boss-face-icon.png');
     background-size: contain; /* Ensure the entire image fits inside */
     background-position: center;
     background-repeat: no-repeat; /* Prevent tiling */
 }
 
-/* Optional: Add a subtle pulse effect */
 @keyframes pulse {
     0% { box-shadow: 0 0 10px 5px rgba(255, 221, 0, 0.7); }
     50% { box-shadow: 0 0 15px 8px rgba(255, 251, 0, 0.9); }

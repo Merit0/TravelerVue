@@ -63,7 +63,6 @@ export const useMapStore = defineStore("map", {
             }
         },
         generateTiles(tilesNumber: number): void {
-            console.log('Tiles number =>> ' + tilesNumber);
             this.tiles = Array.from({length: tilesNumber}, (_, i) => {
                 const tile = new TileModel(i);
                 tile.setIsATree(true);
