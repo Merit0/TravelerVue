@@ -1,47 +1,72 @@
-import { MapComplexity } from "@/enums/MapComplexity";
-import { IHero } from "../abstraction/IHero";
+import {DungeonModel} from "@/models/DungeonModel";
 
-export class MapModel {
-  private mapName: string;
-  private tilesNumber: number;
-  private id: number;
-  private complexity: MapComplexity;
-  private hero: IHero;
+import {Complexity} from "@/enums/complexity";
+import {v4 as uuid} from "uuid";
 
-  constructor() {
-    this.id = 1;
-  }
+interface IMap {
+    readonly name: string;
+    readonly dungeons: DungeonModel[];
+    readonly uuid: string;
+    readonly complexity: Complexity;
+    readonly imgPath: string;
+    readonly isLocked: boolean;
+}
 
-  public setMapName(name: string): MapModel {
-    this.mapName = name;
-    return this;
-  }
+export class MapModel implements IMap {
+    private _mapName: string;
+    private _imgPath: string;
+    private _dungeonsList: DungeonModel[];
+    private readonly _mapId: string;
+    private _mapComplexity: Complexity;
+    private _isLocked: boolean;
 
-  public setNumberOfTiles(numberOfTiles: number): MapModel {
-    this.tilesNumber = numberOfTiles;
-    return this;
-  }
+    constructor() {
+        this._mapId = uuid();
+    }
 
-  public setComplexity(complexity: MapComplexity): MapModel {
-    this.complexity = complexity;
-    return this;
-  }
+    get uuid(): string {
+        return this._mapId
+    }
 
-  public setHero(hero: IHero): void {
-    this.hero = hero;
-  }
+    get name(): string {
+        return this._mapName;
+    }
 
-  public getName(): string {
-    return this.mapName;
-  }
+    set name(mapName: string) {
+        this._mapName = mapName;
+    }
 
-  public getHero(): IHero {
-    return this.hero;
-  }
+    get imgPath(): string {
+        return this._imgPath;
+    }
 
-  public getTilesNumber(): number {
-    return this.tilesNumber;
-  }
+    set imgPath(path: string) {
+        this._imgPath = path;
+    }
+
+    get dungeons(): DungeonModel[] {
+        return this._dungeonsList;
+    }
+
+    setDungeons(dungeons: DungeonModel[]) {
+        this._dungeonsList = dungeons;
+    }
+
+    get complexity(): Complexity {
+        return this._mapComplexity;
+    }
+
+    set complexity(complexity: Complexity) {
+        this._mapComplexity = complexity;
+    }
+
+    get isLocked(): boolean {
+        return this._isLocked;
+    }
+
+    set isLocked(isLocked: boolean) {
+        this._isLocked = isLocked;
+    }
 }
 
 export default MapModel;

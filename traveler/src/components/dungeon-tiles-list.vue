@@ -1,17 +1,17 @@
 <template>
         <div class="tilesSection">
-            <map-tile v-for="mapTile in mapTiles" :key="mapTile.id" :tile="mapTile"></map-tile>
+            <dungeon-tile v-for="mapTile in mapTiles" :key="mapTile.id" :tile="mapTile"></dungeon-tile>
         </div>
 </template>
 
 <script lang="ts">
-import MapTile from './MapTile.vue';
 import TileModel from '../models/TileModel';
 import { PropType } from 'vue';
+import DungeonMap from "@/components/dungeon-tile.vue";
 
 export default {
-    name: "map-tiles",
-    components: { MapTile },
+    name: "dungeon-tiles",
+    components: {DungeonTile: DungeonMap},
     props:  {
         mapTiles: {
             type: Array as PropType<TileModel[]>,

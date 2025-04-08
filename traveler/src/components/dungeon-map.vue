@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import Tiles from './Tiles.vue';
+import Tiles from 'dungeon-tiles-list.vue'
 import HeroDetailsBar from './HeroDetailsBar.vue';
 import HeroDeathOverlay from '@/components/HeroDeathOverlay.vue'
 import {useHeroStore} from '@/stores/HeroStore'
@@ -22,7 +22,7 @@ import {MapProvider} from '@/providers/MapProvider';
 import {useUserStore} from "@/stores/UserStore";
 
 export default {
-  name: "old-forest",
+  name: "DungeonSpot",
   components: {Tiles, HeroDetailsBar, HeroDeathOverlay, HeroInventory},
   data() {
     const heroStore = useHeroStore();
@@ -31,7 +31,7 @@ export default {
     const tilesShown = true;
     const mapStore = useMapStore();
     const oldForest: MapModel = MapProvider.getOldForest();
-    oldForest.setHero(hero);
+    oldForest.dungeons[0].hero = hero;
     mapStore.buildMap(oldForest);
 
     return {hero, tilesShown, heroStore, mapStore, userStore}

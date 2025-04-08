@@ -21,7 +21,7 @@ import ChestInventory from './ChestInventory.vue';
 import { useMapStore } from '@/stores/MapStore';
 
 export default {
-    name: "map-tile",
+    name: "dungeon-tile",
     props: {
         tile: {
             type: TileModel,
