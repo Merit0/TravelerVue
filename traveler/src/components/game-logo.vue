@@ -1,17 +1,22 @@
+<template>
+  <div class="logo-container">
+    <img :src="imageSrc" alt="Monstrum Logo"/>
+  </div>
+</template>
+
 <script lang="ts">
-import Vue from 'vue';
-import Options from 'vue-class-component';
 
-@Options({})
-export default class game-logo extends Vue {
-
+export default {
+  name: "GameLogo",
+  props: {
+    imageSrc: {
+      type: Object,
+      required: true
+    }
+  },
 }
 </script>
 
-<template>
-  $END$
-</template>
-
 <style scoped>
-
+@import '@/styles/game-logo-style.css';
 </style>
