@@ -61,7 +61,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 10; /* Above all other elements */
+  z-index: 10;
 }
 
 .map-overlay {
