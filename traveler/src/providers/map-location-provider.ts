@@ -1,12 +1,12 @@
-import {DungeonModel} from "@/models/map-location-model";
+import {MapLocationModel} from "@/models/map-location-model";
 import {MapLocationBuilder} from "@/builders/map-location-builder";
 import {Randomizer} from "@/utils/Randomizer";
 import {Complexity} from "@/enums/complexity";
 import {IPosition} from "@/interfaces/el-position-interface";
 
-export class DungeonProvider {
-    static getOldForestDungeons(): DungeonModel[] {
-        const dungeonsList: DungeonModel[] = [];
+export class MapLocationProvider {
+    static getOldForestLocations(): MapLocationModel[] {
+        const mapLocationsList: MapLocationModel[] = [];
         const dungeons: { name: string, position: IPosition }[] = [
             {
                 name: 'Forest Entrance',
@@ -45,13 +45,13 @@ export class DungeonProvider {
             }
         ];
         dungeons.forEach((dungeon: { name: string, position: IPosition }) => {
-            dungeonsList.push(new MapLocationBuilder()
+            mapLocationsList.push(new MapLocationBuilder()
                 .name(dungeon.name)
                 .tilesNumber(Randomizer.getRandomIntInRange(20, 39))
                 .complexity(Complexity.EASY)
                 .position(dungeon.position)
                 .build())
         });
-        return dungeonsList;
+        return mapLocationsList;
     }
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="map" :style="getMapBackground(map.imgPath)" v-if="!map.isLocked">
-    <map-location v-for="mapLocation in map.mapLocations" :key="mapLocation.uuid" :mapLocation="mapLocation"></map-location>
+    <map-location-spot v-for="mapLocation in map.mapLocations" :key="mapLocation.uuid" :mapLocation="mapLocation"></map-location-spot>
     <div class="map-name">{{ map.name }}</div>
   </div>
   <div class="map" :style="getMapBackground(map.imgPath)" v-if="map.isLocked">
@@ -13,7 +13,7 @@
 
 <script lang="ts">
 import {useMapStore} from '@/stores/MapStore';
-import MapLocation from "@/components/map-location.vue";
+import MapLocationSpot from "@/components/map-location-spot.vue";
 import MapModel from "@/models/MapModel";
 
 export default {
@@ -24,7 +24,7 @@ export default {
       required: true
     }
   },
-  components: {MapLocation},
+  components: {MapLocationSpot},
   data() {
     const mapStore = useMapStore();
     return {mapStore}

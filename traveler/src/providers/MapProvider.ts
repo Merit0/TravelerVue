@@ -1,14 +1,14 @@
 import MapModel from '../models/MapModel';
 import {MapBuilder} from '@/builders/MapBuilder';
 import {Complexity} from '@/enums/complexity';
-import {DungeonProvider} from "@/providers/dungeons-provider";
+import {MapLocationProvider} from "@/providers/map-location-provider";
 
 export class MapProvider {
     static getOldForest(): MapModel {
         return new MapBuilder()
             .name("Старий Ліс")
             .imagePath('/images/maps-page/map-1-old-forest.png')
-            .mapLocations(DungeonProvider.getOldForestDungeons())
+            .mapLocations(MapLocationProvider.getOldForestLocations())
             .complexity(Complexity.EASY)
             .isLocked(false)
             .build();

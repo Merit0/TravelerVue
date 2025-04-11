@@ -10,12 +10,14 @@ export interface IMapLocation {
     readonly complexity: Complexity;
     readonly hero: IHero;
     readonly position: IPosition
+    readonly imgPath: string;
 }
 
 export class MapLocationModel implements IMapLocation {
     private _dungeonName: string;
     private _tilesNumber: number;
     private readonly _id: string;
+    private _imgPath: string;
     private _complexity: Complexity;
     private _position: IPosition;
 
@@ -67,5 +69,13 @@ export class MapLocationModel implements IMapLocation {
 
     set position(position: IPosition) {
         this._position = position;
+    }
+
+    get imgPath(): string {
+        return this._imgPath;
+    }
+
+    set imgPath(path: string) {
+        this._imgPath = path;
     }
 }

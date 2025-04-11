@@ -53,11 +53,11 @@ export const useMapStore = defineStore("map", {
             console.log('Map state after reset:', this.$state);
         },
         buildMap(map: MapModel) {
-            const firstDungeon = map.mapLocations[0];
+            const firstLocation = map.mapLocations[0];
             if (!JSON.parse(localStorage.getItem("map")) || this.tiles.length === 0) {
                 this.mapName = map.name;
-                this.generateTiles(firstDungeon.tilesNumber);
-                this.addHero(firstDungeon.hero);
+                this.generateTiles(firstLocation.tilesNumber);
+                this.addHero(firstLocation.hero);
                 this.addEnemies();
                 this.isCleared = false;
             }

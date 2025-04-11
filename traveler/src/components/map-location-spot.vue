@@ -12,12 +12,12 @@
 <script lang="ts">
 import router from '@/router/index';
 import {useMapStore} from '@/stores/MapStore';
-import {IPosition} from "@/interfaces/el-position-interface";
 import {PropType} from "vue";
 import {MapLocationModel} from "@/models/map-location-model";
+import {IPosition} from "@/interfaces/el-position-interface";
 
 export default {
-  name: "map-location",
+  name: "MyLocationSpot",
   props: {
     mapLocation: {
       type: Object as PropType<MapLocationModel>,
@@ -46,5 +46,5 @@ export default {
 </script>
 
 <style>
-@import url('@/styles/map-location.css');
+@import url('@/styles/map-location-spot.css');
 </style>
