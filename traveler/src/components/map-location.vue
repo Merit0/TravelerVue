@@ -1,6 +1,6 @@
 <template>
-  <div class="dungeonSpot pulsing" :style="getDungeonPosition(dungeon.position)">
-    <button @click="startDungeon()" class="buttonMap" :disabled="mapStore.isMapCleared"></button>
+  <div class="mapLocation pulsing" :style="getMapLocationPosition(mapLocation.position)">
+    <button @click="enterToMapLocation()" class="buttonMap" :disabled="mapStore.isMapCleared"></button>
     <div class="resetBtnBackground" v-if="mapStore.isMapCleared">
       <div class="resetImg">
         <button class="btnReset" @click="mapStore.resetMap"></button>
@@ -14,13 +14,13 @@ import router from '@/router/index';
 import {useMapStore} from '@/stores/MapStore';
 import {IPosition} from "@/interfaces/el-position-interface";
 import {PropType} from "vue";
-import {DungeonModel} from "@/models/DungeonModel";
+import {MapLocationModel} from "@/models/map-location-model";
 
 export default {
-  name: "dungeon-spot",
+  name: "map-location",
   props: {
-    dungeon: {
-      type: Object as PropType<DungeonModel>,
+    mapLocation: {
+      type: Object as PropType<MapLocationModel>,
     }
   },
   data() {
@@ -29,11 +29,11 @@ export default {
     return {isDisabled, mapStore};
   },
   methods: {
-    async startDungeon() {
+    async enterToMapLocation() {
       router.push("/old-forest");
     },
 
-    getDungeonPosition(spotPosition: IPosition) {
+    getMapLocationPosition(spotPosition: IPosition) {
       return {
         top: spotPosition.top ? spotPosition.top : 0,
         bottom: spotPosition.bottom ? spotPosition.bottom : 0,
@@ -46,5 +46,5 @@ export default {
 </script>
 
 <style>
-@import url('@/styles/dungeon-spot.css');
+@import url('@/styles/map-location.css');
 </style>

@@ -3,7 +3,7 @@ import {IHero} from "@/abstraction/IHero";
 import {v4 as uuid} from "uuid";
 import {IPosition} from "@/interfaces/el-position-interface";
 
-export interface IDungeon {
+export interface IMapLocation {
     readonly name: string;
     readonly tilesNumber: number;
     readonly uuid: string;
@@ -12,7 +12,7 @@ export interface IDungeon {
     readonly position: IPosition
 }
 
-export class DungeonModel implements IDungeon {
+export class MapLocationModel implements IMapLocation {
     private _dungeonName: string;
     private _tilesNumber: number;
     private readonly _id: string;

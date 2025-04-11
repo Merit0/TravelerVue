@@ -1,5 +1,5 @@
-import {DungeonModel} from "@/models/DungeonModel";
-import {DungeonBuilder} from "@/builders/dungeon-builder";
+import {DungeonModel} from "@/models/map-location-model";
+import {MapLocationBuilder} from "@/builders/map-location-builder";
 import {Randomizer} from "@/utils/Randomizer";
 import {Complexity} from "@/enums/complexity";
 import {IPosition} from "@/interfaces/el-position-interface";
@@ -45,7 +45,7 @@ export class DungeonProvider {
             }
         ];
         dungeons.forEach((dungeon: { name: string, position: IPosition }) => {
-            dungeonsList.push(new DungeonBuilder()
+            dungeonsList.push(new MapLocationBuilder()
                 .name(dungeon.name)
                 .tilesNumber(Randomizer.getRandomIntInRange(20, 39))
                 .complexity(Complexity.EASY)

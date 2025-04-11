@@ -31,7 +31,7 @@ export default {
     const tilesShown = true;
     const mapStore = useMapStore();
     const oldForest: MapModel = MapProvider.getOldForest();
-    oldForest.dungeons[0].hero = hero;
+    oldForest.mapLocations[0].hero = hero;
     mapStore.buildMap(oldForest);
 
     return {hero, tilesShown, heroStore, mapStore, userStore}

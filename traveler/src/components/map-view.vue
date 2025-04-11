@@ -1,11 +1,11 @@
 <template>
   <div class="map" :style="getMapBackground(map.imgPath)" v-if="!map.isLocked">
-    <dungeon-spot v-for="dungeon in map.dungeons" :key="dungeon.uuid" :dungeon="dungeon"></dungeon-spot>
+    <map-location v-for="mapLocation in map.mapLocations" :key="mapLocation.uuid" :mapLocation="mapLocation"></map-location>
     <div class="map-name">{{ map.name }}</div>
   </div>
   <div class="map" :style="getMapBackground(map.imgPath)" v-if="map.isLocked">
     <div class="map-overlay">
-      <p class="lock-text">🔒 This map is locked</p>
+      <p class="lock-text">🔒 Замкнуто</p>
       <div class="map-name">{{ map.name }}</div>
     </div>
   </div>
@@ -13,7 +13,7 @@
 
 <script lang="ts">
 import {useMapStore} from '@/stores/MapStore';
-import DungeonSpot from "@/components/dungeon-spot.vue";
+import MapLocation from "@/components/map-location.vue";
 import MapModel from "@/models/MapModel";
 
 export default {
@@ -24,7 +24,7 @@ export default {
       required: true
     }
   },
-  components: {DungeonSpot},
+  components: {MapLocation},
   data() {
     const mapStore = useMapStore();
     return {mapStore}

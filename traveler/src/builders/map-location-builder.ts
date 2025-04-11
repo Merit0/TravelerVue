@@ -1,48 +1,48 @@
 import { Complexity } from '@/enums/complexity';
-import {DungeonModel} from "@/models/DungeonModel";
+import {MapLocationModel} from "@/models/map-location-model";
 import {IPosition} from "@/interfaces/el-position-interface";
 
-interface IDungeonBuilder {
+interface IMapLocationBuilder {
     name(name: string): this;
     tilesNumber(num: number): this;
     complexity(complexityLevel: Complexity): this;
     position(position: IPosition): this;
-    build(): DungeonModel;
+    build(): MapLocationModel;
 }
 
-export class DungeonBuilder implements IDungeonBuilder {
-    private _dungeon: DungeonModel;
+export class MapLocationBuilder implements IMapLocationBuilder {
+    private _mapLocation: MapLocationModel;
 
     constructor() {
         this.reset();
     }
 
     private reset(): void {
-        this._dungeon = new DungeonModel();
+        this._mapLocation = new MapLocationModel();
     }
 
     public name(name: string): this {
-        this._dungeon.name = name;
+        this._mapLocation.name = name;
         return this;
     }
 
     public tilesNumber(num: number): this {
-        this._dungeon.tilesNumber = num;
+        this._mapLocation.tilesNumber = num;
         return this;
     }
 
     public complexity(complexityLevel: Complexity): this {
-        this._dungeon.complexity = complexityLevel;
+        this._mapLocation.complexity = complexityLevel;
         return this;
     }
 
     public position(position: IPosition): this {
-        this._dungeon.position = position;
+        this._mapLocation.position = position;
         return this;
     }
 
-    public build(): DungeonModel {
-        const createdMap = this._dungeon;
+    public build(): MapLocationModel {
+        const createdMap = this._mapLocation;
         this.reset();
         return createdMap;
     }

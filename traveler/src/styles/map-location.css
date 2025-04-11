@@ -1,4 +1,4 @@
-.dungeonSpot {
+.mapLocation {
     position: absolute;
     width: 5vw;
     height: 5vw;
@@ -6,7 +6,6 @@
     max-width: 50px;
     max-height: 50px;
     border-radius: 50%;
-    box-shadow: 0 0 10px 5px rgba(255, 47, 0, 0.7); /* Outer green glow */
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
@@ -15,18 +14,18 @@
     height: 100%;
     border: none;
     border-radius: 50%;
-    background-image: url('/images/dungeons/icons/dungeon-boss-face-icon.png');
-    background-size: contain; /* Ensure the entire image fits inside */
+    background-image: url('/images/map-location/icons/foots-icon.png');
+    background-size: 100% 100%; /* Ensure the entire image fits inside */
     background-position: center;
     background-repeat: no-repeat; /* Prevent tiling */
 }
 
 @keyframes pulse {
-    0% { box-shadow: 0 0 10px 5px rgba(255, 221, 0, 0.7); }
-    50% { box-shadow: 0 0 15px 8px rgba(255, 251, 0, 0.9); }
-    100% { box-shadow: 0 0 10px 5px rgba(255, 196, 0, 0.7); }
+    0% { box-shadow: 0 0 1px 1px rgba(255, 221, 0, 0.7); }
+    50% { box-shadow: 0 0 2px 4px rgba(255, 174, 0, 0.9); }
+    100% { box-shadow: 0 0 1px 1px rgba(255, 183, 0, 0.7); }
 }
 
-.dungeonTile.pulsing {
+.mapLocation.pulsing {
     animation: pulse 1.5s infinite alternate;
 }

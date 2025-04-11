@@ -1,10 +1,10 @@
 import MapModel from '../models/MapModel';
-import {DungeonModel} from "@/models/DungeonModel";
+import {MapLocationModel} from "@/models/map-location-model";
 import {Complexity} from "@/enums/complexity";
 
 interface IMapBuilder {
     name(name: string): this;
-    dungeons(dungeonsList: DungeonModel[]): this;
+    mapLocations(mapLocationsList: MapLocationModel[]): this;
     complexity(complexityLevel: Complexity): this;
     isLocked(status: boolean): this;
     imagePath(path: string): this;
@@ -26,8 +26,8 @@ export class MapBuilder implements IMapBuilder {
         return this;
     }
 
-    public dungeons(dungeonsList: DungeonModel[]): this {
-        this.map.setDungeons(dungeonsList);
+    public mapLocations(locationsList: MapLocationModel[]): this {
+        this.map.setMapLocations(locationsList);
         return this;
     }
 
