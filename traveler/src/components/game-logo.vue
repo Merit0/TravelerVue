@@ -10,7 +10,7 @@ export default {
   name: "GameLogo",
   props: {
     imageSrc: {
-      type: Object,
+      type: String,
       required: true
     }
   },

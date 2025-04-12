@@ -6,7 +6,7 @@ import {MapLocationProvider} from "@/providers/map-location-provider";
 export class MapProvider {
     static getOldForest(): MapModel {
         return new MapBuilder()
-            .name("Старий Ліс")
+            .name("Old Forest")
             .imagePath('/images/maps-page/map-1-old-forest.png')
             .mapLocations(MapLocationProvider.getOldForestLocations())
             .complexity(Complexity.EASY)

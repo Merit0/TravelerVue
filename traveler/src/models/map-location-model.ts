@@ -11,6 +11,7 @@ export interface IMapLocation {
     readonly hero: IHero;
     readonly position: IPosition
     readonly imgPath: string;
+    readonly endPoint: string;
 }
 
 export class MapLocationModel implements IMapLocation {
@@ -18,6 +19,7 @@ export class MapLocationModel implements IMapLocation {
     private _tilesNumber: number;
     private readonly _id: string;
     private _imgPath: string;
+    private _endPoint: string;
     private _complexity: Complexity;
     private _position: IPosition;
 
@@ -31,7 +33,7 @@ export class MapLocationModel implements IMapLocation {
         return this._id;
     }
 
-    get name(): string {
+    public get name(): string {
         return this._dungeonName;
     }
 
@@ -77,5 +79,13 @@ export class MapLocationModel implements IMapLocation {
 
     set imgPath(path: string) {
         this._imgPath = path;
+    }
+
+    get endPoint(): string {
+        return this._endPoint;
+    }
+
+    set endPoint(endPointPath: string) {
+        this._endPoint = endPointPath;
     }
 }

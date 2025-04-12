@@ -24,11 +24,11 @@ export class MapModel implements IMap {
         this._mapId = uuid();
     }
 
-    get uuid(): string {
+    public get uuid(): string {
         return this._mapId
     }
 
-    get name(): string {
+    public get name(): string {
         return this._mapName;
     }
 
@@ -36,7 +36,7 @@ export class MapModel implements IMap {
         this._mapName = mapName;
     }
 
-    get imgPath(): string {
+    public get imgPath(): string {
         return this._imgPath;
     }
 
@@ -44,11 +44,11 @@ export class MapModel implements IMap {
         this._imgPath = path;
     }
 
-    get mapLocations(): MapLocationModel[] {
+    public get mapLocations(): MapLocationModel[] {
         return this._mapLocationsList;
     }
 
-    setMapLocations(locations: MapLocationModel[]) {
+    set mapLocations(locations: MapLocationModel[]) {
         this._mapLocationsList = locations;
     }
 

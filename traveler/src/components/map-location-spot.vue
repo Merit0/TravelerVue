@@ -1,7 +1,7 @@
 <template>
   <div class="mapLocation pulsing" :style="getMapLocationPosition(mapLocation.position)">
-    <button @click="enterToMapLocation()" class="buttonMap" :disabled="mapStore.isMapCleared"></button>
-    <div class="resetBtnBackground" v-if="mapStore.isMapCleared">
+    <button @click="enterToMapLocation()" class="buttonMap" :disabled="useMapLocationStore.isMapLocationCleared"></button>
+    <div class="resetBtnBackground" v-if="useMapLocationStore.isMapLocationCleared">
       <div class="resetImg">
         <button class="btnReset" @click="mapStore.resetMap"></button>
       </div>
@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import router from '@/router/index';
-import {useMapStore} from '@/stores/MapStore';
+import {useMapLocationStore} from '@/stores/map-location-store';
 import {PropType} from "vue";
 import {MapLocationModel} from "@/models/map-location-model";
 import {IPosition} from "@/interfaces/el-position-interface";
@@ -24,13 +24,13 @@ export default {
     }
   },
   data() {
-    const mapStore = useMapStore();
     let isDisabled = false;
-    return {isDisabled, mapStore};
+    return {isDisabled, useMapLocationStore};
   },
   methods: {
     async enterToMapLocation() {
-      router.push("/old-forest");
+      // router.push("/old-forest");
+      router.push(this.mapLocation.endPoint);
     },
 
     getMapLocationPosition(spotPosition: IPosition) {

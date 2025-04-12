@@ -1,11 +1,12 @@
-import { defineStore } from 'pinia';
+import {defineStore} from 'pinia';
 import UserModel from '@/models/UserModel';
 import * as Request from '@/api/Requests';
 import router from '@/router/index';
-import { useHeroStore } from '@/stores/HeroStore';
-import { useMapStore } from '@/stores/MapStore';
-import { useBagStore } from '@/stores/BagStore';
-import { useChestStore } from '@/stores/ChestStore';
+import {useHeroStore} from '@/stores/HeroStore';
+import {useMapLocationStore} from '@/stores/map-location-store';
+import {useBagStore} from '@/stores/BagStore';
+import {useChestStore} from '@/stores/ChestStore';
+import MapModel from "@/models/MapModel";
 
 export const useUserStore = defineStore('user', {
     state: () => ({
@@ -13,7 +14,7 @@ export const useUserStore = defineStore('user', {
         error: '',
     }),
     getters: {
-        isLoggedIn: ():boolean => localStorage.getItem('uStatus') === 'true',
+        isLoggedIn: (): boolean => localStorage.getItem('uStatus') === 'true',
         isUserLoggedIn(): boolean {
             return this.user.getStatus();
         }
@@ -43,21 +44,34 @@ export const useUserStore = defineStore('user', {
         },
         async logout(): Promise<void> {
             console.log('Logout initiated');
-            const mapStore = useMapStore();
+
+            const mapLocationStore = useMapLocationStore();
             const bagStore = useBagStore();
             const chestStore = useChestStore();
 
-            await Promise.all([
-                mapStore.resetMap(),
-                bagStore.resetBag(),
-                chestStore.resetChest(),
-            ]).then(() => {
-                chestStore.isShown = false;
-                localStorage.clear();
-                localStorage.setItem('uStatus', 'false');
-                this.user.setLoggedIn(false);
-                router.push('/login');
-            });
+            mapLocationStore.initMapsList();
+
+            const oldForestMap: MapModel | undefined = mapLocationStore.mapsList.find(map => map.name === 'Old Forest') as MapModel;
+
+            if (oldForestMap) {
+                try {
+                    await Promise.all([
+                        mapLocationStore.resetAllMapLocations(oldForestMap),
+                        bagStore.resetBag(),
+                        chestStore.resetChest(),
+                    ]);
+
+                    chestStore.isShown = false;
+                    localStorage.clear();
+                    localStorage.setItem('uStatus', 'false');
+                    this.user.setLoggedIn(false);
+                    router.push('/login');
+                } catch (error) {
+                    console.error("Error during logout:", error);
+                }
+            } else {
+                console.error('Old Forest map not found');
+            }
         },
         async clearErrorMsg() {
             this.error = '';

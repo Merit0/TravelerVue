@@ -3,7 +3,7 @@
   <HeroDetailsBar :hero="hero"></HeroDetailsBar>
   <div class="mapsViewPort">
     <button class="mapNavigationButton"></button>
-    <MapView v-for="map in mapsList" :key="map.id" :map="map"></MapView>
+    <MapView v-for="map in mapLocationStore.mapsList" :key="map.id" :map="map"></MapView>
     <button class="mapNavigationButton"></button>
   </div>
 </template>
@@ -11,18 +11,21 @@
 <script lang="ts">
 import HeroDetailsBar from "@/components/HeroDetailsBar.vue";
 import {useHeroStore} from "@/stores/HeroStore";
+import {useMapLocationStore} from "@/stores/map-location-store";
 import MapView from "@/components/map-view.vue";
-import MapModel from "@/models/MapModel";
-import {MapProvider} from "@/providers/MapProvider";
 
 export default {
   name: "maps-page",
   components: {MapView, HeroDetailsBar},
-  data() {
+  setup() {
     const heroStore = useHeroStore();
-    const mapsList: MapModel[] = [MapProvider.getOldForest(), MapProvider.getEvilTree(), MapProvider.getMagicCircle()];
     const hero = heroStore.hero;
-    return {hero, mapsList};
+    const mapLocationStore = useMapLocationStore();
+    mapLocationStore.initMapsList();
+    return {
+      hero,
+      mapLocationStore,
+    };
   },
 }
 </script>

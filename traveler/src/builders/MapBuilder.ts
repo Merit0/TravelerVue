@@ -27,7 +27,7 @@ export class MapBuilder implements IMapBuilder {
     }
 
     public mapLocations(locationsList: MapLocationModel[]): this {
-        this.map.setMapLocations(locationsList);
+        this.map.mapLocations = locationsList;
         return this;
     }
 

@@ -7,9 +7,14 @@ import {IPosition} from "@/interfaces/el-position-interface";
 export class MapLocationProvider {
     static getOldForestLocations(): MapLocationModel[] {
         const mapLocationsList: MapLocationModel[] = [];
-        const dungeons: { name: string, position: IPosition }[] = [
+        const mapLocations: {
+            name: string,
+            endPoint: string,
+            position: IPosition
+        }[] = [
             {
                 name: 'Forest Entrance',
+                endPoint: 'forest-entrance',
                 position: {
                     top: "15%",
                     left: "35%"
@@ -17,6 +22,7 @@ export class MapLocationProvider {
             },
             {
                 name: 'Mountain Hill',
+                endPoint: 'mountain-hill',
                 position: {
                     top: "30%",
                     left: "65%"
@@ -24,6 +30,7 @@ export class MapLocationProvider {
             },
             {
                 name: 'Forest Peak',
+                endPoint: 'forest-peak',
                 position: {
                     top: "45%",
                     left: "20%"
@@ -31,25 +38,28 @@ export class MapLocationProvider {
             },
             {
                 name: 'Forest Cave',
+                endPoint: 'forest-cave',
                 position: {
                     top: "62%",
                     left: "58%"
                 }
             },
             {
-                name: 'Forest Entrance',
+                name: 'Forest Shadows',
+                endPoint: 'forest-shadows',
                 position: {
                     top: "90%",
                     left: "40%"
                 }
             }
         ];
-        dungeons.forEach((dungeon: { name: string, position: IPosition }) => {
+        mapLocations.forEach((mapLocation: { name: string, endPoint: string, position: IPosition }) => {
             mapLocationsList.push(new MapLocationBuilder()
-                .name(dungeon.name)
+                .name(mapLocation.name)
                 .tilesNumber(Randomizer.getRandomIntInRange(20, 39))
                 .complexity(Complexity.EASY)
-                .position(dungeon.position)
+                .position(mapLocation.position)
+                .endPoint(mapLocation.endPoint)
                 .build())
         });
         return mapLocationsList;

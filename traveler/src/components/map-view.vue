@@ -12,23 +12,19 @@
 </template>
 
 <script lang="ts">
-import {useMapStore} from '@/stores/MapStore';
 import MapLocationSpot from "@/components/map-location-spot.vue";
 import MapModel from "@/models/MapModel";
+import {PropType} from "vue";
 
 export default {
   name: "MapView",
   props: {
     map: {
-      type: MapModel,
+      type: Object as PropType<MapModel>,
       required: true
     }
   },
   components: {MapLocationSpot},
-  data() {
-    const mapStore = useMapStore();
-    return {mapStore}
-  },
   methods: {
     getMapBackground(mapBackgroundPath: string) {
       return {
