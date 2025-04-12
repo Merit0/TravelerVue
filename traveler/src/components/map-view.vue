@@ -1,34 +1,30 @@
 <template>
   <div class="map" :style="getMapBackground(map.imgPath)" v-if="!map.isLocked">
-    <dungeon-spot v-for="dungeon in map.dungeons" :key="dungeon.uuid" :dungeon="dungeon"></dungeon-spot>
+    <map-location-spot v-for="mapLocation in map.mapLocations" :key="mapLocation.uuid" :mapLocation="mapLocation"></map-location-spot>
     <div class="map-name">{{ map.name }}</div>
   </div>
   <div class="map" :style="getMapBackground(map.imgPath)" v-if="map.isLocked">
     <div class="map-overlay">
-      <p class="lock-text">🔒 This map is locked</p>
+      <p class="lock-text">🔒 Замкнуто</p>
       <div class="map-name">{{ map.name }}</div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import {useMapStore} from '@/stores/MapStore';
-import DungeonSpot from "@/components/dungeon-spot.vue";
+import MapLocationSpot from "@/components/map-location-spot.vue";
 import MapModel from "@/models/MapModel";
+import {PropType} from "vue";
 
 export default {
   name: "MapView",
   props: {
     map: {
-      type: MapModel,
+      type: Object as PropType<MapModel>,
       required: true
     }
   },
-  components: {DungeonSpot},
-  data() {
-    const mapStore = useMapStore();
-    return {mapStore}
-  },
+  components: {MapLocationSpot},
   methods: {
     getMapBackground(mapBackgroundPath: string) {
       return {

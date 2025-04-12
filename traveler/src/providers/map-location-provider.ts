@@ -1,15 +1,20 @@
-import {DungeonModel} from "@/models/DungeonModel";
-import {DungeonBuilder} from "@/builders/dungeon-builder";
+import {MapLocationModel} from "@/models/map-location-model";
+import {MapLocationBuilder} from "@/builders/map-location-builder";
 import {Randomizer} from "@/utils/Randomizer";
 import {Complexity} from "@/enums/complexity";
 import {IPosition} from "@/interfaces/el-position-interface";
 
-export class DungeonProvider {
-    static getOldForestDungeons(): DungeonModel[] {
-        const dungeonsList: DungeonModel[] = [];
-        const dungeons: { name: string, position: IPosition }[] = [
+export class MapLocationProvider {
+    static getOldForestLocations(): MapLocationModel[] {
+        const mapLocationsList: MapLocationModel[] = [];
+        const mapLocations: {
+            name: string,
+            endPoint: string,
+            position: IPosition
+        }[] = [
             {
                 name: 'Forest Entrance',
+                endPoint: 'forest-entrance',
                 position: {
                     top: "15%",
                     left: "35%"
@@ -17,6 +22,7 @@ export class DungeonProvider {
             },
             {
                 name: 'Mountain Hill',
+                endPoint: 'mountain-hill',
                 position: {
                     top: "30%",
                     left: "65%"
@@ -24,6 +30,7 @@ export class DungeonProvider {
             },
             {
                 name: 'Forest Peak',
+                endPoint: 'forest-peak',
                 position: {
                     top: "45%",
                     left: "20%"
@@ -31,27 +38,30 @@ export class DungeonProvider {
             },
             {
                 name: 'Forest Cave',
+                endPoint: 'forest-cave',
                 position: {
                     top: "62%",
                     left: "58%"
                 }
             },
             {
-                name: 'Forest Entrance',
+                name: 'Forest Shadows',
+                endPoint: 'forest-shadows',
                 position: {
                     top: "90%",
                     left: "40%"
                 }
             }
         ];
-        dungeons.forEach((dungeon: { name: string, position: IPosition }) => {
-            dungeonsList.push(new DungeonBuilder()
-                .name(dungeon.name)
+        mapLocations.forEach((mapLocation: { name: string, endPoint: string, position: IPosition }) => {
+            mapLocationsList.push(new MapLocationBuilder()
+                .name(mapLocation.name)
                 .tilesNumber(Randomizer.getRandomIntInRange(20, 39))
                 .complexity(Complexity.EASY)
-                .position(dungeon.position)
+                .position(mapLocation.position)
+                .endPoint(mapLocation.endPoint)
                 .build())
         });
-        return dungeonsList;
+        return mapLocationsList;
     }
 }

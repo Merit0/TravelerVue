@@ -3,19 +3,23 @@ import {IHero} from "@/abstraction/IHero";
 import {v4 as uuid} from "uuid";
 import {IPosition} from "@/interfaces/el-position-interface";
 
-export interface IDungeon {
+export interface IMapLocation {
     readonly name: string;
     readonly tilesNumber: number;
     readonly uuid: string;
     readonly complexity: Complexity;
     readonly hero: IHero;
     readonly position: IPosition
+    readonly imgPath: string;
+    readonly endPoint: string;
 }
 
-export class DungeonModel implements IDungeon {
+export class MapLocationModel implements IMapLocation {
     private _dungeonName: string;
     private _tilesNumber: number;
     private readonly _id: string;
+    private _imgPath: string;
+    private _endPoint: string;
     private _complexity: Complexity;
     private _position: IPosition;
 
@@ -29,7 +33,7 @@ export class DungeonModel implements IDungeon {
         return this._id;
     }
 
-    get name(): string {
+    public get name(): string {
         return this._dungeonName;
     }
 
@@ -67,5 +71,21 @@ export class DungeonModel implements IDungeon {
 
     set position(position: IPosition) {
         this._position = position;
+    }
+
+    get imgPath(): string {
+        return this._imgPath;
+    }
+
+    set imgPath(path: string) {
+        this._imgPath = path;
+    }
+
+    get endPoint(): string {
+        return this._endPoint;
+    }
+
+    set endPoint(endPointPath: string) {
+        this._endPoint = endPointPath;
     }
 }

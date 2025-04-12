@@ -6,13 +6,14 @@
 
 <script lang="ts">
 import TileModel from '@/models/TileModel';
+import {PropType} from 'vue';
 
 
 export default {
   name: "enemy-tile",
   props: {
     tile: {
-      type: TileModel,
+      type: Object as PropType<TileModel>,
       required: true
     },
     enemyAlive: {

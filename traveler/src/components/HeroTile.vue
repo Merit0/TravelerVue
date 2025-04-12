@@ -1,20 +1,19 @@
 <template>
-  <div class="mapTile" v-if="tile.hero && showHero">
-    <div class="heroTile mapTile" :style="getStyle(tile)">
-      <button class="heroBag" @click="openInventory()"></button>
-    </div>
+  <div class="heroTile mapTile" v-if="tile.hero && showHero" :style="getStyle(tile)">
+    <button class="heroBag" @click="openInventory()"></button>
   </div>
 </template>
 
 <script lang="ts">
 import TileModel from '@/models/TileModel';
 import {useHeroStore} from '@/stores/HeroStore';
+import {PropType} from 'vue';
 
 export default {
   name: "hero-tile",
   props: {
     tile: {
-      type: TileModel,
+      type: Object as PropType<TileModel>,
       required: true
     },
     showHero: {

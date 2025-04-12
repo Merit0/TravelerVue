@@ -22,7 +22,7 @@
       </div>
     </div>
     <button class="homeBtn" @click="goCamp()">Home</button>
-    <button @click="logout()" class="logout">Logout</button>
+    <button @click="userStore.logout()" class="logout">Logout</button>
   </div>
 </template>
 
@@ -43,9 +43,6 @@ const goCamp = () => {
   router.push('/camping');
 };
 
-const logout = () => {
-  userStore.logout();
-};
 </script>
 
 <style>

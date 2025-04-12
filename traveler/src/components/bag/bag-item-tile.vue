@@ -9,13 +9,14 @@ import {ItemType} from '@/enums/ItemType';
 import {LootItemModel} from '@/models/LootItemModel';
 import {useBagStore} from '@/stores/BagStore';
 import {useHeroStore} from '@/stores/HeroStore';
+import {PropType} from 'vue';
 
 
 export default {
   name: "BagItemTile",
   props: {
     lootItem: {
-      type: LootItemModel,
+      type: Object as PropType<LootItemModel>,
       required: true
     }
   },

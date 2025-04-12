@@ -1,14 +1,14 @@
 import MapModel from '../models/MapModel';
 import {MapBuilder} from '@/builders/MapBuilder';
 import {Complexity} from '@/enums/complexity';
-import {DungeonProvider} from "@/providers/dungeons-provider";
+import {MapLocationProvider} from "@/providers/map-location-provider";
 
 export class MapProvider {
     static getOldForest(): MapModel {
         return new MapBuilder()
-            .name("Старий Ліс")
+            .name("Old Forest")
             .imagePath('/images/maps-page/map-1-old-forest.png')
-            .dungeons(DungeonProvider.getOldForestDungeons())
+            .mapLocations(MapLocationProvider.getOldForestLocations())
             .complexity(Complexity.EASY)
             .isLocked(false)
             .build();
@@ -18,7 +18,7 @@ export class MapProvider {
         return new MapBuilder()
             .name("Прокляте Дерево")
             .imagePath('/images/maps-page/map-2-evil-tree.png')
-            .dungeons([])
+            .mapLocations([])
             .complexity(Complexity.EASY)
             .isLocked(true)
             .build();
@@ -28,7 +28,7 @@ export class MapProvider {
         return new MapBuilder()
             .name("Магічне Коло")
             .imagePath('/images/maps-page/map-3-magic-circle.png')
-            .dungeons([])
+            .mapLocations([])
             .complexity(Complexity.EASY)
             .isLocked(true)
             .build();
