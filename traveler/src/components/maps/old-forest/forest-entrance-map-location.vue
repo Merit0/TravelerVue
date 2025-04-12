@@ -34,7 +34,7 @@ export default {
     const tilesShown = true;
     const mapLocationStore = useMapLocationStore();
     mapLocationStore.initMapsList();
-    const oldForest: MapModel | undefined = mapLocationStore.mapsList.find(map => map.name === 'Old Forest') as MapModel;
+    const oldForest: MapModel = mapLocationStore.getOldForestMap();
     const locations: MapLocationModel[] = oldForest.mapLocations;
     const forestEntranceLocation: MapLocationModel = locations.find(location => location.name === mapLocationName);
     forestEntranceLocation.hero = hero;
