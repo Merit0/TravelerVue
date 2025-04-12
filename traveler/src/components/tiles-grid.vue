@@ -26,7 +26,6 @@ export default {
   },
   methods: {
     getMapLocationBackground(mapLocationBackgroundPath: string) {
-      console.log('PATH->>', mapLocationBackgroundPath);
       return {
         backgroundImage: `url(${mapLocationBackgroundPath})`,
       }
