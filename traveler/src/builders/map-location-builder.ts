@@ -5,6 +5,7 @@ import {IPosition} from "@/interfaces/el-position-interface";
 interface IMapLocationBuilder {
     name(name: string): this;
     tilesNumber(num: number): this;
+    tilesGridBackgroundImagePath(imagePath: string): this;
     endPoint(endPointPath: string): this;
     complexity(complexityLevel: Complexity): this;
     position(position: IPosition): this;
@@ -44,6 +45,11 @@ export class MapLocationBuilder implements IMapLocationBuilder {
 
     public endPoint(endPointPath: string): this {
         this._mapLocation.endPoint = endPointPath;
+        return this;
+    }
+
+    public tilesGridBackgroundImagePath(imagePath: string): this {
+        this._mapLocation.imgPath = imagePath;
         return this;
     }
 

@@ -9,11 +9,13 @@ export class MapLocationProvider {
         const mapLocationsList: MapLocationModel[] = [];
         const mapLocations: {
             name: string,
+            backgroundImagePath: string
             endPoint: string,
             position: IPosition
         }[] = [
             {
                 name: 'Forest Entrance',
+                backgroundImagePath: '/images/map-location/old-forest-location/tiles-grid-background/tiles-grid-background-forest-entrance.png',
                 endPoint: 'forest-entrance',
                 position: {
                     top: "15%",
@@ -22,6 +24,7 @@ export class MapLocationProvider {
             },
             {
                 name: 'Mountain Hill',
+                backgroundImagePath: '',
                 endPoint: 'mountain-hill',
                 position: {
                     top: "30%",
@@ -30,6 +33,7 @@ export class MapLocationProvider {
             },
             {
                 name: 'Forest Peak',
+                backgroundImagePath: '',
                 endPoint: 'forest-peak',
                 position: {
                     top: "45%",
@@ -38,6 +42,7 @@ export class MapLocationProvider {
             },
             {
                 name: 'Forest Cave',
+                backgroundImagePath: '',
                 endPoint: 'forest-cave',
                 position: {
                     top: "62%",
@@ -46,6 +51,7 @@ export class MapLocationProvider {
             },
             {
                 name: 'Forest Shadows',
+                backgroundImagePath: '',
                 endPoint: 'forest-shadows',
                 position: {
                     top: "90%",
@@ -53,12 +59,13 @@ export class MapLocationProvider {
                 }
             }
         ];
-        mapLocations.forEach((mapLocation: { name: string, endPoint: string, position: IPosition }) => {
+        mapLocations.forEach((mapLocation: { name: string, backgroundImagePath: string, endPoint: string, position: IPosition }) => {
             mapLocationsList.push(new MapLocationBuilder()
                 .name(mapLocation.name)
-                .tilesNumber(Randomizer.getRandomIntInRange(20, 39))
+                .tilesNumber(90)
                 .complexity(Complexity.EASY)
                 .position(mapLocation.position)
+                .tilesGridBackgroundImagePath(mapLocation.backgroundImagePath)
                 .endPoint(mapLocation.endPoint)
                 .build())
         });

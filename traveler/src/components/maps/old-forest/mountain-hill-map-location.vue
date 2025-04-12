@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import Tiles from '../../dungeon-tiles-list.vue';
+import TilesGrid from '../../tiles-grid.vue';
 import HeroDetailsBar from '../../HeroDetailsBar.vue';
 import HeroDeathOverlay from '@/components/HeroDeathOverlay.vue'
 import {useHeroStore} from '@/stores/HeroStore'
@@ -23,7 +23,7 @@ import MapModel from "@/models/MapModel";
 
 export default {
   name: "mountain-hill-map-location",
-  components: {Tiles, HeroDetailsBar, HeroDeathOverlay, HeroInventory},
+  components: {Tiles: TilesGrid, HeroDetailsBar, HeroDeathOverlay, HeroInventory},
   data() {
     const mapLocationName = 'Mountain Hill'
     const heroStore = useHeroStore();

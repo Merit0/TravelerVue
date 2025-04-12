@@ -99,19 +99,6 @@ export const useMapLocationStore = defineStore("map-location-store", {
                 localStorage.removeItem(key);
             });
         },
-        // buildLocationMap(locationMap: MapLocationModel) {
-        //     const itemKey = `${toKebabCase(locationMap.name)}-location-map`;
-        //     console.log('FOUND LOCAL STORAGE MAP LOCATION',localStorage.getItem(itemKey));
-        //     if (!JSON.parse(localStorage.getItem(`${toKebabCase(locationMap.name)}-location-map`)) || this.tiles.length === 0) {
-        //         console.log('BUILDING')
-        //         console.log('tiles number: ->', this.tiles.length)
-        //         this.mapLocationName = locationMap.name;
-        //         this.generateTiles(locationMap.tilesNumber);
-        //         this.addHero(locationMap.hero);
-        //         this.addEnemies();
-        //         this.isCleared = false;
-        //     }
-        // },
         buildLocationMap(locationMap: MapLocationModel) {
             const key = `${toKebabCase(locationMap.name)}-location-map`;
             const saved = localStorage.getItem(key);
