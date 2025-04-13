@@ -6,6 +6,8 @@ interface IMapLocationBuilder {
     name(name: string): this;
     tilesNumber(num: number): this;
     tilesGridBackgroundImagePath(imagePath: string): this;
+    chestImage(imagePath: string): this;
+    initialTileImageImage(imagePath: string): this;
     endPoint(endPointPath: string): this;
     complexity(complexityLevel: Complexity): this;
     position(position: IPosition): this;
@@ -50,6 +52,16 @@ export class MapLocationBuilder implements IMapLocationBuilder {
 
     public tilesGridBackgroundImagePath(imagePath: string): this {
         this._mapLocation.imgPath = imagePath;
+        return this;
+    }
+
+    public chestImage(imagePath: string): this {
+        this._mapLocation.chestImage = imagePath;
+        return this;
+    }
+
+    public initialTileImageImage(imagePath: string): this {
+        this._mapLocation.initialTileImage = imagePath;
         return this;
     }
 

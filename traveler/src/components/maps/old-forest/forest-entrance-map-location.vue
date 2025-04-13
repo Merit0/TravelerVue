@@ -12,7 +12,6 @@
 import HeroDetailsBar from '../../HeroDetailsBar.vue';
 import HeroDeathOverlay from '@/components/HeroDeathOverlay.vue'
 import {useHeroStore} from '@/stores/HeroStore'
-import router from '@/router';
 import {useMapLocationStore} from '@/stores/map-location-store';
 import HeroInventory from '../../HeroInventory.vue';
 import {useUserStore} from "@/stores/UserStore";
@@ -46,6 +45,3 @@ export default {
   }
 }
 </script>
-
-<style>
-</style>

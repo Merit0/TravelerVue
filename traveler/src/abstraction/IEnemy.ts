@@ -1,5 +1,5 @@
-import { EnemyType } from "../enums/EnemyType";
-import { LootItemModel } from "../models/LootItemModel";
+import { EnemyType } from "@/enums/EnemyType";
+import { LootItemModel } from "@/models/LootItemModel";
 
 export interface IEnemy {
   name: string;

@@ -46,9 +46,7 @@ export default {
   height: 94vh;
   box-sizing: border-box;
   overflow-y: auto;
-  background-size: 30% 90%;
 }
-
 .tilesGrid {
   margin-top: 6vh;
   position: relative;

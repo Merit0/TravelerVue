@@ -1,6 +1,6 @@
 <template>
   <button class="enemyTile mapTile" :style="getStyle(tile)"
-          v-if="(!tile.isTree) && tile.enemies.length != 0 && enemyAlive"
+          v-if="(!tile.isInitial) && tile.enemies.length != 0 && enemyAlive"
           @click="startBattle(tile)"></button>
 </template>
 

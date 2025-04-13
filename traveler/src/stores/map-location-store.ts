@@ -112,9 +112,9 @@ export const useMapLocationStore = defineStore("map-location-store", {
                         boss: parsed.boss,
                     };
                 } else {
-                    const tiles = this.generateTiles(locationMap.tilesNumber);
+                    const tiles = this.generateTiles(locationMap);
                     this.addHeroToTiles(tiles, locationMap.hero);
-                    this.addEnemiesToTiles(tiles);
+                    this.addEnemiesToTiles(tiles, locationMap.chestImage);
                     this.locationStates[locationMap.name] = {
                         tiles,
                         isCleared: false,
@@ -126,10 +126,12 @@ export const useMapLocationStore = defineStore("map-location-store", {
             this.mapLocationName = locationMap.name;
         },
 
-        generateTiles(tilesNumber: number): TileModel[] {
+        generateTiles(locationMap: MapLocationModel): TileModel[] {
+            const tilesNumber = locationMap.tilesNumber;
             return Array.from({length: tilesNumber}, (_, i) => {
                 const tile = new TileModel(i);
-                tile.setIsATree(true);
+                tile.setIsInitial(true);
+                tile.setImageSrc(locationMap.initialTileImage)
                 return tile;
             });
         },
@@ -143,7 +145,7 @@ export const useMapLocationStore = defineStore("map-location-store", {
         moveHero(nextTile: TileModel) {
             const heroStore = useHeroStore();
             const tiles = this.tiles;
-            const currentTile = tiles.find((tile) => tile.hero);
+            const currentTile = tiles.find((tile: TileModel) => tile.hero);
             if (!currentTile) return;
 
             const hero = currentTile.hero;
@@ -155,7 +157,7 @@ export const useMapLocationStore = defineStore("map-location-store", {
             this.removeAllItemsFromTile(nextTile);
         },
 
-        addEnemiesToTiles(tiles: TileModel[]) {
+        addEnemiesToTiles(tiles: TileModel[], chestImage: string) {
             const randNumber = Math.floor(Math.random() * tiles.length);
             tiles.forEach((tile, index) => {
                 if (index === 0 || tile.hero) return;
@@ -164,7 +166,7 @@ export const useMapLocationStore = defineStore("map-location-store", {
                 tile.setEnemies(enemies);
 
                 if (enemies.length > 0) {
-                    tile.setChest(this.generateChest(enemies));
+                    tile.setChest(this.generateChest(enemies, chestImage));
                 }
             });
 
@@ -174,8 +176,9 @@ export const useMapLocationStore = defineStore("map-location-store", {
             }
         },
 
-        generateChest(enemies: EnemyModel[]): ChestModel {
+        generateChest(enemies: EnemyModel[], chestImage: string): ChestModel {
             const chest = new ChestModel();
+            chest.setImagePath(chestImage);
             for (const enemy of enemies) {
                 if (enemy.loot.chance) {
                     enemy.loot.place = "Chest";
@@ -218,7 +221,7 @@ export const useMapLocationStore = defineStore("map-location-store", {
 
         removeAllItemsFromTile(tile: TileModel) {
             tile.isEmpty = false;
-            tile.isTree = false;
+            tile.isInitial = false;
         },
     },
 });

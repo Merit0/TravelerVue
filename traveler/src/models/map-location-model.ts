@@ -2,6 +2,7 @@ import {Complexity} from "@/enums/complexity";
 import {IHero} from "@/abstraction/IHero";
 import {v4 as uuid} from "uuid";
 import {IPosition} from "@/interfaces/el-position-interface";
+import {IEnemy} from "@/abstraction/IEnemy";
 
 export interface IMapLocation {
     readonly name: string;
@@ -12,6 +13,9 @@ export interface IMapLocation {
     readonly position: IPosition
     readonly imgPath: string;
     readonly endPoint: string;
+    readonly chestImage: string;
+    readonly initialTileImage: string;
+    readonly boss: IEnemy;
 }
 
 export class MapLocationModel implements IMapLocation {
@@ -20,10 +24,12 @@ export class MapLocationModel implements IMapLocation {
     private readonly _id: string;
     private _imgPath: string;
     private _endPoint: string;
+    private _chestImage: string;
+    private _initialTileImage: string;
     private _complexity: Complexity;
     private _position: IPosition;
-
     private _hero: IHero;
+    private _bose: IEnemy;
 
     constructor() {
         this._id = uuid();
@@ -33,7 +39,23 @@ export class MapLocationModel implements IMapLocation {
         return this._id;
     }
 
-    public get name(): string {
+    get chestImage(): string {
+        return this._chestImage;
+    }
+
+    set chestImage(chestImage: string) {
+        this._chestImage = chestImage;
+    }
+
+    get initialTileImage(): string {
+        return this._initialTileImage;
+    }
+
+    set initialTileImage(initialTileImagePath: string) {
+        this._initialTileImage = initialTileImagePath;
+    }
+
+    get name(): string {
         return this._dungeonName;
     }
 
@@ -55,6 +77,10 @@ export class MapLocationModel implements IMapLocation {
 
     set hero(hero: IHero) {
         this._hero = hero;
+    }
+
+    get boss(): IEnemy {
+        return this._bose;
     }
 
     get complexity(): Complexity {
