@@ -8,6 +8,7 @@ import CampPage from "@/components/camp-page.vue";
 import MountainHillMapLocation from "@/components/maps/old-forest/mountain-hill-map-location.vue";
 import ForestCaveMapLocation from "@/components/maps/old-forest/forest-cave-map-location.vue";
 import ForestPeakMapLocation from "@/components/maps/old-forest/forest-peak-map-location.vue";
+import ForestShadowsMapLocation from "@/components/maps/old-forest/forest-shadows-map-location.vue";
 
 const routes = [
     {path: '/', component: LoginPage},
@@ -59,7 +60,7 @@ const routes = [
     {
         path: "/forest-shadows",
         name: "forest-shadows",
-        component: ForestPeakMapLocation,
+        component: ForestShadowsMapLocation,
         meta: {requiresAuth: true}
     },
 ];

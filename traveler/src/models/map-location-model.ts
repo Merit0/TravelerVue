@@ -2,11 +2,12 @@ import {Complexity} from "@/enums/complexity";
 import {IHero} from "@/abstraction/IHero";
 import {v4 as uuid} from "uuid";
 import {IPosition} from "@/interfaces/el-position-interface";
-import {IEnemy} from "@/abstraction/IEnemy";
+import EnemyModel from "@/models/EnemyModel";
 
 export interface IMapLocation {
     readonly name: string;
     readonly tilesNumber: number;
+    readonly enemyModifier: number;
     readonly uuid: string;
     readonly complexity: Complexity;
     readonly hero: IHero;
@@ -15,12 +16,13 @@ export interface IMapLocation {
     readonly endPoint: string;
     readonly chestImage: string;
     readonly initialTileImage: string;
-    readonly boss: IEnemy;
+    readonly boss: EnemyModel;
 }
 
 export class MapLocationModel implements IMapLocation {
     private _dungeonName: string;
     private _tilesNumber: number;
+    private _enemyModifier: number;
     private readonly _id: string;
     private _imgPath: string;
     private _endPoint: string;
@@ -29,7 +31,7 @@ export class MapLocationModel implements IMapLocation {
     private _complexity: Complexity;
     private _position: IPosition;
     private _hero: IHero;
-    private _bose: IEnemy;
+    private _bose: EnemyModel;
 
     constructor() {
         this._id = uuid();
@@ -71,6 +73,14 @@ export class MapLocationModel implements IMapLocation {
         this._tilesNumber = numberOfTiles;
     }
 
+    get enemyModifier(): number {
+        return this._enemyModifier
+    }
+
+    set enemyModifier(enemyModifier: number) {
+        this._enemyModifier = enemyModifier;
+    }
+
     get hero(): IHero {
         return this._hero;
     }
@@ -79,8 +89,12 @@ export class MapLocationModel implements IMapLocation {
         this._hero = hero;
     }
 
-    get boss(): IEnemy {
+    get boss(): EnemyModel {
         return this._bose;
+    }
+
+    set boss(bossModel: EnemyModel) {
+        this._bose = bossModel;
     }
 
     get complexity(): Complexity {

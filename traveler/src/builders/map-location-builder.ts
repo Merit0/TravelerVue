@@ -1,6 +1,8 @@
 import {Complexity} from '@/enums/complexity';
 import {MapLocationModel} from "@/models/map-location-model";
 import {IPosition} from "@/interfaces/el-position-interface";
+import {IEnemy} from "@/abstraction/IEnemy";
+import EnemyModel from "@/models/EnemyModel";
 
 interface IMapLocationBuilder {
     name(name: string): this;
@@ -11,6 +13,8 @@ interface IMapLocationBuilder {
     endPoint(endPointPath: string): this;
     complexity(complexityLevel: Complexity): this;
     position(position: IPosition): this;
+    boss(bossModel: IEnemy): this;
+    enemiesStatsModifier(modifierNumber: number): this;
     build(): MapLocationModel;
 }
 
@@ -32,6 +36,11 @@ export class MapLocationBuilder implements IMapLocationBuilder {
 
     public tilesNumber(num: number): this {
         this._mapLocation.tilesNumber = num;
+        return this;
+    }
+
+    public enemiesStatsModifier(modifierNumber: number): this {
+        this._mapLocation.enemyModifier = modifierNumber;
         return this;
     }
 
@@ -62,6 +71,11 @@ export class MapLocationBuilder implements IMapLocationBuilder {
 
     public initialTileImageImage(imagePath: string): this {
         this._mapLocation.initialTileImage = imagePath;
+        return this;
+    }
+
+    public boss(boseModel: EnemyModel): this {
+        this._mapLocation.boss = boseModel;
         return this;
     }
 

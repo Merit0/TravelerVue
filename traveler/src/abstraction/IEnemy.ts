@@ -12,4 +12,6 @@ export interface IEnemy {
   enemyType: EnemyType;
   imgPath: string;
   loot: LootItemModel;
+  powerModifierLvl: number;
+  enemyFrameColor: string;
 }

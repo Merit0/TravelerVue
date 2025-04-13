@@ -2,9 +2,12 @@ import {MapLocationModel} from "@/models/map-location-model";
 import {MapLocationBuilder} from "@/builders/map-location-builder";
 import {Complexity} from "@/enums/complexity";
 import {IPosition} from "@/interfaces/el-position-interface";
+import {BossProvider} from "@/providers/BossProvider";
+import EnemyModel from "@/models/EnemyModel";
 
 export class MapLocationProvider {
     static getOldForestLocations(): MapLocationModel[] {
+        const boss: EnemyModel = BossProvider.getSkeletonBoss();
         const mapLocationsList: MapLocationModel[] = [];
         const mapLocations: {
             name: string,
@@ -13,6 +16,8 @@ export class MapLocationProvider {
             initialTileImageImage: string,
             endPoint: string,
             position: IPosition,
+            boss: EnemyModel,
+            enemiesStatsModifier: number
         }[] = [
             {
                 name: 'Forest Entrance',
@@ -23,7 +28,9 @@ export class MapLocationProvider {
                 position: {
                     top: "15%",
                     left: "35%"
-                }
+                },
+                boss: boss,
+                enemiesStatsModifier: 1
             },
             {
                 name: 'Mountain Hill',
@@ -34,7 +41,9 @@ export class MapLocationProvider {
                 position: {
                     top: "30%",
                     left: "65%"
-                }
+                },
+                boss: boss,
+                enemiesStatsModifier: 2
             },
             {
                 name: 'Forest Peak',
@@ -45,7 +54,9 @@ export class MapLocationProvider {
                 position: {
                     top: "45%",
                     left: "20%"
-                }
+                },
+                boss: boss,
+                enemiesStatsModifier: 3
             },
             {
                 name: 'Forest Cave',
@@ -56,7 +67,9 @@ export class MapLocationProvider {
                 position: {
                     top: "62%",
                     left: "58%"
-                }
+                },
+                boss: boss,
+                enemiesStatsModifier: 4
             },
             {
                 name: 'Forest Shadows',
@@ -67,7 +80,9 @@ export class MapLocationProvider {
                 position: {
                     top: "90%",
                     left: "40%"
-                }
+                },
+                boss: boss,
+                enemiesStatsModifier: 5
             }
         ];
         mapLocations.forEach((mapLocation: {
@@ -76,7 +91,9 @@ export class MapLocationProvider {
             chestImage: string,
             initialTileImageImage: string,
             endPoint: string,
-            position: IPosition
+            position: IPosition,
+            enemiesStatsModifier: number
+            boss: EnemyModel
         }) => {
             mapLocationsList.push(new MapLocationBuilder()
                 .name(mapLocation.name)
@@ -87,6 +104,8 @@ export class MapLocationProvider {
                 .chestImage(mapLocation.chestImage)
                 .initialTileImageImage(mapLocation.initialTileImageImage)
                 .endPoint(mapLocation.endPoint)
+                .boss(mapLocation.boss)
+                .enemiesStatsModifier(mapLocation.enemiesStatsModifier)
                 .build())
         });
         return mapLocationsList;

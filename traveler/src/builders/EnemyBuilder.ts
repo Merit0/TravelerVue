@@ -1,10 +1,11 @@
-import EnemyModel from '../models/EnemyModel';
-import { EnemyType } from '../enums/EnemyType';
-import { LootItemModel } from '../models/LootItemModel';
+import EnemyModel from '@/models/EnemyModel';
+import {EnemyType} from '@/enums/EnemyType';
+import {LootItemModel} from '@/models/LootItemModel';
 
 interface IEnemyBuilder {
     enemyName(name: string): EnemyBuilder;
     enemyType(enemyType: EnemyType): EnemyBuilder;
+    powerModifierLvl(modifierNumber: number): this;
     enemyLoot(enemyLootItem: LootItemModel): EnemyBuilder;
     enemyImgPath(imgPath: string): EnemyBuilder;
     enemyBorderFrame(frameColor: string): EnemyBuilder;
@@ -29,6 +30,11 @@ export class EnemyBuilder implements IEnemyBuilder {
 
     public enemyType(enemyType: EnemyType): EnemyBuilder {
         this.enemy.setEnemyType(enemyType);
+        return this;
+    }
+
+    public powerModifierLvl(modifierNumber: number): this {
+        this.enemy.setPowerModifierLvl(modifierNumber);
         return this;
     }
 

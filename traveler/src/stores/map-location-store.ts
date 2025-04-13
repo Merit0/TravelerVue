@@ -15,6 +15,7 @@ import MapModel from "@/models/MapModel";
 import {toKebabCase} from "@/utils/string-utils";
 import {MapProvider} from "@/providers/MapProvider";
 import {HeroModel} from "@/models/HeroModel";
+import {IEnemy} from "@/abstraction/IEnemy";
 
 interface MapLocationState {
     tiles: TileModel[];
@@ -114,11 +115,11 @@ export const useMapLocationStore = defineStore("map-location-store", {
                 } else {
                     const tiles = this.generateTiles(locationMap);
                     this.addHeroToTiles(tiles, locationMap.hero);
-                    this.addEnemiesToTiles(tiles, locationMap.chestImage);
+                    this.addEnemiesToTiles(tiles, locationMap);
                     this.locationStates[locationMap.name] = {
                         tiles,
                         isCleared: false,
-                        boss: BossProvider.getSkeletonBoss(),
+                        boss: locationMap.boss,
                     };
                 }
             }
@@ -157,21 +158,22 @@ export const useMapLocationStore = defineStore("map-location-store", {
             this.removeAllItemsFromTile(nextTile);
         },
 
-        addEnemiesToTiles(tiles: TileModel[], chestImage: string) {
+        addEnemiesToTiles(tiles: TileModel[], locationMap: MapLocationModel) {
             const randNumber = Math.floor(Math.random() * tiles.length);
             tiles.forEach((tile, index) => {
                 if (index === 0 || tile.hero) return;
 
-                const enemies = this.generateEnemies(index);
+                const enemies = this.generateEnemies(index, locationMap.enemyModifier);
                 tile.setEnemies(enemies);
 
                 if (enemies.length > 0) {
-                    tile.setChest(this.generateChest(enemies, chestImage));
+                    tile.setChest(this.generateChest(enemies, locationMap.chestImage));
                 }
             });
 
             if (randNumber < tiles.length) {
-                const boss = BossProvider.getSkeletonBoss();
+                const boss: EnemyModel = locationMap.boss;
+                boss.setPowerModifierLvl(locationMap.enemyModifier)
                 tiles[randNumber].setEnemies([boss]);
             }
         },
@@ -188,7 +190,8 @@ export const useMapLocationStore = defineStore("map-location-store", {
             return chest.items.find((item) => item.name) ? chest : null;
         },
 
-        generateEnemies(id: number): EnemyModel[] {
+        generateEnemies(id: number, enemyPowerModifierNumber: number): EnemyModel[] {
+            console.log('ENEMY MODIFIER ->', enemyPowerModifierNumber)
             if (!Randomizer.getChance(20)) return [];
             const createdEnemies: EnemyModel[] = [];
             const enemiesList = EnemyProvider.getEvilLandsEnemies();
@@ -203,6 +206,7 @@ export const useMapLocationStore = defineStore("map-location-store", {
                     .enemyType(base.enemyType)
                     .enemyImgPath(base.imgPath)
                     .enemyBorderFrame(base.enemyFrameColor)
+                    .powerModifierLvl(enemyPowerModifierNumber)
                     .build();
 
                 enemy.setId(id + i);
