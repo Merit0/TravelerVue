@@ -6,7 +6,10 @@ export class Randomizer {
   }
 
   static getRandomIntInRange(min: number, max: number): number {
-    return Math.floor(Math.random() * max) + min;
+    if (min > max) {
+      throw new Error("Min value must be less than or equal to max value.");
+    }
+    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
   static getRandomEquipment(equipmentList: LootItemModel[]): LootItemModel {

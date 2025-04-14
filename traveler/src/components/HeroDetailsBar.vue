@@ -22,39 +22,51 @@
       </div>
     </div>
     <button class="homeBtn" @click="goCamp()">Home</button>
-    <button @click="userStore.logout()" v-if="userStore.isLoggedIn" class="logout">Logout</button>
+    <button @click="userStore.logout()" class="logout">Logout</button>
   </div>
+<!--  <button @click="quitMap()" class="escapeBtn">Escape</button>-->
 </template>
 
-<script lang="ts">
-import {PropType} from 'vue';
-import {IHero} from '@/abstraction/IHero';
-import {useUserStore} from '@/stores/UserStore'
-import {useMapStore} from '@/stores/MapStore'
-import router from "@/router";
+<script setup lang="ts">
+import { defineProps } from 'vue';
+import { useRouter } from 'vue-router';
+import { useUserStore } from '@/stores/UserStore';
+import { IHero } from '@/abstraction/IHero';
 
-export default {
-  name: "hero-data-bar",
-  props: {
-    hero: {
-      type: Object as PropType<IHero>,
-      required: true
-    }
-  },
-  data() {
-    const userStore = useUserStore();
-    const mapStore = useMapStore();
-    return {userStore, mapStore};
-  },
+defineProps<{
+  hero: IHero;
+}>();
 
-  methods: {
-    goCamp() {
-      router.push('/camping');
-    }
-  }
-}
+const router = useRouter();
+const userStore = useUserStore();
+
+const goCamp = () => {
+  router.push('/camping');
+};
+
+// const quitMap = async() {
+//   if (this.mapLocationStore.isMapLocationCleared) {
+//     this.mapLocationStore.isCleared = this.mapLocationStore.isMapLocationCleared;
+//   }
+//   await this.mapLocationStore.saveProgress(this.mapLocationName).then(() => {
+//     router.push("/maps");
+//   });
+// };
+
 </script>
 
 <style>
 @import '@/styles/hero-details-top-bar.css';
+.escapeBtn {
+  color: #ffb671;
+  position: relative;
+  width: 100px;
+  height: 50px;
+  background-color: rgba(255, 196, 0, 0.185);
+  border-radius: 10px;
+  border: 2px solid rgb(95, 64, 43);
+  margin-top: 10px;
+  align-self: center;
+  margin-left: 45%;
+}
 </style>

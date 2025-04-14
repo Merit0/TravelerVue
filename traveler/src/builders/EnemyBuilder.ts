@@ -1,13 +1,14 @@
-import EnemyModel from '../models/EnemyModel';
-import { EnemyType } from '../enums/EnemyType';
-import { LootItemModel } from '../models/LootItemModel';
+import EnemyModel from '@/models/EnemyModel';
+import {EnemyType} from '@/enums/EnemyType';
+import {LootItemModel} from '@/models/LootItemModel';
 
 interface IEnemyBuilder {
     enemyName(name: string): EnemyBuilder;
     enemyType(enemyType: EnemyType): EnemyBuilder;
+    powerModifierLvl(modifierNumber: number): this;
     enemyLoot(enemyLootItem: LootItemModel): EnemyBuilder;
     enemyImgPath(imgPath: string): EnemyBuilder;
-    enemyBorderFrame(frameColor: string): EnemyBuilder;
+    enemyBackgroundSrc(imgPath: string): EnemyBuilder;
 }
 
 export class EnemyBuilder implements IEnemyBuilder {
@@ -32,13 +33,18 @@ export class EnemyBuilder implements IEnemyBuilder {
         return this;
     }
 
-    public enemyImgPath(imgPath: string): EnemyBuilder {
-        this.enemy.setImage(imgPath);
+    public powerModifierLvl(modifierNumber: number): this {
+        this.enemy.setPowerModifierLvl(modifierNumber);
         return this;
     }
 
-    public enemyBorderFrame(frameColor: string): EnemyBuilder {
-        this.enemy.setEnemyFrameColor(frameColor);
+    public enemyImgPath(imgPath: string): EnemyBuilder {
+        this.enemy.setImageName(imgPath);
+        return this;
+    }
+
+    public enemyBackgroundSrc(backgroundColor: string): EnemyBuilder {
+        this.enemy.setEnemyBackgroundColor(backgroundColor);
         return this;
     }
 

@@ -13,7 +13,7 @@ import router from '@/router';
 export default {
   methods: {
     async quitMap() {
-      router.push("/home"); //TODO: should be changed to 'hero-camp'
+      router.push("/camping");
     }
   }
 }
@@ -51,7 +51,7 @@ export default {
   height: 550px;
   border-radius: 20px;
   margin: auto;
-  background-image: url("../assets/images/deathOverlayBackground.jpg");
+  background-image: url("/images/overlays/hero-death/hero-death-overlay-background.png");
   margin-top: 5px;
 }
 

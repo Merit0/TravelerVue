@@ -1,15 +1,16 @@
 import MapModel from '../models/MapModel';
-import { MapComplexity } from '../enums/MapComplexity';
+import {MapLocationModel} from "@/models/map-location-model";
+import {Complexity} from "@/enums/complexity";
 
 interface IMapBuilder {
-
-    mapName(name: string): MapBuilder;
-    tilesNumber(num: number): MapBuilder;
-    complexity(complexityLevel: MapComplexity): MapBuilder;
+    name(name: string): this;
+    mapLocations(mapLocationsList: MapLocationModel[]): this;
+    complexity(complexityLevel: Complexity): this;
+    isLocked(status: boolean): this;
+    imagePath(path: string): this;
 }
 
 export class MapBuilder implements IMapBuilder {
-
     private map: MapModel;
 
     constructor() {
@@ -20,18 +21,28 @@ export class MapBuilder implements IMapBuilder {
         this.map = new MapModel();
     }
 
-    public mapName(name: string): MapBuilder {
-        this.map.setMapName(name);
+    public name(name: string): this {
+        this.map.name = name;
         return this;
     }
 
-    public tilesNumber(num: number): MapBuilder {
-        this.map.setNumberOfTiles(num);
+    public mapLocations(locationsList: MapLocationModel[]): this {
+        this.map.mapLocations = locationsList;
         return this;
     }
 
-    public complexity(complexityLevel: MapComplexity): MapBuilder {
-        this.map.setComplexity(complexityLevel);
+    public complexity(complexityLevel: Complexity): this {
+        this.map.complexity = complexityLevel;
+        return this;
+    }
+
+    public imagePath(path: string): this {
+        this.map.imgPath = path;
+        return this;
+    }
+
+    public isLocked(status: boolean): this {
+        this.map.isLocked = status;
         return this;
     }
 

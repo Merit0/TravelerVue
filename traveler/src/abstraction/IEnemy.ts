@@ -1,5 +1,5 @@
-import { EnemyType } from "../enums/EnemyType";
-import { LootItemModel } from "../models/LootItemModel";
+import { EnemyType } from "@/enums/EnemyType";
+import { LootItemModel } from "@/models/LootItemModel";
 
 export interface IEnemy {
   name: string;
@@ -11,5 +11,7 @@ export interface IEnemy {
   id: number;
   enemyType: EnemyType;
   imgPath: string;
+  enemyBackgroundColor: string;
   loot: LootItemModel;
+  powerModifierLvl: number;
 }

@@ -41,8 +41,8 @@ import BattleEnemyTile from "./battle-enemy-tile.vue";
 import {PropType} from "vue";
 import TileModel from "../models/TileModel";
 import {useHeroStore} from "@/stores/HeroStore";
-import {useMapStore} from '@/stores/MapStore';
 import EnemyModel from "../models/EnemyModel";
+import {useMapLocationStore} from "@/stores/map-location-store";
 
 export default {
   name: "battle-field",
@@ -59,14 +59,14 @@ export default {
     }
   },
   data() {
-    const mapStore = useMapStore();
+    const mapLocationStore = useMapLocationStore();
     const heroStore = useHeroStore();
     const hero = heroStore.hero;
     const enemies = this.tile.enemies;
     let enemyTileShown = true;
     let enemyAlive = true;
     let isAttacked = false;
-    return {enemyTileShown, enemyAlive, hero, isAttacked, mapStore, enemies};
+    return {enemyTileShown, enemyAlive, hero, isAttacked, mapLocationStore, enemies};
   },
   methods: {
     async attackEnemy(tile: TileModel) {
@@ -89,7 +89,7 @@ export default {
           this.$emit("isBattle", false);
           if (!tile.chest) {
             tile.isEmpty = true;
-            this.mapStore.moveHero(tile);
+            this.mapLocationStore.moveHero(tile);
           }
           tile.inBattle = false;
           return;
@@ -142,7 +142,7 @@ export default {
   position: relative;
   width: 200px;
   height: 200px;
-  background-image: url('@/assets/images/battlefield/crossedSwordsBtn.png');
+  background-image: url('/images/overlays/battlefield/attack-btn.png');
   outline: rgba(0, 0, 0, 0.295) solid 3px;
   border-radius: 30%;
   transition: 0.2s all;
@@ -161,7 +161,7 @@ export default {
 .heroSide {
   height: 600px;
   width: 500px;
-  background-image: url('@/assets/images/battlefield/HeroBody500_600.png');
+  background-image: url('/images/overlays/battlefield/hero-side-view-500x600.png');
   background-size: cover;
   border-radius: 20px;
   padding: 10px;
@@ -192,7 +192,7 @@ export default {
 .battlefieldOverlay {
   width: 1200px;
   height: 750px;
-  background-image: url('@/assets/images/dungeons/lavaLand.jpg');
+  background-image: url('/images/overlays/lavaLand.jpg');
   background-color: black;
   box-shadow: 0px -3px 15px 4px rgba(255, 195, 195, 0.5);
   border-radius: 20px;

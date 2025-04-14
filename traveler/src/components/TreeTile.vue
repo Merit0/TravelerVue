@@ -1,41 +1,46 @@
 <template>
-    <button v-if="tile.isTree" class="treeTile mapTile" @click="cutTree(tile)"></button>
+  <div v-if="tile.isInitial" class="initialTileView mapTile" :style="getTileImage(tile.backgroundSrc)">
+    <div class="initialTileView mapTile" :style="getTileImage(tile.imageSrc)">
+      <button class="mapTile tileButton" @click="clearTile(tile)"></button>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
 import TileModel from '@/models/TileModel';
-import { useHeroStore } from '@/stores/HeroStore';
-import { useMapStore } from '@/stores/MapStore';
+import {useHeroStore} from '@/stores/HeroStore';
+import {useMapLocationStore} from '@/stores/map-location-store';
+import {PropType} from 'vue';
 
 
 export default {
-    name: "tree-tile",
-    props: {
-        tile: {
-            type: TileModel,
-            required: true
-        }
-    },
-    data() {
-        const mapStore = useMapStore();
-        const heroStore = useHeroStore();
-        return { mapStore, heroStore };
-    },
-    methods: {
-        async cutTree(tile: TileModel) {
-            tile.isTree = false;
-            if( tile.enemies.length === 0 ) {
-                this.mapStore.moveHero(tile);
-            }
-        }
+  name: "tree-tile",
+  props: {
+    tile: {
+      type: Object as PropType<TileModel>,
+      required: true
     }
+  },
+  data() {
+    const mapLocationStore = useMapLocationStore();
+    const heroStore = useHeroStore();
+    return {mapLocationStore, heroStore};
+  },
+  methods: {
+    getTileImage(imageSrc: string) {
+      return {
+        backgroundImage: `url(${imageSrc})`,
+      }
+    },
+    async clearTile(tile: TileModel) {
+      tile.isInitial = false;
+      if (tile.enemies.length === 0) {
+        this.mapLocationStore.moveHero(tile);
+      }
+    }
+  }
 }
 </script>
 <style>
-.treeTile {
-    border-radius: 20%;
-    background-image: url('../assets/images/homePage_slotImages/tree.png');
-    border: 2px solid rgb(108, 108, 108);
-    background-size: 100% 100%;
-}
+@import '@/styles/animated-tile.css';
 </style>

@@ -1,14 +1,12 @@
 import { LootItemModel } from "./LootItemModel";
+import {IChest} from "@/abstraction/chest-interface";
 
-export class ChestModel {
+export class ChestModel implements IChest {
   items: LootItemModel[] = new Array(6).fill(new LootItemModel());
+  imgPath: string;
 
-  public setLootItems(items: LootItemModel[]): void {
-    this.items = items;
-  }
-
-  public getLootItems(): LootItemModel[] {
-    return this.items;
+  public setImagePath(imagePath: string): void {
+    this.imgPath = imagePath;
   }
 
   public addLoot(lootItem: LootItemModel): void {

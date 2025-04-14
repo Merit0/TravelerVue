@@ -1,4 +1,4 @@
-function toKebabCase(input: string): string {
+export function toKebabCase(input: string): string {
     return input
         .toLowerCase()
         .trim()
