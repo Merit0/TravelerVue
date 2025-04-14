@@ -1,68 +1,72 @@
-<!--<template>-->
-<!--  <section class="page">-->
-<!--    <title>Old Forest</title>-->
-<!--    <HeroDetailsBar :hero="hero"></HeroDetailsBar>-->
-<!--    <Tiles :mapTiles="mapStore.tiles" v-if="tilesShown && heroStore.isAlive()"></Tiles>-->
-<!--    <HeroDeathOverlay v-if="!heroStore.isAlive() && userStore.isUserLoggedIn"></HeroDeathOverlay>-->
-<!--    <hero-inventory :show-inventory="heroStore.inventoryShown" @heroInventory="closeInventory($event)"></hero-inventory>-->
-<!--    <button @click="quitMap()" class="escapeBtn">Escape</button>-->
-<!--  </section>-->
-<!--</template>-->
+<template>
+  <section class="page">
+    <title>{{mapLocationName}}</title>
+    <HeroDetailsBar :hero="hero"></HeroDetailsBar>
+    <Tiles :mapTiles="mapLocationStore.tiles" v-if="tilesShown && heroStore.isAlive()"></Tiles>
+    <HeroDeathOverlay v-if="!heroStore.isAlive() && userStore.isUserLoggedIn"></HeroDeathOverlay>
+    <hero-inventory :show-inventory="heroStore.inventoryShown" @heroInventory="closeInventory($event)"></hero-inventory>
+    <button @click="quitMap()" class="escapeBtn">Escape</button>
+  </section>
+</template>
 
-<!--<script lang="ts">-->
-<!--import Tiles from '../../dungeon-tiles-list.vue';-->
-<!--import HeroDetailsBar from '../../HeroDetailsBar.vue';-->
-<!--import HeroDeathOverlay from '@/components/HeroDeathOverlay.vue'-->
-<!--import {useHeroStore} from '@/stores/HeroStore'-->
-<!--import router from '@/router';-->
+<script lang="ts">
+import TilesGrid from '../../tiles-grid.vue';
+import HeroDetailsBar from '../../HeroDetailsBar.vue';
+import HeroDeathOverlay from '@/components/HeroDeathOverlay.vue'
+import {useHeroStore} from '@/stores/HeroStore'
+import router from '@/router';
+import {useMapLocationStore} from '@/stores/map-location-store';
+import HeroInventory from '../../HeroInventory.vue';
+import {useUserStore} from "@/stores/UserStore";
+import {MapLocationModel} from "@/models/map-location-model";
+import MapModel from "@/models/MapModel";
 
-<!--import MapModel from '../../../models/MapModel';-->
-<!--import HeroInventory from '../../HeroInventory.vue';-->
-<!--import {MapProvider} from '@/providers/MapProvider';-->
-<!--import {useUserStore} from "@/stores/UserStore";-->
+export default {
+  name: "forest-peak-map-location",
+  components: {Tiles: TilesGrid, HeroDetailsBar, HeroDeathOverlay, HeroInventory},
+  data() {
+    const mapLocationName = 'Forest Peak';
+    const heroStore = useHeroStore();
+    const userStore = useUserStore();
+    const hero = heroStore.hero;
+    const tilesShown = true;
+    const mapLocationStore = useMapLocationStore();
+    mapLocationStore.initMapsList();
+    const oldForest: MapModel = mapLocationStore.getOldForestMap();
+    const locations: MapLocationModel[] = oldForest.mapLocations;
+    const forestPeakLocation: MapLocationModel | undefined = locations.find(location => location.name === mapLocationName);
+    forestPeakLocation.hero = hero;
+    mapLocationStore.buildLocationMap(forestPeakLocation);
 
-<!--export default {-->
-<!--  name: "old-forest",-->
-<!--  components: {Tiles, HeroDetailsBar, HeroDeathOverlay, HeroInventory},-->
-<!--  data() {-->
-<!--    const heroStore = useHeroStore();-->
-<!--    const userStore = useUserStore();-->
-<!--    const hero = heroStore.hero;-->
-<!--    const tilesShown = true;-->
-<!--    const mapStore = useMapStore();-->
-<!--    const oldForest: MapModel = MapProvider.getOldForest();-->
-<!--    oldForest.mapLocations[0].hero = hero;-->
-<!--    mapStore.buildMap(oldForest);-->
+    return {hero, tilesShown, heroStore, mapLocationStore, userStore, mapLocationName}
+  },
+  methods: {
+    async quitMap() {
+      if (this.mapLocationStore.isMapLocationCleared) {
+        this.mapLocationStore.isCleared = this.mapLocationStore.isMapLocationCleared;
+      }
+      await this.mapLocationStore.saveProgress(this.mapLocationName).then(() => {
+        router.push("/maps");
+      });
+    },
+    async closeInventory(inventoryStatus: boolean) {
+      this.heroStore.showInventory(inventoryStatus);
+    },
+  }
+}
+</script>
 
-<!--    return {hero, tilesShown, heroStore, mapStore, userStore}-->
-<!--  },-->
-<!--  methods: {-->
-<!--    async quitMap() {-->
-<!--      if (this.mapStore.isMapCleared) {-->
-<!--        this.mapStore.isCleared = this.mapStore.isMapCleared;-->
-<!--      }-->
-<!--      await this.mapStore.resetMap().then(() => {-->
-<!--        router.push("/maps");-->
-<!--      });-->
-<!--    },-->
-<!--    async closeInventory(inventoryStatus: boolean) {-->
-<!--      this.heroStore.showInventory(inventoryStatus);-->
-<!--    },-->
-<!--  }-->
-<!--}-->
-<!--</script>-->
-
-<!--<style>-->
-<!--.escapeBtn {-->
-<!--  color: #ffb671;-->
-<!--  position: relative;-->
-<!--  width: 100px;-->
-<!--  height: 50px;-->
-<!--  background-color: rgba(255, 196, 0, 0.185);-->
-<!--  border-radius: 10px;-->
-<!--  border: 2px solid rgb(95, 64, 43);-->
-<!--  margin-top: 10px;-->
-<!--  align-self: center;-->
-<!--  margin-left: 45%;-->
-<!--}-->
-<!--</style>-->
+<style>
+.escapeBtn {
+  color: #ffb671;
+  position: relative;
+  width: 100px;
+  height: 50px;
+  background-color: rgba(255, 196, 0, 0.185);
+  border-radius: 10px;
+  border: 2px solid rgb(95, 64, 43);
+  margin-top: 10px;
+  align-self: center;
+  margin-left: 45%;
+}
+</style>

@@ -12,14 +12,15 @@ export default class EnemyModel implements IEnemy {
     attack: number;
     defense: number;
     id: number;
+    powerModifierLvl = 0;
     imgPath: string;
-    enemyFrameColor: string;
+    enemyBackgroundColor: string;
     loot: LootItemModel;
 
     constructor() {
         this.id = 1;
         this.defense = 0;
-        this.attack = Randomizer.getRandomInt(5) + 1;
+        this.attack = 5;
     }
 
     public getName(): string {
@@ -60,6 +61,10 @@ export default class EnemyModel implements IEnemy {
         return this;
     }
 
+    public setPowerModifierLvl(modifierNumber: number): void {
+        this.powerModifierLvl = modifierNumber;
+    }
+
     public setName(name: string): void {
         this.name = name;
     }
@@ -72,8 +77,8 @@ export default class EnemyModel implements IEnemy {
         this.enemyType = enemyType;
     }
 
-    public setEnemyFrameColor(frameColor: string): void {
-        this.enemyFrameColor = frameColor;
+    public setEnemyBackgroundColor(backgroundColor: string): void {
+        this.enemyBackgroundColor = backgroundColor;
     }
 
     public setLoot(lootItem: LootItemModel): void {
@@ -86,11 +91,11 @@ export default class EnemyModel implements IEnemy {
 
     public generateHealth() {
         if (this.enemyType === EnemyType.BOSS) {
-            this.maxHealth = 30;
+            this.maxHealth = 300 * (this.powerModifierLvl + 1);
         } else {
-            this.maxHealth = 50;
+            this.maxHealth = 20  * (this.powerModifierLvl + 1);
         }
-        this.minHealth = Math.floor(this.maxHealth / 3);
+        this.minHealth = Math.floor(this.maxHealth / 2);
         const randomHealth = Randomizer.getRandomIntInRange(
             this.minHealth,
             this.maxHealth
@@ -100,9 +105,15 @@ export default class EnemyModel implements IEnemy {
 
     public generateAttack() {
         if (this.enemyType === EnemyType.BOSS) {
-            this.attack = 5;
+            this.attack = Randomizer.getRandomIntInRange(
+                this.attack + 10,
+                this.attack * (this.powerModifierLvl + 5)
+            );
         } else {
-            this.attack = 5;
+            this.attack = Randomizer.getRandomIntInRange(
+                this.attack,
+                this.attack * (this.powerModifierLvl + 1)
+            );
         }
     }
 }

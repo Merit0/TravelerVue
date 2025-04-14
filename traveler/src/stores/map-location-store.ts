@@ -15,6 +15,7 @@ import MapModel from "@/models/MapModel";
 import {toKebabCase} from "@/utils/string-utils";
 import {MapProvider} from "@/providers/MapProvider";
 import {HeroModel} from "@/models/HeroModel";
+import {IEnemy} from "@/abstraction/IEnemy";
 
 interface MapLocationState {
     tiles: TileModel[];
@@ -99,19 +100,6 @@ export const useMapLocationStore = defineStore("map-location-store", {
                 localStorage.removeItem(key);
             });
         },
-        // buildLocationMap(locationMap: MapLocationModel) {
-        //     const itemKey = `${toKebabCase(locationMap.name)}-location-map`;
-        //     console.log('FOUND LOCAL STORAGE MAP LOCATION',localStorage.getItem(itemKey));
-        //     if (!JSON.parse(localStorage.getItem(`${toKebabCase(locationMap.name)}-location-map`)) || this.tiles.length === 0) {
-        //         console.log('BUILDING')
-        //         console.log('tiles number: ->', this.tiles.length)
-        //         this.mapLocationName = locationMap.name;
-        //         this.generateTiles(locationMap.tilesNumber);
-        //         this.addHero(locationMap.hero);
-        //         this.addEnemies();
-        //         this.isCleared = false;
-        //     }
-        // },
         buildLocationMap(locationMap: MapLocationModel) {
             const key = `${toKebabCase(locationMap.name)}-location-map`;
             const saved = localStorage.getItem(key);
@@ -125,13 +113,13 @@ export const useMapLocationStore = defineStore("map-location-store", {
                         boss: parsed.boss,
                     };
                 } else {
-                    const tiles = this.generateTiles(locationMap.tilesNumber);
+                    const tiles = this.generateTiles(locationMap);
                     this.addHeroToTiles(tiles, locationMap.hero);
-                    this.addEnemiesToTiles(tiles);
+                    this.addEnemiesToTiles(tiles, locationMap);
                     this.locationStates[locationMap.name] = {
                         tiles,
                         isCleared: false,
-                        boss: BossProvider.getSkeletonBoss(),
+                        boss: locationMap.boss,
                     };
                 }
             }
@@ -139,10 +127,13 @@ export const useMapLocationStore = defineStore("map-location-store", {
             this.mapLocationName = locationMap.name;
         },
 
-        generateTiles(tilesNumber: number): TileModel[] {
+        generateTiles(locationMap: MapLocationModel): TileModel[] {
+            const tilesNumber = locationMap.tilesNumber;
             return Array.from({length: tilesNumber}, (_, i) => {
                 const tile = new TileModel(i);
-                tile.setIsATree(true);
+                tile.setIsInitial(true);
+                tile.setImageSrc(locationMap.tileImage)
+                tile.setBackgroundSrc(locationMap.tileBackgroundSrc)
                 return tile;
             });
         },
@@ -156,7 +147,7 @@ export const useMapLocationStore = defineStore("map-location-store", {
         moveHero(nextTile: TileModel) {
             const heroStore = useHeroStore();
             const tiles = this.tiles;
-            const currentTile = tiles.find((tile) => tile.hero);
+            const currentTile = tiles.find((tile: TileModel) => tile.hero);
             if (!currentTile) return;
 
             const hero = currentTile.hero;
@@ -168,27 +159,29 @@ export const useMapLocationStore = defineStore("map-location-store", {
             this.removeAllItemsFromTile(nextTile);
         },
 
-        addEnemiesToTiles(tiles: TileModel[]) {
+        addEnemiesToTiles(tiles: TileModel[], locationMap: MapLocationModel) {
             const randNumber = Math.floor(Math.random() * tiles.length);
             tiles.forEach((tile, index) => {
                 if (index === 0 || tile.hero) return;
 
-                const enemies = this.generateEnemies(index);
+                const enemies = this.generateEnemies(index, locationMap.enemyModifier);
                 tile.setEnemies(enemies);
 
                 if (enemies.length > 0) {
-                    tile.setChest(this.generateChest(enemies));
+                    tile.setChest(this.generateChest(enemies, locationMap.chestImage));
                 }
             });
 
             if (randNumber < tiles.length) {
-                const boss = BossProvider.getSkeletonBoss();
+                const boss: EnemyModel = locationMap.boss;
+                boss.setPowerModifierLvl(locationMap.enemyModifier)
                 tiles[randNumber].setEnemies([boss]);
             }
         },
 
-        generateChest(enemies: EnemyModel[]): ChestModel {
+        generateChest(enemies: EnemyModel[], chestImage: string): ChestModel {
             const chest = new ChestModel();
+            chest.setImagePath(chestImage);
             for (const enemy of enemies) {
                 if (enemy.loot.chance) {
                     enemy.loot.place = "Chest";
@@ -198,7 +191,7 @@ export const useMapLocationStore = defineStore("map-location-store", {
             return chest.items.find((item) => item.name) ? chest : null;
         },
 
-        generateEnemies(id: number): EnemyModel[] {
+        generateEnemies(id: number, enemyPowerModifierNumber: number): EnemyModel[] {
             if (!Randomizer.getChance(20)) return [];
             const createdEnemies: EnemyModel[] = [];
             const enemiesList = EnemyProvider.getEvilLandsEnemies();
@@ -212,7 +205,8 @@ export const useMapLocationStore = defineStore("map-location-store", {
                     .enemyName(base.name)
                     .enemyType(base.enemyType)
                     .enemyImgPath(base.imgPath)
-                    .enemyBorderFrame(base.enemyFrameColor)
+                    .enemyBackgroundSrc(base.enemyBackgroundColor)
+                    .powerModifierLvl(enemyPowerModifierNumber)
                     .build();
 
                 enemy.setId(id + i);
@@ -231,7 +225,7 @@ export const useMapLocationStore = defineStore("map-location-store", {
 
         removeAllItemsFromTile(tile: TileModel) {
             tile.isEmpty = false;
-            tile.isTree = false;
+            tile.isInitial = false;
         },
     },
 });

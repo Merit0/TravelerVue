@@ -17,7 +17,7 @@ import {MapLocationModel} from "@/models/map-location-model";
 import {IPosition} from "@/interfaces/el-position-interface";
 
 export default {
-  name: "MyLocationSpot",
+  name: "MapLocationSpot",
   props: {
     mapLocation: {
       type: Object as PropType<MapLocationModel>,
@@ -29,7 +29,6 @@ export default {
   },
   methods: {
     async enterToMapLocation() {
-      // router.push("/old-forest");
       router.push(this.mapLocation.endPoint);
     },
 

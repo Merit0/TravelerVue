@@ -10,7 +10,7 @@ export class BossProvider {
             .enemyName("Fallen King")
             .enemyType(EnemyType.BOSS)
             .enemyImgPath(this.bossImageRootFolder + "skeleton_boss.png")
-            .enemyBorderFrame('rgb(220,20,60)')
+            .enemyBackgroundSrc('rgb(157 118 118)')
             .build();
     }
 

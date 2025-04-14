@@ -2,28 +2,38 @@ import {Complexity} from "@/enums/complexity";
 import {IHero} from "@/abstraction/IHero";
 import {v4 as uuid} from "uuid";
 import {IPosition} from "@/interfaces/el-position-interface";
+import EnemyModel from "@/models/EnemyModel";
 
 export interface IMapLocation {
     readonly name: string;
     readonly tilesNumber: number;
+    readonly enemyModifier: number;
     readonly uuid: string;
     readonly complexity: Complexity;
     readonly hero: IHero;
     readonly position: IPosition
     readonly imgPath: string;
     readonly endPoint: string;
+    readonly chestImage: string;
+    readonly tileImage: string;
+    readonly tileBackgroundSrc: string;
+    readonly boss: EnemyModel;
 }
 
 export class MapLocationModel implements IMapLocation {
     private _dungeonName: string;
     private _tilesNumber: number;
+    private _enemyModifier: number;
     private readonly _id: string;
     private _imgPath: string;
     private _endPoint: string;
+    private _chestImage: string;
+    private _tileImage: string;
+    private _tileBackgroundSrc: string;
     private _complexity: Complexity;
     private _position: IPosition;
-
     private _hero: IHero;
+    private _bose: EnemyModel;
 
     constructor() {
         this._id = uuid();
@@ -33,7 +43,31 @@ export class MapLocationModel implements IMapLocation {
         return this._id;
     }
 
-    public get name(): string {
+    get chestImage(): string {
+        return this._chestImage;
+    }
+
+    set chestImage(chestImage: string) {
+        this._chestImage = chestImage;
+    }
+
+    get tileImage(): string {
+        return this._tileImage;
+    }
+
+    set tileImage(tileImagePath: string) {
+        this._tileImage = tileImagePath;
+    }
+
+    get tileBackgroundSrc(): string {
+        return this._tileBackgroundSrc;
+    }
+
+    set tileBackgroundSrc(tileBackgroundSrcPath: string) {
+        this._tileBackgroundSrc = tileBackgroundSrcPath;
+    }
+
+    get name(): string {
         return this._dungeonName;
     }
 
@@ -49,12 +83,28 @@ export class MapLocationModel implements IMapLocation {
         this._tilesNumber = numberOfTiles;
     }
 
+    get enemyModifier(): number {
+        return this._enemyModifier
+    }
+
+    set enemyModifier(enemyModifier: number) {
+        this._enemyModifier = enemyModifier;
+    }
+
     get hero(): IHero {
         return this._hero;
     }
 
     set hero(hero: IHero) {
         this._hero = hero;
+    }
+
+    get boss(): EnemyModel {
+        return this._bose;
+    }
+
+    set boss(bossModel: EnemyModel) {
+        this._bose = bossModel;
     }
 
     get complexity(): Complexity {

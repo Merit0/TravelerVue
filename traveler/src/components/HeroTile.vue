@@ -1,6 +1,8 @@
 <template>
-  <div class="heroTile mapTile" v-if="tile.hero && showHero" :style="getStyle(tile)">
-    <button class="heroBag" @click="openInventory()"></button>
+  <div class="initialTileView mapTile" v-if="tile.hero && showHero" :style="getTileBackground(tile)">
+    <div class="initialTileView mapTile heroTile" :style="getStyle(tile)">
+      <button class="mapTile tileButton" @click="openInventory()"></button>
+    </div>
   </div>
 </template>
 
@@ -30,10 +32,12 @@ export default {
     getStyle(tile: TileModel) {
       return {
         backgroundImage: `url(/images/heroes_150_150/${tile.hero.imgPath})`,
-        border: '2px solid rgb(127, 0, 255)',
-        outline: 'none',
-        boxShadow: '0 0 10px rgb(127, 0, 255)'
       };
+    },
+    getTileBackground(tile: TileModel) {
+      return {
+        backgroundImage: `url(${tile.backgroundSrc})`,
+      }
     },
     async openInventory() {
       this.heroStore.inventoryShown = true;
@@ -44,9 +48,7 @@ export default {
 <style>
 .heroTile {
   background: none;
-  border-radius: 20%;
   background-size: 100% 100%;
-  display: inline;
 }
 
 .heroBag {
