@@ -132,7 +132,8 @@ export const useMapLocationStore = defineStore("map-location-store", {
             return Array.from({length: tilesNumber}, (_, i) => {
                 const tile = new TileModel(i);
                 tile.setIsInitial(true);
-                tile.setImageSrc(locationMap.initialTileImage)
+                tile.setImageSrc(locationMap.tileImage)
+                tile.setBackgroundSrc(locationMap.tileBackgroundSrc)
                 return tile;
             });
         },
@@ -191,7 +192,6 @@ export const useMapLocationStore = defineStore("map-location-store", {
         },
 
         generateEnemies(id: number, enemyPowerModifierNumber: number): EnemyModel[] {
-            console.log('ENEMY MODIFIER ->', enemyPowerModifierNumber)
             if (!Randomizer.getChance(20)) return [];
             const createdEnemies: EnemyModel[] = [];
             const enemiesList = EnemyProvider.getEvilLandsEnemies();
@@ -205,7 +205,7 @@ export const useMapLocationStore = defineStore("map-location-store", {
                     .enemyName(base.name)
                     .enemyType(base.enemyType)
                     .enemyImgPath(base.imgPath)
-                    .enemyBorderFrame(base.enemyFrameColor)
+                    .enemyBackgroundSrc(base.enemyBackgroundColor)
                     .powerModifierLvl(enemyPowerModifierNumber)
                     .build();
 

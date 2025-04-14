@@ -15,7 +15,8 @@ export interface IMapLocation {
     readonly imgPath: string;
     readonly endPoint: string;
     readonly chestImage: string;
-    readonly initialTileImage: string;
+    readonly tileImage: string;
+    readonly tileBackgroundSrc: string;
     readonly boss: EnemyModel;
 }
 
@@ -27,7 +28,8 @@ export class MapLocationModel implements IMapLocation {
     private _imgPath: string;
     private _endPoint: string;
     private _chestImage: string;
-    private _initialTileImage: string;
+    private _tileImage: string;
+    private _tileBackgroundSrc: string;
     private _complexity: Complexity;
     private _position: IPosition;
     private _hero: IHero;
@@ -49,12 +51,20 @@ export class MapLocationModel implements IMapLocation {
         this._chestImage = chestImage;
     }
 
-    get initialTileImage(): string {
-        return this._initialTileImage;
+    get tileImage(): string {
+        return this._tileImage;
     }
 
-    set initialTileImage(initialTileImagePath: string) {
-        this._initialTileImage = initialTileImagePath;
+    set tileImage(tileImagePath: string) {
+        this._tileImage = tileImagePath;
+    }
+
+    get tileBackgroundSrc(): string {
+        return this._tileBackgroundSrc;
+    }
+
+    set tileBackgroundSrc(tileBackgroundSrcPath: string) {
+        this._tileBackgroundSrc = tileBackgroundSrcPath;
     }
 
     get name(): string {

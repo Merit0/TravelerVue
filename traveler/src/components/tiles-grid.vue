@@ -36,16 +36,9 @@ export default {
 
 <style>
 .gridContainer {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-content: flex-start;
   padding: 20px;
-  gap: 6px;
   width: 100%;
   height: 94vh;
-  box-sizing: border-box;
-  overflow-y: auto;
 }
 .tilesGrid {
   margin-top: 6vh;
@@ -55,7 +48,7 @@ export default {
   justify-content: center;
   align-content: flex-start;
   padding: 8px;
-  gap: 6px;
+  gap: 2px;
   width: 100%;
   height: 80vh;
   box-sizing: border-box;

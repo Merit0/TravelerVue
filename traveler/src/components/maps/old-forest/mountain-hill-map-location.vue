@@ -2,7 +2,7 @@
   <section class="page">
     <title>{{mapLocationName}}</title>
     <HeroDetailsBar :hero="hero"></HeroDetailsBar>
-    <Tiles :mapTiles="mapLocationStore.tiles" v-if="tilesShown && heroStore.isAlive()"></Tiles>
+    <tiles-grid :mapTiles="mapLocationStore.tiles" v-if="tilesShown && heroStore.isAlive()" :backgroundImageSrc="mapLocation.imgPath"></tiles-grid>
     <HeroDeathOverlay v-if="!heroStore.isAlive() && userStore.isUserLoggedIn"></HeroDeathOverlay>
     <hero-inventory :show-inventory="heroStore.inventoryShown" @heroInventory="closeInventory($event)"></hero-inventory>
     <button @click="quitMap()" class="escapeBtn">Escape</button>
@@ -10,7 +10,6 @@
 </template>
 
 <script lang="ts">
-import TilesGrid from '../../tiles-grid.vue';
 import HeroDetailsBar from '../../HeroDetailsBar.vue';
 import HeroDeathOverlay from '@/components/HeroDeathOverlay.vue'
 import {useHeroStore} from '@/stores/HeroStore'
@@ -20,10 +19,11 @@ import HeroInventory from '../../HeroInventory.vue';
 import {useUserStore} from "@/stores/UserStore";
 import {MapLocationModel} from "@/models/map-location-model";
 import MapModel from "@/models/MapModel";
+import TilesGrid from "@/components/tiles-grid.vue";
 
 export default {
   name: "mountain-hill-map-location",
-  components: {Tiles: TilesGrid, HeroDetailsBar, HeroDeathOverlay, HeroInventory},
+  components: {TilesGrid, HeroDetailsBar, HeroDeathOverlay, HeroInventory},
   data() {
     const mapLocationName = 'Mountain Hill'
     const heroStore = useHeroStore();
@@ -34,11 +34,11 @@ export default {
     mapLocationStore.initMapsList();
     const oldForest: MapModel = mapLocationStore.getOldForestMap();
     const locations: MapLocationModel[] = oldForest.mapLocations;
-    const mountainHillLocation: MapLocationModel = locations.find(location => location.name === mapLocationName);
-    mountainHillLocation.hero = hero;
-    mapLocationStore.buildLocationMap(mountainHillLocation);
+    const mapLocation: MapLocationModel = locations.find(location => location.name === mapLocationName);
+    mapLocation.hero = hero;
+    mapLocationStore.buildLocationMap(mapLocation);
 
-    return {hero, tilesShown, heroStore, mapLocationStore, userStore, mapLocationName}
+    return {hero, tilesShown, heroStore, mapLocationStore, userStore, mapLocationName, mapLocation}
   },
   methods: {
     async quitMap() {

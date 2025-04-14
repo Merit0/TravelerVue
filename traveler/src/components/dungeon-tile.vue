@@ -1,7 +1,7 @@
 <template>
   <tree-tile :tile="tile"></tree-tile>
   <enemy-tile :tile="tile" :enemyAlive="enemyAlive" @showBattlefield="isBattle($event)"></enemy-tile>
-  <empty-tile :emptyTile="tile.isEmpty"></empty-tile>
+  <empty-tile :emptyTile="tile.isEmpty" :tile="tile"></empty-tile>
   <hero-tile :tile="tile" :show-hero="showHero"></hero-tile>
   <chest-tile :tile="tile" @chestInventory="openChestInventory($event)"></chest-tile>
   <Battlefield :showOverlay="tile.inBattle" :tile="tile" @isBattle="isBattle($event)"></Battlefield>

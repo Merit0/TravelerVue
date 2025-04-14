@@ -10,6 +10,7 @@ export interface ITile {
     isEmpty: boolean;
     inBattle: boolean;
     imageSrc: string;
+    backgroundSrc: string;
     hero: HeroModel;
     chest: ChestModel;
 }
@@ -19,6 +20,7 @@ export class TileModel implements ITile {
     enemies: EnemyModel[] = [];
     item: HealPortionModel;
     imageSrc: string;
+    backgroundSrc: string;
     isEmpty: boolean;
     isInitial: boolean;
     inBattle: boolean;
@@ -70,6 +72,9 @@ export class TileModel implements ITile {
         this.imageSrc = imageSrcPath;
     }
 
+    public setBackgroundSrc(imageSrcPath: string) {
+        this.backgroundSrc = imageSrcPath;
+    }
 
     public setInBattle(status: boolean): void {
         this.inBattle = status;

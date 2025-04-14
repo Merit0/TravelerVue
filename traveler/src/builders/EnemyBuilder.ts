@@ -8,7 +8,7 @@ interface IEnemyBuilder {
     powerModifierLvl(modifierNumber: number): this;
     enemyLoot(enemyLootItem: LootItemModel): EnemyBuilder;
     enemyImgPath(imgPath: string): EnemyBuilder;
-    enemyBorderFrame(frameColor: string): EnemyBuilder;
+    enemyBackgroundSrc(imgPath: string): EnemyBuilder;
 }
 
 export class EnemyBuilder implements IEnemyBuilder {
@@ -43,8 +43,8 @@ export class EnemyBuilder implements IEnemyBuilder {
         return this;
     }
 
-    public enemyBorderFrame(frameColor: string): EnemyBuilder {
-        this.enemy.setEnemyFrameColor(frameColor);
+    public enemyBackgroundSrc(backgroundColor: string): EnemyBuilder {
+        this.enemy.setEnemyBackgroundColor(backgroundColor);
         return this;
     }
 

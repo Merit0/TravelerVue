@@ -14,7 +14,7 @@ export default class EnemyModel implements IEnemy {
     id: number;
     powerModifierLvl = 0;
     imgPath: string;
-    enemyFrameColor: string;
+    enemyBackgroundColor: string;
     loot: LootItemModel;
 
     constructor() {
@@ -77,8 +77,8 @@ export default class EnemyModel implements IEnemy {
         this.enemyType = enemyType;
     }
 
-    public setEnemyFrameColor(frameColor: string): void {
-        this.enemyFrameColor = frameColor;
+    public setEnemyBackgroundColor(backgroundColor: string): void {
+        this.enemyBackgroundColor = backgroundColor;
     }
 
     public setLoot(lootItem: LootItemModel): void {
@@ -93,7 +93,7 @@ export default class EnemyModel implements IEnemy {
         if (this.enemyType === EnemyType.BOSS) {
             this.maxHealth = 300 * (this.powerModifierLvl + 1);
         } else {
-            this.maxHealth = 50  * (this.powerModifierLvl + 1);
+            this.maxHealth = 20  * (this.powerModifierLvl + 1);
         }
         this.minHealth = Math.floor(this.maxHealth / 2);
         const randomHealth = Randomizer.getRandomIntInRange(
