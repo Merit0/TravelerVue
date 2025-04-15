@@ -169,7 +169,6 @@ export const useMapLocationStore = defineStore("map-location-store", {
         },
 
         addEnemiesToTiles(tiles: TileModel[], locationMap: MapLocationModel) {
-            const randNumber = Math.floor(Math.random() * tiles.length);
             tiles.forEach((tile, index) => {
                 if (index === 0 || tile.hero) return;
 
@@ -181,10 +180,14 @@ export const useMapLocationStore = defineStore("map-location-store", {
                 }
             });
 
+            const min = 15;
+            const max = tiles.length - 2;
+            const randNumber = Math.floor(Math.random() * (max - min + 1)) + min;
             if (randNumber < tiles.length) {
                 const boss: EnemyModel = locationMap.boss;
                 boss.setPowerModifierLvl(locationMap.enemyModifier)
-                tiles[randNumber].setEnemies([boss]);
+                const bossTile: TileModel = tiles[randNumber];
+                bossTile.setEnemies([boss]);
             }
         },
 

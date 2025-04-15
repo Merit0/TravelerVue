@@ -25,7 +25,7 @@ export class MapLocationProvider {
                 backgroundImagePath: '/images/map-location/old-forest-location/tiles-grid-background/tiles-grid-background.png',
                 chestImage: '/images/chests/map_chest.png',
                 tileImage: '/images/map-location/old-forest-location/tree-tile-image.png',
-                tileBackground: '/images/map-location/old-forest-location/tile-background-image.png',
+                tileBackground: '/images/map-location/old-forest-location/tile-background/ground-tile-background-2.png',
                 endPoint: 'forest-entrance',
                 position: {
                     top: "15%",
@@ -38,8 +38,8 @@ export class MapLocationProvider {
                 name: 'Mountain Hill',
                 backgroundImagePath: '/images/map-location/old-forest-location/tiles-grid-background/ground-image.png',
                 chestImage: '/images/chests/map_chest.png',
-                tileImage: '/images/map-location/old-forest-location/tree-tile-imag.png',
-                tileBackground: '/images/map-location/old-forest-location/.png',
+                tileImage: '/images/map-location/old-forest-location//tile-image/tree-tile-image.png',
+                tileBackground: '/images/map-location/old-forest-location/tile-background/ground-tile-background.png',
                 endPoint: 'mountain-hill',
                 position: {
                     top: "30%",
@@ -104,7 +104,7 @@ export class MapLocationProvider {
         }) => {
             mapLocationsList.push(new MapLocationBuilder()
                 .name(mapLocation.name)
-                .tilesNumber(57)
+                .tilesNumber(56)
                 .complexity(Complexity.EASY)
                 .position(mapLocation.position)
                 .tilesGridBackgroundImagePath(mapLocation.backgroundImagePath)

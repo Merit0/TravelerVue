@@ -21,7 +21,6 @@
         <p class="heroDetailsText">{{ hero.coins }}</p>
       </div>
     </div>
-    <button class="homeBtn" @click="goCamp()">Home</button>
     <button @click="userStore.logout()" class="logout">Logout</button>
   </div>
 </template>
@@ -36,12 +35,7 @@ defineProps<{
   hero: IHero;
 }>();
 
-const router = useRouter();
 const userStore = useUserStore();
-
-const goCamp = () => {
-  router.push('/camping');
-};
 
 </script>
 

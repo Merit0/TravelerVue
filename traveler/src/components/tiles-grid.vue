@@ -2,12 +2,13 @@
   <div class="gridContainer" :style="getMapLocationBackground(this.backgroundImageSrc)">
     <div class="scalableGridWrapper">
       <div class="tilesGrid">
-        <camp-tile :tile="mapTiles[0]"></camp-tile>
+        <camp-tile></camp-tile>
         <map-tile
-            v-for="(mapTile) in mapTiles"
+            v-for="(mapTile) in this.mapTiles"
             :key="mapTile.id"
             :tile="mapTile"
         />
+        <exit-map-tile v-if="this.mapTiles[0]" :tile="this.mapTiles[0]"></exit-map-tile>
       </div>
     </div>
   </div>
@@ -18,10 +19,11 @@ import TileModel from '../models/TileModel';
 import {PropType} from 'vue';
 import MapTile from "@/components/map-tile.vue";
 import CampTile from "@/components/camp-tile.vue";
+import ExitMapTile from "@/components/exit-map-tile.vue";
 
 export default {
   name: "tiles-grid",
-  components: {CampTile, MapTile: MapTile},
+  components: {ExitMapTile, CampTile, MapTile: MapTile},
   props: {
     mapTiles: {
       type: Array as PropType<TileModel[]>,
