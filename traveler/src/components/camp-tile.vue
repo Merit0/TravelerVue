@@ -1,11 +1,9 @@
 <template>
-  <div class="campTileWrapper">
     <div class="initialCampingTileView campingTile">
       <div class="campingTileImage">
         <button @click="visitCamp()" class="campingTile campingTileButton"></button>
       </div>
     </div>
-  </div>
 </template>
 <script lang="ts">
 
@@ -31,12 +29,13 @@ export default {
 
 <style>
 .campingTile {
-  height: 24vh;
-  aspect-ratio: 1 / 1;
+  height: 28vh;
   box-sizing: border-box;
   flex-shrink: 0;
   border-radius: 6px;
   align-content: center;
+  grid-column: span 2;
+  grid-row: span 2;
 }
 
 .campingTileImage {
@@ -60,10 +59,5 @@ export default {
 .initialCampingTileView:hover {
   transform: scale(1.01);
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.4);
-}
-
-.campTileWrapper {
-  grid-column: span 2;
-  grid-row: span 2;
 }
 </style>

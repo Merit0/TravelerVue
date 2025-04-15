@@ -1,12 +1,14 @@
 <template>
   <div class="gridContainer" :style="getMapLocationBackground(this.backgroundImageSrc)">
-    <div class="tilesGrid">
-      <camp-tile :tile="mapTiles[0]"></camp-tile>
-      <map-tile
-          v-for="(mapTile) in mapTiles"
-          :key="mapTile.id"
-          :tile="mapTile"
-      />
+    <div class="scalableGridWrapper">
+      <div class="tilesGrid">
+        <camp-tile :tile="mapTiles[0]"></camp-tile>
+        <map-tile
+            v-for="(mapTile) in mapTiles"
+            :key="mapTile.id"
+            :tile="mapTile"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -42,22 +44,26 @@ export default {
 
 <style>
 .gridContainer {
-  padding: 20px;
   width: 100%;
   height: 94vh;
-}
-.tilesGrid {
-  margin-top: 3vh;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, 12vh);
-  grid-auto-rows: 12vh;
-  gap: 3px;
-  padding: 3vw;
-  width: 100%;
-  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
   box-sizing: border-box;
-  overflow-y: auto;
-  align-content: start;
+}
+
+.scalableGridWrapper {
+  transform: scale(1);
+  transform-origin: top center;
+  transition: transform 0.3s ease;
+}
+
+.tilesGrid {
+  display: grid;
+  grid-template-columns: repeat(12, 14vh);
+  grid-template-rows: repeat(6, 14vh);
+  gap: 4px;
 }
 
 </style>
