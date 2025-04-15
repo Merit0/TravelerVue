@@ -1,8 +1,6 @@
 <template>
-    <div class="initialCampingTileView campingTile">
-      <div class="campingTileImage">
-        <button @click="visitCamp()" class="campingTile campingTileButton"></button>
-      </div>
+    <div class="initialCampingTileView campingTile campingTileImage">
+      <div class="campingTileImage" @click="visitCamp()"></div>
     </div>
 </template>
 <script lang="ts">
@@ -38,15 +36,16 @@ export default {
   grid-row: span 2;
 }
 
-.campingTileImage {
-  background-image: url("/images/camping-place/camp-tile-background.png");
-  background-size: 99%, 99%;
-  background-repeat: no-repeat;
+.campingTile:hover {
+  cursor: pointer;
 }
 
-.campingTileButton {
-  background: none;
-  position: relative;
+.campingTileImage {
+  background-image: url("/images/camping-place/camp-tile-background.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
 }
 
 .initialCampingTileView {
