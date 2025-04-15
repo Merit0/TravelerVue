@@ -1,7 +1,12 @@
 <template>
   <div class="gridContainer" :style="getMapLocationBackground(this.backgroundImageSrc)">
     <div class="tilesGrid">
-      <dungeon-tile v-for="mapTile in mapTiles" :key="mapTile.id" :tile="mapTile"></dungeon-tile>
+      <camp-tile :tile="mapTiles[0]"></camp-tile>
+      <map-tile
+          v-for="(mapTile) in mapTiles"
+          :key="mapTile.id"
+          :tile="mapTile"
+      />
     </div>
   </div>
 </template>
@@ -9,11 +14,12 @@
 <script lang="ts">
 import TileModel from '../models/TileModel';
 import {PropType} from 'vue';
-import DungeonMap from "@/components/dungeon-tile.vue";
+import MapTile from "@/components/map-tile.vue";
+import CampTile from "@/components/camp-tile.vue";
 
 export default {
   name: "tiles-grid",
-  components: {DungeonTile: DungeonMap},
+  components: {CampTile, MapTile: MapTile},
   props: {
     mapTiles: {
       type: Array as PropType<TileModel[]>,
@@ -41,18 +47,17 @@ export default {
   height: 94vh;
 }
 .tilesGrid {
-  margin-top: 6vh;
-  position: relative;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-content: flex-start;
-  padding: 8px;
-  gap: 2px;
+  margin-top: 3vh;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 12vh);
+  grid-auto-rows: 12vh;
+  gap: 3px;
+  padding: 3vw;
   width: 100%;
   height: 80vh;
   box-sizing: border-box;
   overflow-y: auto;
+  align-content: start;
 }
 
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div v-if="tile.isInitial" class="initialTileView mapTile" :style="getTileImage(tile.backgroundSrc)">
     <div class="initialTileView mapTile" :style="getTileImage(tile.imageSrc)">
-      <button class="mapTile tileButton" @click="clearTile(tile)"></button>
+      <button class="mapTile tileButton" @click="checkTile(tile)"></button>
     </div>
   </div>
 </template>
@@ -14,7 +14,7 @@ import {PropType} from 'vue';
 
 
 export default {
-  name: "tree-tile",
+  name: "relief-tile",
   props: {
     tile: {
       type: Object as PropType<TileModel>,
@@ -32,7 +32,7 @@ export default {
         backgroundImage: `url(${imageSrc})`,
       }
     },
-    async clearTile(tile: TileModel) {
+    async checkTile(tile: TileModel) {
       tile.isInitial = false;
       if (tile.enemies.length === 0) {
         this.mapLocationStore.moveHero(tile);

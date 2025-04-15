@@ -1,6 +1,9 @@
 <template>
-  <button class="chestTile mapTile" @click="$emit('chestInventory', true)" :style="getStyle(tile)"
-          v-if="(!tile.isInitial && !tile.hero) && (tile.enemies.length === 0) && tile.chest"></button>
+  <div class="initialTileView mapTile" v-if="(!tile.isInitial && !tile.hero) && (tile.enemies.length === 0) && tile.chest" :style="getTileBackground(tile)">
+    <div class="initialTileView mapTile chestTile" :style="getStyle(tile)">
+      <button class="mapTile tileButton" @click="$emit('chestInventory', true)"></button>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -21,7 +24,12 @@ export default {
       return {
         backgroundImage: `url(${tile.chest.imgPath})`,
       }
-    }
+    },
+    getTileBackground(tile: TileModel) {
+      return {
+        backgroundImage: `url(${tile.backgroundSrc})`,
+      }
+    },
   }
 }
 </script>

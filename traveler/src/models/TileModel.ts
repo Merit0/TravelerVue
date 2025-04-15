@@ -9,6 +9,7 @@ export interface ITile {
     isInitial: boolean;
     isEmpty: boolean;
     inBattle: boolean;
+    isCamping: boolean;
     imageSrc: string;
     backgroundSrc: string;
     hero: HeroModel;
@@ -23,6 +24,7 @@ export class TileModel implements ITile {
     backgroundSrc: string;
     isEmpty: boolean;
     isInitial: boolean;
+    isCamping: boolean;
     inBattle: boolean;
     hero: HeroModel;
     chest: ChestModel;
@@ -66,6 +68,10 @@ export class TileModel implements ITile {
 
     public setIsInitial(status: boolean) {
         this.isInitial = status;
+    }
+
+    public setIsCamping(status: boolean) {
+        this.isCamping = status;
     }
 
     public setImageSrc(imageSrcPath: string) {

@@ -114,6 +114,7 @@ export const useMapLocationStore = defineStore("map-location-store", {
                     };
                 } else {
                     const tiles = this.generateTiles(locationMap);
+                    this.addCamping(tiles);
                     this.addHeroToTiles(tiles, locationMap.hero);
                     this.addEnemiesToTiles(tiles, locationMap);
                     this.locationStates[locationMap.name] = {
@@ -131,7 +132,7 @@ export const useMapLocationStore = defineStore("map-location-store", {
             const tilesNumber = locationMap.tilesNumber;
             return Array.from({length: tilesNumber}, (_, i) => {
                 const tile = new TileModel(i);
-                tile.setIsInitial(true);
+                tile.setIsInitial(i !== 0);
                 tile.setImageSrc(locationMap.tileImage)
                 tile.setBackgroundSrc(locationMap.tileBackgroundSrc)
                 return tile;
@@ -140,8 +141,16 @@ export const useMapLocationStore = defineStore("map-location-store", {
 
         addHeroToTiles(tiles: TileModel[], hero: HeroModel) {
             if (!tiles.length) return;
-            tiles[0].hero = hero;
-            this.removeAllItemsFromTile(tiles[0]);
+            this.removeAllItemsFromTile(tiles[1]);
+            tiles[1].hero = hero;
+        },
+
+        addCamping(tiles: TileModel[]) {
+            if (!tiles.length) return;
+            const firstTile: TileModel = tiles[0];
+            firstTile.isCamping = true;
+            firstTile.setIsInitial(false);
+            this.removeAllItemsFromTile(firstTile);
         },
 
         moveHero(nextTile: TileModel) {

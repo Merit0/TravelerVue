@@ -104,7 +104,7 @@ export class MapLocationProvider {
         }) => {
             mapLocationsList.push(new MapLocationBuilder()
                 .name(mapLocation.name)
-                .tilesNumber(96)
+                .tilesNumber(100)
                 .complexity(Complexity.EASY)
                 .position(mapLocation.position)
                 .tilesGridBackgroundImagePath(mapLocation.backgroundImagePath)
