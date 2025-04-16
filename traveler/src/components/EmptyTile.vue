@@ -1,5 +1,6 @@
 <template>
-    <div class="mapTile" v-if="emptyTile" :style="getTileBackground(tile)"></div>
+  <div v-if="emptyTile" class="mapTile" :style="getTileBackground(tile)">
+  </div>
 </template>
 
 <script lang="ts">
@@ -23,6 +24,7 @@ export default {
     getTileBackground(tile: TileModel) {
       return {
         backgroundImage: `url(${tile.backgroundSrc})`,
+        'background-size': '100% 100%'
       }
     }
   }
