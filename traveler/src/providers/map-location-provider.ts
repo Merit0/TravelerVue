@@ -6,6 +6,7 @@ import {BossProvider} from "@/providers/BossProvider";
 import EnemyModel from "@/models/EnemyModel";
 
 export class MapLocationProvider {
+    private static readonly OLD_FOREST_FILES_PATH = '/images/map-location/old-forest-location/'
     static getOldForestLocations(): MapLocationModel[] {
         const boss: EnemyModel = BossProvider.getSkeletonBoss();
         const mapLocationsList: MapLocationModel[] = [];
@@ -22,10 +23,10 @@ export class MapLocationProvider {
         }[] = [
             {
                 name: 'Forest Entrance',
-                backgroundImagePath: '/images/map-location/old-forest-location/tiles-grid-background/tiles-grid-background.png',
+                backgroundImagePath: `${this.OLD_FOREST_FILES_PATH}tiles-grid-background/tiles-grid-background.png`,
                 chestImage: '/images/chests/map_chest.png',
-                tileImage: '/images/map-location/old-forest-location/tree-tile-image.png',
-                tileBackground: '/images/map-location/old-forest-location/tile-background/ground-tile-background-2.png',
+                tileImage: `${this.OLD_FOREST_FILES_PATH}tile-image-500-500/tree-tile-image.png`,
+                tileBackground: `${this.OLD_FOREST_FILES_PATH}tile-background-500-500/ground-tile-background-2.png`,
                 endPoint: 'forest-entrance',
                 position: {
                     top: "15%",
@@ -36,10 +37,10 @@ export class MapLocationProvider {
             },
             {
                 name: 'Mountain Hill',
-                backgroundImagePath: '/images/map-location/old-forest-location/tiles-grid-background/ground-image.png',
+                backgroundImagePath: `${this.OLD_FOREST_FILES_PATH}tiles-grid-background/ground-image.png`,
                 chestImage: '/images/chests/map_chest.png',
-                tileImage: '/images/map-location/old-forest-location//tile-image/tree-tile-image.png',
-                tileBackground: '/images/map-location/old-forest-location/tile-background/ground-tile-background.png',
+                tileImage: `${this.OLD_FOREST_FILES_PATH}/tile-image-500-500/tree-tile-image.png`,
+                tileBackground: `${this.OLD_FOREST_FILES_PATH}tile-background-500-500/ground-tile-background.png`,
                 endPoint: 'mountain-hill',
                 position: {
                     top: "30%",
@@ -50,10 +51,10 @@ export class MapLocationProvider {
             },
             {
                 name: 'Forest Peak',
-                backgroundImagePath: '',
+                backgroundImagePath: `${this.OLD_FOREST_FILES_PATH}tiles-grid-background/tiles-grid-background.png`,
                 chestImage: '/images/chests/map_chest.png',
-                tileImage: '/images/maps/lost-forest/tree-tile.png',
-                tileBackground: '/images/map-location/old-forest-location/.png',
+                tileImage: `${this.OLD_FOREST_FILES_PATH}tile-image-500-500/tree-image-2.png`,
+                tileBackground: `${this.OLD_FOREST_FILES_PATH}tile-background-500-500/grass-tile-background-3.png`,
                 endPoint: 'forest-peak',
                 position: {
                     top: "45%",
@@ -64,10 +65,10 @@ export class MapLocationProvider {
             },
             {
                 name: 'Forest Cave',
-                backgroundImagePath: '',
+                backgroundImagePath: `${this.OLD_FOREST_FILES_PATH}tiles-grid-background/tiles-grid-background.png`,
                 chestImage: '/images/chests/map_chest.png',
-                tileImage: '/images/maps/lost-forest/tree-tile.png',
-                tileBackground: '/images/map-location/old-forest-location/.png',
+                tileImage: `${this.OLD_FOREST_FILES_PATH}tile-image-500-500/tree-image-3.png`,
+                tileBackground: `${this.OLD_FOREST_FILES_PATH}tile-background-500-500/tile-background-4.png`,
                 endPoint: 'forest-cave',
                 position: {
                     top: "62%",
@@ -78,10 +79,10 @@ export class MapLocationProvider {
             },
             {
                 name: 'Forest Shadows',
-                backgroundImagePath: '',
+                backgroundImagePath: `${this.OLD_FOREST_FILES_PATH}tiles-grid-background/tiles-grid-background.png`,
                 chestImage: '/images/chests/map_chest.png',
-                tileImage: '/images/maps/lost-forest/tree-tile.png',
-                tileBackground: '/images/map-location/old-forest-location/.png',
+                tileImage: `${this.OLD_FOREST_FILES_PATH}/tile-image-500-500/tree-carbon.png`,
+                tileBackground: `${this.OLD_FOREST_FILES_PATH}tile-background-500-500/grass-tile-background-2.png`,
                 endPoint: 'forest-shadows',
                 position: {
                     top: "90%",

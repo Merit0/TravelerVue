@@ -13,7 +13,6 @@
 import HeroDetailsBar from '../../HeroDetailsBar.vue';
 import HeroDeathOverlay from '@/components/HeroDeathOverlay.vue'
 import {useHeroStore} from '@/stores/HeroStore'
-import router from '@/router';
 import {useMapLocationStore} from '@/stores/map-location-store';
 import HeroInventory from '../../HeroInventory.vue';
 import {useUserStore} from "@/stores/UserStore";
@@ -41,32 +40,9 @@ export default {
     return {hero, tilesShown, heroStore, mapLocationStore, userStore, mapLocationName, mapLocation}
   },
   methods: {
-    async quitMap() {
-      if (this.mapLocationStore.isMapLocationCleared) {
-        this.mapLocationStore.isCleared = this.mapLocationStore.isMapLocationCleared;
-      }
-      await this.mapLocationStore.saveProgress(this.mapLocationName).then(() => {
-        router.push("/maps");
-      });
-    },
     async closeInventory(inventoryStatus: boolean) {
       this.heroStore.showInventory(inventoryStatus);
     },
   }
 }
 </script>
-
-<style>
-.escapeBtn {
-  color: #ffb671;
-  position: relative;
-  width: 100px;
-  height: 50px;
-  background-color: rgba(255, 196, 0, 0.185);
-  border-radius: 10px;
-  border: 2px solid rgb(95, 64, 43);
-  margin-top: 10px;
-  align-self: center;
-  margin-left: 45%;
-}
-</style>

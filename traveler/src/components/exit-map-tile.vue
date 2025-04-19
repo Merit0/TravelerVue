@@ -48,7 +48,7 @@ export default {
 
 .exitTileImage {
   margin-left: 8%;
-  background-image: url("/images/map-location/old-forest-location/tile-image/right-arrow.png");
+  background-image: url("/images/map-location/old-forest-location/tile-image-500-500/right-arrow.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   width: 80%;
