@@ -17,9 +17,7 @@ html {
 
 .activeBtn:active {
     transform: scale(0.98);
-    /* Scaling button to 0.98 to its original size */
     box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
-    /* Lowering the shadow */
 }
 
 button:hover {
@@ -32,7 +30,7 @@ button:focus {
 }
 
 .mapTile {
-    height: 12vh;
+    height: 14vh;
     aspect-ratio: 1 / 1;
     box-sizing: border-box;
     flex-shrink: 0;

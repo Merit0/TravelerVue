@@ -1,5 +1,5 @@
 <template>
-  <section class="page">
+  <section>
     <title>{{mapLocationName}}</title>
     <HeroDetailsBar :hero="hero"></HeroDetailsBar>
     <tiles-grid :mapTiles="mapLocationStore.tiles" v-if="tilesShown && heroStore.isAlive()" :backgroundImageSrc="mapLocation.imgPath"></tiles-grid>

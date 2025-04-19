@@ -1,5 +1,5 @@
 <template>
-  <tree-tile :tile="tile"></tree-tile>
+  <relief-tile :tile="tile"></relief-tile>
   <enemy-tile :tile="tile" :enemyAlive="enemyAlive" @showBattlefield="isBattle($event)"></enemy-tile>
   <empty-tile :emptyTile="tile.isEmpty" :tile="tile"></empty-tile>
   <hero-tile :tile="tile" :show-hero="showHero"></hero-tile>
@@ -12,7 +12,7 @@
 <script lang="ts">
 import TileModel from '@/models/TileModel';
 import EnemyTile from '@/components/EnemyTile.vue';
-import TreeTile from '@/components/TreeTile.vue'
+import ReliefTile from '@/components/relief-tile.vue'
 import EmptyTile from '@/components/EmptyTile.vue';
 import Battlefield from '@/components/Battlefield.vue';
 import {useHeroStore} from '@/stores/HeroStore'
@@ -23,14 +23,14 @@ import {useMapLocationStore} from '@/stores/map-location-store';
 import {PropType} from 'vue';
 
 export default {
-  name: "dungeon-tile",
+  name: "map-tile",
   props: {
     tile: {
       type: Object as PropType<TileModel>,
       required: true
     }
   },
-  components: {EnemyTile, TreeTile, EmptyTile, Battlefield, HeroTile, ChestTile, ChestInventory},
+  components: {EnemyTile, ReliefTile, EmptyTile, Battlefield, HeroTile, ChestTile, ChestInventory},
   data() {
     const heroStore = useHeroStore();
     const mapLocationStore = useMapLocationStore();
