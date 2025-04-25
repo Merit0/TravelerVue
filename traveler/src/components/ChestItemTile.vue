@@ -1,6 +1,6 @@
 <template>
   <div class="chestItemArea">
-    <button class="chestItemImg" v-if="lootItem.place === 'Chest'" :style="getItemStyle(lootItem)"
+    <button class="chestItemImg" v-if="lootItem.place === 'chest'" :style="getItemStyle(lootItem)"
             @click="takeItem(lootItem)"></button>
   </div>
 </template>
@@ -35,7 +35,7 @@ export default {
     },
     async takeItem(item: LootItemModel) {
       this.bagStore.putIn(item);
-      item.place = "Bag";
+      item.place = "bag";
     }
   }
 }

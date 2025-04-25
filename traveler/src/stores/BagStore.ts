@@ -1,18 +1,24 @@
 import {defineStore} from "pinia";
 import {LootItemModel} from "@/models/LootItemModel";
+import {useHeroStore} from "@/stores/HeroStore";
 
 export const useBagStore = defineStore("bag", {
     state: () => {
+        const hero = useHeroStore().hero;
         return {
             bagItems: [],
             isShown: false,
             bagCapacity: 25,
+            hero
         };
     },
     getters: {
         showBag: (state) => {
             state.isShown = true;
         },
+        getCoins: (state): number => {
+            return state.hero.getCoins();
+        }
     },
     actions: {
         async resetBag(): Promise<void> {
@@ -35,6 +41,9 @@ export const useBagStore = defineStore("bag", {
             );
             this.bagItems.splice(itemIndex, 1);
             this.bagCapacity += 1;
+        },
+        pay(coins: number) {
+            this.hero.coins -= coins;
         },
     },
 });

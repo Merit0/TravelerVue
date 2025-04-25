@@ -1,6 +1,6 @@
 <template>
   <div class="bagItemArea">
-    <button class="bagItemImg" :style="getItemStyle(lootItem)" @click="useItem(lootItem)"></button>
+    <div class="bagItemImg" :style="getItemStyle(lootItem)" @click="useItem(lootItem)"></div>
   </div>
 </template>
 
@@ -94,17 +94,37 @@ export default {
 .bagItemArea {
   width: 85px;
   height: 85px;
-  margin-left: 1%;
   margin-top: 0.1%;
   display: flex;
   align-items: center;
+  border-radius: 0.5vw;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.1);
+  justify-content: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .bagItemImg {
   position: relative;
-  width: 80px;
-  height: 80px;
-  background-size: 100% 100%;
+  width: 90%;
+  height: 90%;
   border-radius: 10%;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: transform 0.2s ease;
+}
+
+.bagItemImg:active {
+  transform: scale(0.95);
+  filter: brightness(1.2);
+}
+
+.bagItemArea:hover {
+  box-shadow: 0 0 10px rgba(255, 174, 0, 0.6);
+  transform: scale(1.05);
+  cursor: pointer;
 }
 </style>
