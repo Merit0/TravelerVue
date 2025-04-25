@@ -31,14 +31,14 @@ export default {
 .lootItemsGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: clamp(10px, 1.5vw, 24px);
+  gap: clamp(10px, 1.5vw, 3vw);
   justify-items: center;
   align-items: center;
 }
 
 .shopGridContainer {
   width: 100%;
-  height: 74vh;
+  height: 65vh;
   display: flex;
   justify-content: center;
   align-items: center;

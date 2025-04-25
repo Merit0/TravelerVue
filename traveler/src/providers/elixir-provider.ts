@@ -37,7 +37,7 @@ export class ElixirsProvider {
             .lootValue(Randomizer.getRandomIntInRange(40, 50))
             .price(200)
             .itemType(ItemType.HEAL)
-            .lootRarity(Rarity.MYTHIC)
+            .lootRarity(Rarity.LEGEND)
             .lootItemImgPath(this.heroArmorFolderPath + "/mythic-elixir.png")
             .dropChance(Randomizer.getChance(30))
             .build();

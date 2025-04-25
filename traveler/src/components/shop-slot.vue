@@ -1,6 +1,6 @@
 <template>
   <div class="slotContainer">
-    <div class="slotBackground">
+    <div class="slotBackground" :style="getSlotBackgroundStyle(lootItem.rarity)">
       <div class="slotImage">
         <img :src="lootItem.imgPath" alt="item" class="itemImage"/>
       </div>
@@ -12,8 +12,8 @@
       notEnough: !canAfford,
       canAfford: canAfford
     }" @click="handleBuy(lootItem)">
-          <img class="coinIcon" src="/images/top-bar-items/coin-icon.png" alt="coin-icon"/>
           <span class="itemPrice">{{ lootItem.price }}</span>
+          <img class="coinIcon" src="/images/top-bar-items/coin-icon.png" alt="coin-icon"/>
         </div>
       </div>
     </div>
@@ -35,6 +35,7 @@
 import {PropType} from 'vue';
 import {LootItemModel} from "@/models/LootItemModel";
 import {useBagStore} from "@/stores/BagStore";
+import {Rarity} from "@/enums/Rarity";
 
 export default {
   name: "shop-slot",
@@ -58,6 +59,29 @@ export default {
     }
   },
   methods: {
+    getSlotBackgroundStyle(itemRarity: Rarity) {
+      if (itemRarity === Rarity.LEGEND) {
+        return {
+          background: `radial-gradient(
+        circle at center,
+        rgba(203, 149, 255, 0.5) 0%,
+        rgba(207, 159, 255, 0.3) 40%,
+        rgba(164, 71, 255, 0.15) 70%,
+        transparent 100%
+      )`
+        };
+      } else {
+        return {
+          background: `radial-gradient(
+        circle at center,
+        rgba(144, 255, 184, 0.5) 0%,
+        rgba(121, 243, 171, 0.3) 40%,
+        rgba(0, 193, 93, 0.15) 70%,
+        transparent 100%
+      )`
+        };
+      }
+    },
     openConfirmPopup(item: LootItemModel) {
       this.selectedItem = item;
       this.showConfirmPopup = true;
@@ -75,7 +99,9 @@ export default {
     },
     handleBuy(lootItem: LootItemModel) {
       if (!this.canAfford) return;
-      if (!lootItem) { return }
+      if (!lootItem) {
+        return
+      }
       this.openConfirmPopup(lootItem);
     }
   }
@@ -88,13 +114,12 @@ export default {
   flex-direction: column;
   align-items: center;
   gap: 1.2vh;
-  width: clamp(6vw, 20vw, 9vw);
+  width: clamp(6vw, 20vw, 7vw);
 }
 
 .slotBackground {
   width: 100%;
   aspect-ratio: 1 / 1;
-  background: linear-gradient(to top right, rgba(188, 255, 154, 0.8), rgba(255, 255, 255, 0.1));
   display: flex;
   justify-content: center;
   align-items: center;
@@ -122,6 +147,8 @@ export default {
   flex-direction: column;
   align-items: center;
   gap: 0.5vh;
+  margin-top: -20%;
+  z-index: 1;
 }
 
 .priceInfo {
@@ -132,6 +159,8 @@ export default {
 }
 
 .priceRow {
+  width: 4vw;
+  height: 3vh;
   display: flex;
   align-items: center;
   gap: 0.3vw;
@@ -139,13 +168,13 @@ export default {
 
 .itemPrice {
   color: gold;
-  font-size: clamp(12px, 1.6vw, 16px);
+  font-size: clamp(1vw, 1.6vw, 1vw);
   font-weight: bold;
 }
 
 .coinIcon {
-  width: clamp(14px, 2vw, 18px);
-  height: clamp(14px, 2vw, 18px);
+  width: clamp(1vw, 1vw, 1vw);
+  height: clamp(1vw, 1vw, 1vw);
   object-fit: contain;
 }
 
@@ -156,7 +185,7 @@ export default {
 }
 
 .buyBtn {
-  background: transparent;
+  background: rgb(43, 37, 37);
   border: 2px solid #ffaa00;
   padding: 0.4em 0.8em;
   border-radius: 0.6rem;
@@ -166,7 +195,6 @@ export default {
   transition: 0.3s;
 }
 
-/* Коли грошей не вистачає */
 .buyBtn.notEnough {
   border-color: rgba(255, 0, 0, 0.5);
   color: rgba(255, 0, 0, 0.6);
@@ -174,13 +202,12 @@ export default {
 }
 
 .buyBtn.notEnough:hover {
-  background: rgba(255, 0, 0, 0.1);
+  background: rgba(117, 0, 0, 0.48);
   transform: none;
 }
 
-/* Коли можна купити */
 .buyBtn.canAfford:hover {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgb(74, 65, 65);
   transform: scale(1.05);
 }
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="overlay" v-if="showShopOverlay">
+  <div class="globalOverlay" v-if="showShopOverlay">
     <div class="shopOverlay">
       <div class="titleContainer" >
         <span class="shopTitle">SHOP</span>
@@ -52,8 +52,8 @@ export default {
 <style>
 .closeShopBtn {
   position: absolute;
-  top: 2vw;
-  right: 2vw;
+  top: 11%;
+  right: 23%;
   width: 3vw;
   height: 3vw;
   border-radius: 50%;
@@ -79,8 +79,8 @@ export default {
 
 .refreshShopBtn {
   position: absolute;
-  top: 2vw;
-  left: 2vw;
+  top: 11%;
+  left: 23vw;
   width: 3vw;
   height: 3vw;
   border-radius: 50%;
@@ -105,18 +105,18 @@ export default {
 }
 
 .shopOverlay {
-  width: 60vw;
+  width: 55vw;
   height: 85vh;
-  margin-top: 4%;
-  justify-content: center;
   border-radius: 2rem;
-
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-
+  padding: 2vw;
+  background-image: url("/images/overlays/shop-place/shop-background.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   border: 1px solid rgba(255, 255, 255, 0.3);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  margin-top: 5vw;
 }
 
 .titleContainer {
