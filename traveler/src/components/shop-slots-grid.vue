@@ -44,6 +44,7 @@ export default {
   align-items: center;
   overflow: hidden;
   box-sizing: border-box;
+  margin-top: 4vw;
 }
 
 @media (max-width: 1024px) {

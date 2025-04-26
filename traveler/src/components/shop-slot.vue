@@ -4,21 +4,27 @@
       <div class="slotImage">
         <img :src="lootItem.imgPath" alt="item" class="itemImage"/>
       </div>
+      <div class="slotFrame">
+        <div class="slotFrameImage"></div>
+      </div>
+      <div v-if="!this.inShop" class="soldOut">
+        <span class="soldOutText">Sold Out</span>
+      </div>
     </div>
     <div class="slotPriceContainer">
-      <div class="priceInfo">
-        <!--        <span class="itemName">{{ lootItem.name }}</span>-->
+      <div v-if="!this.inShop" class="noInfo"></div>
+      <div v-if="this.inShop" class="priceInfo">
         <div class="priceRow buyBtn" :class="{
       notEnough: !canAfford,
       canAfford: canAfford
     }" @click="handleBuy(lootItem)">
-          <span class="itemPrice">{{ lootItem.price }}</span>
+          <span  class="itemPrice">{{ lootItem.price }}</span>
           <img class="coinIcon" src="/images/top-bar-items/coin-icon.png" alt="coin-icon"/>
         </div>
       </div>
     </div>
   </div>
-  <div v-if="showConfirmPopup" class="confirmOverlay">
+  <div v-if="showConfirmPurchasePopup" class="confirmOverlay">
     <div class="confirmPopup">
       <p class="popupText">Buy <strong>{{ selectedItem.name }}</strong> for {{ selectedItem.price }}
         <img class="modalCoinIcon" src="/images/top-bar-items/coin-icon.png" alt="coin-icon"/> ?</p>
@@ -47,10 +53,12 @@ export default {
   },
   data() {
     const bagStore = useBagStore();
+    let inShop = true;
     return {
-      showConfirmPopup: false,
+      showConfirmPurchasePopup: false,
       selectedItem: null,
       bagStore,
+      inShop
     }
   },
   computed: {
@@ -84,10 +92,10 @@ export default {
     },
     openConfirmPopup(item: LootItemModel) {
       this.selectedItem = item;
-      this.showConfirmPopup = true;
+      this.showConfirmPurchasePopup = true;
     },
     closePopup() {
-      this.showConfirmPopup = false;
+      this.showConfirmPurchasePopup = false;
       this.selectedItem = null;
     },
     confirmPurchase() {
@@ -95,6 +103,7 @@ export default {
       this.selectedItem.place = "bag";
       this.bagStore.putIn(this.selectedItem);
       console.log("Куплено:", this.selectedItem);
+      this.inShop = false;
       this.closePopup();
     },
     handleBuy(lootItem: LootItemModel) {
@@ -141,14 +150,54 @@ export default {
   object-fit: contain;
 }
 
+.slotFrame {
+  position: absolute;
+  width: 17vw;
+  height: 17vh;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.soldOut {
+  position: absolute;
+  width: 8vw;
+  height: 4vh;
+  z-index: 2;
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(39, 37, 37, 0.9);
+  border-radius: 2%;
+}
+
+.soldOutText {
+  color: #ff4d4d;
+  text-shadow: 0 0 6px rgba(255, 77, 77, 0.8);
+  font-weight: 700;
+  font-size: 1vw;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+
+.slotFrameImage {
+  width: 100%;
+  height: 100%;
+  background-image: url("/images/overlays/shop-place/shop-item-frame.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
 .slotPriceContainer {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.5vh;
-  margin-top: -20%;
-  z-index: 1;
+  z-index: 2;
 }
 
 .priceInfo {
@@ -158,23 +207,31 @@ export default {
   text-align: center;
 }
 
-.priceRow {
-  width: 4vw;
-  height: 3vh;
+.noInfo {
+  width: 5vw;
+  height: 4vh;
   display: flex;
   align-items: center;
-  gap: 0.3vw;
+  gap: 0.2vw;
+}
+
+.priceRow {
+  width: 5vw;
+  height: 4vh;
+  display: flex;
+  align-items: center;
+  gap: 0.2vw;
 }
 
 .itemPrice {
   color: gold;
-  font-size: clamp(1vw, 1.6vw, 1vw);
+  font-size: clamp(1vw, 2vw, 1vw);
   font-weight: bold;
 }
 
 .coinIcon {
-  width: clamp(1vw, 1vw, 1vw);
-  height: clamp(1vw, 1vw, 1vw);
+  width: clamp(1vw, 2vw, 1vw);
+  height: clamp(1vw, 2vw, 1vw);
   object-fit: contain;
 }
 
@@ -188,7 +245,7 @@ export default {
   background: rgb(43, 37, 37);
   border: 2px solid #ffaa00;
   padding: 0.4em 0.8em;
-  border-radius: 0.6rem;
+  border-radius: 1vh;
   font-weight: bold;
   font-size: clamp(14px, 1vw, 16px);
   cursor: pointer;
