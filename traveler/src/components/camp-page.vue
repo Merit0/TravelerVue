@@ -21,14 +21,17 @@
       </div>
     </div>
   </section>
-  <shop-overlay :show-shop-overlay="showShop" @closeShop="closeShop"></shop-overlay>
+  <shop-overlay
+      :show-shop-overlay="showShop"
+      @closeShop="closeShop">
+  </shop-overlay>
 </template>
 
 <script lang="ts">
 import HeroDetailsBar from './HeroDetailsBar.vue';
 import {useHeroStore} from '@/stores/HeroStore';
 import router from "@/router";
-import ShopOverlay from "@/components/shop-overlay.vue";
+import ShopOverlay from "@/components/shop/shop-overlay.vue";
 
 export default {
   name: "camping-page",
@@ -38,7 +41,13 @@ export default {
     const hero = heroStore.hero;
     const numberOfTiles = 77
     let showShop = false;
-    return {hero, heroStore, time: '', numberOfTiles, showShop};
+    return {
+      hero,
+      heroStore,
+      time: '',
+      numberOfTiles,
+      showShop
+    };
   },
   methods: {
     async increaseHealth() {
