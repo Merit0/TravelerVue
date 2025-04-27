@@ -32,10 +32,19 @@
 
 .slotFrame {
     position: absolute;
-    width: 17vw;
-    height: 17vh;
+    width: 18vw;
+    height: 18vh;
     z-index: 1;
     pointer-events: none;
+}
+
+.slotFrameImage {
+    width: 100%;
+    height: 100%;
+    background-image: url("/images/overlays/shop-place/shop-item-frame.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .soldOut {
@@ -59,16 +68,6 @@
     letter-spacing: 1px;
     text-transform: uppercase;
     text-align: center;
-}
-
-
-.slotFrameImage {
-    width: 100%;
-    height: 100%;
-    background-image: url("/images/overlays/shop-place/shop-item-frame.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
 }
 
 .slotPriceContainer {
