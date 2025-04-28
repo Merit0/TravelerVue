@@ -42,8 +42,5 @@ export const useBagStore = defineStore("bag", {
             this.bagItems.splice(itemIndex, 1);
             this.bagCapacity += 1;
         },
-        pay(coins: number) {
-            this.hero.coins -= coins;
-        },
     },
 });

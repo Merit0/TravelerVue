@@ -16,6 +16,7 @@
 import {PropType} from 'vue';
 import {LootItemModel} from "@/models/LootItemModel";
 import {useBagStore} from "@/stores/BagStore";
+import {useHeroStore} from "@/stores/HeroStore";
 
 export default {
   name: "confirm-purchase-modal",
@@ -32,15 +33,17 @@ export default {
   },
   data() {
     const bagStore = useBagStore();
+    const heroStore = useHeroStore();
     let itemStore = this.lootItem;
     return {
+      heroStore,
       bagStore,
       itemStore
     }
   },
   methods: {
     confirmPurchase() {
-      this.bagStore.pay(this.itemStore.price)
+      this.heroStore.pay(this.itemStore.price)
       this.itemStore.place = "bag";
       this.bagStore.putIn(this.itemStore);
       console.log("Куплено:", this.itemStore);

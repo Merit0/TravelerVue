@@ -49,5 +49,11 @@ export const useHeroStore = defineStore("hero", {
     setLocation(tile: TileModel) {
       this.location = tile;
     },
+    pay(coins: number) {
+      this.hero.coins -= coins;
+    },
+    collect(coins: number) {
+      this.hero.coins += coins;
+    },
   },
 });
