@@ -76,7 +76,7 @@ export default {
 }
 
 .switcher-option.active {
-  color: #324d68;
+  color: #363a70;
   text-shadow:
       0 0 2px rgba(137, 111, 253, 0.6),
       0 0 10px rgba(56, 144, 255, 0.4);
