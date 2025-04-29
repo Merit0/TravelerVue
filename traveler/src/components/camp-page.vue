@@ -7,7 +7,7 @@
         <div
             v-for="n in numberOfTiles"
             :key="n"
-            class="buildingTile initBuildingTile tileBackground"
+            class="buildingTile tileBackground"
         >
         </div>
         <div class="buildingTile initBuildingTile tileBackground" @click="goFight()">
@@ -86,7 +86,7 @@ export default {
   flex-direction: column;
   height: 95vh;
   width: 100%;
-  background: #401b01;
+  background: #222222;
   justify-content: center;
   align-items: center;
 }
@@ -113,7 +113,8 @@ export default {
 }
 
 .tileBackground {
-  background-image: url('/images/map-location/old-forest-location/tile-background-500-500/ground-tile-background-2.png');
+  background-size: cover;
+  background-image: url('/images/camping-place/stone-tile-baground.png');
 }
 
 .shopBackground {
