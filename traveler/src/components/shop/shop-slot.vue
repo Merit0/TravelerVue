@@ -7,13 +7,13 @@
       <div class="slotFrame">
         <div class="slotFrameImage"></div>
       </div>
-      <div v-if="!this.inShop" class="soldOut">
+      <div v-if="!inShop" class="soldOut">
         <span class="soldOutText">Sold Out</span>
       </div>
     </div>
     <div class="slotPriceContainer">
-      <div v-if="!this.inShop" class="noInfo"></div>
-      <div v-if="this.inShop" class="priceInfo">
+      <div v-if="!inShop" class="noInfo"></div>
+      <div v-if="inShop" class="priceInfo">
         <div class="priceRow buyBtn" :class="{
       notEnough: !canAfford,
       canAfford: canAfford
@@ -26,7 +26,8 @@
   </div>
   <confirm-purchase-modal
       :show-confirm-purchase-overlay="showConfirmPurchasePopup"
-      :lootItem="this.lootItem"
+      :operation-name="operationName"
+      :lootItem="lootItem"
       @closeModal="closePopup"
       @outOfStock="isPurchased"
   >
@@ -53,10 +54,12 @@ export default {
   data() {
     const bagStore = useBagStore();
     let inShop = true;
+    const operationName = "Buy";
     return {
       showConfirmPurchasePopup: false,
       bagStore,
-      inShop
+      inShop,
+      operationName
     }
   },
   computed: {
