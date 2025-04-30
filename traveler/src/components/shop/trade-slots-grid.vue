@@ -1,21 +1,27 @@
 <template>
   <div class="tradeGridContainer">
-    <div class="lootGrid">
+    <div class="tradeInventoryGrid">
       <div
           v-for="(item, index) in bagStore.bagItems"
           :key="index"
-          class="tradeLootSlot"
+          class="inventorySlotContainer"
           @mouseover="hoveredItem = index"
           @mouseleave="hoveredItem = null"
       >
-        <img :src="item.imgPath" alt="item" class="lootItemImage"/>
-        <button
+        <div class="inventoryFrameImage"></div>
+        <img :src="item.imgPath" alt="item" class="inventoryItemImage"/>
+        <div
             v-if="hoveredItem === index"
             class="sellButton"
             @click="confirmSell(item)"
-        >
-          Sell
-        </button>
+        ></div>
+      </div>
+      <div
+          v-for="n in allSlotsNumber - bagStore.itemsNumber"
+          :key="n"
+          class="inventorySlotContainer"
+      >
+        <div class="inventoryFrameImage"></div>
       </div>
     </div>
   </div>
@@ -50,6 +56,7 @@ export default {
       showConfirmModal,
       operationName: 'Sell',
       selectedItem: null as LootItemModel | null,
+      allSlotsNumber: 36,
     };
   },
   methods: {
@@ -68,4 +75,5 @@ export default {
 
 <style>
 @import "@/styles/shop-styles/trade-slots-grid-style.css";
+@import "@/styles/inventory-style/inventory-slot.css";
 </style>

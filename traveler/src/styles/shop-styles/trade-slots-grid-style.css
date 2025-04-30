@@ -1,29 +1,9 @@
-.lootGrid {
+.tradeInventoryGrid {
     display: grid;
-    grid-template-columns: repeat(8, 10vh);
+    grid-template-columns: repeat(9, 10vh);
     grid-template-rows: repeat(4, 10vh);
-    margin-top: 5vh;
-    margin-left: 8vh;
-}
-
-.tradeLootSlot {
-    position: relative;
-    background-size: cover;
-    background-image: url("/images/overlays/shop-place/shop-inventory-frame-image.png");
-    padding: 0.5rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    overflow: hidden;
-}
-
-.lootItemImage {
-    width: 80%;
-    height: 80%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    margin-top: 5vw;
+    gap: 0.2rem;
 }
 
 .tradeGridContainer {
@@ -37,28 +17,29 @@
 
 .sellButton {
     position: absolute;
-    top: 10%;
-    right: 10%;
-    background: rgba(255, 60, 60, 0.9);
-    color: white;
-    border: none;
-    padding: 0.4rem 0.8rem;
-    border-radius: 0.6rem;
+    width: 40%;
+    height: 40%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url("/images/overlays/shop-place/trade-sell-icon-image.png");
     cursor: pointer;
-    font-size: 0.8rem;
+    transform: translateY(20px) scale(0.9);
     opacity: 0;
-    transform: translateY(-10px);
-    pointer-events: none;
+    z-index: 2;
     transition: opacity 0.3s ease, transform 0.3s ease;
+    animation-delay: 0.2s;
 }
 
 .sellButton:hover {
-    box-shadow: 0 0 10px rgba(255, 60, 60, 0.8), 0 0 20px rgba(255, 60, 60, 0.6);
-    background: rgba(255, 80, 80, 1);
+    animation: pulse 0.6s infinite ease-in-out;
+    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.6));
 }
 
-.tradeLootSlot:hover .sellButton {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.15);
+    }
 }

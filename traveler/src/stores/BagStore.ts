@@ -19,7 +19,8 @@ export const useBagStore = defineStore("bag", {
             },
             getCoins: (state): number => {
                 return state.hero.getCoins();
-            }
+            },
+            itemsNumber: (state): number => {return state.bagItems.length}
         },
         actions: {
             async resetBag(): Promise<void> {
