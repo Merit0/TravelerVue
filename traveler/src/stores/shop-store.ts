@@ -1,5 +1,5 @@
-import { defineStore } from 'pinia';
-import { LootItemModel } from '@/models/LootItemModel';
+import {defineStore} from 'pinia';
+import {LootItemModel} from '@/models/LootItemModel';
 import {WeaponProvider} from "@/providers/WeaponProvider";
 import {ElixirsProvider} from "@/providers/elixir-provider";
 
@@ -10,8 +10,50 @@ export const useShopStore = defineStore('shop', {
 
     actions: {
         initShopItems(): void {
+            const purchasedIds: string[] = JSON.parse(localStorage.getItem("purchasedItems") || "[]");
+
+            let parsedShopItems: LootItemModel[] | null = null;
+
+            try {
+                const raw = localStorage.getItem("shop");
+                const parsed = raw ? JSON.parse(raw) : null;
+                parsedShopItems = parsed?.items ?? null;
+            } catch (e) {
+                console.warn("Failed to parse shop items from storage:", e);
+                parsedShopItems = null;
+            }
+
+            const initialItems = this.generateInitialItems();
+
+            const baseItems = parsedShopItems ?? initialItems;
+
+            this.items = baseItems.map(item => ({
+                ...item,
+                place: purchasedIds.includes(item.id) ? "bag" : "shop"
+            }));
+
+            if (!parsedShopItems) {
+                localStorage.setItem("shop", JSON.stringify({items: this.items}));
+            }
+        },
+
+        refreshShopItems(): void {
+            const newItems = this.generateInitialItems();
+
+            this.items = newItems.map(item => ({
+                ...item,
+                place: "shop"
+            }));
+
+            localStorage.setItem("shop", JSON.stringify({items: this.items}));
+            localStorage.removeItem("purchasedItems");
+
+            console.log("Shop has been refreshed!");
+        },
+
+        generateInitialItems(): LootItemModel[] {
             const allWeapons: LootItemModel[] = WeaponProvider.getAll();
-            this.items = [
+            return [
                 allWeapons[0],
                 allWeapons[1],
                 allWeapons[2],
@@ -22,13 +64,8 @@ export const useShopStore = defineStore('shop', {
                 ElixirsProvider.getMythicElixir(),
             ];
         },
-
         getShopItems(): LootItemModel[] {
             return this.items;
         },
-
-        removeItemById(id: string) {
-            this.items = this.items.filter((item: LootItemModel) => item.id !== id);
-        }
     },
 });

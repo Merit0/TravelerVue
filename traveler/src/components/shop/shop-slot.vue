@@ -53,7 +53,7 @@ export default {
   },
   data() {
     const bagStore = useBagStore();
-    let inShop = true;
+    let inShop = (this.lootItem.place === 'shop');
     const operationName = "Buy";
     return {
       showConfirmPurchasePopup: false,

@@ -42,7 +42,7 @@
         "maxHealth": 110,
         "attack": 15,
         "defense": 0,
-        "coins": 300,
+        "coins": 20,
         "available": true,
         "id": 4,
         "kills": 0,

@@ -13,5 +13,5 @@ export class LootItemModel implements IHeroItem {
   rarity: Rarity;
   id = uuid();
   chance: boolean;
-  place: "bag" | "chest";
+  place: "bag" | "chest" | "shop";
 }

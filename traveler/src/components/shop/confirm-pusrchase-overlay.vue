@@ -52,6 +52,11 @@ export default {
         this.heroStore.pay(lootItem.price)
         lootItem.place = "bag";
         this.bagStore.putIn(lootItem);
+        const purchasedIds = JSON.parse(localStorage.getItem("purchasedItems") || "[]");
+        if (!purchasedIds.includes(lootItem.id)) {
+          purchasedIds.push(lootItem.id);
+        }
+        localStorage.setItem("purchasedItems", JSON.stringify(purchasedIds));
         console.log(`Куплено: ${lootItem.name} for ${lootItem.price} coins!`);
         this.$emit("closeModal");
         this.$emit("outOfStock");
