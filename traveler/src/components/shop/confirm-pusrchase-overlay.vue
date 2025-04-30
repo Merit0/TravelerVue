@@ -1,7 +1,7 @@
 <template>
   <div v-if="showConfirmPurchaseOverlay" class="confirmOverlay">
     <div class="confirmPopup">
-      <p v-if="lootItem" class="popupText">{{ operationName }} <strong>{{ lootItem.name }}</strong> for {{ lootItem.price }}
+      <p v-if="lootItem" class="popupText">{{ operationName }} <strong>{{ lootItem.name }}</strong> for {{ operationName === 'Buy' ? lootItem.price : (Math.ceil(lootItem.price * 0.1)) }}
         <img class="modalCoinIcon" src="/images/top-bar-items/coin-icon.png" alt="coin-icon"/> ?</p>
       <div class="popupActions">
         <button class="confirmBtn" @click="confirmAction(lootItem)">{{ operationName.toUpperCase() }}</button>
@@ -20,6 +20,7 @@ import {useHeroStore} from "@/stores/HeroStore";
 
 export default {
   name: "confirm-purchase-modal",
+  emits: ["closeModal", 'outOfStock'],
   props: {
     lootItem: {
       type: Object as PropType<LootItemModel | null>,
@@ -51,13 +52,14 @@ export default {
         this.heroStore.pay(lootItem.price)
         lootItem.place = "bag";
         this.bagStore.putIn(lootItem);
-        console.log("Куплено:", lootItem);
+        console.log(`Куплено: ${lootItem.name} for ${lootItem.price} coins!`);
         this.$emit("closeModal");
         this.$emit("outOfStock");
       } else {
-        this.heroStore.collect(lootItem.price);
+        const sellPrice: number = Math.ceil(lootItem.price * 0.1);
+        this.heroStore.collect(sellPrice);
         this.bagStore.removeItem(lootItem);
-        console.log(`Продано: ${lootItem.name} for ${lootItem.price} coins!`);
+        console.log(`Продано: ${lootItem.name} for ${sellPrice} coins!`);
         this.$emit("closeModal");
       }
     },

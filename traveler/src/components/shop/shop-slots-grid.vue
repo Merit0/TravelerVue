@@ -2,7 +2,7 @@
   <div class="shopGridContainer">
     <div class="lootItemsGrid">
       <shop-slot
-          v-for="lootItem in shopItems"
+          v-for="lootItem in itemsList"
           :key="lootItem.id"
           :loot-item="lootItem"
       />
@@ -11,19 +11,22 @@
 </template>
 
 <script lang="ts">
-import {PropType} from 'vue'
 import {LootItemModel} from "@/models/LootItemModel"
 import ShopSlot from "@/components/shop/shop-slot.vue"
+import {useShopStore} from "@/stores/shop-store";
 
 export default {
   name: "shop-slots-grid",
   components: {ShopSlot},
-  props: {
-    shopItems: {
-      type: Array as PropType<LootItemModel[]>,
-      required: true
-    },
-  }
+  data() {
+    const shopStore = useShopStore();
+    shopStore.initShopItems();
+    const itemsList: LootItemModel[] = shopStore.getShopItems();
+
+    return {
+      itemsList
+    };
+  },
 }
 </script>
 
