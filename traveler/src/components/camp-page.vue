@@ -1,26 +1,53 @@
 <template>
   <title>Camp</title>
-  <div class="page">
-    <section class="campContent">
-      <HeroDetailsBar :hero="hero"></HeroDetailsBar>
-      <div class="camping"></div>
-      <button class="homeBtn" @click="goFight()">Fight</button>
-    </section>
-  </div>
+  <HeroDetailsBar :hero="hero"/>
+  <section class="campContent">
+    <div class="scalableGridWrapper">
+      <div class="buildingGrid">
+        <div
+            v-for="n in numberOfTiles"
+            :key="n"
+            class="buildingTile tileBackground"
+        >
+        </div>
+        <div class="buildingTile initBuildingTile tileBackground" @click="goFight()">
+          <div class="crossedSwordsImage">
+          </div>
+        </div>
+      </div>
+      <div class="shopPlace" @click="openShop()">
+        <div class="shopBackground">
+        </div>
+      </div>
+    </div>
+  </section>
+  <shop-overlay
+      :show-shop-overlay="showShop"
+      @closeShop="closeShop">
+  </shop-overlay>
 </template>
 
 <script lang="ts">
 import HeroDetailsBar from './HeroDetailsBar.vue';
 import {useHeroStore} from '@/stores/HeroStore';
 import router from "@/router";
+import ShopOverlay from "@/components/shop/shop-overlay.vue";
 
 export default {
   name: "camping-page",
-  components: {HeroDetailsBar},
+  components: {ShopOverlay, HeroDetailsBar},
   data() {
     const heroStore = useHeroStore();
     const hero = heroStore.hero;
-    return {hero, heroStore, time: '',};
+    const numberOfTiles = 77
+    let showShop = false;
+    return {
+      hero,
+      heroStore,
+      time: '',
+      numberOfTiles,
+      showShop
+    };
   },
   methods: {
     async increaseHealth() {
@@ -36,7 +63,13 @@ export default {
     },
     goFight() {
       router.push('/home');
-    }
+    },
+    openShop() {
+      this.showShop = true;
+    },
+    closeShop() {
+      this.showShop = false;
+    },
   },
   mounted() {
     this.increaseHealth();
@@ -49,21 +82,72 @@ export default {
 
 <style>
 .campContent {
-  min-height: 100vh;
-  background-size: 100% 100%;
-  background-image: url("/images/camping-place/knight-camping-fire-place.png");
+  display: flex;
+  flex-direction: column;
+  height: 95vh;
+  width: 100%;
+  background: #222222;
+  justify-content: center;
+  align-items: center;
 }
 
-.homeBtn {
+.buildingGrid {
+  display: grid;
+  grid-template-columns: repeat(13, 15vh);
+  grid-template-rows: repeat(5, 15vh);
+  overflow: hidden;
+  gap: 2px;
+}
+
+.buildingTile {
+  width: 15vh;
+  height: 15vh;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.initBuildingTile:hover .crossedSwordsImage {
+  transform: scale(1.02);
+  box-shadow: 0 0 10px rgba(255, 200, 0, 0.7);
+  cursor: pointer;
+}
+
+.tileBackground {
+  background-size: cover;
+  background-image: url('/images/camping-place/stone-tile-baground.png');
+}
+
+.shopBackground {
+  background-image: url('/images/buildings/shop/shop.png');
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.shopPlace {
+  top: 1vw;
+  left: 1vw;
+  width: 20vw;
+  aspect-ratio: 5 / 3;
+  position: absolute;
+}
+
+.crossedSwordsImage {
+  width: 98%;
+  height: 98%;
+  background-image: url('/images/camping-place/crossed-swords.png');
+  background-size: cover;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.scalableGridWrapper {
+  transform: scale(1.01);
+  transform-origin: top center;
+  transition: transform 0.3s ease;
   position: relative;
-  width: 60px;
-  height: 60px;
-  color: rgb(96, 57, 0);
-  font-size: 15px;
-  background-color: rgb(255, 204, 186);
-  border: 2px solid rgba(56, 0, 0, 0.603);
-  border-radius: 20px;
-  margin-right: 5px;
 }
 </style>
 

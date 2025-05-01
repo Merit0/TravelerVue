@@ -4,6 +4,7 @@ import { Rarity } from "@/enums/Rarity";
 export interface IHeroItem {
   name: string;
   value: number;
+  price: number;
   imgPath: string;
   borderFrame: string;
   itemType: ItemType;

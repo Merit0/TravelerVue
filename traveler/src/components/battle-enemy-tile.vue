@@ -38,7 +38,6 @@ export default {
       try {
         return {
           backgroundImage: `url(${enemy.imgPath})`,
-          border: `2px solid ${enemy.enemyFrameColor}`
         };
       } catch (e) {
         console.error("Loading image error:", e);

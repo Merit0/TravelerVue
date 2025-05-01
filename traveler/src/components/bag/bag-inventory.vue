@@ -51,19 +51,6 @@ export default {
 </script>
 
 <style>
- #openInventoryBtn {
-    width: 100px;
-    height: 100px;
-    background-color:rgba(255, 196, 0, 0.185);
-    outline-color: rgba(56, 0, 0, 0.603);
-    outline-width: 1px;
-    outline-style: solid;
-    border-radius:30%;
-    background-image: url('/images/bag/inventory_image.png');
-    background-size: 100px 100px;
-    position: relative;
- }
-
  .bag {
     width: 400px;
     height: 500px;

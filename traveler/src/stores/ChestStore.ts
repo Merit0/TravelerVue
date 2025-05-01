@@ -31,7 +31,6 @@ export const useChestStore = defineStore("chest", {
                     (chestItem: LootItemModel) => chestItem.id === lootItem.id
                 );
                 this.chestItems.splice(itemIndex, 1);
-                this.chestCapacity += 1;
             },
         },
     })

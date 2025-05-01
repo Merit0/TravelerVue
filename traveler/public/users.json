@@ -2,7 +2,7 @@
     {
         "name": "Merito",
         "username": "merito",
-        "password": "123",
+        "password": "2104",
         "id": 1,
         "loggedIn": false
     },
@@ -22,7 +22,7 @@
     },
     {
         "name": "Ostap",
-        "username": "ostap",
+        "username": "ostapik",
         "password": "1111",
         "id": 4,
         "loggedIn": false

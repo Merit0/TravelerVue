@@ -3,7 +3,6 @@ import TileModel from "@/models/TileModel";
 import EnemyModel from "@/models/EnemyModel";
 import {Randomizer} from "@/utils/Randomizer";
 import {EnemyProvider} from "@/providers/EnemyProvider";
-import {BossProvider} from "@/providers/BossProvider";
 import {ChestModel} from "@/models/ChestModel";
 import {useHeroStore} from "./HeroStore";
 import {WeaponProvider} from "@/providers/WeaponProvider";
@@ -15,7 +14,6 @@ import MapModel from "@/models/MapModel";
 import {toKebabCase} from "@/utils/string-utils";
 import {MapProvider} from "@/providers/MapProvider";
 import {HeroModel} from "@/models/HeroModel";
-import {IEnemy} from "@/abstraction/IEnemy";
 
 interface MapLocationState {
     tiles: TileModel[];
@@ -196,7 +194,7 @@ export const useMapLocationStore = defineStore("map-location-store", {
             chest.setImagePath(chestImage);
             for (const enemy of enemies) {
                 if (enemy.loot.chance) {
-                    enemy.loot.place = "Chest";
+                    enemy.loot.place = "chest";
                     chest.addLoot(enemy.loot);
                 }
             }
