@@ -6,11 +6,12 @@
 </template>
 
 <script lang="ts">
-import {LootItemModel} from '@/models/LootItemModel';
-import {useBagStore} from '@/stores/BagStore';
-import {useChestStore} from '@/stores/ChestStore';
-import {PropType} from 'vue'
-
+import {PropType} from 'vue';
+import {LootItemModel} from "@/models/LootItemModel";
+import {useBagStore} from "@/stores/BagStore";
+import {useHeroStore} from "@/stores/HeroStore";
+import {useChestStore} from "@/stores/ChestStore";
+import {ItemType} from "@/enums/ItemType";
 
 export default {
   name: "chest-item-tile",
@@ -22,24 +23,33 @@ export default {
   },
   data() {
     const bagStore = useBagStore();
+    const heroStore = useHeroStore();
+    return {
+      bagStore,
+      heroStore,
+    };
+  },
+  mounted() {
     const chestStore = useChestStore();
     chestStore.addItem(this.lootItem);
-    return {bagStore};
   },
-
   methods: {
-    getItemStyle(lootItem: LootItemModel) {
+    getItemStyle(lootItem: LootItemModel): Record<string, string> {
       return {
         backgroundImage: `url(${lootItem.imgPath})`,
-      }
+      };
     },
-    async takeItem(item: LootItemModel) {
-      this.bagStore.putIn(item);
-      item.place = "bag";
+    async takeItem(item: LootItemModel): Promise<void> {
+      if (item.itemType === ItemType.COIN) {
+        this.heroStore.collect(item.value);
+        item.place = null; // або null, якщо в тебе дозволено
+      } else {
+        this.bagStore.putIn(item);
+        item.place = 'bag';
+      }
     }
   }
 }
-
 </script>
 
 <style>

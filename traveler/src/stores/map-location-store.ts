@@ -1,19 +1,21 @@
 import {defineStore} from "pinia";
 import TileModel from "@/models/TileModel";
 import EnemyModel from "@/models/EnemyModel";
-import {Randomizer} from "@/utils/Randomizer";
 import {EnemyProvider} from "@/providers/EnemyProvider";
 import {ChestModel} from "@/models/ChestModel";
 import {useHeroStore} from "./HeroStore";
-import {WeaponProvider} from "@/providers/WeaponProvider";
-import {EnemyType} from "@/enums/EnemyType";
 import {EnemyBuilder} from "@/builders/EnemyBuilder";
-import {EquipmentGroupProvider} from "@/providers/equipment-group-provider";
 import {MapLocationModel} from "@/models/map-location-model";
 import MapModel from "@/models/MapModel";
 import {toKebabCase} from "@/utils/string-utils";
 import {MapProvider} from "@/providers/MapProvider";
 import {HeroModel} from "@/models/HeroModel";
+import {EnemyLootProvider, ILootChanceConfig} from "@/providers/loot-provider";
+import {DropLootChanceConfigProvider} from "@/providers/loot-chance-drop-provider";
+import {Randomizer} from "@/utils/Randomizer";
+import {LootItemModel} from "@/models/LootItemModel";
+import {ItemType} from "@/enums/ItemType";
+import {CoinsProvider} from "@/providers/coins-provider";
 
 interface MapLocationState {
     tiles: TileModel[];
@@ -174,7 +176,8 @@ export const useMapLocationStore = defineStore("map-location-store", {
                 tile.setEnemies(enemies);
 
                 if (enemies.length > 0) {
-                    tile.setChest(this.generateChest(enemies, locationMap.chestImage));
+                    const chest: ChestModel = this.generateChest(enemies, locationMap.chestImage);
+                    tile.setChest(chest);
                 }
             });
 
@@ -190,15 +193,31 @@ export const useMapLocationStore = defineStore("map-location-store", {
         },
 
         generateChest(enemies: EnemyModel[], chestImage: string): ChestModel {
+            let totalCoins = 0;
+            const nonCoinLoot: LootItemModel[] = [];
             const chest = new ChestModel();
             chest.setImagePath(chestImage);
             for (const enemy of enemies) {
-                if (enemy.loot.chance) {
-                    enemy.loot.place = "chest";
-                    chest.addLoot(enemy.loot);
+                for (const lootItem of enemy.loot) {
+                    lootItem.place = 'chest';
+
+                    if (lootItem.itemType === ItemType.COIN) {
+                        totalCoins += lootItem.value;
+                    } else {
+                        nonCoinLoot.push(lootItem);
+                    }
                 }
             }
-            return chest.items.find((item) => item.name) ? chest : null;
+
+            if (totalCoins > 0) {
+                const coinItem: LootItemModel = CoinsProvider.getCoins(totalCoins);
+                coinItem.place = 'chest';
+                chest.addLoot([coinItem]);
+            }
+
+            chest.addLoot(nonCoinLoot);
+
+            return chest.items.length > 0 ? chest : null;
         },
 
         generateEnemies(id: number, enemyPowerModifierNumber: number): EnemyModel[] {
@@ -221,11 +240,8 @@ export const useMapLocationStore = defineStore("map-location-store", {
 
                 enemy.setId(id + i);
 
-                const loot = base.enemyType === EnemyType.WARRIOR
-                    ? (Randomizer.getChance(5)
-                        ? Randomizer.getRandomEquipment(WeaponProvider.getLegends())
-                        : Randomizer.getRandomEquipment(EquipmentGroupProvider.getCommonEquipment()))
-                    : Randomizer.getRandomEquipment(WeaponProvider.getLegends());
+                const dropChanceConfig: ILootChanceConfig = DropLootChanceConfigProvider.getCommonDropChanceConfig()
+                const loot = EnemyLootProvider.getLoot(dropChanceConfig)
 
                 enemy.setLoot(loot);
                 createdEnemies.push(enemy);
