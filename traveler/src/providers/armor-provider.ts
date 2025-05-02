@@ -14,6 +14,7 @@ export class ArmorProvider {
             .lootRarity(Rarity.COMMON)
             .lootItemImgPath(this.heroArmorFolderPath + "common-type/robe.png")
             .dropChance(Randomizer.getChance(100))
+            .price(20)
             .build();
     }
 

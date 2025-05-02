@@ -11,30 +11,20 @@ export class EquipmentGroupProvider {
     }
 
     public static getRareEquipment(): LootItemModel[] {
-        return [
-            ...WeaponProvider.getCommonWeaponsList(),
-            ...ArmorProvider.getCommonArmorsList(),
-        ]
+        return []
     }
 
     public static getEpicEquipment(): LootItemModel[] {
-        return [
-            ...WeaponProvider.getCommonWeaponsList(),
-            ...ArmorProvider.getCommonArmorsList(),
-        ]
+        return []
     }
 
     public static getLegendEquipment(): LootItemModel[] {
         return [
-            ...WeaponProvider.getCommonWeaponsList(),
-            ...ArmorProvider.getCommonArmorsList(),
+            ...WeaponProvider.getLegends(),
         ]
     }
 
     public static getMythicEquipment(): LootItemModel[] {
-        return [
-            ...WeaponProvider.getCommonWeaponsList(),
-            ...ArmorProvider.getCommonArmorsList(),
-        ]
+        return []
     }
 }

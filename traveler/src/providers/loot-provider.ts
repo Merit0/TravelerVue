@@ -5,6 +5,7 @@ import {CoinsProvider} from "@/providers/coins-provider";
 import {Randomizer} from "@/utils/Randomizer";
 
 export interface ILootChanceConfig {
+    equipmentDropChance: number;
     common: number,
     rare: number,
     epic: number,
@@ -22,20 +23,19 @@ export class EnemyLootProvider {
             loot.push(CoinsProvider.getCoins(coinsNumber));
         }
 
-        if (Randomizer.getChance(30)) {
+        if (Randomizer.getChance(dropChanceConfig.equipmentDropChance)) {
+            let accumulated = 0;
             const roll = Math.random() * 100;
-            let item: LootItemModel | null;
+            let item: LootItemModel | null = null;
 
-            if (roll < dropChanceConfig.common) {
+            if (roll < (accumulated += dropChanceConfig.common)) {
                 item = Randomizer.getRandomEquipment(EquipmentGroupProvider.getCommonEquipment());
-            } else if (roll < dropChanceConfig.rare) {
+            } else if (roll < (accumulated += dropChanceConfig.rare)) {
                 item = Randomizer.getRandomEquipment(EquipmentGroupProvider.getRareEquipment());
-            } else if (roll < dropChanceConfig.epic) {
+            } else if (roll < (accumulated += dropChanceConfig.epic)) {
                 item = Randomizer.getRandomEquipment(EquipmentGroupProvider.getEpicEquipment());
-            } else if (roll < dropChanceConfig.legend) {
+            } else if (roll < (accumulated + dropChanceConfig.legend)) {
                 item = Randomizer.getRandomEquipment(EquipmentGroupProvider.getLegendEquipment());
-            } else {
-                item = Randomizer.getRandomEquipment(EquipmentGroupProvider.getMythicEquipment());
             }
 
             if (item) loot.push(item);

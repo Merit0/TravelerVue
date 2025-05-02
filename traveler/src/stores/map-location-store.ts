@@ -117,6 +117,7 @@ export const useMapLocationStore = defineStore("map-location-store", {
                     this.addCamping(tiles);
                     this.addHeroToTiles(tiles, locationMap.hero);
                     this.addEnemiesToTiles(tiles, locationMap);
+                    this.addBossOnTile(tiles, locationMap)
                     this.locationStates[locationMap.name] = {
                         tiles,
                         isCleared: false,
@@ -180,15 +181,22 @@ export const useMapLocationStore = defineStore("map-location-store", {
                     tile.setChest(chest);
                 }
             });
+        },
 
-            const min = 15;
+        addBossOnTile(tiles: TileModel[], locationMap: MapLocationModel) {
+            const dropChanceConfig: ILootChanceConfig = DropLootChanceConfigProvider.getBossDropChanceConfig()
+            const bossLoot = EnemyLootProvider.getLoot(dropChanceConfig)
+            const min = 5;
             const max = tiles.length - 2;
             const randNumber = Math.floor(Math.random() * (max - min + 1)) + min;
             if (randNumber < tiles.length) {
                 const boss: EnemyModel = locationMap.boss;
-                boss.setPowerModifierLvl(locationMap.enemyModifier)
+                boss.setPowerModifierLvl(locationMap.enemyModifier);
+                boss.setLoot(bossLoot);
                 const bossTile: TileModel = tiles[randNumber];
                 bossTile.setEnemies([boss]);
+                const chest: ChestModel = this.generateChest([ boss ], locationMap.chestImage);
+                bossTile.setChest(chest);
             }
         },
 
@@ -224,9 +232,9 @@ export const useMapLocationStore = defineStore("map-location-store", {
             if (!Randomizer.getChance(20)) return [];
             const createdEnemies: EnemyModel[] = [];
             const enemiesList = EnemyProvider.getEvilLandsEnemies();
-            const numberOfEnemies = Math.floor(Math.random() * 5) + 1;
+            const numberOfEnemiesOnTile = Math.floor(Math.random() * 5) + 1;
 
-            for (let i = 0; i < numberOfEnemies; i++) {
+            for (let i = 0; i < numberOfEnemiesOnTile; i++) {
                 const randIndex = Math.floor(Math.random() * enemiesList.length);
                 const base = enemiesList[randIndex];
 
