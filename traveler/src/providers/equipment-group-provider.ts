@@ -1,12 +1,16 @@
 import {LootItemModel} from "@/models/LootItemModel";
 import {WeaponProvider} from "@/providers/WeaponProvider";
 import {ArmorProvider} from "@/providers/armor-provider";
+import {ShieldProvider} from "@/providers/shield-provider";
+import {HelmetProvider} from "@/providers/helmet-provider";
 
 export class EquipmentGroupProvider {
     public static getCommonEquipment(): LootItemModel[] {
         return [
             ...WeaponProvider.getCommonWeaponsList(),
             ...ArmorProvider.getCommonArmorsList(),
+            ...ShieldProvider.getCommonShieldsList(),
+            ...HelmetProvider.getCommonHelmetsList(),
         ]
     }
 
@@ -21,6 +25,7 @@ export class EquipmentGroupProvider {
     public static getLegendEquipment(): LootItemModel[] {
         return [
             ...WeaponProvider.getLegends(),
+            ...HelmetProvider.getLegendHelmetsList()
         ]
     }
 

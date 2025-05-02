@@ -1,9 +1,18 @@
 <template>
-  <div class="chestOverlay" v-if="showChestInventory">
+  <div class="globalOverlay" v-if="showChestInventory">
     <div class="chestContent">
-      <button class="closeChestInventoryBtn" @click="closeChestInventory()">X</button>
+      <button class="closeChestInventoryBtn" @click="closeChestInventory()">x</button>
       <div class="chestItemsContainer">
-        <chest-item-tile v-for="item in chest.items" :key="item.id" :lootItem="item"></chest-item-tile>
+        <div class="chestInventoryGrid">
+          <chest-item-tile
+              v-for="item in chest.items"
+              :key="item.id"
+              :lootItem="item">
+          </chest-item-tile>
+        </div>
+      </div>
+      <div class="skeletonImageContainer">
+        <div class="deadSkeletonImage"></div>
       </div>
     </div>
   </div>
@@ -11,13 +20,13 @@
 
 <script lang="ts">
 import ChestItemTile from './ChestItemTile.vue';
-import { PropType, watch, defineComponent, computed } from 'vue';
-import { ChestModel } from '@/models/ChestModel';
-import { useChestStore } from '@/stores/ChestStore';
+import {PropType, watch, defineComponent, computed} from 'vue';
+import {ChestModel} from '@/models/ChestModel';
+import {useChestStore} from '@/stores/ChestStore';
 
 export default defineComponent({
   name: 'chest-inventory',
-  components: { ChestItemTile },
+  components: {ChestItemTile},
   props: {
     chest: {
       type: Object as PropType<ChestModel>,
@@ -28,15 +37,13 @@ export default defineComponent({
       required: true
     }
   },
-  setup(props, { emit }) {
+  setup(props, {emit}) {
     const chestStore = useChestStore();
 
-    // Слідкуємо за змінами айтемів
     const isChestEmpty = computed(() => {
       return chestStore.chestItems.filter(item => item.name).length === 0;
     });
 
-    // Автоматичне закриття при спорожненні
     watch(isChestEmpty, (empty) => {
       if (props.showChestInventory && empty) {
         closeChestInventory();
@@ -57,48 +64,97 @@ export default defineComponent({
 </script>
 
 <style>
-
 .chestContent {
   position: relative;
-  width: 500px;
-  height: 400px;
-  border-radius: 20px;
+  width: 26vw;
+  height: 70vh;
+  border-radius: 1vw;
   margin: auto;
-  background-image: url("/images/chests/chest_items_area.png");
-  background-size: 100% 100%;
-  margin-top: 150px;
+  background: linear-gradient(135deg, #2f3639, #2d221f);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.6), inset 0 0 15px rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 1vw;
+  overflow: hidden;
+  border: 2px solid rgba(255, 255, 255, 0.1);
 }
 
-.chestOverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 100;
-  display: flex;
-  align-items: center;
+/* Декоративна крижана рамка */
+.chestContent::before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  border-radius: 1vw;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.02) 70%, transparent 100%);
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.1);
 }
 
 .chestItemsContainer {
-  margin-top: 50px;
-  max-width: 410px;
-  height: 270px;
-  margin-left: 46px;
+  width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
+  box-sizing: border-box;
+}
+
+.chestInventoryGrid {
+  margin-top: 2vw;
+  display: grid;
+  grid-template-columns: repeat(3, 12vh);
+  grid-template-rows: repeat(3, 12vh);
+}
+
+.skeletonImageContainer {
+  margin-top: 2rem;
+  width: 30vw;
+  height: 35vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.deadSkeletonImage {
+  width: 130%;
+  height: 130%;
+  background-image: url("/images/chests/dead-skeleton-image.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .closeChestInventoryBtn {
   position: absolute;
-  left: 440px;
-  top: 40px;
-  width: 50px;
-  height: 50px;
-  background-color: rgb(184, 0, 61);
-  border-radius: 100%;
-  z-index: 1;
+  top: 1rem;
+  right: 1rem;
+  width: 2vw;
+  height: 2vw;
+  border-radius: 50%;
+  background: radial-gradient(circle at top left, #5c3a2e, #2d221f);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  color: #ff9f9f;
+  font-weight: bold;
+  font-size: 1.5vw;
+  cursor: pointer;
+  box-shadow:
+      0 0 5px rgba(255, 255, 255, 0.1),
+      inset 0 0 5px rgba(255, 255, 255, 0.05),
+      0 0 15px rgba(0, 0, 0, 0.6);
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.closeChestInventoryBtn:hover {
+  background: radial-gradient(circle at top left, #7e3a3a, #3a2727);
+  transform: scale(1.1);
+  box-shadow:
+      0 0 10px rgba(255, 255, 255, 0.15),
+      inset 0 0 8px rgba(255, 255, 255, 0.1),
+      0 0 20px rgba(255, 255, 255, 0.05);
 }
 </style>

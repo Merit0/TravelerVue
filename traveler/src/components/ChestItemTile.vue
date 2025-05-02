@@ -1,17 +1,23 @@
 <template>
-  <div class="chestItemArea">
-    <button class="chestItemImg" v-if="lootItem.place === 'chest'" :style="getItemStyle(lootItem)"
-            @click="takeItem(lootItem)"></button>
+  <div class="chestInventorySlotContainer">
+    <div class="chestInventoryFrameImage">
+      <div
+          class="chestItemImg"
+          v-if="lootItem.place === 'chest'"
+          :style="getItemStyle(lootItem)"
+          @click="takeItem(lootItem)"
+      ></div>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import {PropType} from 'vue';
-import {LootItemModel} from "@/models/LootItemModel";
-import {useBagStore} from "@/stores/BagStore";
-import {useHeroStore} from "@/stores/HeroStore";
-import {useChestStore} from "@/stores/ChestStore";
-import {ItemType} from "@/enums/ItemType";
+import { PropType } from 'vue';
+import { LootItemModel } from "@/models/LootItemModel";
+import { useBagStore } from "@/stores/BagStore";
+import { useHeroStore } from "@/stores/HeroStore";
+import { useChestStore } from "@/stores/ChestStore";
+import { ItemType } from "@/enums/ItemType";
 
 export default {
   name: "chest-item-tile",
@@ -37,6 +43,9 @@ export default {
     getItemStyle(lootItem: LootItemModel): Record<string, string> {
       return {
         backgroundImage: `url(${lootItem.imgPath})`,
+        backgroundSize: 'contain',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center'
       };
     },
     async takeItem(item: LootItemModel): Promise<void> {
@@ -55,23 +64,38 @@ export default {
 </script>
 
 <style>
-.chestItemArea {
-  width: 110px;
-  height: 110px;
-  margin: auto;
+.chestInventorySlotContainer {
+  width: 13vh;
+  height: 13vh;
   display: flex;
+  justify-content: center;
   align-items: center;
-  background-image: url("/images/chests/chest_item_area_orange.png");
-  background-size: 100% 100%;
+  position: relative;
+}
+
+.chestInventoryFrameImage {
+  width: 100%;
+  height: 100%;
+  background-image: url("/images/overlays/shop-place/shop-inventory-frame-image.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .chestItemImg {
-  position: relative;
-  width: 84px;
-  height: 84px;
-  background: none;
-  background-size: 100% 100%;
-  border-radius: 13%;
-  margin-left: 12px;
+  width: 60%;
+  height: 60%;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.chestItemImg:hover {
+  transform: scale(1.05);
 }
 </style>
