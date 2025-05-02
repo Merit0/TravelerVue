@@ -42,11 +42,13 @@ export default {
     async takeItem(item: LootItemModel): Promise<void> {
       if (item.itemType === ItemType.COIN) {
         this.heroStore.collect(item.value);
-        item.place = null; // або null, якщо в тебе дозволено
       } else {
         this.bagStore.putIn(item);
-        item.place = 'bag';
       }
+
+      item.place = null;
+      const chestStore = useChestStore();
+      chestStore.removeItem(item);
     }
   }
 }

@@ -4,17 +4,9 @@ import {LootItemModel} from "@/models/LootItemModel";
 export const useChestStore = defineStore("chest", {
         state: () => {
             return {
-                chestItems: [],
+                chestItems: [] as LootItemModel[],
                 isShown: false,
             };
-        },
-        getters: {
-            showChest: (state) => {
-                state.isShown = true;
-            },
-            clearChest: (state) => {
-                state.chestItems = [];
-            },
         },
         actions: {
             async resetChest(): Promise<void> {

@@ -17,10 +17,10 @@ import EmptyTile from '@/components/EmptyTile.vue';
 import Battlefield from '@/components/Battlefield.vue';
 import {useHeroStore} from '@/stores/HeroStore'
 import HeroTile from './HeroTile.vue';
-import ChestTile from './ChestTile.vue';
-import ChestInventory from './ChestInventory.vue';
 import {useMapLocationStore} from '@/stores/map-location-store';
 import {PropType} from 'vue';
+import ChestInventory from "@/components/chest-inventory.vue";
+import ChestTile from "@/components/chest-tile.vue";
 
 export default {
   name: "map-tile",
@@ -30,7 +30,7 @@ export default {
       required: true
     }
   },
-  components: {EnemyTile, ReliefTile, EmptyTile, Battlefield, HeroTile, ChestTile, ChestInventory},
+  components: {ChestTile, ChestInventory, EnemyTile, ReliefTile, EmptyTile, Battlefield, HeroTile},
   data() {
     const heroStore = useHeroStore();
     const mapLocationStore = useMapLocationStore();
