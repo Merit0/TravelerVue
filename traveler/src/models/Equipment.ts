@@ -8,4 +8,5 @@ export class Equipment implements IEquipment {
   helm: LootItemModel;
   armor: LootItemModel;
   ring: LootItemModel;
+  boots: LootItemModel;
 }
