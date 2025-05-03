@@ -2,6 +2,11 @@ import {defineStore} from 'pinia';
 import {LootItemModel} from '@/models/LootItemModel';
 import {WeaponProvider} from "@/providers/WeaponProvider";
 import {ElixirsProvider} from "@/providers/elixir-provider";
+import {HelmetProvider} from "@/providers/helmet-provider";
+import {ArmorProvider} from "@/providers/armor-provider";
+import {ShieldProvider} from "@/providers/shield-provider";
+import {EquipmentGroupProvider} from "@/providers/equipment-group-provider";
+import {Randomizer} from "@/utils/Randomizer";
 
 export const useShopStore = defineStore('shop', {
     state: () => ({
@@ -52,13 +57,12 @@ export const useShopStore = defineStore('shop', {
         },
 
         generateInitialItems(): LootItemModel[] {
-            const allWeapons: LootItemModel[] = WeaponProvider.getAll();
             return [
-                allWeapons[0],
-                allWeapons[1],
-                allWeapons[2],
-                allWeapons[3],
-                allWeapons[4],
+                WeaponProvider.getSkyDestroyerAxe(),
+                ArmorProvider.getStormhideArmor(),
+                HelmetProvider.getOblivorHelm(),
+                ShieldProvider.getDreadwallShield(),
+                EquipmentGroupProvider.getLegendEquipment()[Randomizer.getRandomIntInRange(0, 3)],
                 ElixirsProvider.getRareElixir(),
                 ElixirsProvider.getCommonElixir(),
                 ElixirsProvider.getMythicElixir(),

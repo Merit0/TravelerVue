@@ -83,6 +83,21 @@ export default {
           this.hero.maxHealth += this.hero.equipment.helm.value;
           return true;
         }
+      } else if (item.itemType === ItemType.SHIELD) {
+        if (this.hero.equipment.shield != null) {
+          this.bagStore.removeItem(item);
+          this.hero.maxHealth -= this.hero.equipment.shield.value;
+          this.bagStore.putIn(this.hero.equipment.shield);
+          this.hero.equipment.shield = item;
+          this.hero.maxHealth += this.hero.equipment.shield.value;
+
+          return true;
+        } else if (this.hero.equipment.shield == null) {
+          this.bagStore.removeItem(item);
+          this.hero.equipment.shield = item;
+          this.hero.maxHealth += this.hero.equipment.shield.value;
+          return true;
+        }
       }
     }
   }

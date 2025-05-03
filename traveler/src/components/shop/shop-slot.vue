@@ -79,6 +79,28 @@ export default {
         transparent 100%
       )`
         };
+      }
+      if (itemRarity === Rarity.MYTHIC) {
+        return {
+          background: `radial-gradient(
+        circle at center,
+        rgba(185, 50, 100, 0.5) 0%,
+        rgba(144, 40, 115, 0.35) 40%,
+        rgba(90, 20, 90, 0.2) 70%,
+        transparent 100%
+      )`
+        };
+      }
+      if (itemRarity === Rarity.RARE) {
+        return {
+          background: `radial-gradient(
+        circle at center,
+        rgba(123, 88, 255, 0.6) 0%,
+        rgba(98, 62, 219, 0.4) 40%,
+        rgba(54, 34, 129, 0.25) 70%,
+        transparent 100%
+      )`
+        };
       } else {
         return {
           background: `radial-gradient(

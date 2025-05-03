@@ -14,6 +14,19 @@ export class ArmorProvider {
             .lootRarity(Rarity.COMMON)
             .lootItemImgPath(this.heroArmorFolderPath + "common-type/robe.png")
             .dropChance(Randomizer.getChance(100))
+            .price(20)
+            .build();
+    }
+
+    public static getStormhideArmor(): LootItemModel {
+        return new LootItemBuilder()
+            .lootItemName("Stormhide")
+            .lootValue(Randomizer.getRandomIntInRange(100, 200))
+            .price(2000)
+            .itemType(ItemType.ARMOR)
+            .lootRarity(Rarity.MYTHIC)
+            .lootItemImgPath(this.heroArmorFolderPath + "mythic-type/stormhide-armor.png")
+            .dropChance(Randomizer.getChance(100))
             .build();
     }
 

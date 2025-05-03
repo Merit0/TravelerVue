@@ -8,4 +8,5 @@ export enum ItemType {
   RING,
   NECKLACE,
   HEAL,
+  COIN
 }

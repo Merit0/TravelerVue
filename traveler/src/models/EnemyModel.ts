@@ -15,7 +15,7 @@ export default class EnemyModel implements IEnemy {
     powerModifierLvl = 0;
     imgPath: string;
     enemyBackgroundColor: string;
-    loot: LootItemModel;
+    loot: LootItemModel[];
 
     constructor() {
         this.id = 1;
@@ -47,7 +47,7 @@ export default class EnemyModel implements IEnemy {
         return this.id;
     }
 
-    public getLoot(): LootItemModel {
+    public getLoot(): LootItemModel[] {
         return this.loot;
     }
 
@@ -81,7 +81,7 @@ export default class EnemyModel implements IEnemy {
         this.enemyBackgroundColor = backgroundColor;
     }
 
-    public setLoot(lootItem: LootItemModel): void {
+    public setLoot(lootItem: LootItemModel[]): void {
         this.loot = lootItem;
     }
 
