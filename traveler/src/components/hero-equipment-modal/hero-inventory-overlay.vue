@@ -1,30 +1,12 @@
 <template>
-  <div class="globalOverlay" v-if="showInventory">
+  <div class="globalOverlay" v-if="heroStore.inventoryShown">
     <div class="inventoryContent">
-      <div class="close-button-container">
-        <div class="closeInventoryBtn" @click="$emit('heroInventory', false)">CLOSE</div>
-      </div>
-      <div class="inventory-corner-bag-image"></div>
-      <div class="top-component">
-        <div class="left-component-bar"></div>
-        <div class="middle-component-bar">
-          <div class="top-plank-title-container">
-            <span class="top-plank-title">{{ hero.name }}</span>
-          </div>
-        </div>
-        <div class="right-component-bar"></div>
-      </div>
+      <close-hero-inventory-modal-button @heroInventory="closeInventory($event)"/>
+      <inventory-top-element/>
       <div class="left-side-wooden-plank"></div>
       <div class="bottom-wooden-plank"></div>
-      <div class="bag-content">
-        <div class="bag-title-container">
-          <span class="bag-title">Bag</span>
-        </div>
-        <bag-inventory-slots-grid></bag-inventory-slots-grid>
-        <div class="separator-wooden-plank"></div>
-        <div class="right-side-wooden-plank"></div>
-      </div>
-      <HeroEquipmentHolder :equipment="hero.equipment" :hero-image-path="hero.imgPath" />
+      <hero-bag-inventory/>
+      <HeroEquipmentHolder :equipment="hero.equipment" :hero-image-path="hero.imgPath"/>
     </div>
   </div>
 </template>
@@ -32,19 +14,22 @@
 <script lang="ts">
 import {LootItemModel} from '@/models/LootItemModel';
 import {useBagStore} from '@/stores/BagStore';
-import HeroEquipmentHolder from '@/components/HeroEquipmentHolder.vue'
+import HeroEquipmentHolder from '@/components/hero-equipment-modal/hero-equipment-holder/hero-equipment-holder.vue'
 import {useHeroStore} from '@/stores/HeroStore';
-import BagInventorySlotsGrid from "@/components/bag-inventory/bag-inventory-slots-grid.vue";
+import BagInventorySlotsGrid from "@/components/hero-equipment-modal/bag-inventory/bag-inventory-slots-grid.vue";
+import InventoryTopElement from "@/components/hero-equipment-modal/inventory-top-element.vue";
+import CloseHeroInventoryModalButton from "@/components/gui/buttons/close-hero-inventory-modal-button.vue";
+import HeroBagInventory from "@/components/hero-equipment-modal/bag-inventory/hero-bag-inventory.vue";
 
 
 export default {
   name: "hero-inventory-overlay",
-  components: {BagInventorySlotsGrid, HeroEquipmentHolder: HeroEquipmentHolder},
-  props: {
-    showInventory: {
-      type: Boolean,
-      required: true
-    }
+  components: {
+    HeroBagInventory,
+    CloseHeroInventoryModalButton,
+    InventoryTopElement,
+    BagInventorySlotsGrid,
+    HeroEquipmentHolder: HeroEquipmentHolder
   },
   data() {
     const heroStore = useHeroStore();
@@ -52,7 +37,12 @@ export default {
     const bagStore = useBagStore();
     const bagItems: LootItemModel[] = bagStore.bagItems;
 
-    return {bagItems, hero};
+    return {bagItems, hero, heroStore};
+  },
+  methods: {
+    async closeInventory(inventoryStatus: boolean) {
+      this.heroStore.showInventory(inventoryStatus);
+    },
   }
 }
 </script>
@@ -87,94 +77,16 @@ export default {
   align-content: center;
 }
 
-.top-plank-title-container {
-  position: relative;
-  margin-top: 3%;
-  width: 65vh;
-  height: 50%;
-  text-align: center;
-  align-content: center;
-  border-radius: 1vw;
-}
-
 .bag-title {
   font-size: 3.2vh;
   font-weight: 700;
   color: #ffdfb0; /* Теплий майже білий відтінок */
-  text-shadow:
-      0 1px 2px rgba(0, 0, 0, 0.6),
-      0 0 5px rgba(255, 230, 200, 0.15);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6),
+  0 0 5px rgba(255, 230, 200, 0.15);
 
   letter-spacing: 0.05em;
   text-transform: uppercase;
   font-family: 'Cinzel', serif; /* класичний фентезі-стиль */
-}
-
-.top-plank-title {
-  font-family: 'Cinzel', serif;
-  color: rgb(64, 27, 1);
-  font-size: 3vh;
-  font-weight: bold;
-  text-align: center;
-  line-height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
-  border-radius: 5px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  height: 100%;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-}
-
-.top-component {
-  position: absolute;
-  top: -5vh;
-  left: -1%;
-  width: 102%;
-  height: 20vh;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 10;
-  padding: 0;
-}
-
-.middle-component-bar {
-  position: absolute;
-  width: 100%;
-  height: 75%;
-  background-image: url("/images/hero-inventary/middle-part.png");
-  background-repeat: repeat;
-  background-size: contain;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  align-content: center;
-  flex-direction: column;
-}
-
-.left-component-bar {
-  position: absolute;
-  left: -2%;
-  width: 5%;
-  height: 100%;
-  background-image: url("/images/hero-inventary/left-part-top-bar.png");
-  background-repeat: no-repeat;
-  background-size: contain;
-  z-index: 1;
-}
-
-.right-component-bar {
-  position: absolute;
-  right: -3%;
-  width: 5%;
-  height: 100%;
-  background-image: url("/images/hero-inventary/right-part-top-bar.png");
-  background-repeat: no-repeat;
-  background-size: contain;
 }
 
 .left-side-wooden-plank {

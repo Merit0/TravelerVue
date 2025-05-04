@@ -14,7 +14,7 @@ import HeroDetailsBar from '../../HeroDetailsBar.vue';
 import HeroDeathOverlay from '@/components/HeroDeathOverlay.vue'
 import {useHeroStore} from '@/stores/HeroStore'
 import {useMapLocationStore} from '@/stores/map-location-store';
-import HeroInventoryOverlay from '../../HeroInventoryOverlay.vue';
+import HeroInventoryOverlay from '../../hero-equipment-modal/hero-inventory-overlay.vue';
 import {useUserStore} from "@/stores/UserStore";
 import {MapLocationModel} from "@/models/map-location-model";
 import MapModel from "@/models/MapModel";

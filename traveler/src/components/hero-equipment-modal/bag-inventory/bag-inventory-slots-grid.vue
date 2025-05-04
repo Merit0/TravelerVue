@@ -14,9 +14,10 @@
 </template>
 
 <script lang="ts">
+
+import BagItemTile from "@/components/hero-equipment-modal/bag-inventory/bag-item-tile.vue";
 import {useHeroStore} from "@/stores/HeroStore";
 import {useBagStore} from "@/stores/BagStore";
-import BagItemTile from "@/components/bag-inventory/bag-item-tile.vue";
 
 export default {
   name: "bag-inventory-slots-grid",
