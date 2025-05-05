@@ -13,7 +13,6 @@ export const useChestStore = defineStore("chest", {
                 console.log('Resetting Chest state');
                 this.chestItems = [];
                 this.isShown = false;
-                console.log('Chest state after reset:', this.$state);
             },
             async addItem(lootItem: LootItemModel) {
                 this.chestItems.unshift(lootItem);

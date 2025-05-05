@@ -107,21 +107,6 @@ export default {
 </script>
 
 <style>
-.bagItemArea {
-  width: 85px;
-  height: 85px;
-  margin-top: 0.1%;
-  display: flex;
-  align-items: center;
-  border-radius: 0.5vw;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.1);
-  justify-content: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
 .bagItemImg {
   position: relative;
   width: 80%;
