@@ -1,6 +1,7 @@
 <template>
-  <div class="bagItemArea">
+  <div class="inventorySlotContainer">
     <div class="bagItemImg" :style="getItemStyle(lootItem)" @click="useItem(lootItem)"></div>
+    <div class="inventoryFrameImage"></div>
   </div>
 </template>
 
@@ -106,30 +107,16 @@ export default {
 </script>
 
 <style>
-.bagItemArea {
-  width: 85px;
-  height: 85px;
-  margin-top: 0.1%;
-  display: flex;
-  align-items: center;
-  border-radius: 0.5vw;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.1);
-  justify-content: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
 .bagItemImg {
   position: relative;
-  width: 90%;
-  height: 90%;
+  width: 80%;
+  height: 80%;
   border-radius: 10%;
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  z-index: 1;
 }
 
 .bagItemImg:active {
@@ -137,8 +124,8 @@ export default {
   filter: brightness(1.2);
 }
 
-.bagItemArea:hover {
-  box-shadow: 0 0 10px rgba(255, 174, 0, 0.6);
+.bagItemImg:hover {
+  box-shadow: 0 0 10px rgba(255, 204, 69, 0.6);
   transform: scale(1.05);
   cursor: pointer;
 }

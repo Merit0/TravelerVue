@@ -6,7 +6,7 @@
 <script lang="ts">
 
 import TileModel from "@/models/TileModel";
-import { PropType } from 'vue'
+import { PropType } from 'vue';
 
 export default {
     name: "empty-tile",

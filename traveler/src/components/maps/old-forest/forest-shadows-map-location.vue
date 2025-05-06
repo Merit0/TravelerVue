@@ -15,14 +15,14 @@ import HeroDetailsBar from '../../HeroDetailsBar.vue';
 import HeroDeathOverlay from '@/components/HeroDeathOverlay.vue'
 import {useHeroStore} from '@/stores/HeroStore'
 import {useMapLocationStore} from '@/stores/map-location-store';
-import HeroInventory from '../../HeroInventory.vue';
+import HeroInventoryOverlay from '../../hero-equipment-modal/hero-inventory-overlay.vue';
 import {useUserStore} from "@/stores/UserStore";
 import {MapLocationModel} from "@/models/map-location-model";
 import MapModel from "@/models/MapModel";
 
 export default {
   name: "forest-shadows-map-location",
-  components: {TilesGrid, HeroDetailsBar, HeroDeathOverlay, HeroInventory},
+  components: {TilesGrid, HeroDetailsBar, HeroDeathOverlay, HeroInventory: HeroInventoryOverlay},
   data() {
     const mapLocationName = 'Forest Shadows';
     const heroStore = useHeroStore();

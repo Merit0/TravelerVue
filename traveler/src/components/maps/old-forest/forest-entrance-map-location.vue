@@ -4,7 +4,7 @@
     <HeroDetailsBar :hero="hero"></HeroDetailsBar>
     <tiles-grid :mapTiles="mapLocationStore.tiles" v-if="tilesShown && heroStore.isAlive()" :backgroundImageSrc="mapLocation.imgPath"></tiles-grid>
     <HeroDeathOverlay v-if="!heroStore.isAlive() && userStore.isUserLoggedIn"></HeroDeathOverlay>
-    <hero-inventory :show-inventory="heroStore.inventoryShown" @heroInventory="closeInventory($event)"></hero-inventory>
+    <hero-inventory></hero-inventory>
   </section>
 </template>
 
@@ -13,7 +13,7 @@ import HeroDetailsBar from '../../HeroDetailsBar.vue';
 import HeroDeathOverlay from '@/components/HeroDeathOverlay.vue'
 import {useHeroStore} from '@/stores/HeroStore'
 import {useMapLocationStore} from '@/stores/map-location-store';
-import HeroInventory from '../../HeroInventory.vue';
+import HeroInventoryOverlay from '../../hero-equipment-modal/hero-inventory-overlay.vue';
 import {useUserStore} from "@/stores/UserStore";
 import {MapLocationModel} from "@/models/map-location-model";
 import MapModel from "@/models/MapModel";
@@ -21,7 +21,7 @@ import TilesGrid from "@/components/tiles-grid.vue";
 
 export default {
   name: "forest-entrance-map-location",
-  components: {TilesGrid, HeroDetailsBar, HeroDeathOverlay, HeroInventory},
+  components: {TilesGrid, HeroDetailsBar, HeroDeathOverlay, HeroInventory: HeroInventoryOverlay},
   data() {
     const mapLocationName = 'Forest Entrance'
     const heroStore = useHeroStore();
@@ -38,10 +38,5 @@ export default {
 
     return {hero, tilesShown, heroStore, mapLocationStore, userStore, mapLocationName, mapLocation}
   },
-  methods: {
-    async closeInventory(inventoryStatus: boolean) {
-      this.heroStore.showInventory(inventoryStatus);
-    },
-  }
 }
 </script>
