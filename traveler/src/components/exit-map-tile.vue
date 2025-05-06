@@ -1,5 +1,5 @@
 <template>
-  <div class="initialTileView exitMapTile" :style="getTileImage(tile.backgroundSrc)">
+  <div v-if="tile.isExit" class="initialTileView exitMapTile" :style="getTileImage(tile.backgroundSrc)">
     <div class="exitTileImage" @click="visitMaps()"></div>
   </div>
 </template>

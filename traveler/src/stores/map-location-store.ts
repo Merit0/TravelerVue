@@ -114,7 +114,6 @@ export const useMapLocationStore = defineStore("map-location-store", {
                     };
                 } else {
                     const tiles = this.generateTiles(locationMap);
-                    this.addCamping(tiles);
                     this.addHeroToTiles(tiles, locationMap.hero);
                     this.addEnemiesToTiles(tiles, locationMap);
                     this.addBossOnTile(tiles, locationMap)
@@ -129,46 +128,70 @@ export const useMapLocationStore = defineStore("map-location-store", {
             this.mapLocationName = locationMap.name;
         },
 
-        generateTiles(locationMap: MapLocationModel): TileModel[] {
-            const tilesNumber = locationMap.tilesNumber;
-            return Array.from({length: tilesNumber}, (_, i) => {
-                const tile = new TileModel(i);
-                tile.setIsInitial(i !== 0);
-                tile.setImageSrc(locationMap.tileImage)
-                tile.setBackgroundSrc(locationMap.tileBackgroundSrc)
-                return tile;
-            });
-        },
+        generateTiles(locationMap: MapLocationModel, rows = 5, cols = 12): TileModel[] {
+            const tiles: TileModel[] = [];
 
+            for (let y = 0; y < rows; y++) {
+                for (let x = 0; x < cols; x++) {
+                    const index = y * cols + x;
+                    const tile = new TileModel(index, {x, y});
+                    tile.setIsInitial(index !== 0);
+                    tile.setImageSrc(locationMap.tileImage);
+                    tile.setBackgroundSrc(locationMap.tileBackgroundSrc);
+                    tile.isHeroHere = false;
+                    tile.isExit = false;
+                    tiles.push(tile);
+                }
+            }
+
+            if (tiles.length > 0) {
+                tiles[0].isHeroHere = true;
+                tiles[tiles.length - 1].isExit = true;
+            }
+
+            return tiles;
+        },
         addHeroToTiles(tiles: TileModel[], hero: HeroModel) {
-            if (!tiles.length) return;
-            this.removeAllItemsFromTile(tiles[1]);
-            tiles[1].hero = hero;
+            const startTile = tiles[0];
+            startTile.isHeroHere = true;
+            hero.currentTile = startTile;
+            hero.heroLocation = {...startTile.coordinates};
+            this.calculateReachableTiles(startTile, tiles);
         },
 
-        addCamping(tiles: TileModel[]) {
-            if (!tiles.length) return;
-            const firstTile: TileModel = tiles[0];
-            firstTile.isCamping = true;
-            firstTile.setIsInitial(false);
-            this.removeAllItemsFromTile(firstTile);
-        },
+        // addCamping(tiles: TileModel[]) {
+        //     if (!tiles.length) return;
+        //     const firstTile: TileModel = tiles[0];
+        //     firstTile.isCamping = true;
+        //     firstTile.setIsInitial(false);
+        //     this.removeAllItemsFromTile(firstTile);
+        // },
+
+        // addExit(tiles: TileModel[]) {
+        //     if (!tiles.length) return;
+        //     const lastTile: TileModel = tiles[tiles.length - 1];
+        //     lastTile.isExit = true;
+        //     lastTile.setIsInitial(false);
+        //     this.removeAllItemsFromTile(lastTile);
+        // },
 
         moveHero(nextTile: TileModel) {
             const heroStore = useHeroStore();
-            const tiles = this.tiles;
-            const currentTile = tiles.find((tile: TileModel) => tile.hero);
+            const hero = heroStore.hero;
+            const currentTile = hero.currentTile;
+
             if (!currentTile) return;
 
-            const hero = currentTile.hero;
-            currentTile.hero = null;
+            currentTile.isHeroHere = false;
             currentTile.isEmpty = true;
 
-            nextTile.hero = hero;
-            heroStore.setLocation(nextTile);
-            this.removeAllItemsFromTile(nextTile);
-        },
+            nextTile.isHeroHere = true;
+            hero.currentTile = nextTile;
+            hero.heroLocation = {...nextTile.coordinates};
 
+            this.removeAllItemsFromTile(nextTile);
+            this.calculateReachableTiles(nextTile, this.tiles);
+        },
         addEnemiesToTiles(tiles: TileModel[], locationMap: MapLocationModel) {
             tiles.forEach((tile, index) => {
                 if (index === 0 || tile.hero) return;
@@ -195,7 +218,7 @@ export const useMapLocationStore = defineStore("map-location-store", {
                 boss.setLoot(bossLoot);
                 const bossTile: TileModel = tiles[randNumber];
                 bossTile.setEnemies([boss]);
-                const chest: ChestModel = this.generateChest([ boss ], locationMap.chestImage);
+                const chest: ChestModel = this.generateChest([boss], locationMap.chestImage);
                 bossTile.setChest(chest);
             }
         },
@@ -261,5 +284,33 @@ export const useMapLocationStore = defineStore("map-location-store", {
             tile.isEmpty = false;
             tile.isInitial = false;
         },
+
+        calculateReachableTiles(heroTile: TileModel, allTiles: TileModel[]) {
+            const directions = [
+                {x: 0, y: -1},  // top
+                {x: 1, y: 0},   // right
+                {x: 0, y: 1},   // bottom
+                {x: -1, y: 0},  // left
+                {x: 1, y: -1},  // top-right
+                {x: -1, y: -1}, // top-left
+                {x: 1, y: 1},   // bottom-right
+                {x: -1, y: 1},  // bottom-left
+            ];
+
+            // Скидуємо статус усіх клітинок
+            allTiles.forEach(tile => tile.isReachable = false);
+
+            // Позначаємо сусідів як досяжні
+            for (const dir of directions) {
+                const tx = heroTile.coordinates.x + dir.x;
+                const ty = heroTile.coordinates.y + dir.y;
+                const neighbor = allTiles.find(
+                    t => t.coordinates.x === tx && t.coordinates.y === ty
+                );
+                if (neighbor) {
+                    neighbor.isReachable = true;
+                }
+            }
+        }
     },
 });
