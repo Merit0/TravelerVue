@@ -52,8 +52,30 @@ export default {
 }
 </script>
 <style>
+@keyframes heroJump {
+  0% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(-8px);
+  }
+  50% {
+    transform: translateY(0);
+  }
+  75% {
+    transform: translateY(-4px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
 .heroTile {
-  background: none;
-  background-size: 100% 100%;
+  width: 100%;
+  height: 100%;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  animation: heroJump 0.5s ease-out;
 }
 </style>

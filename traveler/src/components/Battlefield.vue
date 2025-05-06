@@ -97,8 +97,16 @@ export default {
       }
     },
     async closeBattlefield(tile: TileModel) {
-      this.$emit('isBattle', false)
+      this.$emit('isBattle', false);
       tile.inBattle = false;
+      if (tile.enemies.length === 0) {
+        tile.isEmpty = true;
+        tile.chest = null;
+      }
+      const mapStore = useMapLocationStore();
+      const heroStore = useHeroStore();
+      mapStore.calculateReachableTiles(heroStore.hero.currentTile, mapStore.tiles);
+      await mapStore.saveProgress(mapStore.mapLocationName);
     },
     async showEnemies() {
       this.enemies.forEach((enemy: EnemyModel) => {

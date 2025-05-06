@@ -152,6 +152,9 @@ export const useMapLocationStore = defineStore("map-location-store", {
             return tiles;
         },
         addHeroToTiles(tiles: TileModel[], hero: HeroModel) {
+            tiles.forEach((tile: TileModel) => {
+                tile.isHeroHere = false;
+            })
             const startTile = tiles[0];
             startTile.isHeroHere = true;
             hero.currentTile = startTile;

@@ -75,9 +75,13 @@ export default {
       this.moveHeroTo(tile);
     },
     moveHeroTo(targetTile: TileModel) {
-      const currentTile = this.hero.currentTile;
-      if (currentTile) currentTile.isHeroHere = false;
+      const currentTile: TileModel = this.hero.currentTile;
+      if (currentTile) {
+        currentTile.isHeroHere = false;
+        currentTile.isEmpty = true;
+      }
       targetTile.isHeroHere = true;
+      targetTile.isEmpty = false;
       this.hero.currentTile = targetTile;
       this.hero.heroLocation = targetTile.coordinates;
       this.mapLocationStore.calculateReachableTiles(targetTile, this.mapLocationStore.tiles);
@@ -85,11 +89,6 @@ export default {
     }
   },
   mounted() {
-    this.heroStore.loadHeroLocation();
-    const mountTiles = this.mapLocationStore.tiles;
-    console.log('Mount Tile -->', mountTiles[0]);
-    console.log('Mount Tile -->', mountTiles[1]);
-    console.log('Mount Tile -->', mountTiles[2]);
     const savedCoords = this.hero.heroLocation;
     if (savedCoords) {
       const matchedTile = this.mapLocationStore.tiles.find(
