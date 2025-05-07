@@ -1,7 +1,16 @@
 <template>
-  <div class="initialTileView mapTile" v-if="(!tile.isInitial) && tile.enemies.length != 0 && enemyAlive" :style="getTileBackground(tile)">
+  <div class="initialTileView mapTile" v-if="(!tile.isInitial) && tile.enemies.length != 0 && enemyAlive"
+       :style="getTileBackground(tile)">
     <div class="initialTileView mapTile enemyTile" :style="getEnemyImage(tile.enemies[0])">
-      <button class="mapTile tileButton" @click="startBattle(tile)"></button>
+      <button
+          class="mapTile tileButton"
+          @click="startBattle(tile)"
+          :disabled="!tile.isReachable"
+          :class="{
+    unreachable: !tile.isReachable,
+    'reachable-tile': tile.isReachable && !tile.isHeroHere,
+  }"
+      ></button>
     </div>
   </div>
 </template>
@@ -44,6 +53,8 @@ export default {
 }
 </script>
 <style>
+@import '@/styles/animated-tile.css';
+
 .enemyTile {
   background: none;
   background-size: 90% 90%;

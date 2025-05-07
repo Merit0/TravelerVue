@@ -2,13 +2,11 @@
   <div class="gridContainer" :style="getMapLocationBackground(this.backgroundImageSrc)">
     <div class="scalableGridWrapper">
       <div class="tilesGrid">
-<!--        <camp-tile></camp-tile>-->
         <map-tile
             v-for="mapTile in mapTiles"
             :key="mapTile.id"
             :tile="mapTile"
         />
-<!--        <exit-map-tile v-if="this.mapTiles[0]" :tile="this.mapTiles[0]"></exit-map-tile>-->
       </div>
     </div>
   </div>

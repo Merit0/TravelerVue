@@ -10,6 +10,7 @@ export const useHeroStore = defineStore("hero", {
         return {
             hero: new HeroModel(),
             inventoryShown: false,
+            heroPositionsByMap: {}
         };
     },
     actions: {
@@ -60,11 +61,5 @@ export const useHeroStore = defineStore("hero", {
                 localStorage.setItem("hero-location", JSON.stringify(this.hero.heroLocation));
             }
         },
-        loadHeroLocation() {
-            const saved = localStorage.getItem("hero-location");
-            if (saved) {
-                this.hero.heroLocation = JSON.parse(saved);
-            }
-        }
     },
 });

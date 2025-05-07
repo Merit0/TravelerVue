@@ -71,6 +71,8 @@ export const useMapLocationStore = defineStore("map-location-store", {
                 MapProvider.getEvilTree(),
                 MapProvider.getMagicCircle(),
             ];
+
+            this.mapLocationName = "";
         },
         async saveProgress(locationName: string) {
             const key = `${toKebabCase(locationName)}-location-map`;
@@ -100,6 +102,7 @@ export const useMapLocationStore = defineStore("map-location-store", {
                 localStorage.removeItem(key);
             });
         },
+
         buildLocationMap(locationMap: MapLocationModel) {
             const key = `${toKebabCase(locationMap.name)}-location-map`;
             const saved = localStorage.getItem(key);
@@ -149,8 +152,11 @@ export const useMapLocationStore = defineStore("map-location-store", {
                 tiles[tiles.length - 1].isExit = true;
             }
 
+            console.log('LENGH ->', tiles.length);
+
             return tiles;
         },
+
         addHeroToTiles(tiles: TileModel[], hero: HeroModel) {
             tiles.forEach((tile: TileModel) => {
                 tile.isHeroHere = false;
@@ -161,22 +167,6 @@ export const useMapLocationStore = defineStore("map-location-store", {
             hero.heroLocation = {...startTile.coordinates};
             this.calculateReachableTiles(startTile, tiles);
         },
-
-        // addCamping(tiles: TileModel[]) {
-        //     if (!tiles.length) return;
-        //     const firstTile: TileModel = tiles[0];
-        //     firstTile.isCamping = true;
-        //     firstTile.setIsInitial(false);
-        //     this.removeAllItemsFromTile(firstTile);
-        // },
-
-        // addExit(tiles: TileModel[]) {
-        //     if (!tiles.length) return;
-        //     const lastTile: TileModel = tiles[tiles.length - 1];
-        //     lastTile.isExit = true;
-        //     lastTile.setIsInitial(false);
-        //     this.removeAllItemsFromTile(lastTile);
-        // },
 
         moveHero(nextTile: TileModel) {
             const heroStore = useHeroStore();
@@ -195,6 +185,7 @@ export const useMapLocationStore = defineStore("map-location-store", {
             this.removeAllItemsFromTile(nextTile);
             this.calculateReachableTiles(nextTile, this.tiles);
         },
+
         addEnemiesToTiles(tiles: TileModel[], locationMap: MapLocationModel) {
             tiles.forEach((tile, index) => {
                 if (index === 0 || tile.hero) return;
@@ -300,10 +291,8 @@ export const useMapLocationStore = defineStore("map-location-store", {
                 {x: -1, y: 1},  // bottom-left
             ];
 
-            // Скидуємо статус усіх клітинок
             allTiles.forEach(tile => tile.isReachable = false);
 
-            // Позначаємо сусідів як досяжні
             for (const dir of directions) {
                 const tx = heroTile.coordinates.x + dir.x;
                 const ty = heroTile.coordinates.y + dir.y;
@@ -314,6 +303,13 @@ export const useMapLocationStore = defineStore("map-location-store", {
                     neighbor.isReachable = true;
                 }
             }
+        },
+
+        resetCurrentLocation() {
+            const key = `${toKebabCase(this.mapLocationName)}-location-map`;
+            localStorage.removeItem(key);
+            delete this.locationStates[this.mapLocationName];
+            this.mapLocationName = "";
         }
     },
 });

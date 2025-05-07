@@ -1,5 +1,5 @@
 <template>
-  <div v-if="tile.isExit" class="initialTileView exitMapTile" :style="getTileImage(tile.backgroundSrc)">
+  <div class="initialTileView exitMapTile" :style="getTileImage(tile.backgroundSrc)">
     <div class="exitTileImage" @click="visitMaps()"></div>
   </div>
 </template>
@@ -8,6 +8,7 @@
 import TileModel from '@/models/TileModel';
 import {PropType} from "vue";
 import router from "@/router";
+import {useMapLocationStore} from "@/stores/map-location-store";
 
 export default {
   name: "exit-map-tile",
@@ -24,8 +25,10 @@ export default {
       }
     },
     visitMaps() {
+      const mapStore = useMapLocationStore();
+      mapStore.resetCurrentLocation();
       router.push('/maps');
-    },
+    }
   }
 }
 </script>
