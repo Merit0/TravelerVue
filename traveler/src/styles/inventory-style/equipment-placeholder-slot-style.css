@@ -1,4 +1,4 @@
-.equipmentSlot {
+.equipment-slot {
     width: 6vw;
     height: 12vh;
     display: flex;
@@ -89,7 +89,7 @@
 }
 
 @media (max-width: 768px) {
-    .equipmentSlot {
+    .equipment-slot {
         width: 3rem;
         height: 3rem;
     }
