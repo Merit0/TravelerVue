@@ -45,12 +45,12 @@ export default {
 <style>
 .gridContainer {
   width: 100%;
-  height: 94vh;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 .scalableGridWrapper {
@@ -61,10 +61,8 @@ export default {
 
 .tilesGrid {
   display: grid;
-  grid-template-columns: repeat(12, 14vh);
-  grid-template-rows: repeat(6, 14vh);
-  gap: 3px;
-  margin-top: 12vh;
+  grid-template-columns: repeat(13, 14vh);
+  grid-template-rows: repeat(7, 14vh);
+  gap: 2px;
 }
-
 </style>

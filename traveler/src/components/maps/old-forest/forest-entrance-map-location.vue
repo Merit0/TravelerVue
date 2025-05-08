@@ -1,7 +1,6 @@
 <template>
-  <section>
-    <title>{{mapLocationName}}</title>
-    <HeroDetailsBar :hero="hero"></HeroDetailsBar>
+  <section class="mapContent">
+<!--    <HeroDetailsBar :hero="hero"></HeroDetailsBar>-->
     <tiles-grid :mapTiles="mapLocationStore.tiles" v-if="tilesShown && heroStore.isAlive()" :backgroundImageSrc="mapLocation.imgPath"></tiles-grid>
     <HeroDeathOverlay v-if="!heroStore.isAlive() && userStore.isUserLoggedIn"></HeroDeathOverlay>
     <hero-inventory></hero-inventory>
@@ -40,3 +39,15 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.mapContent {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+</style>

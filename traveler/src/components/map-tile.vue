@@ -1,12 +1,30 @@
 <template>
-  <exit-map-tile v-if="tile.isExit" :tile="tile"/>
+  <camp-tile v-if="tile.isCamping" :tile="tile"/>
   <template v-else>
     <relief-tile :tile="tile"/>
-    <enemy-tile :tile="tile" :enemyAlive="enemyAlive" @showBattlefield="isBattle($event)"/>
-    <empty-tile :emptyTile="tile.isEmpty" :tile="tile"/>
-    <hero-tile :tile="tile" :show-hero="tile.isHeroHere" :key="tile.id + '-' + tile.isHeroHere"/>
-    <chest-tile :tile="tile" @chestInventory="openChestInventory($event)"/>
-    <Battlefield :showOverlay="tile.inBattle" :tile="tile" @isBattle="isBattle($event)"/>
+    <enemy-tile
+        :tile="tile"
+        :enemyAlive="enemyAlive"
+        @showBattlefield="isBattle($event)"
+    />
+    <empty-tile
+        :emptyTile="tile.isEmpty"
+        :tile="tile"
+    />
+    <hero-tile
+        :tile="tile"
+        :show-hero="tile.isHeroHere"
+        :key="tile.id + '-' + tile.isHeroHere"
+    />
+    <chest-tile
+        :tile="tile"
+        @chestInventory="openChestInventory($event)"
+    />
+    <Battlefield
+        :showOverlay="tile.inBattle"
+        :tile="tile"
+        @isBattle="isBattle($event)"
+    />
     <chest-inventory
         v-if="tile.chest"
         :chest="tile.chest"
@@ -18,18 +36,18 @@
 
 <script lang="ts">
 import TileModel from '@/models/TileModel';
-import EnemyTile from '@/components/EnemyTile.vue';
-import ReliefTile from '@/components/relief-tile.vue';
-import EmptyTile from '@/components/EmptyTile.vue';
-import Battlefield from '@/components/Battlefield.vue';
-import {useHeroStore} from '@/stores/HeroStore';
-import HeroTile from './HeroTile.vue';
-import {useMapLocationStore} from '@/stores/map-location-store';
 import {PropType} from 'vue';
-import ChestInventory from '@/components/chest-inventory.vue';
+import {useHeroStore} from '@/stores/HeroStore';
+import {useMapLocationStore} from '@/stores/map-location-store';
+
+import CampTile from '@/components/camp-tile.vue';
+import ReliefTile from '@/components/relief-tile.vue';
+import EnemyTile from '@/components/EnemyTile.vue';
+import EmptyTile from '@/components/EmptyTile.vue';
+import HeroTile from '@/components/HeroTile.vue';
 import ChestTile from '@/components/chest-tile.vue';
-import CampTile from "@/components/camp-tile.vue";
-import ExitMapTile from "@/components/exit-map-tile.vue";
+import ChestInventory from '@/components/chest-inventory.vue';
+import Battlefield from '@/components/Battlefield.vue';
 
 export default {
   name: 'map-tile',
@@ -40,15 +58,14 @@ export default {
     }
   },
   components: {
-    ExitMapTile,
     CampTile,
+    ReliefTile,
+    EnemyTile,
+    EmptyTile,
+    HeroTile,
     ChestTile,
     ChestInventory,
-    EnemyTile,
-    ReliefTile,
-    EmptyTile,
-    Battlefield,
-    HeroTile
+    Battlefield
   },
   data() {
     const heroStore = useHeroStore();

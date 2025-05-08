@@ -1,5 +1,9 @@
 <template>
-  <div class="initialTileView mapTile" v-if="(!tile.isInitial && !tile.hero) && (tile.enemies.length === 0) && tile.chest" :style="getTileBackground(tile)">
+  <div
+      v-if="tile.chest && !tile.isHeroHere && tile.enemies.length === 0"
+      class="initialTileView mapTile"
+      :style="getTileBackground(tile)"
+  >
     <div class="initialTileView mapTile chestTile" :style="getStyle(tile)">
       <button class="mapTile tileButton" @click="$emit('chestInventory', true)"></button>
     </div>

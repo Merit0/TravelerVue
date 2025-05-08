@@ -16,7 +16,6 @@ import {LootItemModel} from '@/models/LootItemModel';
 import {useBagStore} from '@/stores/BagStore';
 import HeroEquipmentHolder from '@/components/hero-equipment-modal/hero-equipment-holder/hero-equipment-holder.vue'
 import {useHeroStore} from '@/stores/HeroStore';
-import BagInventorySlotsGrid from "@/components/hero-equipment-modal/bag-inventory/bag-inventory-slots-grid.vue";
 import InventoryTopElement from "@/components/hero-equipment-modal/inventory-top-element.vue";
 import CloseHeroInventoryModalButton from "@/components/gui/buttons/close-hero-inventory-modal-button.vue";
 import HeroBagInventory from "@/components/hero-equipment-modal/bag-inventory/hero-bag-inventory.vue";
@@ -28,7 +27,6 @@ export default {
     HeroBagInventory,
     CloseHeroInventoryModalButton,
     InventoryTopElement,
-    BagInventorySlotsGrid,
     HeroEquipmentHolder: HeroEquipmentHolder
   },
   data() {

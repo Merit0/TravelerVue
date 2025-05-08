@@ -1,34 +1,46 @@
 <template>
-  <div class="overlay" v-if="showOverlay">
+  <div class="globalOverlay" v-if="showOverlay">
     <div class="battlefieldOverlay">
       <div class="battleArea">
-        <div class="heroSide">
+        <!-- Ліва сторона: герой -->
+        <div class="heroSide" :class="{ 'hero-hit-anim': heroWasHit }">
           <button class="escapeButton" @click="closeBattlefield(tile)">X</button>
-          <button class="escapeButton" @click="showEnemies()">O</button>
+          <button class="escapeButton info" @click="showEnemies()">i</button>
         </div>
+
+        <!-- Центр: кнопка атаки -->
         <div class="attackButtonContainer">
           <button class="attackButton activeBtn" @click="attackEnemy(tile)"></button>
         </div>
+
+        <!-- Права сторона: вороги -->
         <div class="enemySide">
-          <battle-enemy-tile v-for="enemy in tile.enemies" :key="enemy.id" :enemy="enemy" :enemy-shown="enemyTileShown"
-            :enemy-alive="enemyAlive">
-          </battle-enemy-tile>
+          <battle-enemy-tile
+              v-for="enemy in tile.enemies"
+              :key="enemy.id"
+              :enemy="enemy"
+              :enemy-shown="enemyTileShown"
+              :enemy-alive="enemyAlive"
+              :class="{ 'enemy-hit-anim': recentlyHitEnemyIds.includes(enemy.id) }"
+          />
         </div>
       </div>
-      <div class="battleReporter">
-        <h1 style="font-size: 18px; margin-left: 550px; color:maroon">Battle:</h1>
-        <div v-for="enemy in enemies" :key="enemy.id" v-bind="enemy">
-          <p v-if="isAttacked" style="font-size: 15px;">
-            =>
-            <span class="pHero">{{ hero.getName() }}</span>
-            hit enemy by {{ hero.getAttack() }}
-            <span class="pEnemy">{{ enemy.name }}'s</span>
-            [health:
-            <span>{{ enemy.health }}]. --- </span>
-            <span class="pEnemy">{{ enemy.name }}</span>
-            hit
-            <span class="pHero">{{ hero.getName() }}</span>
-            by {{ enemy.attack }}.
+
+      <!-- Лог бою -->
+      <div class="battleReporter" v-if="isAttacked && enemies.length">
+        <h2>Battle log</h2>
+        <div v-for="enemy in enemies" :key="enemy.id">
+          <p class="logLine">
+            <span class="pHero">{{ hero.getName() }}</span> hit
+            <span class="pEnemy">{{ enemy.name }}</span> for
+            {{ hero.getAttack() }} damage —
+            <span class="pEnemy">{{ enemy.name }}</span>'s HP:
+            {{ enemy.health }}.
+          </p>
+          <p v-if="enemy.health > 0" class="logLine">
+            <span class="pEnemy">{{ enemy.name }}</span> hit
+            <span class="pHero">{{ hero.getName() }}</span> for
+            {{ enemy.attack }} damage.
           </p>
         </div>
       </div>
@@ -37,87 +49,97 @@
 </template>
 
 <script lang="ts">
+import { defineComponent, PropType } from "vue";
+import TileModel from "@/models/TileModel";
+import { useHeroStore } from "@/stores/HeroStore";
+import { useMapLocationStore } from "@/stores/map-location-store";
+import EnemyModel from "@/models/EnemyModel";
 import BattleEnemyTile from "./battle-enemy-tile.vue";
-import {PropType} from "vue";
-import TileModel from "../models/TileModel";
-import {useHeroStore} from "@/stores/HeroStore";
-import EnemyModel from "../models/EnemyModel";
-import {useMapLocationStore} from "@/stores/map-location-store";
 
-export default {
+export default defineComponent({
   name: "battle-field",
-  components: {BattleEnemyTile},
+  components: { BattleEnemyTile },
   props: {
     tile: {
       type: Object as PropType<TileModel>,
-      required: true,
+      required: true
     },
     showOverlay: {
       type: Boolean,
-      required: true,
-      default: false
+      required: true
     }
   },
   data() {
-    const mapLocationStore = useMapLocationStore();
     const heroStore = useHeroStore();
-    const hero = heroStore.hero;
-    const enemies = this.tile.enemies;
-    let enemyTileShown = true;
-    let enemyAlive = true;
-    let isAttacked = false;
-    return {enemyTileShown, enemyAlive, hero, isAttacked, mapLocationStore, enemies};
+    const mapLocationStore = useMapLocationStore();
+    return {
+      hero: heroStore.hero,
+      mapLocationStore,
+      enemyTileShown: true,
+      enemyAlive: true,
+      isAttacked: false,
+      heroWasHit: false,
+      recentlyHitEnemyIds: [] as number[],
+      enemies: [] as EnemyModel[]
+    };
+  },
+  mounted() {
+    this.enemies = [...this.tile.enemies];
   },
   methods: {
     async attackEnemy(tile: TileModel) {
       this.isAttacked = true;
-      tile.inBattle = true;
-      if (this.hero.getHealth() > 0) {
-        for (let i = 0; i < this.enemies.length; i++) {
-          this.hero.takeDamage(this.enemies[i].attack);
-          this.enemies[i].health -= this.hero.getAttack();
-          if (this.enemies[i].health <= 0) {
+      this.heroWasHit = false;
+      this.recentlyHitEnemyIds = [];
+
+      for (const enemy of this.enemies) {
+        if (enemy.health > 0) {
+          enemy.health -= this.hero.getAttack();
+          this.recentlyHitEnemyIds.push(enemy.id);
+
+          if (enemy.health <= 0) {
             await this.hero.addKilled();
-            const enemyIndex = this.enemies.findIndex((e: EnemyModel) => e.id === this.enemies[i].id);
-            this.enemies.splice(enemyIndex, 1);
-          }
-          if (!this.enemies.length) {
-            this.enemyAlive = false;
+          } else {
+            this.hero.takeDamage(enemy.attack);
+            this.heroWasHit = true;
           }
         }
-        if (!this.enemyAlive && !this.enemies.length) {
-          this.$emit("isBattle", false);
-          if (!tile.chest) {
-            tile.isEmpty = true;
-            this.mapLocationStore.moveHero(tile);
-          }
-          tile.inBattle = false;
-          return;
+      }
+
+      this.enemies = this.enemies.filter(e => e.health > 0);
+      tile.enemies = [...this.enemies];
+
+      if (this.enemies.length === 0) {
+        this.enemyAlive = false;
+        tile.inBattle = false;
+
+        tile.isEmpty = !tile.chest;
+        console.warn('CHEST', tile.chest);
+        this.$emit("isBattle", false);
+        if (!tile.chest) {
+          this.mapLocationStore.moveHero(tile);
         }
       }
     },
     async closeBattlefield(tile: TileModel) {
-      this.$emit('isBattle', false);
       tile.inBattle = false;
-      if (tile.enemies.length === 0) {
+      if (!tile.enemies.length) {
         tile.isEmpty = true;
         tile.chest = null;
       }
-      const mapStore = useMapLocationStore();
-      const heroStore = useHeroStore();
-      mapStore.calculateReachableTiles(heroStore.hero.currentTile, mapStore.tiles);
-      await mapStore.saveProgress(mapStore.mapLocationName);
+      this.$emit("isBattle", false);
+      await this.mapLocationStore.saveProgress(this.mapLocationStore.mapLocationName);
     },
-    async showEnemies() {
-      this.enemies.forEach((enemy: EnemyModel) => {
-        console.log(enemy.name, enemy.health);
+    showEnemies() {
+      this.enemies.forEach(e => {
+        console.log(`[${e.name}] HP: ${e.health}, ATK: ${e.attack}`);
       });
     }
   }
-};
+});
 </script>
 
-<style>
+<style scoped>
 .pHero {
   color: #0800ff;
   font-weight: bold;
@@ -126,84 +148,127 @@ export default {
 .pEnemy {
   color: #ff0000;
   font-weight: bold;
-
 }
 
 .battleReporter {
-  width: 1200px;
-  height: 150px;
-  margin: auto;
-  background-color: rgb(218, 218, 218);
-  border-radius: 20px;
-  padding: 4px;
+  width: 100%;
+  max-width: 900px;
+  margin: 1rem auto;
+  padding: 1rem;
+  background: #eee;
+  border-radius: 12px;
+  box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+  font-size: 0.95rem;
 }
 
-.attackButtonContainer {
-  width: 200px;
-  height: 600px;
-  display: flex;
-  align-items: center;
+.logLine {
+  margin-bottom: 0.5rem;
 }
 
-.attackButton {
-  margin: auto;
+.battlefieldOverlay {
   position: relative;
-  width: 200px;
-  height: 200px;
-  background-image: url('/images/overlays/battlefield/attack-btn.png');
-  outline: rgba(0, 0, 0, 0.295) solid 3px;
-  border-radius: 30%;
-  transition: 0.2s all;
-
-}
-
-.escapeButton {
-  position: relative;
-  width: 30px;
-  height: 30px;
-  background-color: rgb(255, 0, 0);
-  outline: rgba(255, 0, 0, 0.589) solid 2px;
-  border-radius: 100%;
-}
-
-.heroSide {
-  height: 600px;
-  width: 500px;
-  background-image: url('/images/overlays/battlefield/hero-side-view-500x600.png');
-  background-size: cover;
+  width: 80vw;
+  height: 80vh;
+  background-image: url('/images/overlays/lavaLand.jpg');
+  background-color: black;
+  box-shadow: 0px -3px 15px 4px rgba(255, 195, 195, 0.5);
   border-radius: 20px;
-  padding: 10px;
-}
-
-.enemySide {
-  height: 600px;
-  width: 500px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  padding: 80px;
-  background-color: rgba(95, 95, 95, 0.382);
-  border-radius: 20px;
-  border: 1px solid rgba(68, 0, 0, 0.292);
+  margin: auto;
 }
 
 .battleArea {
-  width: 1200px;
-  height: 600px;
+  width: 100%;
+  height: 100%;
   border-radius: 20px;
   margin: auto;
   display: flex;
   justify-content: center;
 }
 
-.battlefieldOverlay {
-  width: 1200px;
-  height: 750px;
-  background-image: url('/images/overlays/lavaLand.jpg');
-  background-color: black;
-  box-shadow: 0px -3px 15px 4px rgba(255, 195, 195, 0.5);
+.heroSide {
+  position: relative;
+  width: 40vw;
+  height: 80vh;
+  background-image: url('/images/overlays/battlefield/hero-side-view-500x600.png');
+  background-size: cover;
   border-radius: 20px;
+  padding: 1%;
+}
+
+.enemySide {
+  width: 50vw;
+  height: 80vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 5vw;
+  background-color: rgba(95, 95, 95, 0.382);
+  border-radius: 20px;
+  border: 1px solid rgba(68, 0, 0, 0.292);
+}
+
+.attackButtonContainer {
+  width: 5vw;
+  height: 10vh;
+  display: flex;
+  align-items: center;
+}
+
+.attackButton {
   margin: auto;
+  width: 100%;
+  height: 100%;
+  background-image: url('/images/overlays/battlefield/attack-btn.png');
+  background-size: cover;
+  outline: rgba(0, 0, 0, 0.295) solid 3px;
+  border-radius: 30%;
+  transition: 0.2s all;
+}
+
+.escapeButton {
+  width: 3vw;
+  height: 6vh;
+  margin: 0 5px;
+  background-color: crimson;
+  color: white;
+  border-radius: 50%;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.escapeButton.info {
+  background-color: darkblue;
+}
+
+/* Анімація удару героя */
+.hero-hit-anim {
+  animation: heroHitPulse 0.4s ease;
+}
+@keyframes heroHitPulse {
+  0% {
+    transform: scale(1.1);
+    filter: brightness(1.4);
+  }
+  100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+}
+
+/* Анімація удару ворога */
+.enemy-hit-anim {
+  animation: enemyHitFlash 0.4s ease;
+}
+@keyframes enemyHitFlash {
+  0% {
+    transform: scale(1.1);
+    filter: brightness(2);
+  }
+  100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
 }
 </style>

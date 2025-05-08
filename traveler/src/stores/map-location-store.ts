@@ -131,28 +131,37 @@ export const useMapLocationStore = defineStore("map-location-store", {
             this.mapLocationName = locationMap.name;
         },
 
-        generateTiles(locationMap: MapLocationModel, rows = 5, cols = 12): TileModel[] {
+        generateTiles(locationMap: MapLocationModel, rows = 7, cols = 13): TileModel[] {
             const tiles: TileModel[] = [];
+
+            // Центр сітки
+            const centerX = Math.floor(cols / 2); // 6
+            const centerY = Math.floor(rows / 2); // 3
 
             for (let y = 0; y < rows; y++) {
                 for (let x = 0; x < cols; x++) {
                     const index = y * cols + x;
                     const tile = new TileModel(index, {x, y});
+
                     tile.setIsInitial(index !== 0);
                     tile.setImageSrc(locationMap.tileImage);
                     tile.setBackgroundSrc(locationMap.tileBackgroundSrc);
                     tile.isHeroHere = false;
                     tile.isExit = false;
+
+                    // Позначити центральний тайл як кемп
+                    if (x === centerX && y === centerY) {
+                        tile.isCamping = true;
+                    }
+
                     tiles.push(tile);
                 }
             }
 
+            // Встановити останній тайл як вихід (можеш обрати інший)
             if (tiles.length > 0) {
-                tiles[0].isHeroHere = true;
                 tiles[tiles.length - 1].isExit = true;
             }
-
-            console.log('LENGH ->', tiles.length);
 
             return tiles;
         },
