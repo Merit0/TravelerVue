@@ -47,8 +47,8 @@ export default {
 
 <style scoped>
 .battleEnemyTile {
-  width: 10vw;
-  height: 20vh;
+  width: 6vw;
+  height: 12vh;
   border-radius: 50%;
   position: relative;
   cursor: pointer;

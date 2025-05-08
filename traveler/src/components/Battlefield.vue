@@ -2,18 +2,14 @@
   <div class="globalOverlay" v-if="showOverlay">
     <div class="battlefieldOverlay">
       <div class="battleArea">
-        <!-- Ліва сторона: герой -->
         <div class="heroSide" :class="{ 'hero-hit-anim': heroWasHit }">
-          <button class="escapeButton" @click="closeBattlefield(tile)">X</button>
-          <button class="escapeButton info" @click="showEnemies()">i</button>
+          <button class="escapeButton run" @click="closeBattlefield(tile)">
+            🏃
+          </button>
         </div>
-
-        <!-- Центр: кнопка атаки -->
         <div class="attackButtonContainer">
           <button class="attackButton activeBtn" @click="attackEnemy(tile)"></button>
         </div>
-
-        <!-- Права сторона: вороги -->
         <div class="enemySide">
           <battle-enemy-tile
               v-for="enemy in tile.enemies"
@@ -25,10 +21,7 @@
           />
         </div>
       </div>
-
-      <!-- Лог бою -->
       <div class="battleReporter" v-if="isAttacked && enemies.length">
-        <h2>Battle log</h2>
         <div v-for="enemy in enemies" :key="enemy.id">
           <p class="logLine">
             <span class="pHero">{{ hero.getName() }}</span> hit
@@ -159,6 +152,24 @@ export default defineComponent({
   border-radius: 12px;
   box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
   font-size: 0.95rem;
+
+  /* нове ↓↓↓ */
+  max-height: 25vh;
+  overflow-y: auto;
+  scrollbar-width: thin; /* для Firefox */
+}
+
+.battleReporter::-webkit-scrollbar {
+  width: 8px;
+}
+
+.battleReporter::-webkit-scrollbar-thumb {
+  background-color: rgba(80, 80, 80, 0.5);
+  border-radius: 4px;
+}
+
+.battleReporter::-webkit-scrollbar-track {
+  background-color: transparent;
 }
 
 .logLine {
@@ -168,27 +179,28 @@ export default defineComponent({
 .battlefieldOverlay {
   position: relative;
   width: 80vw;
-  height: 80vh;
+  height: 90vh;
   background-image: url('/images/overlays/lavaLand.jpg');
   background-color: black;
   box-shadow: 0px -3px 15px 4px rgba(255, 195, 195, 0.5);
   border-radius: 20px;
-  margin: auto;
+  margin: 2%;
 }
 
 .battleArea {
   width: 100%;
-  height: 100%;
+  height: 60vh;
   border-radius: 20px;
   margin: auto;
   display: flex;
   justify-content: center;
+  padding: 0.5rem;
 }
 
 .heroSide {
   position: relative;
-  width: 40vw;
-  height: 80vh;
+  width: 30vw;
+  height: 60vh;
   background-image: url('/images/overlays/battlefield/hero-side-view-500x600.png');
   background-size: cover;
   border-radius: 20px;
@@ -196,8 +208,8 @@ export default defineComponent({
 }
 
 .enemySide {
-  width: 50vw;
-  height: 80vh;
+  width: 30vw;
+  height: 60vh;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -209,8 +221,8 @@ export default defineComponent({
 }
 
 .attackButtonContainer {
-  width: 5vw;
-  height: 10vh;
+  width: 10vw;
+  height: 20vh;
   display: flex;
   align-items: center;
 }
@@ -225,21 +237,54 @@ export default defineComponent({
   border-radius: 30%;
   transition: 0.2s all;
 }
-
-.escapeButton {
-  width: 3vw;
-  height: 6vh;
-  margin: 0 5px;
-  background-color: crimson;
-  color: white;
+.escapeButton.run {
+  position: relative;
+  width: 4vw;
+  height: 8vh;
+  font-size: 1.5vw;
+  background: radial-gradient(circle at top left, #7a1f1f, #4a0d0d);
+  color: #fff3e0;
   border-radius: 50%;
-  border: none;
-  font-weight: bold;
+  border: 2px solid rgba(255, 100, 100, 0.3);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4),
+  inset 0 0 8px rgba(255, 180, 180, 0.2);
   cursor: pointer;
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.escapeButton.info {
-  background-color: darkblue;
+.escapeButton.run:hover {
+  background: radial-gradient(circle at top left, #a62a2a, #6a1a1a);
+  transform: scale(1.1);
+  box-shadow: 0 0 12px rgba(255, 100, 100, 0.5),
+  inset 0 0 10px rgba(255, 200, 200, 0.3);
+}
+
+/* Tooltip */
+.escapeButton.run .tooltipText {
+  visibility: hidden;
+  opacity: 0;
+  width: max-content;
+  background-color: rgba(0, 0, 0, 0.75);
+  color: #fff;
+  text-align: center;
+  padding: 5px 8px;
+  border-radius: 6px;
+  font-size: 0.8vw;
+  position: absolute;
+  top: -130%;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: opacity 0.2s ease;
+  white-space: nowrap;
+  z-index: 5;
+}
+
+.escapeButton.run:hover .tooltipText {
+  visibility: visible;
+  opacity: 1;
 }
 
 /* Анімація удару героя */
