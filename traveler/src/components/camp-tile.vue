@@ -1,5 +1,8 @@
 <template>
-  <div class="initialTileView mapTile" @click="visitCamp">
+  <div
+      class="campTile"
+      @click="visitCamp"
+  >
     <div class="campingTileImage">
       <div class="fire"></div>
     </div>
@@ -8,7 +11,7 @@
 
 <script lang="ts">
 import router from "@/router";
-import {useMapLocationStore} from "@/stores/map-location-store";
+import { useMapLocationStore } from "@/stores/map-location-store";
 
 export default {
   name: "camp-tile",
@@ -24,6 +27,22 @@ export default {
 </script>
 
 <style scoped>
+.campTile {
+  width: 100%;
+  height: 100%;
+  border-radius: 6px;
+  position: relative;
+  z-index: 10;
+  background-size: cover;
+  background: transparent url("/images/camping-place/camp-tile-background.png") no-repeat;
+}
+
+.campTile:hover {
+  cursor: pointer;
+  transform: scale(1.02);
+  box-shadow: 0 0 15px rgba(255, 180, 80, 0.4);
+}
+
 .campingTileImage {
   background-image: url("/images/camping-place/camp-tile-background.png");
   background-size: 100% 100%;
@@ -31,6 +50,7 @@ export default {
   width: 100%;
   height: 100%;
   position: relative;
+  border-radius: 6px;
 }
 
 .fire {
@@ -45,7 +65,6 @@ export default {
   pointer-events: none;
 }
 
-/* Анімації */
 @keyframes firePulse {
   0%, 100% {
     transform: scale(1);

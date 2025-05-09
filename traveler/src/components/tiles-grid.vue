@@ -63,6 +63,7 @@ export default {
   display: grid;
   grid-template-columns: repeat(13, 14vh);
   grid-template-rows: repeat(7, 14vh);
-  gap: 2px;
+  gap: 3px;
+  position: relative;
 }
 </style>
