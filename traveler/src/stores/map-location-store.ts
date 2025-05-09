@@ -134,9 +134,14 @@ export const useMapLocationStore = defineStore("map-location-store", {
         generateTiles(locationMap: MapLocationModel, rows = 7, cols = 13): TileModel[] {
             const tiles: TileModel[] = [];
 
-            // Центр сітки
-            const centerX = Math.floor(cols / 2); // 6
-            const centerY = Math.floor(rows / 2); // 3
+            const centerX = Math.floor(cols / 2);
+            const centerY = Math.floor(rows / 2);
+
+            const blockStartX = centerX - 1;
+            const blockStartY = centerY - 1;
+
+            const blockEndX = centerX + 1;
+            const blockEndY = centerY + 1;
 
             for (let y = 0; y < rows; y++) {
                 for (let x = 0; x < cols; x++) {
@@ -149,9 +154,14 @@ export const useMapLocationStore = defineStore("map-location-store", {
                     tile.isHeroHere = false;
                     tile.isExit = false;
 
-                    // Позначити центральний тайл як кемп
-                    if (x === centerX && y === centerY) {
-                        tile.isCamping = true;
+                    const isInCampZone = x >= blockStartX && x <= blockEndX &&
+                        y >= blockStartY && y <= blockEndY;
+
+                    if (isInCampZone) {
+                        tile.isBlocked = true;
+                        tile.setBackgroundSrc("")
+                        tile.setImageSrc("");
+                        tile.isReachable = false;
                     }
 
                     tiles.push(tile);
@@ -178,6 +188,10 @@ export const useMapLocationStore = defineStore("map-location-store", {
             const currentTile = hero.currentTile;
 
             if (!currentTile) return;
+            if (nextTile.isBlocked) {
+                console.warn("❌ Hero tried to move to a blocked tile:", nextTile.coordinates);
+                return;
+            }
 
             currentTile.isHeroHere = false;
             currentTile.isEmpty = true;
@@ -192,7 +206,7 @@ export const useMapLocationStore = defineStore("map-location-store", {
 
         addEnemiesToTiles(tiles: TileModel[], locationMap: MapLocationModel) {
             tiles.forEach((tile, index) => {
-                if (index === 0 || tile.hero) return;
+                if (tile.isBlocked || tile.hero) return;
 
                 const enemies = this.generateEnemies(index, locationMap.enemyModifier);
                 tile.setEnemies(enemies);
@@ -205,20 +219,28 @@ export const useMapLocationStore = defineStore("map-location-store", {
         },
 
         addBossOnTile(tiles: TileModel[], locationMap: MapLocationModel) {
-            const dropChanceConfig: ILootChanceConfig = DropLootChanceConfigProvider.getBossDropChanceConfig()
-            const bossLoot = EnemyLootProvider.getLoot(dropChanceConfig)
-            const min = 5;
-            const max = tiles.length - 2;
-            const randNumber = Math.floor(Math.random() * (max - min + 1)) + min;
-            if (randNumber < tiles.length) {
-                const boss: EnemyModel = locationMap.boss;
-                boss.setPowerModifierLvl(locationMap.enemyModifier);
-                boss.setLoot(bossLoot);
-                const bossTile: TileModel = tiles[randNumber];
-                bossTile.setEnemies([boss]);
-                const chest: ChestModel = this.generateChest([boss], locationMap.chestImage);
-                bossTile.setChest(chest);
+            const dropChanceConfig: ILootChanceConfig = DropLootChanceConfigProvider.getBossDropChanceConfig();
+            const bossLoot = EnemyLootProvider.getLoot(dropChanceConfig);
+            const boss: EnemyModel = locationMap.boss;
+            boss.setPowerModifierLvl(locationMap.enemyModifier);
+            boss.setLoot(bossLoot);
+
+            const validTiles = tiles.filter(tile =>
+                !tile.isBlocked &&
+                !tile.isHeroHere
+            );
+
+            if (validTiles.length === 0) {
+                console.warn("⚠️ No valid tiles found to place the boss.");
+                return;
             }
+
+            const randomIndex = Math.floor(Math.random() * validTiles.length);
+            const bossTile = validTiles[randomIndex];
+            bossTile.enemies = [];
+            bossTile.setEnemies([boss]);
+            const chest: ChestModel = this.generateChest([boss], locationMap.chestImage);
+            bossTile.setChest(chest);
         },
 
         generateChest(enemies: EnemyModel[], chestImage: string): ChestModel {
@@ -303,7 +325,7 @@ export const useMapLocationStore = defineStore("map-location-store", {
                 const neighbor = allTiles.find(
                     t => t.coordinates.x === tx && t.coordinates.y === ty
                 );
-                if (neighbor) {
+                if (neighbor && !neighbor.isBlocked) {
                     neighbor.isReachable = true;
                 }
             }
