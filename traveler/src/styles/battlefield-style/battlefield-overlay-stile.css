@@ -100,10 +100,10 @@
     border-radius: 30%;
     transition: 0.2s all;
 }
-.escapeButton.run {
-    position: relative;
-    width: 4vw;
-    height: 8vh;
+.escapeButton{
+    position: absolute;
+    width: 2vw;
+    height: 4vh;
     font-size: 1.5vw;
     background: radial-gradient(circle at top left, #7a1f1f, #4a0d0d);
     color: #fff3e0;
@@ -118,30 +118,11 @@
     justify-content: center;
 }
 
-.escapeButton.run:hover {
+.escapeButton:hover {
     background: radial-gradient(circle at top left, #a62a2a, #6a1a1a);
     transform: scale(1.1);
     box-shadow: 0 0 12px rgba(255, 100, 100, 0.5),
     inset 0 0 10px rgba(255, 200, 200, 0.3);
-}
-
-.escapeButton.run {
-    visibility: hidden;
-    opacity: 0;
-    width: max-content;
-    background-color: rgba(0, 0, 0, 0.75);
-    color: #fff;
-    text-align: center;
-    padding: 5px 8px;
-    border-radius: 6px;
-    font-size: 0.8vw;
-    position: absolute;
-    top: -130%;
-    left: 50%;
-    transform: translateX(-50%);
-    transition: opacity 0.2s ease;
-    white-space: nowrap;
-    z-index: 5;
 }
 
 .escapeButton.run:hover {

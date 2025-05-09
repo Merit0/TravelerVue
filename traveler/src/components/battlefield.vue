@@ -3,7 +3,7 @@
     <div class="battlefieldOverlay">
       <div class="battleArea">
         <div class="heroSide" :class="{ 'hero-hit-anim': heroWasHit }">
-          <button class="escapeButton run" @click="closeBattlefield(tile)">
+          <button class="escapeButton" @click="closeBattlefield(tile)">
             🏃
           </button>
         </div>
