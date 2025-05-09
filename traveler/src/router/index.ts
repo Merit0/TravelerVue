@@ -24,6 +24,7 @@ const routes = [
     },
     {
         path: '/camping',
+        name: "camping-page",
         component: CampPage,
         meta: {requiresAuth: true}
     },
