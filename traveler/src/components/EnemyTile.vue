@@ -1,7 +1,10 @@
 <template>
   <div class="initialTileView mapTile" v-if="(!tile.isInitial) && tile.enemies.length != 0 && enemyAlive"
        :style="getTileBackground(tile)">
-    <div class="initialTileView mapTile enemyTile" :style="getEnemyImage(tile.enemies[0])">
+    <div
+        class="initialTileView mapTile enemyTile"
+        :style="getEnemyImage(tile.enemies[0])"
+    >
       <button
           class="mapTile tileButton"
           @click="startBattle(tile)"
@@ -56,7 +59,7 @@ export default {
 @import '@/styles/animated-tile.css';
 
 .enemyTile {
-  background: none;
   background-size: 90% 90%;
+  background-repeat: no-repeat;
 }
 </style>

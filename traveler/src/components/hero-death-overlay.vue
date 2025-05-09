@@ -11,6 +11,7 @@
 import router from '@/router';
 
 export default {
+  name: "HeroDeathOverlay",
   methods: {
     async quitMap() {
       router.push("/camping");

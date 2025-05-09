@@ -5,7 +5,16 @@
       :style="getTileBackground(tile)"
   >
     <div class="initialTileView mapTile chestTile" :style="getStyle(tile)">
-      <button class="mapTile tileButton" @click="$emit('chestInventory', true)"></button>
+      <button
+          class="mapTile tileButton"
+          @click="$emit('chestInventory', true)"
+          :disabled="!tile.isReachable"
+          :class="{
+    unreachable: !tile.isReachable,
+    'reachable-tile': tile.isReachable && !tile.isHeroHere,
+  }"
+      >
+      </button>
     </div>
   </div>
 </template>

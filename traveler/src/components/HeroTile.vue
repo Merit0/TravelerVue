@@ -1,7 +1,13 @@
 <template>
   <div class="initialTileView mapTile" v-if="showHero" :style="getTileBackground(tile)">
-    <div class="initialTileView mapTile heroTile" :style="heroImgStyle">
-      <button class="mapTile tileButton" @click="openInventory()"></button>
+    <div
+        class="mapTile heroTile"
+        :style="heroImgStyle">
+      <button
+          class="mapTile tileButton"
+          @click="openInventory()"
+      >
+      </button>
     </div>
   </div>
 </template>
@@ -71,11 +77,9 @@ export default {
 }
 
 .heroTile {
-  width: 100%;
-  height: 100%;
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
+  width: 90%;
+  height: 90%;
   animation: heroJump 0.5s ease-out;
+  background-repeat: no-repeat;
 }
 </style>

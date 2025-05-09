@@ -10,7 +10,7 @@
       :show-chest-inventory="showChestInventory"
       @chestInventory="closeChestInventory(tile, $event)"
   />
-  <Battlefield :showOverlay="tile.inBattle" :tile="tile" @isBattle="isBattle($event)"/>
+  <battlefield :showOverlay="tile.inBattle" :tile="tile" @isBattle="isBattle($event)"/>
   <camp-tile/>
 </template>
 
@@ -19,7 +19,7 @@ import TileModel from '@/models/TileModel';
 import EnemyTile from '@/components/EnemyTile.vue';
 import ReliefTile from '@/components/relief-tile.vue';
 import EmptyTile from '@/components/EmptyTile.vue';
-import Battlefield from '@/components/Battlefield.vue';
+import Battlefield from '@/components/battlefield.vue';
 import {useHeroStore} from '@/stores/HeroStore';
 import HeroTile from './HeroTile.vue';
 import {useMapLocationStore} from '@/stores/map-location-store';
@@ -27,7 +27,6 @@ import {PropType} from 'vue';
 import ChestInventory from '@/components/chest-inventory.vue';
 import ChestTile from '@/components/chest-tile.vue';
 import CampTile from "@/components/camp-tile.vue";
-import ExitMapTile from "@/components/exit-map-tile.vue";
 
 export default {
   name: 'map-tile',
@@ -38,7 +37,6 @@ export default {
     }
   },
   components: {
-    ExitMapTile,
     CampTile,
     ChestTile,
     ChestInventory,
