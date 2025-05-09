@@ -1,11 +1,14 @@
 <template>
-  <camp-tile v-if="tile.isCamping" :tile="tile"/>
-  <template v-else>
-    <relief-tile :tile="tile"/>
-    <enemy-tile :tile="tile" :enemyAlive="enemyAlive" @showBattlefield="isBattle($event)"/>
-    <empty-tile :emptyTile="tile.isEmpty" :tile="tile"/>
-    <hero-tile :tile="tile" :show-hero="tile.isHeroHere" :key="tile.id + '-' + tile.isHeroHere"/>
-    <chest-tile :tile="tile" @chestInventory="openChestInventory($event)"/>
+  <div>
+    <camp-tile v-if="tile.isCamping" :tile="tile"/>
+    <template v-else>
+      <relief-tile :tile="tile"/>
+      <enemy-tile :tile="tile" :enemyAlive="enemyAlive" @showBattlefield="isBattle($event)"/>
+      <empty-tile :emptyTile="tile.isEmpty" :tile="tile"/>
+      <hero-tile :tile="tile" :show-hero="tile.isHeroHere" :key="tile.id + '-' + tile.isHeroHere"/>
+      <chest-tile :tile="tile" @chestInventory="openChestInventory($event)"/>
+    </template>
+
     <Battlefield :showOverlay="tile.inBattle" :tile="tile" @isBattle="isBattle($event)"/>
     <chest-inventory
         v-if="tile.chest"
@@ -13,7 +16,7 @@
         :show-chest-inventory="showChestInventory"
         @chestInventory="closeChestInventory(tile, $event)"
     />
-  </template>
+  </div>
 </template>
 
 <script lang="ts">

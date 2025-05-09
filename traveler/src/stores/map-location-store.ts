@@ -158,11 +158,6 @@ export const useMapLocationStore = defineStore("map-location-store", {
                 }
             }
 
-            // Встановити останній тайл як вихід (можеш обрати інший)
-            if (tiles.length > 0) {
-                tiles[tiles.length - 1].isExit = true;
-            }
-
             return tiles;
         },
 

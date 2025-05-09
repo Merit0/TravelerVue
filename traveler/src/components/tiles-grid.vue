@@ -65,5 +65,6 @@ export default {
   grid-template-rows: repeat(7, 14vh);
   gap: 3px;
   position: relative;
+  padding: 1px;
 }
 </style>
