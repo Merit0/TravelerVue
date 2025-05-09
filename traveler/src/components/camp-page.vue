@@ -10,7 +10,7 @@
             class="buildingTile tileBackground"
         ></div>
 
-        <div class="buildingTile initBuildingTile tileBackground" @click="goFight">
+        <div class="buildingTile initBuildingTile tileBackground">
           <div class="icon crossed-swords-icon" />
         </div>
 
