@@ -148,7 +148,7 @@ export const useMapLocationStore = defineStore("map-location-store", {
                     const index = y * cols + x;
                     const tile = new TileModel(index, {x, y});
 
-                    tile.setIsInitial(index !== 0);
+                    tile.setIsInitial(index !== 47); //hero start position tile
                     tile.setImageSrc(locationMap.tileImage);
                     tile.setBackgroundSrc(locationMap.tileBackgroundSrc);
                     tile.isHeroHere = false;
@@ -175,7 +175,7 @@ export const useMapLocationStore = defineStore("map-location-store", {
             tiles.forEach((tile: TileModel) => {
                 tile.isHeroHere = false;
             })
-            const startTile = tiles[0];
+            const startTile = tiles[47];
             startTile.isHeroHere = true;
             hero.currentTile = startTile;
             hero.heroLocation = {...startTile.coordinates};
@@ -206,7 +206,7 @@ export const useMapLocationStore = defineStore("map-location-store", {
 
         addEnemiesToTiles(tiles: TileModel[], locationMap: MapLocationModel) {
             tiles.forEach((tile, index) => {
-                if (tile.isBlocked || tile.hero) return;
+                if (tile.isBlocked || tile.isHeroHere) return;
 
                 const enemies = this.generateEnemies(index, locationMap.enemyModifier);
                 tile.setEnemies(enemies);

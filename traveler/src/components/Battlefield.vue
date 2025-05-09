@@ -177,7 +177,7 @@ export default defineComponent({
 }
 
 .battlefieldOverlay {
-  position: relative;
+  position: absolute;
   width: 80vw;
   height: 90vh;
   background-image: url('/images/overlays/lavaLand.jpg');

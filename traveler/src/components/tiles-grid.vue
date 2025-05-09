@@ -44,6 +44,7 @@ export default {
 
 <style>
 .gridContainer {
+  position: relative;
   width: 100%;
   height: 100%;
   display: flex;
@@ -51,6 +52,7 @@ export default {
   align-items: center;
   box-sizing: border-box;
   overflow: hidden;
+  z-index: 0;
 }
 
 .scalableGridWrapper {

@@ -1,6 +1,6 @@
 <template>
   <div
-      class="campTile"
+      class="campOverlayTile"
       @click="visitCamp"
   >
     <div class="campingTileImage">
@@ -19,27 +19,27 @@ export default {
     visitCamp() {
       const mapStore = useMapLocationStore();
       mapStore.resetCurrentLocation();
-      router.push('/maps');
-      // router.push('/camping');
+      router.push('/camping');
     },
   }
 }
 </script>
 
 <style scoped>
-.campTile {
-  width: 100%;
-  height: 100%;
-  border-radius: 6px;
-  position: relative;
-  z-index: 10;
-  background-size: cover;
-  background: transparent url("/images/camping-place/camp-tile-background.png") no-repeat;
+.campOverlayTile {
+  position: absolute;
+  top: calc(2 * 14vh - 2 * 1px);
+  left: calc(5 * 14vh + 2 * 8px);
+  width: calc(3 * 14vh + 2 * 3px);
+  height: calc(3 * 14vh + 2 * 2px);
+  z-index: 1;
+  pointer-events: auto;
+  margin-top: 0.6rem;
 }
 
-.campTile:hover {
+.campOverlayTile:hover {
   cursor: pointer;
-  transform: scale(1.02);
+  transform: scale(1.005);
   box-shadow: 0 0 15px rgba(255, 180, 80, 0.4);
 }
 
