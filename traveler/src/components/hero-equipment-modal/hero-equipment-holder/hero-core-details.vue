@@ -9,7 +9,7 @@
             :class="{ danger: stat.name === 'Health' && stat.percentage <= 25 }"
             :style="{
             width: stat.percentage + '%',
-            backgroundColor: stat.fillColor
+            background: stat.fillColor
           }"
         >
         </div>
@@ -27,13 +27,18 @@ export default defineComponent({
   setup() {
     const {hero} = useHeroStore();
 
+    const healthPercentage = computed(() => {
+      if (!hero.maxHealth || hero.maxHealth === 0) return 0;
+      return Math.min(100, Math.round((hero.currentHealth / hero.maxHealth) * 100));
+    });
+
     const stats = computed(() => [
       {
         name: 'Health',
         percentage: Math.round((hero.currentHealth / hero.maxHealth) * 100),
-        fillColor: '#e53935',
+        fillColor: 'linear-gradient(to bottom, #aa4444 0%, #5a0000 50%, #aa4444 100%)',
         bgColor: '#ffeeaa',
-        tooltip: `${Math.round((hero.currentHealth / hero.maxHealth) * 100)}%`,
+        tooltip: `${healthPercentage.value}%`,
         iconClass: 'heart-icon',
       },
       {
