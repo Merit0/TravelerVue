@@ -1,6 +1,6 @@
 <template>
   <title>Camp</title>
-  <HeroDetailsBar :hero="hero" />
+  <HeroDetailsBar :hero="hero"/>
   <section class="campContent">
     <div class="scalableGridWrapper">
       <div class="buildingGrid">
@@ -9,13 +9,11 @@
             :key="n"
             class="buildingTile tileBackground"
         ></div>
-
-        <div class="buildingTile initBuildingTile tileBackground">
-          <div class="icon crossed-swords-icon" />
+        <div class="buildingTile initBuildingTile tileBackground" @click="openInventory">
+          <div class="icon bag-icon"/>
         </div>
-
         <div class="buildingTile initBuildingTile tileBackground" @click="exitOnMap">
-          <div class="icon map-icon" />
+          <div class="icon map-icon"/>
         </div>
       </div>
 
@@ -24,22 +22,24 @@
       </div>
     </div>
   </section>
-
   <shop-overlay
       :show-shop-overlay="showShop"
       @closeShop="closeShop"
   />
+  <hero-inventory-overlay></hero-inventory-overlay>
 </template>
 
 <script lang="ts">
 import HeroDetailsBar from './hero-details-bar.vue';
-import { useHeroStore } from '@/stores/HeroStore';
+import {useHeroStore} from '@/stores/HeroStore';
 import router from "@/router";
 import ShopOverlay from "@/components/shop/shop-overlay.vue";
+import HeroBagInventory from "@/components/hero-equipment-modal/bag-inventory/hero-bag-inventory.vue";
+import HeroInventoryOverlay from "@/components/hero-equipment-modal/hero-inventory-overlay.vue";
 
 export default {
   name: "camping-page",
-  components: { ShopOverlay, HeroDetailsBar: HeroDetailsBar },
+  components: {HeroInventoryOverlay, ShopOverlay, HeroDetailsBar: HeroDetailsBar},
   data() {
     const heroStore = useHeroStore();
     return {
@@ -69,6 +69,9 @@ export default {
     exitOnMap() {
       router.push('/forest-entrance');
     },
+    openInventory() {
+      this.heroStore.inventoryShown = true;
+    },
     openShop() {
       this.showShop = true;
     },
@@ -78,14 +81,16 @@ export default {
   },
   mounted() {
     this.increaseHealth();
-  },
+  }
+  ,
   unmounted() {
     clearInterval(this.time);
   }
-};
+}
+;
 </script>
 
-<style>
+<style scoped>
 .campContent {
   display: flex;
   flex-direction: column;
@@ -142,6 +147,10 @@ export default {
 
 .crossed-swords-icon {
   background-image: url('/images/camping-place/crossed-swords.png');
+}
+
+.bag-icon {
+  background-image: url('/images/camping-place/bag-icon-image.png');
 }
 
 .map-icon {
