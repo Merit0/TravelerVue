@@ -9,14 +9,14 @@
 </template>
 
 <script lang="ts">
-import HeroDetailsBar from "@/components/HeroDetailsBar.vue";
+import HeroDetailsBar from "@/components/hero-details-bar.vue";
 import {useHeroStore} from "@/stores/HeroStore";
 import {useMapLocationStore} from "@/stores/map-location-store";
 import MapView from "@/components/map-view.vue";
 
 export default {
   name: "maps-page",
-  components: {MapView, HeroDetailsBar},
+  components: {MapView, HeroDetailsBar: HeroDetailsBar},
   setup() {
     const heroStore = useHeroStore();
     const hero = heroStore.hero;

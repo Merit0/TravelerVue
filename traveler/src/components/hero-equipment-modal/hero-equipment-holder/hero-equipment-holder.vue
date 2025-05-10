@@ -3,9 +3,7 @@
     <div class="hero-slot">
       <div class="hero-image" :style="getStyle(heroImagePath)" ref="heroImage"></div>
     </div>
-    <div class="hero-details-container">
-      <div class="hero-details-title">Core:</div>
-    </div>
+    <hero-core-details></hero-core-details>
     <div class="equipment-row first-equipment-row">
       <equipment-placeholder-slot
           :equipment-item="equipment.helm"
@@ -58,11 +56,12 @@ import {Equipment} from "@/models/Equipment";
 import {PropType} from 'vue'
 import EquipmentPlaceholderSlot
   from "@/components/hero-equipment-modal/hero-equipment-holder/equipment-placeholder-slot.vue";
+import HeroCoreDetails from "@/components/hero-equipment-modal/hero-equipment-holder/hero-core-details.vue";
 
 
 export default {
   name: "hero-equipment-holder",
-  components: {EquipmentPlaceholderSlot},
+  components: {HeroCoreDetails, EquipmentPlaceholderSlot},
   props: {
     equipment: {
       type: Object as PropType<Equipment>,

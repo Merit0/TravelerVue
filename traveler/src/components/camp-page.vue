@@ -32,14 +32,14 @@
 </template>
 
 <script lang="ts">
-import HeroDetailsBar from './HeroDetailsBar.vue';
+import HeroDetailsBar from './hero-details-bar.vue';
 import { useHeroStore } from '@/stores/HeroStore';
 import router from "@/router";
 import ShopOverlay from "@/components/shop/shop-overlay.vue";
 
 export default {
   name: "camping-page",
-  components: { ShopOverlay, HeroDetailsBar },
+  components: { ShopOverlay, HeroDetailsBar: HeroDetailsBar },
   data() {
     const heroStore = useHeroStore();
     return {
