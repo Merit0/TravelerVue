@@ -4,7 +4,7 @@
       <span class="tooltip">{{ stat.tooltip }}</span>
       <div class="icon" :class="stat.iconClass"/>
       <div class="bar-container-image">
-        <div class="bar-container" :style="{ backgroundColor: stat.bgColor }">
+        <div class="bar-container">
           <div
               class="bar-fill"
               :class="{ danger: stat.name === 'Health' && stat.percentage <= 25 }"
@@ -39,7 +39,6 @@ export default defineComponent({
         name: 'Health',
         percentage: Math.round((hero.currentHealth / hero.maxHealth) * 100),
         fillColor: 'linear-gradient(to right, #d32f2f 0%, #f06292 35%, #ff9800 70%, #ffeb3b 100%)',
-        bgColor: '#ffeeaa',
         tooltip: `${healthPercentage.value}%`,
         iconClass: 'heart-icon',
       },
@@ -47,7 +46,6 @@ export default defineComponent({
         name: 'Attack',
         percentage: Math.min(hero.attack * 10, 100),
         fillColor: '#4a75ff',
-        bgColor: '#ffeeaa',
         tooltip: `${hero.attack}`,
         iconClass: 'crossed-swords-icon',
       },
@@ -55,7 +53,6 @@ export default defineComponent({
         name: 'Defense',
         percentage: 0,
         fillColor: '#8d6e63',
-        bgColor: '#ffeeaa',
         tooltip: `0`,
         iconClass: 'shield-icon',
       },
