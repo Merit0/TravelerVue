@@ -6,7 +6,7 @@ interface IEnemyBuilder {
     enemyName(name: string): EnemyBuilder;
     enemyType(enemyType: EnemyType): EnemyBuilder;
     powerModifierLvl(modifierNumber: number): this;
-    enemyLoot(enemyLootItem: LootItemModel): EnemyBuilder;
+    enemyLoot(enemyLootItem: LootItemModel[]): EnemyBuilder;
     enemyImgPath(imgPath: string): EnemyBuilder;
     enemyBackgroundSrc(imgPath: string): EnemyBuilder;
 }
@@ -48,7 +48,7 @@ export class EnemyBuilder implements IEnemyBuilder {
         return this;
     }
 
-    public enemyLoot(enemyLootItem: LootItemModel): EnemyBuilder {
+    public enemyLoot(enemyLootItem: LootItemModel[]): EnemyBuilder {
         this.enemy.setLoot(enemyLootItem);
         return this;
     }

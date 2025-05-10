@@ -1,13 +1,13 @@
 <template>
   <div class="battleEnemyTile" :style="getStyle(enemy)" v-if="enemyShown && enemyAlive">
     <div class="infoBlock">
-      i
-      <span class="tooltipText">
-                <h3>Info:</h3>
-                <p>ID = {{ enemy.id }}</p>
-                <p>Health = {{ enemy.health }}</p>
-                <p>Attack = {{ enemy.attack }}</p>
-            </span>
+      ℹ️
+      <div class="tooltipText">
+        <h3>Enemy Info</h3>
+        <p><strong>ID:</strong> {{ enemy.id }}</p>
+        <p><strong>Health:</strong> {{ enemy.health }}</p>
+        <p><strong>Attack:</strong> {{ enemy.attack }}</p>
+      </div>
     </div>
   </div>
 </template>
@@ -33,55 +33,71 @@ export default {
   },
   methods: {
     getStyle(enemy: EnemyModel) {
-      if (!enemy || !enemy.imgPath) throw new Error('Enemy props missing');
-
-      try {
-        return {
-          backgroundImage: `url(${enemy.imgPath})`,
-          border: `2px solid ${enemy.enemyFrameColor}`
-        };
-      } catch (e) {
-        console.error("Loading image error:", e);
-        return {};
-      }
+      return {
+        backgroundImage: `url(${enemy.imgPath})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        boxShadow: '0 0 12px rgba(255, 0, 0, 0.5)',
+        transition: 'transform 0.2s ease, box-shadow 0.2s ease'
+      };
     }
   }
 }
 </script>
-<style>
+
+<style scoped>
 .battleEnemyTile {
-  width: 150px;
-  height: 150px;
-  display: flex;
-  align-items: center;
-  background: none;
+  width: 6vw;
+  height: 12vh;
   border-radius: 50%;
-  background-size: 100% 100%;
   position: relative;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.battleEnemyTile:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
+}
+
+/* Info badge */
+.infoBlock {
+  position: absolute;
+  background-color: #fff;
+  color: #333;
+  font-size: 1.2vw;
+  font-weight: bold;
+  width: 2vw;
+  height: 2vw;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 2vw;
+  box-shadow: 0 0 6px rgba(0,0,0,0.2);
+  z-index: 5;
+}
+
+/* Tooltip */
+.tooltipText {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  bottom: 110%;
+  right: 50%;
+  transform: translateX(50%);
+  background: rgba(255, 255, 255, 0.95);
+  color: #333;
+  padding: 10px;
+  border-radius: 10px;
+  text-align: left;
+  width: max-content;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  transition: opacity 0.3s ease;
+  font-size: 0.8vw;
+  z-index: 10;
 }
 
 .infoBlock:hover .tooltipText {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
   visibility: visible;
-  background-color: rgba(255, 255, 255, 0.8);
   opacity: 1;
-}
-
-.tooltipText {
-  visibility: hidden;
-  font-weight: bold;
-  opacity: 1;
-  color: rgb(90, 66, 0);
-  text-align: center;
-  padding: 5px 10px;
-  border-radius: 4px;
-  position: absolute;
-  z-index: 1;
-  bottom: 0%;
-  left: 50%;
-  transform: translateX(-50%);
-  transition: opacity 0.2s;
 }
 </style>

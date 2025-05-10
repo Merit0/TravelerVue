@@ -1,13 +1,13 @@
-import { LootItemModel } from "../models/LootItemModel";
-import { Rarity } from "../enums/Rarity";
+import { LootItemModel } from "@/models/LootItemModel";
+import { Rarity } from "@/enums/Rarity";
 import { ItemType } from "@/enums/ItemType";
 import { Randomizer } from "@/utils/Randomizer";
 
 interface ILootItemBuilder {
   lootItemName(name: string): LootItemBuilder;
+  price(priceValue: number): LootItemBuilder;
   itemType(itemType: ItemType): LootItemBuilder;
   lootItemImgPath(imgPath: string): LootItemBuilder;
-  lootItemBorderFrame(frameColor: string): LootItemBuilder;
   lootRarity(rarity: Rarity): LootItemBuilder;
   lootValue(value: number): LootItemBuilder;
   dropChance(chance: boolean): LootItemBuilder;
@@ -39,11 +39,6 @@ export class LootItemBuilder implements ILootItemBuilder {
     return this;
   }
 
-  public lootItemBorderFrame(frameColor: string): LootItemBuilder {
-    this.loot.borderFrame = frameColor;
-    return this;
-  }
-
   public lootRarity(rarity: Rarity): LootItemBuilder {
     this.loot.rarity = rarity;
     return this;
@@ -56,6 +51,11 @@ export class LootItemBuilder implements ILootItemBuilder {
 
   public dropChance(chance: boolean): LootItemBuilder {
     this.loot.chance = chance;
+    return this;
+  }
+
+  public price(priceValue: number): LootItemBuilder {
+    this.loot.price = priceValue;
     return this;
   }
 

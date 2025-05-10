@@ -5,7 +5,7 @@
         "maxHealth": 100,
         "attack": 10,
         "defense": 0,
-        "coins": 0,
+        "coins": 10000,
         "available": true,
         "id": 1,
         "kills": 0,
@@ -37,12 +37,12 @@
         }
     },
     {
-        "name": "Ostap",
-        "currentHealth": 50,
-        "maxHealth": 80,
-        "attack": 5,
+        "name": "Ostapik",
+        "currentHealth": 110,
+        "maxHealth": 110,
+        "attack": 15,
         "defense": 0,
-        "coins": 0,
+        "coins": 20,
         "available": true,
         "id": 4,
         "kills": 0,
@@ -53,6 +53,7 @@
             "helm": null,
             "armor": null,
             "ring": null
-        }
+        },
+        "heroLocation": null
     }
 ]

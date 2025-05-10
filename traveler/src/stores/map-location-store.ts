@@ -1,21 +1,21 @@
 import {defineStore} from "pinia";
 import TileModel from "@/models/TileModel";
 import EnemyModel from "@/models/EnemyModel";
-import {Randomizer} from "@/utils/Randomizer";
 import {EnemyProvider} from "@/providers/EnemyProvider";
-import {BossProvider} from "@/providers/BossProvider";
 import {ChestModel} from "@/models/ChestModel";
 import {useHeroStore} from "./HeroStore";
-import {WeaponProvider} from "@/providers/WeaponProvider";
-import {EnemyType} from "@/enums/EnemyType";
 import {EnemyBuilder} from "@/builders/EnemyBuilder";
-import {EquipmentGroupProvider} from "@/providers/equipment-group-provider";
 import {MapLocationModel} from "@/models/map-location-model";
 import MapModel from "@/models/MapModel";
 import {toKebabCase} from "@/utils/string-utils";
 import {MapProvider} from "@/providers/MapProvider";
 import {HeroModel} from "@/models/HeroModel";
-import {IEnemy} from "@/abstraction/IEnemy";
+import {EnemyLootProvider, ILootChanceConfig} from "@/providers/loot-provider";
+import {DropLootChanceConfigProvider} from "@/providers/loot-chance-drop-provider";
+import {Randomizer} from "@/utils/Randomizer";
+import {LootItemModel} from "@/models/LootItemModel";
+import {ItemType} from "@/enums/ItemType";
+import {CoinsProvider} from "@/providers/coins-provider";
 
 interface MapLocationState {
     tiles: TileModel[];
@@ -71,6 +71,8 @@ export const useMapLocationStore = defineStore("map-location-store", {
                 MapProvider.getEvilTree(),
                 MapProvider.getMagicCircle(),
             ];
+
+            this.mapLocationName = "";
         },
         async saveProgress(locationName: string) {
             const key = `${toKebabCase(locationName)}-location-map`;
@@ -100,6 +102,7 @@ export const useMapLocationStore = defineStore("map-location-store", {
                 localStorage.removeItem(key);
             });
         },
+
         buildLocationMap(locationMap: MapLocationModel) {
             const key = `${toKebabCase(locationMap.name)}-location-map`;
             const saved = localStorage.getItem(key);
@@ -114,9 +117,9 @@ export const useMapLocationStore = defineStore("map-location-store", {
                     };
                 } else {
                     const tiles = this.generateTiles(locationMap);
-                    this.addCamping(tiles);
                     this.addHeroToTiles(tiles, locationMap.hero);
                     this.addEnemiesToTiles(tiles, locationMap);
+                    this.addBossOnTile(tiles, locationMap)
                     this.locationStates[locationMap.name] = {
                         tiles,
                         isCleared: false,
@@ -128,88 +131,153 @@ export const useMapLocationStore = defineStore("map-location-store", {
             this.mapLocationName = locationMap.name;
         },
 
-        generateTiles(locationMap: MapLocationModel): TileModel[] {
-            const tilesNumber = locationMap.tilesNumber;
-            return Array.from({length: tilesNumber}, (_, i) => {
-                const tile = new TileModel(i);
-                tile.setIsInitial(i !== 0);
-                tile.setImageSrc(locationMap.tileImage)
-                tile.setBackgroundSrc(locationMap.tileBackgroundSrc)
-                return tile;
-            });
+        generateTiles(locationMap: MapLocationModel, rows = 7, cols = 13): TileModel[] {
+            const tiles: TileModel[] = [];
+
+            const centerX = Math.floor(cols / 2);
+            const centerY = Math.floor(rows / 2);
+
+            const blockStartX = centerX - 1;
+            const blockStartY = centerY - 1;
+
+            const blockEndX = centerX + 1;
+            const blockEndY = centerY + 1;
+
+            for (let y = 0; y < rows; y++) {
+                for (let x = 0; x < cols; x++) {
+                    const index = y * cols + x;
+                    const tile = new TileModel(index, {x, y});
+
+                    tile.setIsInitial(index !== 47); //hero start position tile
+                    tile.setImageSrc(locationMap.tileImage);
+                    tile.setBackgroundSrc(locationMap.tileBackgroundSrc);
+                    tile.isHeroHere = false;
+                    tile.isExit = false;
+
+                    const isInCampZone = x >= blockStartX && x <= blockEndX &&
+                        y >= blockStartY && y <= blockEndY;
+
+                    if (isInCampZone) {
+                        tile.isBlocked = true;
+                        tile.setBackgroundSrc("")
+                        tile.setImageSrc("");
+                        tile.isReachable = false;
+                    }
+
+                    tiles.push(tile);
+                }
+            }
+
+            return tiles;
         },
 
         addHeroToTiles(tiles: TileModel[], hero: HeroModel) {
-            if (!tiles.length) return;
-            this.removeAllItemsFromTile(tiles[1]);
-            tiles[1].hero = hero;
-        },
-
-        addCamping(tiles: TileModel[]) {
-            if (!tiles.length) return;
-            const firstTile: TileModel = tiles[0];
-            firstTile.isCamping = true;
-            firstTile.setIsInitial(false);
-            this.removeAllItemsFromTile(firstTile);
+            tiles.forEach((tile: TileModel) => {
+                tile.isHeroHere = false;
+            })
+            const startTile = tiles[47];
+            startTile.isHeroHere = true;
+            hero.currentTile = startTile;
+            hero.heroLocation = {...startTile.coordinates};
+            this.calculateReachableTiles(startTile, tiles);
         },
 
         moveHero(nextTile: TileModel) {
             const heroStore = useHeroStore();
-            const tiles = this.tiles;
-            const currentTile = tiles.find((tile: TileModel) => tile.hero);
-            if (!currentTile) return;
+            const hero = heroStore.hero;
+            const currentTile = hero.currentTile;
 
-            const hero = currentTile.hero;
-            currentTile.hero = null;
+            if (!currentTile) return;
+            if (nextTile.isBlocked) {
+                console.warn("❌ Hero tried to move to a blocked tile:", nextTile.coordinates);
+                return;
+            }
+
+            currentTile.isHeroHere = false;
             currentTile.isEmpty = true;
 
-            nextTile.hero = hero;
-            heroStore.setLocation(nextTile);
+            nextTile.isHeroHere = true;
+            hero.currentTile = nextTile;
+            hero.heroLocation = {...nextTile.coordinates};
+
             this.removeAllItemsFromTile(nextTile);
+            this.calculateReachableTiles(nextTile, this.tiles);
         },
 
         addEnemiesToTiles(tiles: TileModel[], locationMap: MapLocationModel) {
             tiles.forEach((tile, index) => {
-                if (index === 0 || tile.hero) return;
+                if (tile.isBlocked || tile.isHeroHere) return;
 
                 const enemies = this.generateEnemies(index, locationMap.enemyModifier);
                 tile.setEnemies(enemies);
 
                 if (enemies.length > 0) {
-                    tile.setChest(this.generateChest(enemies, locationMap.chestImage));
+                    const chest: ChestModel = this.generateChest(enemies, locationMap.chestImage);
+                    tile.setChest(chest);
                 }
             });
+        },
 
-            const min = 15;
-            const max = tiles.length - 2;
-            const randNumber = Math.floor(Math.random() * (max - min + 1)) + min;
-            if (randNumber < tiles.length) {
-                const boss: EnemyModel = locationMap.boss;
-                boss.setPowerModifierLvl(locationMap.enemyModifier)
-                const bossTile: TileModel = tiles[randNumber];
-                bossTile.setEnemies([boss]);
+        addBossOnTile(tiles: TileModel[], locationMap: MapLocationModel) {
+            const dropChanceConfig: ILootChanceConfig = DropLootChanceConfigProvider.getBossDropChanceConfig();
+            const bossLoot = EnemyLootProvider.getLoot(dropChanceConfig);
+            const boss: EnemyModel = locationMap.boss;
+            boss.setPowerModifierLvl(locationMap.enemyModifier);
+            boss.setLoot(bossLoot);
+
+            const validTiles = tiles.filter(tile =>
+                !tile.isBlocked &&
+                !tile.isHeroHere
+            );
+
+            if (validTiles.length === 0) {
+                console.warn("⚠️ No valid tiles found to place the boss.");
+                return;
             }
+
+            const randomIndex = Math.floor(Math.random() * validTiles.length);
+            const bossTile = validTiles[randomIndex];
+            bossTile.enemies = [];
+            bossTile.setEnemies([boss]);
+            const chest: ChestModel = this.generateChest([boss], locationMap.chestImage);
+            bossTile.setChest(chest);
         },
 
         generateChest(enemies: EnemyModel[], chestImage: string): ChestModel {
+            let totalCoins = 0;
+            const nonCoinLoot: LootItemModel[] = [];
             const chest = new ChestModel();
             chest.setImagePath(chestImage);
             for (const enemy of enemies) {
-                if (enemy.loot.chance) {
-                    enemy.loot.place = "Chest";
-                    chest.addLoot(enemy.loot);
+                for (const lootItem of enemy.loot) {
+                    lootItem.place = 'chest';
+
+                    if (lootItem.itemType === ItemType.COIN) {
+                        totalCoins += lootItem.value;
+                    } else {
+                        nonCoinLoot.push(lootItem);
+                    }
                 }
             }
-            return chest.items.find((item) => item.name) ? chest : null;
+
+            if (totalCoins > 0) {
+                const coinItem: LootItemModel = CoinsProvider.getCoins(totalCoins);
+                coinItem.place = 'chest';
+                chest.addLoot([coinItem]);
+            }
+
+            chest.addLoot(nonCoinLoot);
+
+            return chest.items.length > 0 ? chest : null;
         },
 
         generateEnemies(id: number, enemyPowerModifierNumber: number): EnemyModel[] {
             if (!Randomizer.getChance(20)) return [];
             const createdEnemies: EnemyModel[] = [];
             const enemiesList = EnemyProvider.getEvilLandsEnemies();
-            const numberOfEnemies = Math.floor(Math.random() * 5) + 1;
+            const numberOfEnemiesOnTile = Math.floor(Math.random() * 5) + 1;
 
-            for (let i = 0; i < numberOfEnemies; i++) {
+            for (let i = 0; i < numberOfEnemiesOnTile; i++) {
                 const randIndex = Math.floor(Math.random() * enemiesList.length);
                 const base = enemiesList[randIndex];
 
@@ -223,11 +291,8 @@ export const useMapLocationStore = defineStore("map-location-store", {
 
                 enemy.setId(id + i);
 
-                const loot = base.enemyType === EnemyType.WARRIOR
-                    ? (Randomizer.getChance(5)
-                        ? Randomizer.getRandomEquipment(WeaponProvider.getLegends())
-                        : Randomizer.getRandomEquipment(EquipmentGroupProvider.getCommonEquipment()))
-                    : Randomizer.getRandomEquipment(WeaponProvider.getLegends());
+                const dropChanceConfig: ILootChanceConfig = DropLootChanceConfigProvider.getCommonDropChanceConfig()
+                const loot = EnemyLootProvider.getLoot(dropChanceConfig)
 
                 enemy.setLoot(loot);
                 createdEnemies.push(enemy);
@@ -239,5 +304,38 @@ export const useMapLocationStore = defineStore("map-location-store", {
             tile.isEmpty = false;
             tile.isInitial = false;
         },
+
+        calculateReachableTiles(heroTile: TileModel, allTiles: TileModel[]) {
+            const directions = [
+                {x: 0, y: -1},  // top
+                {x: 1, y: 0},   // right
+                {x: 0, y: 1},   // bottom
+                {x: -1, y: 0},  // left
+                {x: 1, y: -1},  // top-right
+                {x: -1, y: -1}, // top-left
+                {x: 1, y: 1},   // bottom-right
+                {x: -1, y: 1},  // bottom-left
+            ];
+
+            allTiles.forEach(tile => tile.isReachable = false);
+
+            for (const dir of directions) {
+                const tx = heroTile.coordinates.x + dir.x;
+                const ty = heroTile.coordinates.y + dir.y;
+                const neighbor = allTiles.find(
+                    t => t.coordinates.x === tx && t.coordinates.y === ty
+                );
+                if (neighbor && !neighbor.isBlocked) {
+                    neighbor.isReachable = true;
+                }
+            }
+        },
+
+        resetCurrentLocation() {
+            const key = `${toKebabCase(this.mapLocationName)}-location-map`;
+            localStorage.removeItem(key);
+            delete this.locationStates[this.mapLocationName];
+            this.mapLocationName = "";
+        }
     },
 });

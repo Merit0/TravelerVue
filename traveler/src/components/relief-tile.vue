@@ -1,7 +1,21 @@
 <template>
-  <div v-if="tile.isInitial" class="initialTileView mapTile" :style="getTileImage(tile.backgroundSrc)">
+  <div
+      v-if="tile.isInitial"
+      class="initialTileView mapTile"
+      :style="getTileImage(tile.backgroundSrc)"
+      :class="`tile-id-${tile.id}`"
+      :data-id="tile.id"
+  >
     <div class="initialTileView mapTile" :style="getTileImage(tile.imageSrc)">
-      <button class="mapTile tileButton" @click="checkTile(tile)"></button>
+      <button
+          class="mapTile tileButton"
+          :disabled="!tile.isReachable"
+          :class="{
+    unreachable: !tile.isReachable,
+    'reachable-tile': tile.isReachable && !tile.isHeroHere,
+  }"
+          @click="checkTile(tile)"
+      ></button>
     </div>
   </div>
 </template>
@@ -11,7 +25,6 @@ import TileModel from '@/models/TileModel';
 import {useHeroStore} from '@/stores/HeroStore';
 import {useMapLocationStore} from '@/stores/map-location-store';
 import {PropType} from 'vue';
-
 
 export default {
   name: "relief-tile",
@@ -30,17 +43,20 @@ export default {
     getTileImage(imageSrc: string) {
       return {
         backgroundImage: `url(${imageSrc})`,
-      }
+      };
     },
     async checkTile(tile: TileModel) {
+      if (!tile.isReachable) return;
       tile.isInitial = false;
+
       if (tile.enemies.length === 0) {
         this.mapLocationStore.moveHero(tile);
       }
     }
   }
-}
+};
 </script>
-<style>
+
+<style scoped>
 @import '@/styles/animated-tile.css';
 </style>

@@ -1,19 +1,18 @@
 <template>
-  <section>
-    <title>{{mapLocationName}}</title>
-    <HeroDetailsBar :hero="hero"></HeroDetailsBar>
+  <section class="mapContent">
+<!--    <HeroDetailsBar :hero="hero"></HeroDetailsBar>-->
     <tiles-grid :mapTiles="mapLocationStore.tiles" v-if="tilesShown && heroStore.isAlive()" :backgroundImageSrc="mapLocation.imgPath"></tiles-grid>
     <HeroDeathOverlay v-if="!heroStore.isAlive() && userStore.isUserLoggedIn"></HeroDeathOverlay>
-    <hero-inventory :show-inventory="heroStore.inventoryShown" @heroInventory="closeInventory($event)"></hero-inventory>
+    <hero-inventory></hero-inventory>
   </section>
 </template>
 
 <script lang="ts">
 import HeroDetailsBar from '../../HeroDetailsBar.vue';
-import HeroDeathOverlay from '@/components/HeroDeathOverlay.vue'
+import HeroDeathOverlay from '@/components/hero-death-overlay.vue'
 import {useHeroStore} from '@/stores/HeroStore'
 import {useMapLocationStore} from '@/stores/map-location-store';
-import HeroInventory from '../../HeroInventory.vue';
+import HeroInventoryOverlay from '../../hero-equipment-modal/hero-inventory-overlay.vue';
 import {useUserStore} from "@/stores/UserStore";
 import {MapLocationModel} from "@/models/map-location-model";
 import MapModel from "@/models/MapModel";
@@ -21,7 +20,7 @@ import TilesGrid from "@/components/tiles-grid.vue";
 
 export default {
   name: "forest-entrance-map-location",
-  components: {TilesGrid, HeroDetailsBar, HeroDeathOverlay, HeroInventory},
+  components: {TilesGrid, HeroDetailsBar, HeroDeathOverlay: HeroDeathOverlay, HeroInventory: HeroInventoryOverlay},
   data() {
     const mapLocationName = 'Forest Entrance'
     const heroStore = useHeroStore();
@@ -38,10 +37,17 @@ export default {
 
     return {hero, tilesShown, heroStore, mapLocationStore, userStore, mapLocationName, mapLocation}
   },
-  methods: {
-    async closeInventory(inventoryStatus: boolean) {
-      this.heroStore.showInventory(inventoryStatus);
-    },
-  }
 }
 </script>
+
+<style scoped>
+.mapContent {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+</style>

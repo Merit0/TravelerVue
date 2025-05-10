@@ -1,5 +1,5 @@
 import { Equipment } from "@/models/Equipment";
-import TileModel from "@/models/TileModel";
+import TileModel, {ICoordinates} from "@/models/TileModel";
 
 export interface IHero {
   name: string;
@@ -14,6 +14,7 @@ export interface IHero {
   imgPath: string;
   available: boolean;
   equipment: Equipment;
-  heroLocation: TileModel;
+  currentTile: TileModel;
+  heroLocation: ICoordinates;
   experienceCollector(): void;
 }
