@@ -71,6 +71,8 @@ export const useMapLocationStore = defineStore("map-location-store", {
                 MapProvider.getEvilTree(),
                 MapProvider.getMagicCircle(),
             ];
+
+            this.mapLocationName = "";
         },
         async saveProgress(locationName: string) {
             const key = `${toKebabCase(locationName)}-location-map`;
@@ -100,6 +102,7 @@ export const useMapLocationStore = defineStore("map-location-store", {
                 localStorage.removeItem(key);
             });
         },
+
         buildLocationMap(locationMap: MapLocationModel) {
             const key = `${toKebabCase(locationMap.name)}-location-map`;
             const saved = localStorage.getItem(key);
@@ -114,7 +117,6 @@ export const useMapLocationStore = defineStore("map-location-store", {
                     };
                 } else {
                     const tiles = this.generateTiles(locationMap);
-                    this.addCamping(tiles);
                     this.addHeroToTiles(tiles, locationMap.hero);
                     this.addEnemiesToTiles(tiles, locationMap);
                     this.addBossOnTile(tiles, locationMap)
@@ -129,49 +131,82 @@ export const useMapLocationStore = defineStore("map-location-store", {
             this.mapLocationName = locationMap.name;
         },
 
-        generateTiles(locationMap: MapLocationModel): TileModel[] {
-            const tilesNumber = locationMap.tilesNumber;
-            return Array.from({length: tilesNumber}, (_, i) => {
-                const tile = new TileModel(i);
-                tile.setIsInitial(i !== 0);
-                tile.setImageSrc(locationMap.tileImage)
-                tile.setBackgroundSrc(locationMap.tileBackgroundSrc)
-                return tile;
-            });
+        generateTiles(locationMap: MapLocationModel, rows = 7, cols = 13): TileModel[] {
+            const tiles: TileModel[] = [];
+
+            const centerX = Math.floor(cols / 2);
+            const centerY = Math.floor(rows / 2);
+
+            const blockStartX = centerX - 1;
+            const blockStartY = centerY - 1;
+
+            const blockEndX = centerX + 1;
+            const blockEndY = centerY + 1;
+
+            for (let y = 0; y < rows; y++) {
+                for (let x = 0; x < cols; x++) {
+                    const index = y * cols + x;
+                    const tile = new TileModel(index, {x, y});
+
+                    tile.setIsInitial(index !== 47); //hero start position tile
+                    tile.setImageSrc(locationMap.tileImage);
+                    tile.setBackgroundSrc(locationMap.tileBackgroundSrc);
+                    tile.isHeroHere = false;
+                    tile.isExit = false;
+
+                    const isInCampZone = x >= blockStartX && x <= blockEndX &&
+                        y >= blockStartY && y <= blockEndY;
+
+                    if (isInCampZone) {
+                        tile.isBlocked = true;
+                        tile.setBackgroundSrc("")
+                        tile.setImageSrc("");
+                        tile.isReachable = false;
+                    }
+
+                    tiles.push(tile);
+                }
+            }
+
+            return tiles;
         },
 
         addHeroToTiles(tiles: TileModel[], hero: HeroModel) {
-            if (!tiles.length) return;
-            this.removeAllItemsFromTile(tiles[1]);
-            tiles[1].hero = hero;
-        },
-
-        addCamping(tiles: TileModel[]) {
-            if (!tiles.length) return;
-            const firstTile: TileModel = tiles[0];
-            firstTile.isCamping = true;
-            firstTile.setIsInitial(false);
-            this.removeAllItemsFromTile(firstTile);
+            tiles.forEach((tile: TileModel) => {
+                tile.isHeroHere = false;
+            })
+            const startTile = tiles[47];
+            startTile.isHeroHere = true;
+            hero.currentTile = startTile;
+            hero.heroLocation = {...startTile.coordinates};
+            this.calculateReachableTiles(startTile, tiles);
         },
 
         moveHero(nextTile: TileModel) {
             const heroStore = useHeroStore();
-            const tiles = this.tiles;
-            const currentTile = tiles.find((tile: TileModel) => tile.hero);
-            if (!currentTile) return;
+            const hero = heroStore.hero;
+            const currentTile = hero.currentTile;
 
-            const hero = currentTile.hero;
-            currentTile.hero = null;
+            if (!currentTile) return;
+            if (nextTile.isBlocked) {
+                console.warn("❌ Hero tried to move to a blocked tile:", nextTile.coordinates);
+                return;
+            }
+
+            currentTile.isHeroHere = false;
             currentTile.isEmpty = true;
 
-            nextTile.hero = hero;
-            heroStore.setLocation(nextTile);
+            nextTile.isHeroHere = true;
+            hero.currentTile = nextTile;
+            hero.heroLocation = {...nextTile.coordinates};
+
             this.removeAllItemsFromTile(nextTile);
+            this.calculateReachableTiles(nextTile, this.tiles);
         },
 
         addEnemiesToTiles(tiles: TileModel[], locationMap: MapLocationModel) {
             tiles.forEach((tile, index) => {
-                if (index === 0 || tile.hero) return;
+                if (tile.isBlocked || tile.isHeroHere) return;
 
                 const enemies = this.generateEnemies(index, locationMap.enemyModifier);
                 tile.setEnemies(enemies);
@@ -184,20 +219,28 @@ export const useMapLocationStore = defineStore("map-location-store", {
         },
 
         addBossOnTile(tiles: TileModel[], locationMap: MapLocationModel) {
-            const dropChanceConfig: ILootChanceConfig = DropLootChanceConfigProvider.getBossDropChanceConfig()
-            const bossLoot = EnemyLootProvider.getLoot(dropChanceConfig)
-            const min = 5;
-            const max = tiles.length - 2;
-            const randNumber = Math.floor(Math.random() * (max - min + 1)) + min;
-            if (randNumber < tiles.length) {
-                const boss: EnemyModel = locationMap.boss;
-                boss.setPowerModifierLvl(locationMap.enemyModifier);
-                boss.setLoot(bossLoot);
-                const bossTile: TileModel = tiles[randNumber];
-                bossTile.setEnemies([boss]);
-                const chest: ChestModel = this.generateChest([ boss ], locationMap.chestImage);
-                bossTile.setChest(chest);
+            const dropChanceConfig: ILootChanceConfig = DropLootChanceConfigProvider.getBossDropChanceConfig();
+            const bossLoot = EnemyLootProvider.getLoot(dropChanceConfig);
+            const boss: EnemyModel = locationMap.boss;
+            boss.setPowerModifierLvl(locationMap.enemyModifier);
+            boss.setLoot(bossLoot);
+
+            const validTiles = tiles.filter(tile =>
+                !tile.isBlocked &&
+                !tile.isHeroHere
+            );
+
+            if (validTiles.length === 0) {
+                console.warn("⚠️ No valid tiles found to place the boss.");
+                return;
             }
+
+            const randomIndex = Math.floor(Math.random() * validTiles.length);
+            const bossTile = validTiles[randomIndex];
+            bossTile.enemies = [];
+            bossTile.setEnemies([boss]);
+            const chest: ChestModel = this.generateChest([boss], locationMap.chestImage);
+            bossTile.setChest(chest);
         },
 
         generateChest(enemies: EnemyModel[], chestImage: string): ChestModel {
@@ -261,5 +304,38 @@ export const useMapLocationStore = defineStore("map-location-store", {
             tile.isEmpty = false;
             tile.isInitial = false;
         },
+
+        calculateReachableTiles(heroTile: TileModel, allTiles: TileModel[]) {
+            const directions = [
+                {x: 0, y: -1},  // top
+                {x: 1, y: 0},   // right
+                {x: 0, y: 1},   // bottom
+                {x: -1, y: 0},  // left
+                {x: 1, y: -1},  // top-right
+                {x: -1, y: -1}, // top-left
+                {x: 1, y: 1},   // bottom-right
+                {x: -1, y: 1},  // bottom-left
+            ];
+
+            allTiles.forEach(tile => tile.isReachable = false);
+
+            for (const dir of directions) {
+                const tx = heroTile.coordinates.x + dir.x;
+                const ty = heroTile.coordinates.y + dir.y;
+                const neighbor = allTiles.find(
+                    t => t.coordinates.x === tx && t.coordinates.y === ty
+                );
+                if (neighbor && !neighbor.isBlocked) {
+                    neighbor.isReachable = true;
+                }
+            }
+        },
+
+        resetCurrentLocation() {
+            const key = `${toKebabCase(this.mapLocationName)}-location-map`;
+            localStorage.removeItem(key);
+            delete this.locationStates[this.mapLocationName];
+            this.mapLocationName = "";
+        }
     },
 });

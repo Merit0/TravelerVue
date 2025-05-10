@@ -1,7 +1,11 @@
-import {ChestModel} from "./ChestModel";
+import { ChestModel } from "./ChestModel";
 import EnemyModel from "./EnemyModel";
-import {HealPortionModel} from "./HealPortionModel";
-import {HeroModel} from "./HeroModel";
+import { HeroModel } from "./HeroModel";
+
+export interface ICoordinates {
+    x: number;
+    y: number;
+}
 
 export interface ITile {
     id: number;
@@ -12,82 +16,58 @@ export interface ITile {
     isCamping: boolean;
     imageSrc: string;
     backgroundSrc: string;
-    hero: HeroModel;
-    chest: ChestModel;
+    hero?: HeroModel;
+    chest?: ChestModel;
+    coordinates: ICoordinates;
+    isReachable: boolean;
+    isHeroHere: boolean;
+    isBlocked: boolean;
 }
 
 export class TileModel implements ITile {
     id: number;
     enemies: EnemyModel[] = [];
-    item: HealPortionModel;
-    imageSrc: string;
-    backgroundSrc: string;
-    isEmpty: boolean;
-    isInitial: boolean;
-    isCamping: boolean;
-    inBattle: boolean;
-    hero: HeroModel;
-    chest: ChestModel;
+    imageSrc = '';
+    backgroundSrc = '';
+    isEmpty = false;
+    isInitial = false;
+    isCamping = false;
+    inBattle = false;
+    hero?: HeroModel;
+    chest?: ChestModel;
+    coordinates: ICoordinates;
+    isReachable = false;
+    isHeroHere = false;
+    isExit = false;
+    isBlocked = false;
 
-    constructor(id: number) {
+    constructor(id: number, coordinates: ICoordinates) {
         this.id = id;
+        this.coordinates = coordinates;
     }
 
-    public getId(): number {
-        return this.id;
+    setImageSrc(path: string) {
+        this.imageSrc = path;
     }
 
-    public getItem(): HealPortionModel {
-        return this.item;
+    setBackgroundSrc(path: string) {
+        this.backgroundSrc = path;
     }
 
-    public getIsEmpty(): boolean {
-        return this.isEmpty;
-    }
-
-    public getHero(): HeroModel {
-        return this.hero;
-    }
-
-    public getChest(): ChestModel {
-        return this.chest;
-    }
-
-    public setId(id: number): TileModel {
-        this.id = id;
-        return this;
-    }
-
-    public setEnemies(enemies: EnemyModel[]): void {
-        this.enemies = enemies;
-    }
-
-    public setItem(item: HealPortionModel): void {
-        this.item = item;
-    }
-
-    public setIsInitial(status: boolean) {
+    setIsInitial(status: boolean) {
         this.isInitial = status;
     }
 
-    public setIsCamping(status: boolean) {
-        this.isCamping = status;
+    setEnemies(enemies: EnemyModel[]) {
+        this.enemies = enemies;
     }
 
-    public setImageSrc(imageSrcPath: string) {
-        this.imageSrc = imageSrcPath;
-    }
-
-    public setBackgroundSrc(imageSrcPath: string) {
-        this.backgroundSrc = imageSrcPath;
-    }
-
-    public setInBattle(status: boolean): void {
-        this.inBattle = status;
-    }
-
-    public setChest(chest: ChestModel): void {
+    setChest(chest: ChestModel) {
         this.chest = chest;
+    }
+
+    setHero(hero: HeroModel) {
+        this.hero = hero;
     }
 }
 

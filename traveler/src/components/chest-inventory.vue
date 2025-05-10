@@ -79,9 +79,9 @@ export default defineComponent({
   padding: 1vw;
   overflow: hidden;
   border: 2px solid rgba(255, 255, 255, 0.1);
+  max-height: 90vh;
 }
 
-/* Декоративна крижана рамка */
 .chestContent::before {
   content: "";
   position: absolute;

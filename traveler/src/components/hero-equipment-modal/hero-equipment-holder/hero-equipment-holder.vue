@@ -1,7 +1,7 @@
 <template>
   <div class="hero-equipment-container">
     <div class="hero-slot">
-      <div class="hero-image" :style="getStyle(heroImagePath)"></div>
+      <div class="hero-image" :style="getStyle(heroImagePath)" ref="heroImage"></div>
     </div>
     <div class="hero-details-container">
       <div class="hero-details-title">Core:</div>
@@ -10,11 +10,13 @@
       <equipment-placeholder-slot
           :equipment-item="equipment.helm"
           :empty-placeholder-image="placeholderImages.helmet"
+          slot-type="helm"
       >
       </equipment-placeholder-slot>
       <equipment-placeholder-slot
           :equipment-item="equipment.armor"
           :empty-placeholder-image="placeholderImages.armor"
+          slot-type="armor"
       >
       </equipment-placeholder-slot>
     </div>
@@ -22,12 +24,14 @@
       <equipment-placeholder-slot
           :equipment-item="equipment.shield"
           :empty-placeholder-image="placeholderImages.shield"
+          slot-type="shield"
       >
       </equipment-placeholder-slot>
       <equipment-placeholder-slot
           :equipment-item="equipment.weapon"
           :empty-placeholder-image="placeholderImages.weapon"
           :move-image-move-right="String('16%')"
+          slot-type="weapon"
       >
       </equipment-placeholder-slot>
     </div>
@@ -35,11 +39,13 @@
       <equipment-placeholder-slot
           :equipment-item="equipment.boots"
           :empty-placeholder-image="placeholderImages.boots"
+          slot-type="boots"
       >
       </equipment-placeholder-slot>
       <equipment-placeholder-slot
           :equipment-item="equipment.gloves"
           :empty-placeholder-image="placeholderImages.gloves"
+          slot-type="gloves"
       >
       </equipment-placeholder-slot>
     </div>

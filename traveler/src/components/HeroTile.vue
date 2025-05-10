@@ -1,7 +1,13 @@
 <template>
-  <div class="initialTileView mapTile" v-if="tile.hero && showHero" :style="getTileBackground(tile)">
-    <div class="initialTileView mapTile heroTile" :style="getStyle(tile)">
-      <button class="mapTile tileButton" @click="openInventory()"></button>
+  <div class="initialTileView mapTile" v-if="showHero" :style="getTileBackground(tile)">
+    <div
+        class="mapTile heroTile"
+        :style="heroImgStyle">
+      <button
+          class="mapTile tileButton"
+          @click="openInventory()"
+      >
+      </button>
     </div>
   </div>
 </template>
@@ -28,12 +34,18 @@ export default {
 
     return {heroStore}
   },
-  methods: {
-    getStyle(tile: TileModel) {
+  computed: {
+    heroImgStyle(): Record<string, string> {
+      const heroStore = useHeroStore();
       return {
-        backgroundImage: `url(/images/heroes_150_150/${tile.hero.imgPath})`,
+        backgroundImage: `url(/images/heroes_150_150/${heroStore.hero.imgPath})`,
+        backgroundSize: 'contain',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center'
       };
-    },
+    }
+  },
+  methods: {
     getTileBackground(tile: TileModel) {
       return {
         backgroundImage: `url(${tile.backgroundSrc})`,
@@ -46,8 +58,28 @@ export default {
 }
 </script>
 <style>
+@keyframes heroJump {
+  0% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(-8px);
+  }
+  50% {
+    transform: translateY(0);
+  }
+  75% {
+    transform: translateY(-4px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
 .heroTile {
-  background: none;
-  background-size: 100% 100%;
+  width: 90%;
+  height: 90%;
+  animation: heroJump 0.5s ease-out;
+  background-repeat: no-repeat;
 }
 </style>

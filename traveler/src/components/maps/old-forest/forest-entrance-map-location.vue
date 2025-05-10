@@ -1,7 +1,6 @@
 <template>
-  <section>
-    <title>{{mapLocationName}}</title>
-    <HeroDetailsBar :hero="hero"></HeroDetailsBar>
+  <section class="mapContent">
+<!--    <HeroDetailsBar :hero="hero"></HeroDetailsBar>-->
     <tiles-grid :mapTiles="mapLocationStore.tiles" v-if="tilesShown && heroStore.isAlive()" :backgroundImageSrc="mapLocation.imgPath"></tiles-grid>
     <HeroDeathOverlay v-if="!heroStore.isAlive() && userStore.isUserLoggedIn"></HeroDeathOverlay>
     <hero-inventory></hero-inventory>
@@ -10,7 +9,7 @@
 
 <script lang="ts">
 import HeroDetailsBar from '../../HeroDetailsBar.vue';
-import HeroDeathOverlay from '@/components/HeroDeathOverlay.vue'
+import HeroDeathOverlay from '@/components/hero-death-overlay.vue'
 import {useHeroStore} from '@/stores/HeroStore'
 import {useMapLocationStore} from '@/stores/map-location-store';
 import HeroInventoryOverlay from '../../hero-equipment-modal/hero-inventory-overlay.vue';
@@ -21,7 +20,7 @@ import TilesGrid from "@/components/tiles-grid.vue";
 
 export default {
   name: "forest-entrance-map-location",
-  components: {TilesGrid, HeroDetailsBar, HeroDeathOverlay, HeroInventory: HeroInventoryOverlay},
+  components: {TilesGrid, HeroDetailsBar, HeroDeathOverlay: HeroDeathOverlay, HeroInventory: HeroInventoryOverlay},
   data() {
     const mapLocationName = 'Forest Entrance'
     const heroStore = useHeroStore();
@@ -40,3 +39,15 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.mapContent {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+</style>

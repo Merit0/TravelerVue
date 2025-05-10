@@ -14,3 +14,27 @@
     background: none;
     border: none;
 }
+
+.unreachable {
+    opacity: 0.4;
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+.reachable-tile {
+    border-radius: 5px;
+    animation: reachableGlow 1.5s infinite ease-in-out;
+    transition: transform 0.3s ease-in-out;
+}
+
+@keyframes reachableGlow {
+    0% {
+        box-shadow: 0 0 5px rgba(206, 255, 200, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 15px rgba(109, 243, 114, 0.6);
+    }
+    100% {
+        box-shadow: 0 0 5px rgba(227, 255, 200, 0.3);
+    }
+}

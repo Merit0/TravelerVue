@@ -35,6 +35,9 @@ button:focus {
     box-sizing: border-box;
     flex-shrink: 0;
     border-radius: 4px;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
 }
 
  .globalOverlay {

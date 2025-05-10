@@ -1,36 +1,46 @@
 <template>
-  <div class="initialCampingTileView campingTile campingTileImage">
-    <div class="campingTileImage" @click="visitCamp()">
+  <div
+      class="campOverlayTile"
+      @click="visitCamp"
+  >
+    <div class="campingTileImage">
       <div class="fire"></div>
     </div>
   </div>
 </template>
+
 <script lang="ts">
 import router from "@/router";
+import { useMapLocationStore } from "@/stores/map-location-store";
 
 export default {
   name: "camp-tile",
   methods: {
     visitCamp() {
+      const mapStore = useMapLocationStore();
+      mapStore.resetCurrentLocation();
       router.push('/camping');
     },
   }
 }
 </script>
 
-<style>
-.campingTile {
-  height: 28vh;
-  box-sizing: border-box;
-  flex-shrink: 0;
-  border-radius: 6px;
-  align-content: center;
-  grid-column: span 2;
-  grid-row: span 2;
+<style scoped>
+.campOverlayTile {
+  position: absolute;
+  top: calc(2 * 14vh - 2 * 1px);
+  left: calc(5 * 14vh + 2 * 8px);
+  width: calc(3 * 14vh + 2 * 3px);
+  height: calc(3 * 14vh + 2 * 2px);
+  z-index: 1;
+  pointer-events: auto;
+  margin-top: 0.6rem;
 }
 
-.campingTile:hover {
+.campOverlayTile:hover {
   cursor: pointer;
+  transform: scale(1.005);
+  box-shadow: 0 0 15px rgba(255, 180, 80, 0.4);
 }
 
 .campingTileImage {
@@ -39,23 +49,13 @@ export default {
   background-repeat: no-repeat;
   width: 100%;
   height: 100%;
-}
-
-.initialCampingTileView {
-  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2),
-  0 4px 6px rgba(0, 0, 0, 0.3);
-  background-size: 100% 100%;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.initialCampingTileView:hover {
-  transform: scale(1.01);
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.4);
-}
-
-.fire{
   position: relative;
-  top: 45%;     /* ← Встановлюй тут точку, де на зображенні малюнок вогню */
+  border-radius: 6px;
+}
+
+.fire {
+  position: absolute;
+  top: 45%;
   left: 60%;
   width: 10%;
   height: 10%;
@@ -65,7 +65,6 @@ export default {
   pointer-events: none;
 }
 
-/* Анімації */
 @keyframes firePulse {
   0%, 100% {
     transform: scale(1);

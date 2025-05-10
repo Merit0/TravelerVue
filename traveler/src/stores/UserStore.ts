@@ -36,10 +36,10 @@ export const useUserStore = defineStore('user', {
             localStorage.setItem('uStatus', 'true');
 
             const heroStore = useHeroStore();
-            heroStore.getHero();
+            await heroStore.getHero();
 
             this.error = '';
-            router.push('/home');
+            router.push('/camping');
             return true;
         },
         async logout(): Promise<void> {

@@ -1,5 +1,5 @@
 <template>
-  <div class="equipmentSlot">
+  <div class="equipment-slot" :data-slot="slotType">
     <div class="slot-background-image"></div>
     <div
         v-if="equipmentItem == null"
@@ -48,6 +48,10 @@ export default defineComponent({
     moveImageMoveRight: {
       type: String,
       required: false,
+    },
+    slotType: {
+      type: String,
+      required: true
     },
   },
   data() {

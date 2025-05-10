@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import HeroDetailsBar from '../../HeroDetailsBar.vue';
-import HeroDeathOverlay from '@/components/HeroDeathOverlay.vue'
+import HeroDeathOverlay from '@/components/hero-death-overlay.vue'
 import {useHeroStore} from '@/stores/HeroStore'
 import {useMapLocationStore} from '@/stores/map-location-store';
 import HeroInventoryOverlay from '../../hero-equipment-modal/hero-inventory-overlay.vue';
@@ -22,7 +22,7 @@ import TilesGrid from "@/components/tiles-grid.vue";
 
 export default {
   name: "mountain-hill-map-location",
-  components: {TilesGrid, HeroDetailsBar, HeroDeathOverlay, HeroInventory: HeroInventoryOverlay},
+  components: {TilesGrid, HeroDetailsBar, HeroDeathOverlay: HeroDeathOverlay, HeroInventory: HeroInventoryOverlay},
   data() {
     const mapLocationName = 'Mountain Hill'
     const heroStore = useHeroStore();
