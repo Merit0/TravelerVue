@@ -152,7 +152,6 @@ export const useMapLocationStore = defineStore("map-location-store", {
                     tile.setImageSrc(locationMap.tileImage);
                     tile.setBackgroundSrc(locationMap.tileBackgroundSrc);
                     tile.isHeroHere = false;
-                    tile.isExit = false;
 
                     const isInCampZone = x >= blockStartX && x <= blockEndX &&
                         y >= blockStartY && y <= blockEndY;
@@ -191,6 +190,12 @@ export const useMapLocationStore = defineStore("map-location-store", {
             if (nextTile.isBlocked) {
                 console.warn("❌ Hero tried to move to a blocked tile:", nextTile.coordinates);
                 return;
+            }
+
+            if (nextTile.coordinates.x < currentTile.coordinates.x) {
+                hero.flippedImage = false; //turn Hero left
+            } else if (nextTile.coordinates.x > currentTile.coordinates.x) {
+                hero.flippedImage = true; //turn Hero right
             }
 
             currentTile.isHeroHere = false;

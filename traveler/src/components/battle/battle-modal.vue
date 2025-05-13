@@ -50,7 +50,7 @@ import EnemyModel from "@/models/EnemyModel";
 import BattleEnemyTile from "./battle-enemy-tile.vue";
 
 export default defineComponent({
-  name: "battle-field",
+  name: "battlefield-modal",
   components: { BattleEnemyTile },
   props: {
     tile: {

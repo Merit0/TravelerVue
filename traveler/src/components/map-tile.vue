@@ -1,6 +1,6 @@
 <template>
   <relief-tile :tile="tile"/>
-  <enemy-tile :tile="tile" :enemyAlive="enemyAlive" @showBattlefield="isBattle($event)"/>
+  <enemy-tile :tile="tile" :enemyAlive="enemyAlive"/>
   <empty-tile :emptyTile="tile.isEmpty" :tile="tile"/>
   <hero-tile :tile="tile" :show-hero="tile.isHeroHere" :key="tile.id + '-' + tile.isHeroHere"/>
   <chest-tile :tile="tile" @chestInventory="openChestInventory($event)"/>
@@ -10,7 +10,6 @@
       :show-chest-inventory="showChestInventory"
       @chestInventory="closeChestInventory(tile, $event)"
   />
-  <battlefield :showOverlay="tile.inBattle" :tile="tile" @isBattle="isBattle($event)"/>
   <camp-tile/>
 </template>
 
@@ -19,7 +18,6 @@ import TileModel from '@/models/TileModel';
 import EnemyTile from '@/components/EnemyTile.vue';
 import ReliefTile from '@/components/relief-tile.vue';
 import EmptyTile from '@/components/EmptyTile.vue';
-import Battlefield from '@/components/battlefield.vue';
 import {useHeroStore} from '@/stores/HeroStore';
 import HeroTile from './HeroTile.vue';
 import {useMapLocationStore} from '@/stores/map-location-store';
@@ -43,7 +41,6 @@ export default {
     EnemyTile,
     ReliefTile,
     EmptyTile,
-    Battlefield,
     HeroTile
   },
   data() {
@@ -54,15 +51,11 @@ export default {
       hero,
       heroStore,
       mapLocationStore,
-      showBattlefield: false,
       showChestInventory: false,
       enemyAlive: true
     };
   },
   methods: {
-    isBattle(status: boolean) {
-      this.showBattlefield = status;
-    },
     openChestInventory(status: boolean) {
       this.showChestInventory = status;
     },

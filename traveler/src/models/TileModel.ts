@@ -21,6 +21,7 @@ export interface ITile {
     coordinates: ICoordinates;
     isReachable: boolean;
     isHeroHere: boolean;
+    isEnemyHere: boolean;
     isBlocked: boolean;
 }
 
@@ -38,7 +39,7 @@ export class TileModel implements ITile {
     coordinates: ICoordinates;
     isReachable = false;
     isHeroHere = false;
-    isExit = false;
+    isEnemyHere = false;
     isBlocked = false;
 
     constructor(id: number, coordinates: ICoordinates) {

@@ -13,13 +13,23 @@ export class HeroModel implements IHero {
     kills: number;
     available: boolean;
     id: number;
-    imgPath = "hero_ass1.png";
+    imgPath = "/images/heroes_150_150/hero-tile-image.png";
     equipment: Equipment;
     currentTile: TileModel;
     heroLocation: ICoordinates;
+    flippedImage = false;
 
     constructor() {
         this.maxHealth = 100;
+    }
+
+    setFlipped(state: boolean) {
+        this.flippedImage = state;
+        return this;
+    }
+
+    getFlipped(): boolean {
+        return this.flippedImage;
     }
 
     public setName(name: string): HeroModel {

@@ -1,63 +1,54 @@
 <template>
-  <div class="initialTileView mapTile" v-if="showHero" :style="getTileBackground(tile)">
+  <div
+      class="initialTileView mapTile"
+      v-if="showHero"
+      :style="tileBackgroundStyle"
+  >
     <div
         class="mapTile heroTile"
-        :style="heroImgStyle">
+        :style="heroImgStyle"
+        :class="{ flipped }"
+    >
       <button
           class="mapTile tileButton"
-          @click="openInventory()"
-      >
-      </button>
+          @click="openInventory"
+      />
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import TileModel from '@/models/TileModel';
-import {useHeroStore} from '@/stores/HeroStore';
-import {PropType} from 'vue';
+<script setup lang="ts">
+import { computed, defineProps } from 'vue'
+import TileModel from '@/models/TileModel'
+import { useHeroStore } from '@/stores/HeroStore'
 
-export default {
-  name: "hero-tile",
-  props: {
-    tile: {
-      type: Object as PropType<TileModel>,
-      required: true
-    },
-    showHero: {
-      type: Boolean,
-      required: true
-    }
-  },
-  data() {
-    const heroStore = useHeroStore();
+const props = defineProps<{
+  tile: TileModel
+  showHero: boolean
+}>()
 
-    return {heroStore}
-  },
-  computed: {
-    heroImgStyle(): Record<string, string> {
-      const heroStore = useHeroStore();
-      return {
-        backgroundImage: `url(/images/heroes_150_150/${heroStore.hero.imgPath})`,
-        backgroundSize: 'contain',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center'
-      };
-    }
-  },
-  methods: {
-    getTileBackground(tile: TileModel) {
-      return {
-        backgroundImage: `url(${tile.backgroundSrc})`,
-      }
-    },
-    async openInventory() {
-      this.heroStore.inventoryShown = true;
-    }
-  }
+const heroStore = useHeroStore()
+
+const heroImgStyle = computed(() => ({
+  backgroundImage: `url(${heroStore.hero.imgPath})`,
+  backgroundSize: 'contain',
+  backgroundRepeat: 'no-repeat',
+  backgroundPosition: 'center',
+}))
+
+const flipped = heroStore.hero.flippedImage;
+
+const tileBackgroundStyle = computed(() => ({
+  backgroundImage: `url(${props.tile.backgroundSrc})`,
+  backgroundSize: '100% 100%',
+}))
+
+const openInventory = () => {
+  heroStore.inventoryShown = true
 }
 </script>
-<style>
+
+<style scoped>
 @keyframes heroJump {
   0% {
     transform: translateY(0);
@@ -77,9 +68,14 @@ export default {
 }
 
 .heroTile {
-  width: 90%;
-  height: 90%;
+  width: 100%;
+  height: 100%;
   animation: heroJump 0.5s ease-out;
   background-repeat: no-repeat;
+  transition: transform 0.4s ease-in-out;
+}
+
+.heroTile.flipped {
+  transform: scaleX(-1);
 }
 </style>

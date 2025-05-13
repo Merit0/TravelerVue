@@ -48,6 +48,7 @@ export const useUserStore = defineStore('user', {
             const mapLocationStore = useMapLocationStore();
             const bagStore = useBagStore();
             const chestStore = useChestStore();
+            const heroStore = useHeroStore();
 
             mapLocationStore.initMapsList();
 
@@ -72,6 +73,8 @@ export const useUserStore = defineStore('user', {
             } else {
                 console.error('Old Forest map not found');
             }
+            heroStore.resetHero();
+            localStorage.clear();
         },
         async clearErrorMsg() {
             this.error = '';
