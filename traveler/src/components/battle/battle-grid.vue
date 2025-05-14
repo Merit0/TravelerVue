@@ -30,9 +30,10 @@ const tiles = battleStore.tiles
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  height: 90vh;
-  background: red;
+  width: 26vw;
+  height: 54vh;
+  background: #401b01;
+  border-radius: 2vh;
 }
 
 .battle-tiles-grid {
