@@ -27,6 +27,6 @@ const diceStore = useDiceStore();
 }
 .dices {
   display: flex;
-  gap: 1rem;
+  gap: 2rem;
 }
 </style>

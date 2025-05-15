@@ -133,7 +133,6 @@ onMounted(() => {
   box-shadow: 0 0 12px rgba(255, 100, 100, 0.5), inset 0 0 10px rgba(255, 200, 200, 0.3);
 }
 
-/* ==== Лог бойової арени ==== */
 .battlefield-logger-container {
   position: relative;
   margin-top: 3%;
@@ -149,7 +148,6 @@ onMounted(() => {
   z-index: 0;
 }
 
-/* ==== Контейнер бойових елементів ==== */
 .battle-controls-gui {
   position: absolute;
   width: 100%;
@@ -162,23 +160,15 @@ onMounted(() => {
   gap: 0.5rem;
 }
 
-/* ==== Контейнери кубиків ==== */
 .three-dices-container {
   width: 100%;
   height: 40%;
-  background: #fff582;
+  background: #373735;
   border-radius: 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 1rem;
-}
-
-.single-dice-container {
-  width: 3vw;
-  height: 6vh;
-  background: #00ff33;
-  border-radius: 0.5rem;
 }
 
 .controls {
@@ -243,7 +233,6 @@ onMounted(() => {
   transform: scale(1.05);
 }
 
-/* Ефект натискання */
 .attack-button:active {
   transform: scale(0.95);
   background: #8800bb;
@@ -253,7 +242,7 @@ onMounted(() => {
 .attack-button-container {
   flex: 1;
   height: 100%;
-  background: #ff8800;
+  background: #000c5a;
   border-radius: 1rem;
   display: flex;
   justify-content: center;

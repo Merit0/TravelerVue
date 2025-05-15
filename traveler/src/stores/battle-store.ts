@@ -2,6 +2,7 @@ import {defineStore} from 'pinia'
 import TileModel from '@/models/TileModel'
 import EnemyModel from '@/models/EnemyModel'
 import {useHeroStore} from './HeroStore'
+import {useDiceStore} from "@/stores/DiceStore";
 
 interface BattleArena {
     tiles: TileModel[];
@@ -89,7 +90,7 @@ export const useBattleStore = defineStore('battle-store', {
 
         finishBattle() {
             const heroStore = useHeroStore();
-
+            const diceStore = useDiceStore();
             const allEnemiesDead = this.enemies.every((e: EnemyModel) => e.isDead);
 
             if (allEnemiesDead) {
@@ -99,7 +100,7 @@ export const useBattleStore = defineStore('battle-store', {
                 heroStore.hero.heroLocation = {...this.heroTile.coordinates};
                 heroStore.hero.currentTile = this.heroTile;
             }
-
+            diceStore.removeDices();
             this.tiles = [];
             this.enemies = [];
             this.tileWithEnemies = null;

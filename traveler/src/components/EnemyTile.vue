@@ -27,6 +27,7 @@ import TileModel from '@/models/TileModel'
 import EnemyModel from '@/models/EnemyModel'
 import {useBattleStore} from '@/stores/battle-store'
 import {useOverlayStore} from '@/stores/overlay-store'
+import {useDiceStore} from "@/stores/DiceStore";
 
 export default defineComponent({
   name: 'enemy-tile',
@@ -44,8 +45,14 @@ export default defineComponent({
     startBattle(tile: TileModel) {
       const battleStore = useBattleStore();
       const overlayStore = useOverlayStore();
+      const diceStore = useDiceStore();
+
       battleStore.startBattleOnTile(tile);
-      tile.inBattle = true
+      tile.inBattle = true;
+
+      const enemyCount = tile.enemies?.length || 1; // fallback: 1
+      diceStore.setDiceCountWithEnemyCount(enemyCount);
+
       overlayStore.openOverlay('battle', {tile});
     },
     getEnemyImage(enemy: EnemyModel) {

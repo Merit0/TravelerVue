@@ -1,12 +1,13 @@
-export type DiceFace = 'sword' | 'shield' | 'energy';
+export type DiceFace = 'sword' | 'shield' | 'energy' | `x${number}`;
 
 export class DiceModel {
-    face: DiceFace = 'sword';
+    face: DiceFace | string = 'sword';
     isRolling = false;
 
-    constructor(public faces: DiceFace[] = ['sword', 'shield', 'energy']) {}
+    constructor(public faces: DiceFace[] | string[]) {
+    }
 
-    roll(): Promise<DiceFace> {
+    roll(): Promise<DiceFace | string> {
         this.isRolling = true;
         return new Promise(resolve => {
             const interval = setInterval(() => {
@@ -19,7 +20,7 @@ export class DiceModel {
                 this.face = result;
                 this.isRolling = false;
                 resolve(result);
-            }, 1500);
+            }, 1000);
         });
     }
 }

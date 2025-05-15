@@ -1,9 +1,10 @@
 import {defineStore} from 'pinia';
 import {DicesHolderModel} from '@/models/DicesHolderModel';
+import {DiceFace, DiceModel} from "@/models/DiceModel";
 
 export const useDiceStore = defineStore('dice', {
         state: () => ({
-            holder: new DicesHolderModel(3),
+            holder: new DicesHolderModel(),
             lastResult: [] as string[],
             isRolling: false,
         }),
@@ -11,19 +12,41 @@ export const useDiceStore = defineStore('dice', {
             async rollDices() {
                 this.isRolling = true;
                 this.lastResult = await this.holder.rollAll();
+                await new Promise(resolve => setTimeout(resolve, 1000));
+
                 this.isRolling = false;
             },
+            setDiceCountWithEnemyCount(enemyCount: number) {
+                const actionFaces: DiceFace[] = ['sword', 'shield', 'energy'];
+                const enemyFaces = Array.from({length: enemyCount}, (_, i) => `x${i + 1}`);
+
+                this.holder.dices = [
+                    new DiceModel(actionFaces),
+                    new DiceModel(actionFaces),
+                    new DiceModel(actionFaces),
+                    new DiceModel(enemyFaces), // <- 4-й кубик: кількість ворогів
+                ];
+            },
             restoreState(saved: any) {
-                if (saved?.holder?.dices) {
+                if (saved?.holder?.dices?.length > 0) {
                     this.holder = DicesHolderModel.fromSaved(saved.holder);
+                } else {
+                    this.holder = new DicesHolderModel();
                 }
+
                 if (Array.isArray(saved.lastResult)) {
                     this.lastResult = saved.lastResult;
                 }
-                this.isRolling = false; // ❗ обовʼязково
+
+                this.isRolling = false;
+            },
+            removeDices() {
+                this.holder.dices = [];
+                this.lastResult = [];
+                this.isRolling = false;
             },
             persist: {
-                paths: ['holder.dices', 'lastResult'], // ❗ без isRolling
+                paths: ['holder.dices', 'lastResult'],
             },
         },
     })
