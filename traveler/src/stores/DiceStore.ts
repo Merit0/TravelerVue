@@ -1,6 +1,7 @@
 import {defineStore} from 'pinia';
 import {DicesHolderModel} from '@/models/DicesHolderModel';
 import {DiceFace, DiceModel} from "@/models/DiceModel";
+import {RollDiceTester} from "@/utils/roll-dice-tester";
 
 export const useDiceStore = defineStore('dice', {
         state: () => ({
@@ -19,12 +20,14 @@ export const useDiceStore = defineStore('dice', {
             setDiceCountWithEnemyCount(enemyCount: number) {
                 const actionFaces: DiceFace[] = ['sword', 'shield', 'energy'];
                 const enemyFaces = Array.from({length: enemyCount}, (_, i) => `x${i + 1}`);
+                const swordDice = [10, 1, 1]
+                this.testDice(actionFaces, swordDice)
 
                 this.holder.dices = [
-                    new DiceModel(actionFaces),
-                    new DiceModel(actionFaces),
-                    new DiceModel(actionFaces),
-                    new DiceModel(enemyFaces), // <- 4-й кубик: кількість ворогів
+                    new DiceModel(actionFaces, swordDice),
+                    new DiceModel(actionFaces, swordDice),
+                    new DiceModel(actionFaces, swordDice),
+                    new DiceModel(enemyFaces), // Enemy Dice
                 ];
             },
             restoreState(saved: any) {
@@ -44,6 +47,9 @@ export const useDiceStore = defineStore('dice', {
                 this.holder.dices = [];
                 this.lastResult = [];
                 this.isRolling = false;
+            },
+            testDice(faces: DiceFace[], weights: number[]) {
+                new RollDiceTester(faces, weights).testRolls(1000);
             },
             persist: {
                 paths: ['holder.dices', 'lastResult'],

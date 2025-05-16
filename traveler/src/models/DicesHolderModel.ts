@@ -7,16 +7,18 @@ export class DicesHolderModel {
     constructor(count = 4, enemyCount?: number) {
         this.count = count;
         const actionFaces: DiceFace[] = ['sword', 'shield', 'energy'];
+        const baseWeights: number[] = [1, 1, 1]
 
         this.dices = [
-            new DiceModel(actionFaces),
-            new DiceModel(actionFaces),
-            new DiceModel(actionFaces),
+            new DiceModel(actionFaces, baseWeights),
+            new DiceModel(actionFaces, baseWeights),
+            new DiceModel(actionFaces, baseWeights),
         ];
 
         if (enemyCount !== undefined) {
+            const enemyCounterWeights: number[] = Array(enemyCount).fill(1);
             const enemyFaces: DiceFace[] = Array.from({length: enemyCount}, (_, i) => `x${i + 1}` as DiceFace);
-            this.dices.push(new DiceModel(enemyFaces));
+            this.dices.push(new DiceModel(enemyFaces, enemyCounterWeights));
             this.count++;
         }
     }
@@ -30,7 +32,7 @@ export class DicesHolderModel {
         const holder = new DicesHolderModel(0); // починаємо з 0, потім додаємо вручну
 
         holder.dices = data.dices.map((d: any) => {
-            const dice = new DiceModel(d.faces || ['sword', 'shield', 'energy']);
+            const dice = new DiceModel(d.faces || ['sword', 'shield', 'energy'], d.weights);
             dice.face = d.face || 'sword';
             dice.isRolling = false;
             return dice;

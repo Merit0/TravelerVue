@@ -50,7 +50,7 @@ export default defineComponent({
       battleStore.startBattleOnTile(tile);
       tile.inBattle = true;
 
-      const enemyCount = tile.enemies?.length || 1; // fallback: 1
+      const enemyCount = tile.enemies?.length || 1;
       diceStore.setDiceCountWithEnemyCount(enemyCount);
 
       overlayStore.openOverlay('battle', {tile});

@@ -21,7 +21,7 @@
             <button
                 class="attack-button"
                 @click="roll"
-                :disabled="diceStore.isRolling">
+                :disabled="diceStore.isRolling || noEnemies">
               {{ diceStore.isRolling ? 'ROLLING...' : 'ROLL' }}
             </button>
           </div>
@@ -43,23 +43,64 @@ import BattleGrid from "@/components/battle/battle-grid.vue";
 import {useOverlayStore} from "@/stores/overlay-store";
 import DiceRoller from "@/components/dice-roller/dice-roller.vue";
 import {useDiceStore} from "@/stores/DiceStore";
+import {useHeroStore} from "@/stores/HeroStore";
 
 const battleStore = useBattleStore();
 const diceStore = useDiceStore();
+
+const noEnemies = computed(() =>
+    battleStore.enemies.length === 0 ||
+    battleStore.enemies.every(e => e.isDead)
+);
+
 const tile = computed(() => battleStore.tileWithEnemies);
+
 const roll = async () => {
   await diceStore.rollDices();
+  const result = diceStore.lastResult;
+  const combatFaces = result.slice(0, 3);
+  const swordCount = combatFaces.filter(face => face === 'sword').length;
+  if (swordCount === 3) {
+    attackEnemies();
+  }
 };
+
 const closeOverlay = () => {
   const overlayStore = useOverlayStore();
   const battleStore = useBattleStore();
   battleStore.finishBattle();
   overlayStore.closeOverlay();
 }
+
 onMounted(() => {
   const saved = JSON.parse(localStorage.getItem('dice') || '{}');
   diceStore.restoreState(saved);
 });
+
+function attackEnemies() {
+  const battleStore = useBattleStore();
+  const heroStore = useHeroStore();
+  const {hero} = heroStore;
+  const enemies = battleStore.enemies;
+
+  if (!enemies || enemies.length === 0) return;
+
+  enemies.forEach(enemy => {
+    enemy.health -= hero.attack;
+    if (enemy.health < 0) enemy.health = 0;
+  });
+
+  battleStore.enemies = enemies.filter(e => !e.isDead);
+  battleStore.tiles.forEach(tile => {
+    if (tile.isEnemyHere && tile.enemies.length > 0) {
+      tile.enemies = tile.enemies.filter(e => !e.isDead);
+      if (tile.enemies.length === 0) {
+        tile.isEnemyHere = false;
+      }
+    }
+  });
+}
+
 </script>
 
 <style scoped>
@@ -72,7 +113,7 @@ onMounted(() => {
   right: 0;
   bottom: 0;
   z-index: 10;
-  background-color: rgba(83, 83, 83, 0.55);
+  background-color: rgba(83, 83, 83, 0.71);
   display: flex;
   flex-direction: column;
   align-items: center;

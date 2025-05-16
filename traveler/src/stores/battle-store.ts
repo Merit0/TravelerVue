@@ -2,7 +2,7 @@ import {defineStore} from 'pinia'
 import TileModel from '@/models/TileModel'
 import EnemyModel from '@/models/EnemyModel'
 import {useHeroStore} from './HeroStore'
-import {useDiceStore} from "@/stores/DiceStore";
+import {useDiceStore} from '@/stores/DiceStore'
 
 interface BattleArena {
     tiles: TileModel[];
@@ -10,6 +10,7 @@ interface BattleArena {
     enemies: EnemyModel[];
     tileWithEnemies: TileModel | null;
     heroTile: TileModel | null;
+    tileWithEnemiesId: string | null;
 }
 
 export const useBattleStore = defineStore('battle-store', {
@@ -18,7 +19,8 @@ export const useBattleStore = defineStore('battle-store', {
         heroPosition: {x: 2, y: 2},
         enemies: [],
         tileWithEnemies: null,
-        heroTile: null
+        heroTile: null,
+        tileWithEnemiesId: null
     }),
 
     actions: {
@@ -30,6 +32,7 @@ export const useBattleStore = defineStore('battle-store', {
 
             this.heroTile = hero.currentTile;
             this.tileWithEnemies = tile;
+            this.tileWithEnemiesId = tile.id;
 
             const tiles: TileModel[] = [];
             for (let y = 0; y < GRID_SIZE; y++) {
@@ -48,10 +51,10 @@ export const useBattleStore = defineStore('battle-store', {
 
             const used = new Set([`${center.x},${center.y}`]);
             const enemies: EnemyModel[] = [];
-
             const arenaEnemies = Array.isArray(tile.enemies) ? tile.enemies : [];
+
             if (arenaEnemies.length === 0) {
-                console.warn("⚠️ В tile.enemies немає ворогів", tile);
+                console.warn('⚠️ В tile.enemies немає ворогів', tile);
             }
 
             for (const enemy of arenaEnemies) {
@@ -94,17 +97,46 @@ export const useBattleStore = defineStore('battle-store', {
             const allEnemiesDead = this.enemies.every((e: EnemyModel) => e.isDead);
 
             if (allEnemiesDead) {
-                heroStore.hero.heroLocation = {...this.tileWithEnemies.coordinates};
-                heroStore.hero.currentTile = this.tileWithEnemies;
+                if (this.tileWithEnemies) {
+                    this.tileWithEnemies.enemies = [];
+                    this.tileWithEnemies.isEnemyHere = false;
+                }
+
+                const chest = this.tileWithEnemies.chest;
+
+                if (!chest) {
+                    heroStore.hero.heroLocation = {...this.tileWithEnemies.coordinates};
+                    heroStore.hero.currentTile = this.tileWithEnemies;
+                } else {
+                    heroStore.hero.heroLocation = {...this.heroTile?.coordinates};
+                    heroStore.hero.currentTile = this.heroTile;
+                }
             } else {
-                heroStore.hero.heroLocation = {...this.heroTile.coordinates};
+                heroStore.hero.heroLocation = {...this.heroTile?.coordinates};
                 heroStore.hero.currentTile = this.heroTile;
             }
+
             diceStore.removeDices();
+
+            // 🧼 Очистити бойовий стан
             this.tiles = [];
             this.enemies = [];
             this.tileWithEnemies = null;
             this.heroTile = null;
+            this.tileWithEnemiesId = null;
+        },
+
+        restoreAfterReload(allTiles: TileModel[]) {
+            if (this.tileWithEnemiesId) {
+                const tile = allTiles.find(t => t.id === this.tileWithEnemiesId);
+                if (tile) {
+                    tile.setEnemies(this.enemies.map(e => ({...e})));
+                    this.tileWithEnemies = tile;
+                }
+            }
+        },
+        persist: {
+            paths: ['tileWithEnemiesId', 'enemies']
         }
-    }
-})
+    },
+});
