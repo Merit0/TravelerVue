@@ -23,6 +23,7 @@ export interface ITile {
     isHeroHere: boolean;
     isEnemyHere: boolean;
     isBlocked: boolean;
+    isChestTile: boolean;
 }
 
 export class TileModel implements ITile {
@@ -41,6 +42,7 @@ export class TileModel implements ITile {
     isHeroHere = false;
     isEnemyHere = false;
     isBlocked = false;
+    isChestTile = false;
 
     constructor(id: number, coordinates: ICoordinates) {
         this.id = id;
@@ -64,6 +66,7 @@ export class TileModel implements ITile {
     }
 
     setChest(chest: ChestModel) {
+        this.isChestTile = true;
         this.chest = chest;
     }
 

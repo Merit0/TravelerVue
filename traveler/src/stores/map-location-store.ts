@@ -219,6 +219,7 @@ export const useMapLocationStore = defineStore("map-location-store", {
                 if (enemies.length > 0) {
                     const chest: ChestModel = this.generateChest(enemies, locationMap.chestImage);
                     tile.setChest(chest);
+                    tile.isChestTile = true;
                 }
             });
         },

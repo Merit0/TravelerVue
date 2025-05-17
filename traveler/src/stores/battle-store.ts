@@ -1,40 +1,40 @@
-import {defineStore} from 'pinia'
-import TileModel from '@/models/TileModel'
-import EnemyModel from '@/models/EnemyModel'
-import {useHeroStore} from './HeroStore'
-import {useDiceStore} from '@/stores/DiceStore'
-import {useMapLocationStore} from "@/stores/map-location-store";
+import {defineStore} from 'pinia';
+import TileModel from '@/models/TileModel';
+import EnemyModel from '@/models/EnemyModel';
+import {useHeroStore} from './HeroStore';
+import {useDiceStore} from '@/stores/DiceStore';
+import {useMapLocationStore} from '@/stores/map-location-store';
 
 interface BattleArena {
     tiles: TileModel[];
-    heroPosition: { x: number; y: number };
-    enemies: EnemyModel[];
     battleTile: TileModel | null;
-    heroTile: TileModel | null;
     battleTileId: number | null;
+    enemies: EnemyModel[];
+    previousHeroTileId: number | null;
 }
 
 export const useBattleStore = defineStore('battle-store', {
     state: (): BattleArena => ({
         tiles: [],
-        heroPosition: {x: 2, y: 2},
-        enemies: [],
         battleTile: null,
-        heroTile: null,
-        battleTileId: null
+        battleTileId: null,
+        enemies: [],
+        previousHeroTileId: null
     }),
 
     actions: {
         startBattleOnTile(tile: TileModel) {
             const GRID_SIZE = 5;
-            const center = {x: 2, y: 2};
+            const CENTER = {x: 2, y: 2};
+
             const heroStore = useHeroStore();
             const hero = heroStore.hero;
 
-            this.heroTile = hero.currentTile;
             this.battleTile = tile;
             this.battleTileId = tile.id;
+            this.previousHeroTileId = hero.currentTile?.id ?? null;
 
+            // Ініціалізуємо тайли арени
             const tiles: TileModel[] = [];
             for (let y = 0; y < GRID_SIZE; y++) {
                 for (let x = 0; x < GRID_SIZE; x++) {
@@ -45,18 +45,15 @@ export const useBattleStore = defineStore('battle-store', {
                 }
             }
 
-            const centerIndex = center.y * GRID_SIZE + center.x;
+            // Ставимо героя в центр
+            const centerIndex = CENTER.y * GRID_SIZE + CENTER.x;
             tiles[centerIndex].isHeroHere = true;
             hero.currentTile = tiles[centerIndex];
-            this.heroPosition = {...center};
 
-            const used = new Set([`${center.x},${center.y}`]);
-            const enemies: EnemyModel[] = [];
+            // Розставляємо ворогів навколо
+            const used = new Set([`${CENTER.x},${CENTER.y}`]);
             const arenaEnemies = Array.isArray(tile.enemies) ? tile.enemies : [];
-
-            if (arenaEnemies.length === 0) {
-                console.warn('⚠️ В tile.enemies немає ворогів', tile);
-            }
+            const placedEnemies: EnemyModel[] = [];
 
             for (const enemy of arenaEnemies) {
                 let placed = false;
@@ -65,8 +62,8 @@ export const useBattleStore = defineStore('battle-store', {
                 while (!placed && attempts < 100) {
                     const dx = Math.floor(Math.random() * 7) - 3;
                     const dy = Math.floor(Math.random() * 7) - 3;
-                    const x = center.x + dx;
-                    const y = center.y + dy;
+                    const x = CENTER.x + dx;
+                    const y = CENTER.y + dy;
                     const dist = Math.abs(dx) + Math.abs(dy);
                     const key = `${x},${y}`;
                     const index = y * GRID_SIZE + x;
@@ -79,7 +76,7 @@ export const useBattleStore = defineStore('battle-store', {
                     ) {
                         tiles[index].isEnemyHere = true;
                         tiles[index].setEnemies([enemy]);
-                        enemies.push(enemy);
+                        placedEnemies.push(enemy);
                         used.add(key);
                         placed = true;
                     }
@@ -89,43 +86,49 @@ export const useBattleStore = defineStore('battle-store', {
             }
 
             this.tiles = tiles;
-            this.enemies = enemies;
+            this.enemies = placedEnemies;
         },
 
         finishBattle() {
             const mapLocationStore = useMapLocationStore();
             const diceStore = useDiceStore();
-            const allEnemiesDead = this.enemies.every((e: EnemyModel) => e.isDead);
+            const heroStore = useHeroStore();
+            const hero = heroStore.hero;
 
-            if (allEnemiesDead && this.battleTile) {
-                console.warn('All enemies are dead');
+            const allEnemiesDead = this.enemies.every(e => e.isDead);
 
-                // 1. Очистити тайл від ворогів
+            if (this.battleTile) {
                 this.battleTile.enemies = [];
                 this.battleTile.isEnemyHere = false;
 
-                // 2. Перемістити героя
-                mapLocationStore.moveHero(this.battleTile);
-
-                // 3. Позначити старий тайл як порожній
-                if (this.heroTile) {
-                    this.heroTile.isHeroHere = false;
-                    this.heroTile.isEmpty = true;
+                if (allEnemiesDead) {
+                    this.battleTile.isEmpty = false;
+                    mapLocationStore.moveHero(this.battleTile);
+                } else {
+                    // Повертаємо героя на попередній тайл, якщо ID є
+                    if (this.previousHeroTileId !== null) {
+                        const mapLocation = mapLocationStore.currentLocation;
+                        const previousTile = mapLocation?.tiles.find(t => t.id === this.previousHeroTileId);
+                        if (previousTile) {
+                            previousTile.isHeroHere = true;
+                            previousTile.isEmpty = false;
+                            hero.currentTile = previousTile;
+                        }
+                    }
                 }
-
-                // 4. Переконатися, що battleTile вже не пустий
-                this.battleTile.isEmpty = false;
             }
 
-            // Очищаємо кубики
+            // Прибираємо героя з бойових тайлів
+            this.tiles.forEach(t => t.isHeroHere = false);
+
+            // Очищення
             diceStore.removeDices();
 
-            // Очищаємо бойовий стан
             this.tiles = [];
             this.enemies = [];
             this.battleTile = null;
-            this.heroTile = null;
             this.battleTileId = null;
+            this.previousHeroTileId = null;
         },
 
         restoreAfterReload(allTiles: TileModel[]) {

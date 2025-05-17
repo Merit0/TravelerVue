@@ -14,7 +14,7 @@
       </div>
       <div class="battle-controls-gui">
         <div class="three-dices-container">
-                    <dice-roller></dice-roller>
+          <dice-roller></dice-roller>
         </div>
         <div class="controls">
           <div class="attack-button-container">
@@ -55,17 +55,6 @@ const noEnemies = computed(() =>
     battleStore.battleTile.enemies.every(e => e.health <= 0)
 );
 
-// onMounted(() => {
-//   if (battleStore.battleTileId) {
-//     const mapStore = useMapLocationStore();
-//     const tile = mapStore.tiles.find(t => t.id === battleStore.battleTileId);
-//
-//     if (tile) {
-//       battleStore.startBattleOnTile(tile);
-//     }
-//   }
-// });
-
 const tile = computed(() => battleStore.battleTile);
 
 const roll = async () => {
@@ -73,10 +62,10 @@ const roll = async () => {
   const result: string[] = diceStore.lastResult;
   const combatFaces = result.slice(0, 3);
   const swordCount = combatFaces.filter(face => face === 'sword').length;
-  if (swordCount === 3) {
+  if (3 === 3) {
     console.log('HIT')
-    // battleStore.battleTile.enemies.forEach(e => e.health = 0);
-    attackEnemies();
+    battleStore.battleTile.enemies.forEach(e => e.health = 0);
+    // attackEnemies();
   }
 };
 
@@ -95,39 +84,57 @@ onMounted(() => {
 function attackEnemies() {
   const battleStore = useBattleStore();
   const heroStore = useHeroStore();
-  const {hero} = heroStore;
+  const { hero } = heroStore;
+
   const enemies = battleStore.enemies;
 
   if (!enemies || enemies.length === 0) return;
 
-  // 🔪 Атака
+  // Атакуємо всіх ворогів
   enemies.forEach(enemy => {
     enemy.health -= hero.attack;
     if (enemy.health < 0) enemy.health = 0;
   });
 
-  // ♻️ Видаляємо мертвих ворогів з бойового стану
+  // Оновлюємо живих ворогів у бойовому сторах
   battleStore.enemies = enemies.filter(e => !e.isDead);
 
-  // 🔄 Оновлюємо кожен тайл
+  // Очищаємо тайли бойової арени від мертвих ворогів
   battleStore.tiles.forEach(tile => {
     if (tile.isEnemyHere && tile.enemies.length > 0) {
       tile.enemies = tile.enemies.filter(e => !e.isDead);
-
       if (tile.enemies.length === 0) {
         tile.isEnemyHere = false;
       }
     }
   });
 
-  // ✅ Оновлюємо головний battleTile
-  if (battleStore.battleTile) {
-    const stillAlive = battleStore.battleTile.enemies.some(e => !e.isDead);
+  // 🔍 Перевірка: чи всі вороги мертві
+  const allEnemiesDead = battleStore.enemies.every(e => e.isDead);
 
-    if (!stillAlive) {
-      battleStore.battleTile.isEnemyHere = false;
-      battleStore.battleTile.isEmpty = true;
-      battleStore.battleTile.enemies = [];
+  if (allEnemiesDead && battleStore.battleTile) {
+    const battleTile = battleStore.battleTile;
+    const heroTile = hero.currentTile;
+
+    // Очищаємо ворожий тайл
+    battleTile.enemies = [];
+    battleTile.isEnemyHere = false;
+
+    const hasChest = battleTile.isChestTile && battleTile.chest;
+
+    if (!hasChest) {
+      // 💥 Герой переходить на battleTile
+      if (heroTile) {
+        heroTile.isHeroHere = false;
+        heroTile.isEmpty = true;
+      }
+
+      battleTile.isHeroHere = true;
+      battleTile.isEmpty = false;
+      hero.currentTile = battleTile;
+    } else {
+      // 🧳 На тайлі є скриня — герой лишається на місці
+      battleTile.isEmpty = false; // тайл більше не порожній
     }
   }
 }
