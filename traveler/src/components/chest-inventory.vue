@@ -23,6 +23,8 @@ import ChestItemTile from './ChestItemTile.vue';
 import {PropType, watch, defineComponent, computed} from 'vue';
 import {ChestModel} from '@/models/ChestModel';
 import {useChestStore} from '@/stores/ChestStore';
+import {useBattleStore} from "@/stores/battle-store";
+import {useMapLocationStore} from "@/stores/map-location-store";
 
 export default defineComponent({
   name: 'chest-inventory',
@@ -53,6 +55,15 @@ export default defineComponent({
     const closeChestInventory = async () => {
       emit('chestInventory', false);
       await chestStore.resetChest();
+      const battleStore = useBattleStore();
+      const mapLocationStore = useMapLocationStore();
+
+      if (battleStore.battleTile) {
+        mapLocationStore.moveHero(battleStore.battleTile);
+
+        battleStore.battleTile.isChestTile = false;
+        battleStore.battleTile.chest = null;
+      }
     };
 
     return {
@@ -91,7 +102,7 @@ export default defineComponent({
   bottom: -5px;
   border-radius: 1vw;
   pointer-events: none;
-  background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.02) 70%, transparent 100%);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.02) 70%, transparent 100%);
   box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.1);
 }
 
@@ -141,10 +152,9 @@ export default defineComponent({
   font-weight: bold;
   font-size: 1.5vw;
   cursor: pointer;
-  box-shadow:
-      0 0 5px rgba(255, 255, 255, 0.1),
-      inset 0 0 5px rgba(255, 255, 255, 0.05),
-      0 0 15px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.1),
+  inset 0 0 5px rgba(255, 255, 255, 0.05),
+  0 0 15px rgba(0, 0, 0, 0.6);
   transition: all 0.3s ease;
   z-index: 10;
 }
@@ -152,9 +162,8 @@ export default defineComponent({
 .closeChestInventoryBtn:hover {
   background: radial-gradient(circle at top left, #7e3a3a, #3a2727);
   transform: scale(1.1);
-  box-shadow:
-      0 0 10px rgba(255, 255, 255, 0.15),
-      inset 0 0 8px rgba(255, 255, 255, 0.1),
-      0 0 20px rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.15),
+  inset 0 0 8px rgba(255, 255, 255, 0.1),
+  0 0 20px rgba(255, 255, 255, 0.05);
 }
 </style>

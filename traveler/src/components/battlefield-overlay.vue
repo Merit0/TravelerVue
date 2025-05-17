@@ -44,9 +44,6 @@ import {useOverlayStore} from "@/stores/overlay-store";
 import DiceRoller from "@/components/dice-roller/dice-roller.vue";
 import {useDiceStore} from "@/stores/DiceStore";
 import {useHeroStore} from "@/stores/HeroStore";
-import {DiceModel} from "@/models/DiceModel";
-import EnemyModel from "@/models/EnemyModel";
-import {useMapLocationStore} from "@/stores/map-location-store";
 
 const battleStore = useBattleStore();
 const diceStore = useDiceStore();
@@ -62,10 +59,8 @@ const roll = async () => {
   const result: string[] = diceStore.lastResult;
   const combatFaces = result.slice(0, 3);
   const swordCount = combatFaces.filter(face => face === 'sword').length;
-  if (3 === 3) {
-    console.log('HIT')
-    battleStore.battleTile.enemies.forEach(e => e.health = 0);
-    // attackEnemies();
+  if (swordCount === 3) {
+    attackEnemies();
   }
 };
 
@@ -90,16 +85,13 @@ function attackEnemies() {
 
   if (!enemies || enemies.length === 0) return;
 
-  // Атакуємо всіх ворогів
   enemies.forEach(enemy => {
     enemy.health -= hero.attack;
     if (enemy.health < 0) enemy.health = 0;
   });
 
-  // Оновлюємо живих ворогів у бойовому сторах
   battleStore.enemies = enemies.filter(e => !e.isDead);
 
-  // Очищаємо тайли бойової арени від мертвих ворогів
   battleStore.tiles.forEach(tile => {
     if (tile.isEnemyHere && tile.enemies.length > 0) {
       tile.enemies = tile.enemies.filter(e => !e.isDead);
@@ -109,21 +101,18 @@ function attackEnemies() {
     }
   });
 
-  // 🔍 Перевірка: чи всі вороги мертві
   const allEnemiesDead = battleStore.enemies.every(e => e.isDead);
 
   if (allEnemiesDead && battleStore.battleTile) {
     const battleTile = battleStore.battleTile;
     const heroTile = hero.currentTile;
 
-    // Очищаємо ворожий тайл
     battleTile.enemies = [];
     battleTile.isEnemyHere = false;
 
     const hasChest = battleTile.isChestTile && battleTile.chest;
 
     if (!hasChest) {
-      // 💥 Герой переходить на battleTile
       if (heroTile) {
         heroTile.isHeroHere = false;
         heroTile.isEmpty = true;
@@ -133,7 +122,6 @@ function attackEnemies() {
       battleTile.isEmpty = false;
       hero.currentTile = battleTile;
     } else {
-      // 🧳 На тайлі є скриня — герой лишається на місці
       battleTile.isEmpty = false; // тайл більше не порожній
     }
   }

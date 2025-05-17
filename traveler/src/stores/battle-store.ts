@@ -34,7 +34,6 @@ export const useBattleStore = defineStore('battle-store', {
             this.battleTileId = tile.id;
             this.previousHeroTileId = hero.currentTile?.id ?? null;
 
-            // Ініціалізуємо тайли арени
             const tiles: TileModel[] = [];
             for (let y = 0; y < GRID_SIZE; y++) {
                 for (let x = 0; x < GRID_SIZE; x++) {
@@ -45,12 +44,10 @@ export const useBattleStore = defineStore('battle-store', {
                 }
             }
 
-            // Ставимо героя в центр
             const centerIndex = CENTER.y * GRID_SIZE + CENTER.x;
             tiles[centerIndex].isHeroHere = true;
             hero.currentTile = tiles[centerIndex];
 
-            // Розставляємо ворогів навколо
             const used = new Set([`${CENTER.x},${CENTER.y}`]);
             const arenaEnemies = Array.isArray(tile.enemies) ? tile.enemies : [];
             const placedEnemies: EnemyModel[] = [];
@@ -94,21 +91,44 @@ export const useBattleStore = defineStore('battle-store', {
             const diceStore = useDiceStore();
             const heroStore = useHeroStore();
             const hero = heroStore.hero;
+            const mapLocation = mapLocationStore.currentLocation;
 
             const allEnemiesDead = this.enemies.every(e => e.isDead);
 
+            this.tiles.forEach(t => t.isHeroHere = false);
+
             if (this.battleTile) {
+                const battleTile = this.battleTile;
+                const hasChest = battleTile.isChestTile && !!battleTile.chest;
+
                 if (allEnemiesDead) {
-                    this.battleTile.enemies = [];
-                    this.battleTile.isEnemyHere = false;
-                    this.battleTile.isEmpty = false;
-                    mapLocationStore.moveHero(this.battleTile);
+                    battleTile.enemies = [];
+                    battleTile.isEnemyHere = false;
+
+                    if (hasChest) {
+                        if (this.previousHeroTileId !== null && mapLocation) {
+                            const previousTile = mapLocation.tiles.find(t => t.id === this.previousHeroTileId);
+                            if (previousTile) {
+                                mapLocation.tiles.forEach(t => (t.isHeroHere = false));
+                                previousTile.isHeroHere = true;
+                                previousTile.isEmpty = false;
+                                hero.currentTile = previousTile;
+                            }
+                        }
+
+                        battleTile.isEmpty = false;
+
+                    } else {
+                        mapLocationStore.moveHero(battleTile);
+                        battleTile.isEmpty = false;
+                    }
+
                 } else {
-                    // Повертаємо героя на попередній тайл, якщо ID є
-                    if (this.previousHeroTileId !== null) {
-                        const mapLocation = mapLocationStore.currentLocation;
-                        const previousTile = mapLocation?.tiles.find(t => t.id === this.previousHeroTileId);
+                    if (this.previousHeroTileId !== null && mapLocation) {
+                        const previousTile = mapLocation.tiles.find(t => t.id === this.previousHeroTileId);
                         if (previousTile) {
+                            mapLocation.tiles.forEach(t => (t.isHeroHere = false));
+
                             previousTile.isHeroHere = true;
                             previousTile.isEmpty = false;
                             hero.currentTile = previousTile;
@@ -117,12 +137,7 @@ export const useBattleStore = defineStore('battle-store', {
                 }
             }
 
-            // Прибираємо героя з бойових тайлів
-            this.tiles.forEach(t => t.isHeroHere = false);
-
-            // Очищення
             diceStore.removeDices();
-
             this.tiles = [];
             this.enemies = [];
             this.battleTile = null;

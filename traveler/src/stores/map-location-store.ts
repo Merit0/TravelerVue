@@ -192,16 +192,22 @@ export const useMapLocationStore = defineStore("map-location-store", {
                 return;
             }
 
+            this.tiles.forEach(tile => {
+                tile.isHeroHere = false;
+            });
+
             if (nextTile.coordinates.x < currentTile.coordinates.x) {
-                hero.flippedImage = false; //turn Hero left
+                hero.flippedImage = false; // turn Hero left
             } else if (nextTile.coordinates.x > currentTile.coordinates.x) {
-                hero.flippedImage = true; //turn Hero right
+                hero.flippedImage = true; // turn Hero right
             }
 
             currentTile.isHeroHere = false;
             currentTile.isEmpty = true;
 
             nextTile.isHeroHere = true;
+            nextTile.isEmpty = false; // ⬅ додано
+
             hero.currentTile = nextTile;
             hero.heroLocation = {...nextTile.coordinates};
 

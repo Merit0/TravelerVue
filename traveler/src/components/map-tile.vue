@@ -52,7 +52,6 @@ export default {
       heroStore,
       mapLocationStore,
       showChestInventory: false,
-      enemyAlive: true
     };
   },
   methods: {
