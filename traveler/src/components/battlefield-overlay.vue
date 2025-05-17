@@ -44,24 +44,40 @@ import {useOverlayStore} from "@/stores/overlay-store";
 import DiceRoller from "@/components/dice-roller/dice-roller.vue";
 import {useDiceStore} from "@/stores/DiceStore";
 import {useHeroStore} from "@/stores/HeroStore";
+import {DiceModel} from "@/models/DiceModel";
+import EnemyModel from "@/models/EnemyModel";
+import {useMapLocationStore} from "@/stores/map-location-store";
 
 const battleStore = useBattleStore();
 const diceStore = useDiceStore();
 
 const noEnemies = computed(() =>
-    battleStore.enemies.length === 0 ||
-    battleStore.enemies.every(e => e.isDead)
+    battleStore.battleTile.enemies.every(e => e.health <= 0)
 );
+
+// onMounted(() => {
+//   if (battleStore.battleTileId) {
+//     const mapStore = useMapLocationStore();
+//     const tile = mapStore.tiles.find(t => t.id === battleStore.battleTileId);
+//
+//     if (tile) {
+//       battleStore.startBattleOnTile(tile);
+//     }
+//   }
+// });
 
 const tile = computed(() => battleStore.battleTile);
 
 const roll = async () => {
   await diceStore.rollDices();
-  const result = diceStore.lastResult;
+  const result: string[] = diceStore.lastResult;
   const combatFaces = result.slice(0, 3);
   const swordCount = combatFaces.filter(face => face === 'sword').length;
   if (swordCount === 3) {
-    attackEnemies();
+    console.log('HIT')
+    battleStore.battleTile.enemies.forEach(e => e.health = 0);
+    battleStore.battleTile.isEnemyHere = false;
+    // attackEnemies();
   }
 };
 

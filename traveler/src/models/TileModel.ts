@@ -1,6 +1,6 @@
-import { ChestModel } from "./ChestModel";
+import {ChestModel} from "./ChestModel";
 import EnemyModel from "./EnemyModel";
-import { HeroModel } from "./HeroModel";
+import {HeroModel} from "./HeroModel";
 
 export interface ICoordinates {
     x: number;
@@ -77,7 +77,7 @@ export class TileModel implements ITile {
 
         if (Array.isArray(data.enemies)) {
             console.log('data.enemies is aaray')
-            tile.enemies = data.enemies.map((e: any) => EnemyModel.fromSaved(e));
+            tile.enemies = data.enemies.map((e: any) => EnemyModel.mapToModel(e));
         }
 
         return tile;

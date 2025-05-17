@@ -1,7 +1,7 @@
 <template>
   <transition name="fade-in-scale" mode="out-in">
     <div
-        v-if="tile.isEnemyHere && tile.enemies.length > 0 && enemyAlive"
+        v-if="tile.isEnemyHere && enemyAlive"
         class="battle-initial-tile-view battle-map-tile"
         :style="getTileBackgroundImage(tile)"
     >
@@ -36,10 +36,10 @@
 import {defineProps, computed, ref} from 'vue'
 import TileModel from '@/models/TileModel'
 import {useHeroStore} from "@/stores/HeroStore";
+import EnemyModel from "@/models/EnemyModel";
 
 const props = defineProps<{
   tile: TileModel
-  enemyAlive: boolean
 }>()
 
 const flipped = ref(false);
@@ -77,6 +77,10 @@ const getEnemyImage = (tile: TileModel) => {
     backgroundImage: `url(${tile.enemies[0].imgPath})`,
   }
 };
+
+const enemyAlive = computed<EnemyModel | null>(() => {
+  return props.tile.enemies.find(e => e.health > 0) || null
+})
 </script>
 
 <style scoped>

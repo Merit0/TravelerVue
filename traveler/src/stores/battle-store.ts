@@ -10,7 +10,7 @@ interface BattleArena {
     enemies: EnemyModel[];
     battleTile: TileModel | null;
     heroTile: TileModel | null;
-    tileWithEnemiesId: string | null;
+    battleTileId: number | null;
 }
 
 export const useBattleStore = defineStore('battle-store', {
@@ -20,7 +20,7 @@ export const useBattleStore = defineStore('battle-store', {
         enemies: [],
         battleTile: null,
         heroTile: null,
-        tileWithEnemiesId: null
+        battleTileId: null
     }),
 
     actions: {
@@ -32,7 +32,7 @@ export const useBattleStore = defineStore('battle-store', {
 
             this.heroTile = hero.currentTile;
             this.battleTile = tile;
-            this.tileWithEnemiesId = tile.id;
+            this.battleTileId = tile.id;
 
             const tiles: TileModel[] = [];
             for (let y = 0; y < GRID_SIZE; y++) {
@@ -97,12 +97,12 @@ export const useBattleStore = defineStore('battle-store', {
             const allEnemiesDead = this.enemies.every((e: EnemyModel) => e.isDead);
 
             if (allEnemiesDead) {
-                if (this.tileWithEnemies) {
-                    this.tileWithEnemies.enemies = [];
-                    this.tileWithEnemies.isEnemyHere = false;
+                if (this.battleTile) {
+                    this.battleTile.enemies = [];
+                    this.battleTile.isEnemyHere = false;
                 }
 
-                const chest = this.tileWithEnemies.chest;
+                const chest = this.battleTile.chest;
 
                 if (!chest) {
                     heroStore.hero.heroLocation = {...this.tileWithEnemies.coordinates};
@@ -121,22 +121,22 @@ export const useBattleStore = defineStore('battle-store', {
             // 🧼 Очистити бойовий стан
             this.tiles = [];
             this.enemies = [];
-            this.tileWithEnemies = null;
+            this.battleTile = null;
             this.heroTile = null;
-            this.tileWithEnemiesId = null;
+            this.battleTileId = null;
         },
 
         restoreAfterReload(allTiles: TileModel[]) {
-            if (this.tileWithEnemiesId) {
-                const tile = allTiles.find(t => t.id === this.tileWithEnemiesId);
+            if (this.battleTileId) {
+                const tile = allTiles.find(t => t.id === this.battleTileId);
                 if (tile) {
                     tile.setEnemies(this.enemies.map(e => ({...e})));
-                    this.tileWithEnemies = tile;
+                    this.battleTile = tile;
                 }
             }
         },
         persist: {
-            paths: ['tileWithEnemiesId', 'enemies']
+            paths: ['battleTileId', 'enemies']
         }
     },
 });

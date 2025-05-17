@@ -125,7 +125,7 @@ export default class EnemyModel implements IEnemy {
         }
     }
 
-    static fromSaved(data: any): EnemyModel {
+    static mapToModel(data: any): EnemyModel {
         const enemy = new EnemyModel();
         Object.assign(enemy, data);
         return enemy;

@@ -5,7 +5,6 @@
           v-for="tile in tiles"
           :key="tile.id"
           :tile="tile"
-          :enemyAlive="true"
       />
     </div>
   </div>
