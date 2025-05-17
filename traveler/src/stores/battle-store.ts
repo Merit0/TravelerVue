@@ -8,7 +8,7 @@ interface BattleArena {
     tiles: TileModel[];
     heroPosition: { x: number; y: number };
     enemies: EnemyModel[];
-    tileWithEnemies: TileModel | null;
+    battleTile: TileModel | null;
     heroTile: TileModel | null;
     tileWithEnemiesId: string | null;
 }
@@ -18,7 +18,7 @@ export const useBattleStore = defineStore('battle-store', {
         tiles: [],
         heroPosition: {x: 2, y: 2},
         enemies: [],
-        tileWithEnemies: null,
+        battleTile: null,
         heroTile: null,
         tileWithEnemiesId: null
     }),
@@ -31,7 +31,7 @@ export const useBattleStore = defineStore('battle-store', {
             const hero = heroStore.hero;
 
             this.heroTile = hero.currentTile;
-            this.tileWithEnemies = tile;
+            this.battleTile = tile;
             this.tileWithEnemiesId = tile.id;
 
             const tiles: TileModel[] = [];

@@ -70,6 +70,18 @@ export class TileModel implements ITile {
     setHero(hero: HeroModel) {
         this.hero = hero;
     }
+
+    static mapToModel(data: any): TileModel {
+        const tile = new TileModel(data.id, data.coordinates);
+        Object.assign(tile, data);
+
+        if (Array.isArray(data.enemies)) {
+            console.log('data.enemies is aaray')
+            tile.enemies = data.enemies.map((e: any) => EnemyModel.fromSaved(e));
+        }
+
+        return tile;
+    }
 }
 
 export default TileModel;

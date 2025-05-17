@@ -1,7 +1,7 @@
 <template>
   <div
       class="initialTileView mapTile"
-      v-if="!tile.isInitial && tile.enemies.length > 0 && enemyAlive"
+      v-if="!tile.isInitial && hasAliveEnemies"
       :style="getTileBackground(tile)"
   >
     <div
@@ -36,10 +36,14 @@ export default defineComponent({
       type: Object as PropType<TileModel>,
       required: true,
     },
-    enemyAlive: {
-      type: Boolean,
-      default: true,
+  },
+  computed: {
+    firstAliveEnemy(): EnemyModel | null {
+      return this.tile.enemies.find((e) => e.health > 0) || null;
     },
+    hasAliveEnemies(): boolean {
+      return !!this.firstAliveEnemy;
+    }
   },
   methods: {
     startBattle(tile: TileModel) {

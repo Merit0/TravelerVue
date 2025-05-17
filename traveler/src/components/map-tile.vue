@@ -1,6 +1,6 @@
 <template>
   <relief-tile :tile="tile"/>
-  <enemy-tile :tile="tile" :enemyAlive="enemyAlive"/>
+  <enemy-tile :tile="tile"/>
   <empty-tile :emptyTile="tile.isEmpty" :tile="tile"/>
   <hero-tile :tile="tile" :show-hero="tile.isHeroHere" :key="tile.id + '-' + tile.isHeroHere"/>
   <chest-tile :tile="tile" @chestInventory="openChestInventory($event)"/>

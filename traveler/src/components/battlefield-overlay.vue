@@ -53,7 +53,7 @@ const noEnemies = computed(() =>
     battleStore.enemies.every(e => e.isDead)
 );
 
-const tile = computed(() => battleStore.tileWithEnemies);
+const tile = computed(() => battleStore.battleTile);
 
 const roll = async () => {
   await diceStore.rollDices();

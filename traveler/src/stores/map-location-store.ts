@@ -111,7 +111,7 @@ export const useMapLocationStore = defineStore("map-location-store", {
                 if (saved) {
                     const parsed = JSON.parse(saved);
                     this.locationStates[locationMap.name] = {
-                        tiles: parsed.tiles,
+                        tiles: parsed.tiles.map((t: any) => TileModel.mapToModel(t)),
                         isCleared: parsed.isMapLocationCleared,
                         boss: parsed.boss,
                     };
