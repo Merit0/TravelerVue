@@ -14,7 +14,7 @@
       </div>
       <div class="battle-controls-gui">
         <div class="three-dices-container">
-          <dice-roller></dice-roller>
+                    <dice-roller></dice-roller>
         </div>
         <div class="controls">
           <div class="attack-button-container">
@@ -75,9 +75,8 @@ const roll = async () => {
   const swordCount = combatFaces.filter(face => face === 'sword').length;
   if (swordCount === 3) {
     console.log('HIT')
-    battleStore.battleTile.enemies.forEach(e => e.health = 0);
-    battleStore.battleTile.isEnemyHere = false;
-    // attackEnemies();
+    // battleStore.battleTile.enemies.forEach(e => e.health = 0);
+    attackEnemies();
   }
 };
 
@@ -101,20 +100,36 @@ function attackEnemies() {
 
   if (!enemies || enemies.length === 0) return;
 
+  // 🔪 Атака
   enemies.forEach(enemy => {
     enemy.health -= hero.attack;
     if (enemy.health < 0) enemy.health = 0;
   });
 
+  // ♻️ Видаляємо мертвих ворогів з бойового стану
   battleStore.enemies = enemies.filter(e => !e.isDead);
+
+  // 🔄 Оновлюємо кожен тайл
   battleStore.tiles.forEach(tile => {
     if (tile.isEnemyHere && tile.enemies.length > 0) {
       tile.enemies = tile.enemies.filter(e => !e.isDead);
+
       if (tile.enemies.length === 0) {
         tile.isEnemyHere = false;
       }
     }
   });
+
+  // ✅ Оновлюємо головний battleTile
+  if (battleStore.battleTile) {
+    const stillAlive = battleStore.battleTile.enemies.some(e => !e.isDead);
+
+    if (!stillAlive) {
+      battleStore.battleTile.isEnemyHere = false;
+      battleStore.battleTile.isEmpty = true;
+      battleStore.battleTile.enemies = [];
+    }
+  }
 }
 
 </script>

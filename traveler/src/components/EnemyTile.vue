@@ -42,7 +42,7 @@ export default defineComponent({
       return this.tile.enemies.find((e) => e.health > 0) || null;
     },
     hasAliveEnemies(): boolean {
-      return !!this.firstAliveEnemy;
+      return !!this.firstAliveEnemy && this.tile.enemies.length > 0;
     }
   },
   methods: {

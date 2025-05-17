@@ -3,6 +3,7 @@ import TileModel from '@/models/TileModel'
 import EnemyModel from '@/models/EnemyModel'
 import {useHeroStore} from './HeroStore'
 import {useDiceStore} from '@/stores/DiceStore'
+import {useMapLocationStore} from "@/stores/map-location-store";
 
 interface BattleArena {
     tiles: TileModel[];
@@ -92,33 +93,34 @@ export const useBattleStore = defineStore('battle-store', {
         },
 
         finishBattle() {
-            const heroStore = useHeroStore();
+            const mapLocationStore = useMapLocationStore();
             const diceStore = useDiceStore();
             const allEnemiesDead = this.enemies.every((e: EnemyModel) => e.isDead);
 
-            if (allEnemiesDead) {
-                if (this.battleTile) {
-                    this.battleTile.enemies = [];
-                    this.battleTile.isEnemyHere = false;
+            if (allEnemiesDead && this.battleTile) {
+                console.warn('All enemies are dead');
+
+                // 1. Очистити тайл від ворогів
+                this.battleTile.enemies = [];
+                this.battleTile.isEnemyHere = false;
+
+                // 2. Перемістити героя
+                mapLocationStore.moveHero(this.battleTile);
+
+                // 3. Позначити старий тайл як порожній
+                if (this.heroTile) {
+                    this.heroTile.isHeroHere = false;
+                    this.heroTile.isEmpty = true;
                 }
 
-                const chest = this.battleTile.chest;
-
-                if (!chest) {
-                    heroStore.hero.heroLocation = {...this.tileWithEnemies.coordinates};
-                    heroStore.hero.currentTile = this.tileWithEnemies;
-                } else {
-                    heroStore.hero.heroLocation = {...this.heroTile?.coordinates};
-                    heroStore.hero.currentTile = this.heroTile;
-                }
-            } else {
-                heroStore.hero.heroLocation = {...this.heroTile?.coordinates};
-                heroStore.hero.currentTile = this.heroTile;
+                // 4. Переконатися, що battleTile вже не пустий
+                this.battleTile.isEmpty = false;
             }
 
+            // Очищаємо кубики
             diceStore.removeDices();
 
-            // 🧼 Очистити бойовий стан
+            // Очищаємо бойовий стан
             this.tiles = [];
             this.enemies = [];
             this.battleTile = null;
@@ -135,8 +137,5 @@ export const useBattleStore = defineStore('battle-store', {
                 }
             }
         },
-        persist: {
-            paths: ['battleTileId', 'enemies']
-        }
     },
 });
