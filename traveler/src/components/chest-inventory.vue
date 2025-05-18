@@ -1,14 +1,14 @@
 <template>
-  <div class="globalOverlay" v-if="showChestInventory">
+  <div class="globalOverlay">
     <div class="chestContent">
-      <button class="closeChestInventoryBtn" @click="closeChestInventory()">x</button>
+      <button class="closeChestInventoryBtn" @click="closeChest">x</button>
       <div class="chestItemsContainer">
         <div class="chestInventoryGrid">
           <chest-item-tile
-              v-for="item in chest.items"
+              v-for="item in chestStore.chestInventoryItems"
               :key="item.id"
-              :lootItem="item">
-          </chest-item-tile>
+              :lootItem="item"
+          />
         </div>
       </div>
       <div class="skeletonImageContainer">
@@ -19,45 +19,26 @@
 </template>
 
 <script lang="ts">
-import ChestItemTile from './ChestItemTile.vue';
-import {PropType, watch, defineComponent, computed} from 'vue';
-import {ChestModel} from '@/models/ChestModel';
+import {defineComponent} from 'vue';
 import {useChestStore} from '@/stores/ChestStore';
+import {useOverlayStore} from '@/stores/overlay-store';
+import ChestItemTile from './ChestItemTile.vue';
 
 export default defineComponent({
   name: 'chest-inventory',
   components: {ChestItemTile},
-  props: {
-    chest: {
-      type: Object as PropType<ChestModel>,
-      required: true
-    },
-    showChestInventory: {
-      type: Boolean,
-      required: true
-    }
-  },
-  setup(props, {emit}) {
+  setup() {
     const chestStore = useChestStore();
+    const overlayStore = useOverlayStore();
 
-    const isChestEmpty = computed(() => {
-      return chestStore.chestItems.filter(item => item.name).length === 0;
-    });
-
-    watch(isChestEmpty, (empty) => {
-      if (props.showChestInventory && empty) {
-        closeChestInventory();
-      }
-    });
-
-    const closeChestInventory = async () => {
-      emit('chestInventory', false);
-      await chestStore.resetChest();
+    const closeChest = () => {
+      overlayStore.closeOverlay();
+      chestStore.resetChest();
     };
 
     return {
       chestStore,
-      closeChestInventory
+      closeChest,
     };
   }
 });
@@ -91,7 +72,7 @@ export default defineComponent({
   bottom: -5px;
   border-radius: 1vw;
   pointer-events: none;
-  background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.02) 70%, transparent 100%);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.02) 70%, transparent 100%);
   box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.1);
 }
 
@@ -141,10 +122,9 @@ export default defineComponent({
   font-weight: bold;
   font-size: 1.5vw;
   cursor: pointer;
-  box-shadow:
-      0 0 5px rgba(255, 255, 255, 0.1),
-      inset 0 0 5px rgba(255, 255, 255, 0.05),
-      0 0 15px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.1),
+  inset 0 0 5px rgba(255, 255, 255, 0.05),
+  0 0 15px rgba(0, 0, 0, 0.6);
   transition: all 0.3s ease;
   z-index: 10;
 }
@@ -152,9 +132,8 @@ export default defineComponent({
 .closeChestInventoryBtn:hover {
   background: radial-gradient(circle at top left, #7e3a3a, #3a2727);
   transform: scale(1.1);
-  box-shadow:
-      0 0 10px rgba(255, 255, 255, 0.15),
-      inset 0 0 8px rgba(255, 255, 255, 0.1),
-      0 0 20px rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.15),
+  inset 0 0 8px rgba(255, 255, 255, 0.1),
+  0 0 20px rgba(255, 255, 255, 0.05);
 }
 </style>

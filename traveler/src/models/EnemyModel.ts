@@ -23,6 +23,14 @@ export default class EnemyModel implements IEnemy {
         this.attack = 5;
     }
 
+    get isAlive(): boolean {
+        return this.health > 0;
+    }
+
+    get isDead(): boolean {
+        return this.health <= 0;
+    }
+
     public getName(): string {
         return this.name;
     }
@@ -115,5 +123,11 @@ export default class EnemyModel implements IEnemy {
                 this.attack * (this.powerModifierLvl + 1)
             );
         }
+    }
+
+    static mapToModel(data: any): EnemyModel {
+        const enemy = new EnemyModel();
+        Object.assign(enemy, data);
+        return enemy;
     }
 }

@@ -14,4 +14,6 @@ export interface IEnemy {
   enemyBackgroundColor: string;
   loot: LootItemModel[];
   powerModifierLvl: number;
+  isAlive: boolean;
+  isDead: boolean;
 }

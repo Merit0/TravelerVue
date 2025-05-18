@@ -127,7 +127,9 @@ export default defineComponent({
         this.hero.maxHealth -= equipment.shield.value;
         equipment.shield = null;
       }
-    },
+
+      this.hero.adjustHealthOnStatChange();
+    }
   },
 });
 </script>

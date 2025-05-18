@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import TilesGrid from '../../tiles-grid.vue';
-import HeroDetailsBar from '../../HeroDetailsBar.vue';
+import HeroDetailsBar from '../../hero-details-bar.vue';
 import HeroDeathOverlay from '@/components/hero-death-overlay.vue'
 import {useHeroStore} from '@/stores/HeroStore'
 import {useMapLocationStore} from '@/stores/map-location-store';
@@ -22,7 +22,7 @@ import MapModel from "@/models/MapModel";
 
 export default {
   name: "forest-cave-map-location",
-  components: {TilesGrid, HeroDetailsBar, HeroDeathOverlay: HeroDeathOverlay, HeroInventory: HeroInventoryOverlay},
+  components: {TilesGrid, HeroDetailsBar: HeroDetailsBar, HeroDeathOverlay: HeroDeathOverlay, HeroInventory: HeroInventoryOverlay},
   data() {
     const mapLocationName = 'Forest Cave';
     const heroStore = useHeroStore();

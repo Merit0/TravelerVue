@@ -16,6 +16,7 @@ import {Randomizer} from "@/utils/Randomizer";
 import {LootItemModel} from "@/models/LootItemModel";
 import {ItemType} from "@/enums/ItemType";
 import {CoinsProvider} from "@/providers/coins-provider";
+import {reactive} from 'vue';
 
 interface MapLocationState {
     tiles: TileModel[];
@@ -111,7 +112,7 @@ export const useMapLocationStore = defineStore("map-location-store", {
                 if (saved) {
                     const parsed = JSON.parse(saved);
                     this.locationStates[locationMap.name] = {
-                        tiles: parsed.tiles,
+                        tiles: parsed.tiles.map((t: any) => reactive(TileModel.mapToModel(t))),
                         isCleared: parsed.isMapLocationCleared,
                         boss: parsed.boss,
                     };
@@ -152,7 +153,6 @@ export const useMapLocationStore = defineStore("map-location-store", {
                     tile.setImageSrc(locationMap.tileImage);
                     tile.setBackgroundSrc(locationMap.tileBackgroundSrc);
                     tile.isHeroHere = false;
-                    tile.isExit = false;
 
                     const isInCampZone = x >= blockStartX && x <= blockEndX &&
                         y >= blockStartY && y <= blockEndY;
@@ -193,10 +193,20 @@ export const useMapLocationStore = defineStore("map-location-store", {
                 return;
             }
 
+            this.tiles.forEach(tile => {
+                tile.isHeroHere = false;
+            });
+
+            if (nextTile.coordinates.x < currentTile.coordinates.x) {
+                hero.flippedImage = false; // turn Hero left
+            } else if (nextTile.coordinates.x > currentTile.coordinates.x) {
+                hero.flippedImage = true; // turn Hero right
+            }
+
             currentTile.isHeroHere = false;
-            currentTile.isEmpty = true;
 
             nextTile.isHeroHere = true;
+
             hero.currentTile = nextTile;
             hero.heroLocation = {...nextTile.coordinates};
 
@@ -213,7 +223,9 @@ export const useMapLocationStore = defineStore("map-location-store", {
 
                 if (enemies.length > 0) {
                     const chest: ChestModel = this.generateChest(enemies, locationMap.chestImage);
-                    tile.setChest(chest);
+                    if (chest) {
+                        tile.setChest(chest);
+                    }
                 }
             });
         },
@@ -240,7 +252,9 @@ export const useMapLocationStore = defineStore("map-location-store", {
             bossTile.enemies = [];
             bossTile.setEnemies([boss]);
             const chest: ChestModel = this.generateChest([boss], locationMap.chestImage);
-            bossTile.setChest(chest);
+            if (chest) {
+                bossTile.setChest(chest);
+            }
         },
 
         generateChest(enemies: EnemyModel[], chestImage: string): ChestModel {
@@ -301,7 +315,8 @@ export const useMapLocationStore = defineStore("map-location-store", {
         },
 
         removeAllItemsFromTile(tile: TileModel) {
-            tile.isEmpty = false;
+            tile.isChestTile = false;
+            tile.isEnemyHere = false;
             tile.isInitial = false;
         },
 

@@ -3,6 +3,18 @@
     <div class="bag-title-container">
       <span class="bag-title">Bag</span>
     </div>
+    <div class="inventory-title-bar">
+      <div class="inventory-counter-stats">
+        <div class="item-amount-holder">
+          <div class="iconImg coins-icon" label="heroCoins"></div>
+          <p class="heroDetailsText">{{ hero.coins }}</p>
+        </div>
+        <div class="item-amount-holder">
+          <div class="gem-icon-img gems-icon" label="heroGems"></div>
+          <p class="heroDetailsText">{{ 0 }}</p>
+        </div>
+      </div>
+    </div>
     <bag-inventory-slots-grid></bag-inventory-slots-grid>
     <div class="separator-wooden-plank"></div>
     <div class="right-side-wooden-plank"></div>
@@ -11,16 +23,24 @@
 <script lang="ts">
 
 import BagInventorySlotsGrid from "@/components/hero-equipment-modal/bag-inventory/bag-inventory-slots-grid.vue";
+import {useHeroStore} from "@/stores/HeroStore";
 
 export default {
   name: "hero-bag-inventory",
   components: {
     BagInventorySlotsGrid,
+  },
+  setup() {
+    const heroStore = useHeroStore();
+    const hero = heroStore.hero;
+    return {hero};
   }
-}
+};
 </script>
 
 <style scoped>
+@import '@/styles/hero-details-top-bar.css';
+
 .bag-content {
   position: absolute;
   align-items: center;
@@ -35,8 +55,8 @@ export default {
 }
 
 .bag-title-container {
-  position: relative;
-  margin-top: 9vh;
+  position: absolute;
+  margin-top: 10vh;
   width: 15vh;
   height: 5vh;
   text-align: center;
@@ -44,7 +64,7 @@ export default {
 }
 
 .bag-title {
-  font-size: 3.2vh;
+  font-size: 4vh;
   font-weight: 700;
   color: #ffdfb0;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6),
@@ -87,5 +107,58 @@ export default {
   0 0 10px rgba(0, 0, 0, 0.5);
   border: 1px solid #252525;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.inventory-counter-stats {
+  display: flex;
+  justify-content: space-between;
+  gap: 13vw;
+}
+
+.item-amount-holder {
+  position: relative;
+  background-color: rgb(255, 240, 186);
+  border: 2px solid rgb(64, 27, 1);
+  border-radius: 5px;
+  width: 6vw;
+  min-width: 6vw;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+}
+
+.inventory-title-bar {
+  position: relative;
+  top: 15%;
+  width: 93%;
+  height: 4vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.iconImg {
+  width: 34%;
+  height: 100%;
+  background-position: center;
+}
+
+.gem-icon-img {
+  width: 34%;
+  height: 100%;
+  background-position: center;
+}
+
+.coins-icon {
+  background-image: url("/images/top-bar-items/coin-icon.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.gems-icon {
+  background-image: url("/images/top-bar-items/gem-icon.png");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 </style>

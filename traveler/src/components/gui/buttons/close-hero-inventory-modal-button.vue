@@ -10,3 +10,7 @@ export default {
   emits: ["heroInventory"],
 }
 </script>
+
+<style scoped>
+@import "@/styles/ui-elements/buttons/close-hero-inventory-modal-btn-style.css";
+</style>

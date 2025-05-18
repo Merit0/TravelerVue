@@ -25,11 +25,11 @@
 <script lang="ts">
 import {useHeroStore} from '@/stores/HeroStore'
 import router from "@/router";
-import HeroDetailsBar from "@/components/HeroDetailsBar.vue";
+import HeroDetailsBar from "@/components/hero-details-bar.vue";
 
 export default {
   name: "home-page",
-  components: {HeroDetailsBar},
+  components: {HeroDetailsBar: HeroDetailsBar},
   data() {
     const hero = useHeroStore().hero;
     return {hero};

@@ -3,7 +3,7 @@
     <div class="scalableGridWrapper">
       <div class="tilesGrid">
         <map-tile
-            v-for="mapTile in mapTiles"
+            v-for="mapTile in validMapTiles"
             :key="mapTile.id"
             :tile="mapTile"
         />
@@ -28,6 +28,13 @@ export default {
     backgroundImageSrc: {
       type: String,
       required: true
+    }
+  },
+  computed: {
+    validMapTiles() {
+      return this.mapTiles.filter(
+          (tile: TileModel) => tile && tile.id !== undefined && tile.coordinates
+      );
     }
   },
   methods: {
