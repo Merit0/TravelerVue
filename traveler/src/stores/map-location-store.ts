@@ -315,6 +315,8 @@ export const useMapLocationStore = defineStore("map-location-store", {
         },
 
         removeAllItemsFromTile(tile: TileModel) {
+            tile.isChestTile = false;
+            tile.isEnemyHere = false;
             tile.isInitial = false;
         },
 

@@ -93,41 +93,13 @@ function attackEnemies() {
     if (enemy.health < 0) enemy.health = 0
   })
 
-  // Оновлюємо стан ворогів
-  battleStore.enemies = enemies.filter(e => !e.isDead)
-
-  battleStore.tiles.forEach(tile => {
-    if (tile.isEnemyHere && tile.enemies.length > 0) {
-      tile.enemies = tile.enemies.filter(e => !e.isDead)
-      if (tile.enemies.length === 0) tile.isEnemyHere = false
-    }
-  })
-
-  const allEnemiesDead = battleStore.enemies.length === 0
-
-  if (!allEnemiesDead) return
-
-  // ⬇⬇⬇ ОСНОВНА ЧАСТИНА — працюємо тільки з mapLocationStore.tiles
-  const battleTileId = battleStore.battleTileId
-  const mapLocation = mapLocationStore.currentLocation
-  if (!battleTileId || !mapLocation) return
-
-  const tile = mapLocation.tiles.find(t => t.id === battleTileId)
-  if (!tile) return
-
-  const hasChest = tile.isChestTile && !!tile.chest
-
-  tile.enemies = []
-  tile.isEnemyHere = false
-
-  if (!hasChest) {
-    const previousTile = hero.currentTile
-    if (previousTile) {
-      previousTile.isHeroHere = false
-    }
-
-    tile.isHeroHere = true
-    hero.currentTile = tile
+  battleStore.enemies = [...enemies] // оновлення реактивності
+  const tile = mapLocationStore.currentLocation?.tiles.find(t => t.id === battleStore.battleTileId);
+  if (tile && tile.enemies.every(e => e.health <= 0)) {
+    tile.isEnemyHere = false;
+    tile.isHeroHere = false;
+    tile.isInitial = false;
+    tile.isChestTile = false;
   }
 }
 

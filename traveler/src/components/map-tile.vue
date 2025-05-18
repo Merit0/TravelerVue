@@ -1,15 +1,13 @@
 <template>
   <relief-tile v-if="tile.isInitial" :tile="tile"/>
-  <empty-tile
-      v-if="!tile.isHeroHere && !tile.isEnemyHere && !tile.isChestTile && !tile.isInitial"
-      :tile="tile"/>
+  <empty-tile :tile="tile"/>
   <enemy-tile :tile="tile"/>
   <hero-tile v-if="tile.isHeroHere" :tile="tile" :key="tile.id + '-' + tile.isHeroHere"/>
-  <chest-tile
-      v-if="tile.isChestTile && tile.enemies.length === 0 && !tile.isHeroHere && tile.chest"
-      :tile="tile"
-      @chestInventory="openChestInventory($event)"
-  />
+<!--  <chest-tile-->
+<!--      v-if="tile.isChestTile && tile.enemies.length === 0 && !tile.isHeroHere && tile.chest"-->
+<!--      :tile="tile"-->
+<!--      @chestInventory="openChestInventory($event)"-->
+<!--  />-->
   <chest-inventory
       v-if="tile.chest"
       :chest="tile.chest"

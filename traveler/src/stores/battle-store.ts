@@ -24,8 +24,6 @@ export const useBattleStore = defineStore('battle-store', {
 
     actions: {
         startBattleOnTile(tile: TileModel) {
-            console.warn('Starting Battle on tile ->', tile.id);
-            console.log('Clicked on tile ->', tile);
             const GRID_SIZE = 5;
             const CENTER = {x: 2, y: 2};
 
@@ -99,33 +97,26 @@ export const useBattleStore = defineStore('battle-store', {
             this.tiles.forEach(t => t.isHeroHere = false);
 
             if (this.battleTile) {
-                console.log('if (this.battleTile)')
                 const battleTile = this.battleTile;
                 const hasChest = battleTile.isChestTile && !!battleTile.chest;
                 if (allEnemiesDead) {
-                    console.log('IF All are dead ->', allEnemiesDead)
                     battleTile.enemies = [];
                     battleTile.isEnemyHere = false;
 
                     if (hasChest) {
-                        console.log('Has chest?', hasChest);
                         if (this.previousHeroTileId !== null && mapLocation) {
-                            console.log('this.previousHeroTileId?', this.previousHeroTileId);
                             const previousTile = mapLocation.tiles.find(t => t.id === this.previousHeroTileId);
                             if (previousTile) {
-                                console.log('We found previous hero tile in the map', this.previousHeroTileId);
                                 mapLocation.tiles.forEach(t => (t.isHeroHere = false));
                                 previousTile.isHeroHere = true;
                                 hero.currentTile = previousTile;
                             }
                         }
                     } else {
-                        console.log('Has no chest and we moved the Hero on battle tile');
                         mapLocationStore.moveHero(battleTile);
                     }
 
                 } else {
-                    console.log('Some enemies alive ->', allEnemiesDead)
                     if (this.previousHeroTileId !== null && mapLocation) {
                         const previousTile = mapLocation.tiles.find(t => t.id === this.previousHeroTileId);
                         if (previousTile) {

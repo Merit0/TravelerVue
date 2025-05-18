@@ -25,7 +25,6 @@ import {ChestModel} from '@/models/ChestModel';
 import {useChestStore} from '@/stores/ChestStore';
 import {useBattleStore} from "@/stores/battle-store";
 import {useMapLocationStore} from "@/stores/map-location-store";
-import {useHeroStore} from "@/stores/HeroStore";
 
 export default defineComponent({
   name: 'chest-inventory',
@@ -59,29 +58,27 @@ export default defineComponent({
 
       const battleStore = useBattleStore();
       const mapLocationStore = useMapLocationStore();
-      const heroStore = useHeroStore();
 
-      const battleTile = battleStore.battleTile;
-      const hero = heroStore.hero;
+      const battleTileId = battleStore.battleTileId;
+      const mapTiles = mapLocationStore.currentLocation?.tiles;
+      const mapTile = mapTiles?.find(t => t.id === battleTileId);
+      if (!mapTile) return;
 
-      if (!battleTile) return;
-
-      // ❗ Попередній тайл — з якого герой почав бій
+      // ❗ Попередній тайл
       const previousTileId = battleStore.previousHeroTileId;
-      const previousTile = mapLocationStore.currentLocation?.tiles.find(t => t.id === previousTileId);
-
+      const previousTile = mapTiles.find(t => t.id === previousTileId);
       if (previousTile) {
         previousTile.isHeroHere = false;
       }
 
-      // ✅ Перемістити героя на тайл бою
-      mapLocationStore.moveHero(battleTile);
+      // ✅ Перемістити героя на бойовий тайл
+      mapLocationStore.moveHero(mapTile);
 
-      // 🧹 Прибрати скриню
-      battleTile.isChestTile = false;
-      battleTile.chest = null;
+      // 🧹 Прибрати скриню на мапі
+      mapTile.isChestTile = false;
+      mapTile.chest = null;
 
-      // ❗ Очистити battleStore тільки після повного оновлення
+      // ❌ Не трогай battleStore.battleTile напряму — це може бути копія
       battleStore.battleTile = null;
       battleStore.battleTileId = null;
       battleStore.previousHeroTileId = null;
