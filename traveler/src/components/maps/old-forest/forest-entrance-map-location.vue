@@ -5,14 +5,12 @@
         :mapTiles="mapLocationStore.tiles"
         :backgroundImageSrc="mapLocation.imgPath"
     />
-
     <HeroDeathOverlay
         v-if="!heroStore.isAlive() && userStore.isUserLoggedIn"
     />
-
     <hero-inventory />
-
     <battlefield-overlay v-if="isBattleActive" />
+    <chest-inventory v-if="isChestOpened"/>
   </section>
 </template>
 
@@ -29,6 +27,7 @@ import TilesGrid from '@/components/tiles-grid.vue';
 import HeroInventory from '../../hero-equipment-modal/hero-inventory-overlay.vue';
 import HeroDeathOverlay from '@/components/hero-death-overlay.vue';
 import BattlefieldOverlay from '@/components/battlefield-overlay.vue';
+import ChestInventory from "@/components/chest-inventory.vue";
 
 const heroStore = useHeroStore();
 const userStore = useUserStore();
@@ -50,6 +49,7 @@ mapLocationStore.buildLocationMap(mapLocation);
 const tilesShown = true;
 
 const isBattleActive = computed(() => overlayStore.activeOverlay === 'battle');
+const isChestOpened = computed(() => overlayStore.activeOverlay === 'chest-inventory');
 
 onMounted(() => {
   overlayStore.closeOverlay();

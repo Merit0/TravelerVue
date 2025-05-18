@@ -35,10 +35,6 @@ export default {
       heroStore,
     };
   },
-  mounted() {
-    const chestStore = useChestStore();
-    chestStore.addItem(this.lootItem);
-  },
   methods: {
     getItemStyle(lootItem: LootItemModel): Record<string, string> {
       return {

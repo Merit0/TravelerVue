@@ -93,13 +93,13 @@ function attackEnemies() {
     if (enemy.health < 0) enemy.health = 0
   })
 
-  battleStore.enemies = [...enemies] // оновлення реактивності
+  battleStore.enemies = [...enemies]
   const tile = mapLocationStore.currentLocation?.tiles.find(t => t.id === battleStore.battleTileId);
   if (tile && tile.enemies.every(e => e.health <= 0)) {
     tile.isEnemyHere = false;
     tile.isHeroHere = false;
     tile.isInitial = false;
-    tile.isChestTile = false;
+    tile.isChestTile = true;
   }
 }
 

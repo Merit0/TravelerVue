@@ -6,7 +6,7 @@
     <div class="initialTileView mapTile chestTile" :style="getStyle(tile)">
       <button
           class="mapTile tileButton"
-          @click="$emit('chestInventory', true)"
+          @click="openChestInventory(tile)"
           :disabled="!tile.isReachable"
           :class="{
     unreachable: !tile.isReachable,
@@ -22,6 +22,8 @@
 
 import TileModel from '@/models/TileModel';
 import {PropType} from "vue";
+import {useOverlayStore} from "@/stores/overlay-store";
+import {useChestStore} from "@/stores/ChestStore";
 
 export default {
   name: "chest-tile",
@@ -32,6 +34,15 @@ export default {
     }
   },
   methods: {
+    openChestInventory(tile: TileModel) {
+      const chestStore = useChestStore();
+      const overlayStore = useOverlayStore();
+
+      if (tile.isChestTile && tile.chest) {
+        chestStore.openChest(tile);
+        overlayStore.openOverlay("chest-inventory");
+      }
+    },
     getStyle(tile: TileModel) {
       return {
         backgroundImage: `url(${tile.chest.imgPath})`,

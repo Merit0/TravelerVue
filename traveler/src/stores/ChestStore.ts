@@ -1,28 +1,31 @@
-import {defineStore} from "pinia";
-import {LootItemModel} from "@/models/LootItemModel";
+import { defineStore } from "pinia";
+import { LootItemModel } from "@/models/LootItemModel";
+import TileModel from "@/models/TileModel";
 
 export const useChestStore = defineStore("chest", {
-        state: () => {
-            return {
-                chestItems: [] as LootItemModel[],
-                isShown: false,
-            };
+    state: () => ({
+        chestTile: null as TileModel,
+        chestInventoryItems: [] as LootItemModel[],
+    }),
+
+    getters: {
+        isEmpty: (state) => state.chestInventoryItems.length === 0,
+    },
+
+    actions: {
+        openChest(chestTile: TileModel) {
+            this.chestTile = chestTile;
+            this.chestInventoryItems =chestTile.chest.items;
         },
-        actions: {
-            async resetChest(): Promise<void> {
-                console.log('Resetting Chest state');
-                this.chestItems = [];
-                this.isShown = false;
-            },
-            async addItem(lootItem: LootItemModel) {
-                this.chestItems.unshift(lootItem);
-            },
-            async removeItem(lootItem: LootItemModel) {
-                const itemIndex = this.chestItems.findIndex(
-                    (chestItem: LootItemModel) => chestItem.id === lootItem.id
-                );
-                this.chestItems.splice(itemIndex, 1);
-            },
+
+        resetChest() {
+            this.chestTile.chest = null;
+            this.chestTile.isChestTile = false;
+            this.chestInventoryItems = [];
         },
-    })
-;
+
+        removeItem(item: LootItemModel) {
+            this.chestInventoryItems = this.chestInventoryItems.filter(i => i.id !== item.id);
+        }
+    },
+});

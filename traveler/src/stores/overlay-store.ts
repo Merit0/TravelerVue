@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-export type OverlayType = 'battle' | 'inventory' | 'shop' | 'mapInfo' | 'dialogue';
+export type OverlayType = 'battle' | 'chest-inventory' | 'shop' | 'mapInfo' | 'dialogue' | 'hero-inventory';
 
 export const useOverlayStore = defineStore('overlay-store', {
     state: () => ({

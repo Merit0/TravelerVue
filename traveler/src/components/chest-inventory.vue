@@ -1,14 +1,14 @@
 <template>
-  <div class="globalOverlay" v-if="showChestInventory">
+  <div class="globalOverlay">
     <div class="chestContent">
-      <button class="closeChestInventoryBtn" @click="closeChestInventory()">x</button>
+      <button class="closeChestInventoryBtn" @click="closeChest">x</button>
       <div class="chestItemsContainer">
         <div class="chestInventoryGrid">
           <chest-item-tile
-              v-for="item in chest.items"
+              v-for="item in chestStore.chestInventoryItems"
               :key="item.id"
-              :lootItem="item">
-          </chest-item-tile>
+              :lootItem="item"
+          />
         </div>
       </div>
       <div class="skeletonImageContainer">
@@ -19,69 +19,26 @@
 </template>
 
 <script lang="ts">
-import ChestItemTile from './ChestItemTile.vue';
-import {PropType, watch, defineComponent, computed} from 'vue';
-import {ChestModel} from '@/models/ChestModel';
+import {defineComponent} from 'vue';
 import {useChestStore} from '@/stores/ChestStore';
-import {useBattleStore} from "@/stores/battle-store";
-import {useMapLocationStore} from "@/stores/map-location-store";
+import {useOverlayStore} from '@/stores/overlay-store';
+import ChestItemTile from './ChestItemTile.vue';
 
 export default defineComponent({
   name: 'chest-inventory',
   components: {ChestItemTile},
-  props: {
-    chest: {
-      type: Object as PropType<ChestModel>,
-      required: true
-    },
-    showChestInventory: {
-      type: Boolean,
-      required: true
-    }
-  },
-  setup(props, {emit}) {
+  setup() {
     const chestStore = useChestStore();
+    const overlayStore = useOverlayStore();
 
-    const isChestEmpty = computed(() => {
-      return chestStore.chestItems.filter(item => item.name).length === 0;
-    });
+    const closeChest = () => {
+      overlayStore.closeOverlay();
+      chestStore.resetChest();
+    };
 
-    watch(isChestEmpty, (empty) => {
-      if (props.showChestInventory && empty) {
-        closeChestInventory();
-      }
-    });
-
-    const closeChestInventory = async () => {
-      emit('chestInventory', false);
-      await chestStore.resetChest();
-
-      const battleStore = useBattleStore();
-      const mapLocationStore = useMapLocationStore();
-
-      const battleTileId = battleStore.battleTileId;
-      const mapTiles = mapLocationStore.currentLocation?.tiles;
-      const mapTile = mapTiles?.find(t => t.id === battleTileId);
-      if (!mapTile) return;
-
-      // ❗ Попередній тайл
-      const previousTileId = battleStore.previousHeroTileId;
-      const previousTile = mapTiles.find(t => t.id === previousTileId);
-      if (previousTile) {
-        previousTile.isHeroHere = false;
-      }
-
-      // ✅ Перемістити героя на бойовий тайл
-      mapLocationStore.moveHero(mapTile);
-
-      // 🧹 Прибрати скриню на мапі
-      mapTile.isChestTile = false;
-      mapTile.chest = null;
-
-      // ❌ Не трогай battleStore.battleTile напряму — це може бути копія
-      battleStore.battleTile = null;
-      battleStore.battleTileId = null;
-      battleStore.previousHeroTileId = null;
+    return {
+      chestStore,
+      closeChest,
     };
   }
 });

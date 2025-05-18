@@ -3,16 +3,9 @@
   <empty-tile :tile="tile"/>
   <enemy-tile :tile="tile"/>
   <hero-tile v-if="tile.isHeroHere" :tile="tile" :key="tile.id + '-' + tile.isHeroHere"/>
-<!--  <chest-tile-->
-<!--      v-if="tile.isChestTile && tile.enemies.length === 0 && !tile.isHeroHere && tile.chest"-->
-<!--      :tile="tile"-->
-<!--      @chestInventory="openChestInventory($event)"-->
-<!--  />-->
-  <chest-inventory
-      v-if="tile.chest"
-      :chest="tile.chest"
-      :show-chest-inventory="showChestInventory"
-      @chestInventory="closeChestInventory(tile, $event)"
+  <chest-tile
+      v-if="tile.isChestTile && !hasAliveEnemies && !tile.isHeroHere && tile.chest"
+      :tile="tile"
   />
   <camp-tile/>
 </template>
@@ -26,9 +19,9 @@ import {useHeroStore} from '@/stores/HeroStore';
 import HeroTile from './HeroTile.vue';
 import {useMapLocationStore} from '@/stores/map-location-store';
 import {PropType} from 'vue';
-import ChestInventory from '@/components/chest-inventory.vue';
 import ChestTile from '@/components/chest-tile.vue';
 import CampTile from "@/components/camp-tile.vue";
+import EnemyModel from "@/models/EnemyModel";
 
 export default {
   name: 'map-tile',
@@ -41,7 +34,6 @@ export default {
   components: {
     CampTile,
     ChestTile,
-    ChestInventory,
     EnemyTile,
     ReliefTile,
     EmptyTile,
@@ -59,25 +51,12 @@ export default {
       enemyAlive: true
     };
   },
-  methods: {
-    openChestInventory(status: boolean) {
-      this.showChestInventory = status;
+  computed: {
+    firstAliveEnemy(): EnemyModel | null {
+      return this.tile.enemies.find((e) => e.health > 0) || null;
     },
-    closeChestInventory(tile: TileModel, status: boolean) {
-      this.showChestInventory = status;
-      tile.chest = null;
-      this.moveHeroTo(tile);
-    },
-    moveHeroTo(targetTile: TileModel) {
-      const currentTile: TileModel = this.hero.currentTile;
-      if (currentTile) {
-        currentTile.isHeroHere = false;
-      }
-      targetTile.isHeroHere = true;
-      this.hero.currentTile = targetTile;
-      this.hero.heroLocation = targetTile.coordinates;
-      this.mapLocationStore.calculateReachableTiles(targetTile, this.mapLocationStore.tiles);
-      this.heroStore.persistHeroLocation();
+    hasAliveEnemies(): boolean {
+      return !!this.firstAliveEnemy && this.tile.enemies.length > 0;
     }
   },
   mounted() {
