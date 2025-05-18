@@ -2,24 +2,24 @@
   <div class="chestInventorySlotContainer">
     <div class="chestInventoryFrameImage">
       <div
-          class="chestItemImg"
           v-if="lootItem.place === 'chest'"
-          :style="getItemStyle(lootItem)"
-          @click="takeItem(lootItem)"
+          class="chestItemImg"
+          :style="itemStyle"
+          @click="takeItem"
       ></div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { PropType } from 'vue';
+import { defineComponent, PropType, computed } from 'vue';
 import { LootItemModel } from "@/models/LootItemModel";
 import { useBagStore } from "@/stores/BagStore";
 import { useHeroStore } from "@/stores/HeroStore";
 import { useChestStore } from "@/stores/ChestStore";
 import { ItemType } from "@/enums/ItemType";
 
-export default {
+export default defineComponent({
   name: "chest-item-tile",
   props: {
     lootItem: {
@@ -27,39 +27,39 @@ export default {
       required: true
     }
   },
-  data() {
+  setup(props) {
     const bagStore = useBagStore();
     const heroStore = useHeroStore();
-    return {
-      bagStore,
-      heroStore,
-    };
-  },
-  methods: {
-    getItemStyle(lootItem: LootItemModel): Record<string, string> {
-      return {
-        backgroundImage: `url(${lootItem.imgPath})`,
-        backgroundSize: 'contain',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center'
-      };
-    },
-    async takeItem(item: LootItemModel): Promise<void> {
+    const chestStore = useChestStore();
+
+    const itemStyle = computed(() => ({
+      backgroundImage: `url(${props.lootItem.imgPath})`,
+      backgroundSize: 'contain',
+      backgroundRepeat: 'no-repeat',
+      backgroundPosition: 'center'
+    }));
+
+    const takeItem = async () => {
+      const item = props.lootItem;
       if (item.itemType === ItemType.COIN) {
-        this.heroStore.collect(item.value);
+        heroStore.collect(item.value);
       } else {
-        this.bagStore.putIn(item);
+        bagStore.putIn(item);
       }
 
       item.place = null;
-      const chestStore = useChestStore();
       chestStore.removeItem(item);
-    }
+    };
+
+    return {
+      itemStyle,
+      takeItem
+    };
   }
-}
+});
 </script>
 
-<style>
+<style scoped>
 .chestInventorySlotContainer {
   width: 13vh;
   height: 13vh;
@@ -86,9 +86,6 @@ export default {
   height: 60%;
   cursor: pointer;
   transition: transform 0.3s ease-in-out;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
 }
 
 .chestItemImg:hover {

@@ -59,10 +59,8 @@ export const useUserStore = defineStore('user', {
                     await Promise.all([
                         mapLocationStore.resetAllMapLocations(oldForestMap),
                         bagStore.resetBag(),
-                        chestStore.resetChest(),
                     ]);
 
-                    chestStore.isShown = false;
                     localStorage.clear();
                     localStorage.setItem('uStatus', 'false');
                     this.user.setLoggedIn(false);
