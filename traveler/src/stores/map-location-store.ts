@@ -16,6 +16,7 @@ import {Randomizer} from "@/utils/Randomizer";
 import {LootItemModel} from "@/models/LootItemModel";
 import {ItemType} from "@/enums/ItemType";
 import {CoinsProvider} from "@/providers/coins-provider";
+import { reactive } from 'vue';
 
 interface MapLocationState {
     tiles: TileModel[];
@@ -111,7 +112,7 @@ export const useMapLocationStore = defineStore("map-location-store", {
                 if (saved) {
                     const parsed = JSON.parse(saved);
                     this.locationStates[locationMap.name] = {
-                        tiles: parsed.tiles.map((t: any) => TileModel.mapToModel(t)),
+                        tiles: parsed.tiles.map((t: any) => reactive(TileModel.mapToModel(t))),
                         isCleared: parsed.isMapLocationCleared,
                         boss: parsed.boss,
                     };
@@ -203,10 +204,8 @@ export const useMapLocationStore = defineStore("map-location-store", {
             }
 
             currentTile.isHeroHere = false;
-            currentTile.isEmpty = true;
 
             nextTile.isHeroHere = true;
-            nextTile.isEmpty = false; // ⬅ додано
 
             hero.currentTile = nextTile;
             hero.heroLocation = {...nextTile.coordinates};
@@ -312,7 +311,6 @@ export const useMapLocationStore = defineStore("map-location-store", {
         },
 
         removeAllItemsFromTile(tile: TileModel) {
-            tile.isEmpty = false;
             tile.isInitial = false;
         },
 

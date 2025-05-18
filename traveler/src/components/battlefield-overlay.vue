@@ -10,7 +10,7 @@
         </button>
       </div>
       <div class="battle-area-container">
-        <battle-grid :tile="tile"></battle-grid>
+        <battle-grid v-if="realBattleTile" :tile="realBattleTile" />
       </div>
       <div class="battle-controls-gui">
         <div class="three-dices-container">
@@ -44,15 +44,18 @@ import {useOverlayStore} from "@/stores/overlay-store";
 import DiceRoller from "@/components/dice-roller/dice-roller.vue";
 import {useDiceStore} from "@/stores/DiceStore";
 import {useHeroStore} from "@/stores/HeroStore";
+import {useMapLocationStore} from "@/stores/map-location-store";
+import { useRealBattleTile } from '@/composables/useRealBattleTile';
 
 const battleStore = useBattleStore();
 const diceStore = useDiceStore();
 
-const noEnemies = computed(() =>
-    battleStore.battleTile.enemies.every(e => e.health <= 0)
-);
+const noEnemies = computed(() => {
+  const tile = battleStore.battleTile;
+  return tile?.enemies?.every(e => e.health <= 0) ?? true;
+});
 
-const tile = computed(() => battleStore.battleTile);
+const { realBattleTile } = useRealBattleTile();
 
 const roll = async () => {
   await diceStore.rollDices();
@@ -77,53 +80,54 @@ onMounted(() => {
 });
 
 function attackEnemies() {
-  const battleStore = useBattleStore();
-  const heroStore = useHeroStore();
-  const { hero } = heroStore;
+  const battleStore = useBattleStore()
+  const heroStore = useHeroStore()
+  const mapLocationStore = useMapLocationStore()
+  const { hero } = heroStore
 
-  const enemies = battleStore.enemies;
-
-  if (!enemies || enemies.length === 0) return;
+  const enemies = battleStore.enemies
+  if (!enemies || enemies.length === 0) return
 
   enemies.forEach(enemy => {
-    enemy.health -= hero.attack;
-    if (enemy.health < 0) enemy.health = 0;
-  });
+    enemy.health -= hero.attack
+    if (enemy.health < 0) enemy.health = 0
+  })
 
-  battleStore.enemies = enemies.filter(e => !e.isDead);
+  // Оновлюємо стан ворогів
+  battleStore.enemies = enemies.filter(e => !e.isDead)
 
   battleStore.tiles.forEach(tile => {
     if (tile.isEnemyHere && tile.enemies.length > 0) {
-      tile.enemies = tile.enemies.filter(e => !e.isDead);
-      if (tile.enemies.length === 0) {
-        tile.isEnemyHere = false;
-      }
+      tile.enemies = tile.enemies.filter(e => !e.isDead)
+      if (tile.enemies.length === 0) tile.isEnemyHere = false
     }
-  });
+  })
 
-  const allEnemiesDead = battleStore.enemies.every(e => e.isDead);
+  const allEnemiesDead = battleStore.enemies.length === 0
 
-  if (allEnemiesDead && battleStore.battleTile) {
-    const battleTile = battleStore.battleTile;
-    const heroTile = hero.currentTile;
+  if (!allEnemiesDead) return
 
-    battleTile.enemies = [];
-    battleTile.isEnemyHere = false;
+  // ⬇⬇⬇ ОСНОВНА ЧАСТИНА — працюємо тільки з mapLocationStore.tiles
+  const battleTileId = battleStore.battleTileId
+  const mapLocation = mapLocationStore.currentLocation
+  if (!battleTileId || !mapLocation) return
 
-    const hasChest = battleTile.isChestTile && battleTile.chest;
+  const tile = mapLocation.tiles.find(t => t.id === battleTileId)
+  if (!tile) return
 
-    if (!hasChest) {
-      if (heroTile) {
-        heroTile.isHeroHere = false;
-        heroTile.isEmpty = true;
-      }
+  const hasChest = tile.isChestTile && !!tile.chest
 
-      battleTile.isHeroHere = true;
-      battleTile.isEmpty = false;
-      hero.currentTile = battleTile;
-    } else {
-      battleTile.isEmpty = false; // тайл більше не порожній
+  tile.enemies = []
+  tile.isEnemyHere = false
+
+  if (!hasChest) {
+    const previousTile = hero.currentTile
+    if (previousTile) {
+      previousTile.isHeroHere = false
     }
+
+    tile.isHeroHere = true
+    hero.currentTile = tile
   }
 }
 

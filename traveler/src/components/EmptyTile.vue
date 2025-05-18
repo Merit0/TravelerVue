@@ -1,5 +1,5 @@
 <template>
-  <div v-if="emptyTile" class="mapTile" :style="getTileBackground(tile)"></div>
+  <div class="mapTile" :style="getTileBackground(tile)"></div>
 </template>
 
 <script lang="ts">
@@ -10,10 +10,6 @@ import {PropType} from 'vue';
 export default {
   name: "empty-tile",
   props: {
-    emptyTile: {
-      type: Boolean,
-      default: false
-    },
     tile: {
       type: Object as PropType<TileModel>,
       required: true

@@ -1,7 +1,6 @@
 <template>
   <div
       class="initialTileView mapTile"
-      v-if="showHero"
       :style="tileBackgroundStyle"
   >
     <div
@@ -24,7 +23,6 @@ import { useHeroStore } from '@/stores/HeroStore'
 
 const props = defineProps<{
   tile: TileModel
-  showHero: boolean
 }>()
 
 const heroStore = useHeroStore()

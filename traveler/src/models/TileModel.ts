@@ -11,7 +11,6 @@ export interface ITile {
     id: number;
     enemies: EnemyModel[];
     isInitial: boolean;
-    isEmpty: boolean;
     inBattle: boolean;
     isCamping: boolean;
     imageSrc: string;
@@ -31,7 +30,6 @@ export class TileModel implements ITile {
     enemies: EnemyModel[] = [];
     imageSrc = '';
     backgroundSrc = '';
-    isEmpty = false;
     isInitial = false;
     isCamping = false;
     inBattle = false;
@@ -72,6 +70,19 @@ export class TileModel implements ITile {
 
     setHero(hero: HeroModel) {
         this.hero = hero;
+    }
+
+    get isEmpty(): boolean {
+        console.log(`🟡 [DEBUG] isEmpty called for tile ${this.id}`, {
+            hero: this.isHeroHere,
+            enemy: this.isEnemyHere,
+            chest: this.isChestTile,
+            initial: this.isInitial,
+        });
+        return !this.isHeroHere &&
+            !this.isEnemyHere &&
+            !this.isChestTile &&
+            !this.isInitial;
     }
 
     static mapToModel(data: any): TileModel {

@@ -1,9 +1,15 @@
 <template>
-  <relief-tile :tile="tile"/>
+  <relief-tile v-if="tile.isInitial" :tile="tile"/>
+  <empty-tile
+      v-if="!tile.isHeroHere && !tile.isEnemyHere && !tile.isChestTile && !tile.isInitial"
+      :tile="tile"/>
   <enemy-tile :tile="tile"/>
-  <empty-tile :emptyTile="tile.isEmpty" :tile="tile"/>
-  <hero-tile :tile="tile" :show-hero="tile.isHeroHere" :key="tile.id + '-' + tile.isHeroHere"/>
-  <chest-tile :tile="tile" @chestInventory="openChestInventory($event)"/>
+  <hero-tile v-if="tile.isHeroHere" :tile="tile" :key="tile.id + '-' + tile.isHeroHere"/>
+  <chest-tile
+      v-if="tile.isChestTile && tile.enemies.length === 0 && !tile.isHeroHere && tile.chest"
+      :tile="tile"
+      @chestInventory="openChestInventory($event)"
+  />
   <chest-inventory
       v-if="tile.chest"
       :chest="tile.chest"
@@ -52,6 +58,7 @@ export default {
       heroStore,
       mapLocationStore,
       showChestInventory: false,
+      enemyAlive: true
     };
   },
   methods: {
@@ -67,10 +74,8 @@ export default {
       const currentTile: TileModel = this.hero.currentTile;
       if (currentTile) {
         currentTile.isHeroHere = false;
-        currentTile.isEmpty = true;
       }
       targetTile.isHeroHere = true;
-      targetTile.isEmpty = false;
       this.hero.currentTile = targetTile;
       this.hero.heroLocation = targetTile.coordinates;
       this.mapLocationStore.calculateReachableTiles(targetTile, this.mapLocationStore.tiles);

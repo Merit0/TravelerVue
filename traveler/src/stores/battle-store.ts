@@ -111,16 +111,11 @@ export const useBattleStore = defineStore('battle-store', {
                             if (previousTile) {
                                 mapLocation.tiles.forEach(t => (t.isHeroHere = false));
                                 previousTile.isHeroHere = true;
-                                previousTile.isEmpty = false;
                                 hero.currentTile = previousTile;
                             }
                         }
-
-                        battleTile.isEmpty = false;
-
                     } else {
                         mapLocationStore.moveHero(battleTile);
-                        battleTile.isEmpty = false;
                     }
 
                 } else {
@@ -130,7 +125,6 @@ export const useBattleStore = defineStore('battle-store', {
                             mapLocation.tiles.forEach(t => (t.isHeroHere = false));
 
                             previousTile.isHeroHere = true;
-                            previousTile.isEmpty = false;
                             hero.currentTile = previousTile;
                         }
                     }

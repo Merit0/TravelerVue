@@ -1,6 +1,5 @@
 <template>
   <div
-      v-if="tile.isInitial"
       class="initialTileView mapTile"
       :style="getTileImage(tile.backgroundSrc)"
       :class="`tile-id-${tile.id}`"

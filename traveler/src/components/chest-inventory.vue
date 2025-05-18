@@ -25,6 +25,7 @@ import {ChestModel} from '@/models/ChestModel';
 import {useChestStore} from '@/stores/ChestStore';
 import {useBattleStore} from "@/stores/battle-store";
 import {useMapLocationStore} from "@/stores/map-location-store";
+import {useHeroStore} from "@/stores/HeroStore";
 
 export default defineComponent({
   name: 'chest-inventory',
@@ -55,20 +56,35 @@ export default defineComponent({
     const closeChestInventory = async () => {
       emit('chestInventory', false);
       await chestStore.resetChest();
+
       const battleStore = useBattleStore();
       const mapLocationStore = useMapLocationStore();
+      const heroStore = useHeroStore();
 
-      if (battleStore.battleTile) {
-        mapLocationStore.moveHero(battleStore.battleTile);
+      const battleTile = battleStore.battleTile;
+      const hero = heroStore.hero;
 
-        battleStore.battleTile.isChestTile = false;
-        battleStore.battleTile.chest = null;
+      if (!battleTile) return;
+
+      // ❗ Попередній тайл — з якого герой почав бій
+      const previousTileId = battleStore.previousHeroTileId;
+      const previousTile = mapLocationStore.currentLocation?.tiles.find(t => t.id === previousTileId);
+
+      if (previousTile) {
+        previousTile.isHeroHere = false;
       }
-    };
 
-    return {
-      chestStore,
-      closeChestInventory
+      // ✅ Перемістити героя на тайл бою
+      mapLocationStore.moveHero(battleTile);
+
+      // 🧹 Прибрати скриню
+      battleTile.isChestTile = false;
+      battleTile.chest = null;
+
+      // ❗ Очистити battleStore тільки після повного оновлення
+      battleStore.battleTile = null;
+      battleStore.battleTileId = null;
+      battleStore.previousHeroTileId = null;
     };
   }
 });
