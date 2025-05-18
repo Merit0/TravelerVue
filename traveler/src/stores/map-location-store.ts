@@ -16,7 +16,7 @@ import {Randomizer} from "@/utils/Randomizer";
 import {LootItemModel} from "@/models/LootItemModel";
 import {ItemType} from "@/enums/ItemType";
 import {CoinsProvider} from "@/providers/coins-provider";
-import { reactive } from 'vue';
+import {reactive} from 'vue';
 
 interface MapLocationState {
     tiles: TileModel[];
@@ -223,7 +223,9 @@ export const useMapLocationStore = defineStore("map-location-store", {
 
                 if (enemies.length > 0) {
                     const chest: ChestModel = this.generateChest(enemies, locationMap.chestImage);
-                    tile.setChest(chest);
+                    if (chest) {
+                        tile.setChest(chest);
+                    }
                 }
             });
         },
@@ -250,7 +252,9 @@ export const useMapLocationStore = defineStore("map-location-store", {
             bossTile.enemies = [];
             bossTile.setEnemies([boss]);
             const chest: ChestModel = this.generateChest([boss], locationMap.chestImage);
-            bossTile.setChest(chest);
+            if (chest) {
+                bossTile.setChest(chest);
+            }
         },
 
         generateChest(enemies: EnemyModel[], chestImage: string): ChestModel {

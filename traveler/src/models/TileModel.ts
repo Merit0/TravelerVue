@@ -61,11 +61,12 @@ export class TileModel implements ITile {
 
     setEnemies(enemies: EnemyModel[]) {
         this.enemies = enemies;
+        this.isEnemyHere = enemies.some(e => e.health > 0);
     }
 
     setChest(chest: ChestModel) {
-        this.isChestTile = true;
         this.chest = chest;
+        this.isChestTile = this.enemies.every(e => e.health <= 0);
     }
 
     setHero(hero: HeroModel) {
