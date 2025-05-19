@@ -12,6 +12,7 @@ interface BattleArena {
     enemies: EnemyModel[];
     previousHeroTileId: number | null;
     damagePopups: Record<number, number>;
+    battleLog: string[];
 }
 
 export const useBattleStore = defineStore('battle-store', {
@@ -22,6 +23,7 @@ export const useBattleStore = defineStore('battle-store', {
         enemies: [],
         previousHeroTileId: null,
         damagePopups: {} as Record<number, number>,
+        battleLog: [] as string[],
     }),
 
     actions: {
@@ -132,6 +134,7 @@ export const useBattleStore = defineStore('battle-store', {
             }
 
             diceStore.removeDices();
+            this.battleLog = [];
             this.tiles = [];
             this.enemies = [];
             this.battleTile = null;
@@ -154,6 +157,14 @@ export const useBattleStore = defineStore('battle-store', {
             setTimeout(() => {
                 delete this.damagePopups[tileId];
             }, 700);
+        },
+
+        logEvent(message: string) {
+            this.battleLog.push(message);
+            // string limitation
+            if (this.battleLog.length > 30) {
+                this.battleLog.shift();
+            }
         }
     },
 });

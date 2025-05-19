@@ -1,7 +1,12 @@
 <template>
   <div class="battlefield-overlay">
     <div class="battlefield-logger-container">
-      <p>Battle-Logger:</p>
+      <p class="logger-title">Battle Log:</p>
+      <div class="logger-list">
+        <p v-for="(log, index) in battleStore.battleLog" :key="index">
+          {{ log }}
+        </p>
+      </div>
     </div>
     <div class="battlefield-overlay-content">
       <div class="top-bar-hero-stats">
@@ -49,6 +54,7 @@ import {useRealBattleTile} from '@/composables/useRealBattleTile';
 
 const battleStore = useBattleStore();
 const diceStore = useDiceStore();
+const heroStore = useHeroStore();
 
 const noEnemies = computed(() => {
   const tile = battleStore.battleTile;
@@ -58,12 +64,15 @@ const noEnemies = computed(() => {
 const {realBattleTile} = useRealBattleTile();
 
 const roll = async () => {
+  const hero = heroStore.hero;
   await diceStore.rollDices();
   const result: string[] = diceStore.lastResult;
   const combatFaces = result.slice(0, 3);
   const swordCount = combatFaces.filter(face => face === 'sword').length;
   if (swordCount === 3) {
     attackEnemies();
+  } else {
+    battleStore.logEvent(`${hero.name}  missed!`)
   }
 };
 
@@ -94,27 +103,38 @@ function attackEnemies() {
     enemy.health -= hero.attack
     if (enemy.health < 0) enemy.health = 0
 
+    //method for logs and visual attack effects
+    const percent = Math.round((enemy.health / enemy.maxHealth) * 100)
+    battleStore.logEvent(`${hero.name} ⚔️ ${enemy.name} by ${hero.attack}. ${enemy.name} has ❤️ -> ${percent}%`)
     battleStore.showDamagePopup(tile.id, hero.attack)
-    // triggerBloodSplash(tile.id)
+    // battleStore.triggerBloodSplash(tile.id) // якщо хочеш додати ефект
 
     if (enemy.health <= 0) {
+      battleStore.logEvent(`${enemy.name} has been defeated!`)
       tile.enemies = []
       tile.isGrave = true
     }
-
-    updateMapTileState();
   }
+
+  updateMapTileState();
 }
 
 function updateMapTileState() {
   const battleStore = useBattleStore()
   const mapLocationStore = useMapLocationStore()
-  const tile = mapLocationStore.currentLocation?.tiles.find(t => t.id === battleStore.battleTileId);
-  if (tile && tile.enemies.every(e => e.health <= 0)) {
-    tile.isEnemyHere = false;
-    tile.isHeroHere = false;
-    tile.isInitial = false;
-    tile.isChestTile = true;
+
+  const mapTile = mapLocationStore.currentLocation?.tiles.find(
+      t => t.id === battleStore.battleTileId
+  );
+
+  if (!mapTile) return;
+
+  const enemyDead = mapTile.enemies.every(e => e.health <= 0);
+  if (enemyDead) {
+    mapTile.isEnemyHere = false;
+    mapTile.isHeroHere = false;
+    mapTile.isInitial = false;
+    mapTile.isChestTile = true;
   }
 }
 
@@ -195,15 +215,45 @@ function updateMapTileState() {
   position: relative;
   margin-top: 3%;
   margin-bottom: 3%;
-  right: -45vh;
+  right: -52vh;
   width: 20vw;
-  height: 100%;
+  height: 90vh;
   background: rgba(92, 49, 0, 0.28);
   border-radius: 5px;
   color: #ffe900;
-  text-align: center;
+  text-align: left;
+  padding: 1vh;
   overflow-y: auto;
-  z-index: 0;
+  font-family: 'Crimson Pro', cursive;
+  font-size: 1.4vh;
+  z-index: 1;
+  box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.1);
+}
+
+.logger-title {
+  font-weight: bold;
+  margin-bottom: 0.5vh;
+  color: #fff300;
+  font-size: 1.4vh;
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+  font-family: 'IM Fell English SC', cursive;
+  text-align: center;
+}
+
+.logger-list p {
+  margin: 0.2vh 0;
+  animation: fadeLog 0.3s ease-in;
+}
+
+@keyframes fadeLog {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .battle-controls-gui {
