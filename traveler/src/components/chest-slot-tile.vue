@@ -21,7 +21,7 @@ import { useChestStore } from '@/stores/ChestStore';
 import { ItemType } from '@/enums/ItemType';
 
 export default defineComponent({
-  name: 'chest-item-tile',
+  name: 'chest-slot-tile',
   props: {
     lootItem: {
       type: Object as PropType<LootItemModel | null>,
@@ -94,10 +94,5 @@ export default defineComponent({
 
 .chestItemImg:hover {
   transform: scale(1.05);
-}
-
-.emptySlotPlaceholder {
-  width: 50%;
-  height: 50%;
 }
 </style>

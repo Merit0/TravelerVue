@@ -4,7 +4,7 @@
       <button class="closeChestInventoryBtn" @click="closeChest">x</button>
       <div class="chestItemsContainer">
         <div class="chestInventoryGrid">
-          <chest-item-tile
+          <chest-slot-tile
               v-for="(item, index) in chestStore.chestSlots"
               :key="index"
               :lootItem="item"
@@ -23,13 +23,13 @@
 import {defineComponent, watch, computed} from 'vue';
 import {useChestStore} from '@/stores/ChestStore';
 import {useOverlayStore} from '@/stores/overlay-store';
-import ChestItemTile from './ChestItemTile.vue';
 import {useMapLocationStore} from "@/stores/map-location-store";
 import {useHeroStore} from "@/stores/HeroStore";
+import ChestSlotTile from "@/components/chest-slot-tile.vue";
 
 export default defineComponent({
   name: 'chest-inventory',
-  components: {ChestItemTile},
+  components: {ChestSlotTile},
   setup() {
     const chestStore = useChestStore();
     const overlayStore = useOverlayStore();
