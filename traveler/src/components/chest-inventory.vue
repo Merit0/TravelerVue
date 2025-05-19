@@ -5,9 +5,10 @@
       <div class="chestItemsContainer">
         <div class="chestInventoryGrid">
           <chest-item-tile
-              v-for="item in chestStore.chestInventoryItems"
-              :key="item.id"
+              v-for="(item, index) in chestStore.chestSlots"
+              :key="index"
               :lootItem="item"
+              :is-empty="!item"
           />
         </div>
       </div>
@@ -19,11 +20,12 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue';
+import {defineComponent, watch, computed} from 'vue';
 import {useChestStore} from '@/stores/ChestStore';
 import {useOverlayStore} from '@/stores/overlay-store';
 import ChestItemTile from './ChestItemTile.vue';
 import {useMapLocationStore} from "@/stores/map-location-store";
+import {useHeroStore} from "@/stores/HeroStore";
 
 export default defineComponent({
   name: 'chest-inventory',
@@ -33,13 +35,27 @@ export default defineComponent({
     const overlayStore = useOverlayStore();
     const mapLocationStore = useMapLocationStore();
 
+    const chestHasItems = computed(() => {
+      return chestStore.chestInventoryItems.filter(item => item.name).length === 0;
+    });
+
     const closeChest = () => {
       overlayStore.closeOverlay();
+      const heroStore = useHeroStore();
       chestStore.resetChest();
       if (chestStore.chestTile) {
-        mapLocationStore.moveHero(chestStore.chestTile);
+        const currentHeroTile = heroStore.hero.currentTile;
+        if (currentHeroTile?.id !== chestStore.chestTile.id) {
+          mapLocationStore.moveHero(chestStore.chestTile);
+        }
       }
     };
+
+    watch(chestHasItems, (empty) => {
+      if (overlayStore.isOverlay('chest-inventory') && empty) {
+        closeChest();
+      }
+    });
 
     return {
       chestStore,

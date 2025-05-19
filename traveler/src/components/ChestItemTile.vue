@@ -2,29 +2,31 @@
   <div class="chestInventorySlotContainer">
     <div class="chestInventoryFrameImage">
       <div
-          v-if="lootItem.place === 'chest'"
+          v-if="lootItem && lootItem.place === 'chest'"
           class="chestItemImg"
           :style="itemStyle"
           @click="takeItem"
       ></div>
+      <div v-else class="emptySlotPlaceholder" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType, computed } from 'vue';
-import { LootItemModel } from "@/models/LootItemModel";
-import { useBagStore } from "@/stores/BagStore";
-import { useHeroStore } from "@/stores/HeroStore";
-import { useChestStore } from "@/stores/ChestStore";
-import { ItemType } from "@/enums/ItemType";
+import { LootItemModel } from '@/models/LootItemModel';
+import { useBagStore } from '@/stores/BagStore';
+import { useHeroStore } from '@/stores/HeroStore';
+import { useChestStore } from '@/stores/ChestStore';
+import { ItemType } from '@/enums/ItemType';
 
 export default defineComponent({
-  name: "chest-item-tile",
+  name: 'chest-item-tile',
   props: {
     lootItem: {
-      type: Object as PropType<LootItemModel>,
-      required: true
+      type: Object as PropType<LootItemModel | null>,
+      required: false,
+      default: null
     }
   },
   setup(props) {
@@ -33,7 +35,7 @@ export default defineComponent({
     const chestStore = useChestStore();
 
     const itemStyle = computed(() => ({
-      backgroundImage: `url(${props.lootItem.imgPath})`,
+      backgroundImage: props.lootItem?.imgPath ? `url(${props.lootItem.imgPath})` : 'none',
       backgroundSize: 'contain',
       backgroundRepeat: 'no-repeat',
       backgroundPosition: 'center'
@@ -41,6 +43,8 @@ export default defineComponent({
 
     const takeItem = async () => {
       const item = props.lootItem;
+      if (!item) return;
+
       if (item.itemType === ItemType.COIN) {
         heroStore.collect(item.value);
       } else {
@@ -90,5 +94,10 @@ export default defineComponent({
 
 .chestItemImg:hover {
   transform: scale(1.05);
+}
+
+.emptySlotPlaceholder {
+  width: 50%;
+  height: 50%;
 }
 </style>
