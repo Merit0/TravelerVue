@@ -94,8 +94,7 @@ function attackEnemies() {
     enemy.health -= hero.attack
     if (enemy.health < 0) enemy.health = 0
 
-    // 🔔 ефекти:
-    // showDamage(tile.id, hero.attack)
+    battleStore.showDamagePopup(tile.id, hero.attack)
     // triggerBloodSplash(tile.id)
 
     if (enemy.health <= 0) {

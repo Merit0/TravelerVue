@@ -13,6 +13,9 @@
           ❤️ {{ enemy?.health }}
           ⚔️ {{ enemy?.attack }}
         </div>
+        <div class="damage-popup" v-if="damageValue">
+          -{{ damageValue }}
+        </div>
       </div>
     </div>
     <div
@@ -50,13 +53,19 @@ import {defineProps, computed, ref} from 'vue'
 import TileModel from '@/models/TileModel'
 import {useHeroStore} from "@/stores/HeroStore";
 import EnemyModel from "@/models/EnemyModel";
+import {useBattleStore} from "@/stores/battle-store";
 
+const battleStore = useBattleStore()
 const props = defineProps<{
   tile: TileModel
 }>()
 
 const flipped = ref(false);
-const enemy = computed(() => props.tile.enemies[0] || null)
+const enemy = computed(() => props.tile.enemies[0] || null);
+
+const damageValue = computed(() => {
+  return battleStore.damagePopups[props.tile.id] || null
+})
 
 function handleMouse(e: MouseEvent) {
   const target = e.currentTarget as HTMLElement
@@ -200,15 +209,16 @@ const enemyAlive = computed<EnemyModel | null>(() => {
 }
 
 .grave-tile {
-  width: 90%;
-  height: 90%;
+  width: 100%;
+  height: 100%;
   background-image: url('/images/overlays/battlefield/dead-skeleton-tile-image.png');
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
-  opacity: 0.9;
+  opacity: 0.7;
   position: relative;
   animation: graveAppear 0.5s ease-in-out;
+  border-radius: 4px;
 }
 
 .grave-info-icon {
@@ -248,4 +258,38 @@ const enemyAlive = computed<EnemyModel | null>(() => {
     transform: scale(1);
   }
 }
+
+.damage-popup {
+  position: absolute;
+  top: -5%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2vh;
+  color: #ff4a4a;
+  font-weight: bold;
+  text-shadow: 0 0 5px black;
+  animation: damageFloat 1.2s ease-out;
+  pointer-events: none;
+  z-index: 15;
+}
+
+@keyframes damageFloat {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+  30% {
+    transform: translate(-50%, -1.2vh) scale(1.25);
+    opacity: 1;
+  }
+  60% {
+    transform: translate(-50%, -2vh) scale(1.1);
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -3.2vh) scale(1);
+  }
+}
+
 </style>
