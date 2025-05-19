@@ -23,6 +23,7 @@ import {defineComponent} from 'vue';
 import {useChestStore} from '@/stores/ChestStore';
 import {useOverlayStore} from '@/stores/overlay-store';
 import ChestItemTile from './ChestItemTile.vue';
+import {useMapLocationStore} from "@/stores/map-location-store";
 
 export default defineComponent({
   name: 'chest-inventory',
@@ -30,10 +31,14 @@ export default defineComponent({
   setup() {
     const chestStore = useChestStore();
     const overlayStore = useOverlayStore();
+    const mapLocationStore = useMapLocationStore();
 
     const closeChest = () => {
       overlayStore.closeOverlay();
       chestStore.resetChest();
+      if (chestStore.chestTile) {
+        mapLocationStore.moveHero(chestStore.chestTile);
+      }
     };
 
     return {
