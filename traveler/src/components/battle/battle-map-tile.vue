@@ -8,7 +8,12 @@
       <div
           class="battle-enemy-tile"
           :style="getEnemyImage(tile)"
-      />
+      >
+        <div class="enemy-stats-hover">
+          ❤️ {{ enemy?.health }}
+          ⚔️ {{ enemy?.attack }}
+        </div>
+      </div>
     </div>
     <div
         v-else-if="tile.isHeroHere"
@@ -51,6 +56,7 @@ const props = defineProps<{
 }>()
 
 const flipped = ref(false);
+const enemy = computed(() => props.tile.enemies[0] || null)
 
 function handleMouse(e: MouseEvent) {
   const target = e.currentTarget as HTMLElement
@@ -128,6 +134,29 @@ const enemyAlive = computed<EnemyModel | null>(() => {
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+  position: relative;
+}
+
+.enemy-stats-hover {
+  position: absolute;
+  top: 4%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgb(64, 27, 1);
+  color: #ffef8a;
+  padding: 0.3vh 0.8vh;
+  border-radius: 5px;
+  font-size: 1.4vh;
+  font-weight: bold;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 12;
+}
+
+.battle-enemy-tile:hover .enemy-stats-hover {
+  opacity: 1;
 }
 
 .battle-map-tile {
@@ -162,7 +191,7 @@ const enemyAlive = computed<EnemyModel | null>(() => {
 
 .battle-hero-tile,
 .battle-enemy-tile {
-  image-rendering: crisp-edges; /* або pixelated */
+  image-rendering: pixelated; /* або crisp-edges */
 }
 
 .battle-initial-tile-view:hover {
@@ -191,9 +220,8 @@ const enemyAlive = computed<EnemyModel | null>(() => {
   font-weight: bold;
   font-size: 2.8vh;
   color: #ffe600;
-  text-shadow:
-      0 0 4px rgba(255, 255, 150, 0.8),
-      0 0 8px rgba(255, 255, 100, 0.6);
+  text-shadow: 0 0 4px rgba(255, 255, 150, 0.8),
+  0 0 8px rgba(255, 255, 100, 0.6);
   animation: pulseIcon 1.5s infinite ease-in-out;
   pointer-events: none;
   user-select: none;
