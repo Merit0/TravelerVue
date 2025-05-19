@@ -10,7 +10,6 @@
           :style="getEnemyImage(tile)"
       />
     </div>
-
     <div
         v-else-if="tile.isHeroHere"
         class="battle-initial-tile-view battle-map-tile"
@@ -25,6 +24,15 @@
             class="battle-map-tile tileButton"
             @click="openInventory()"
         />
+      </div>
+    </div>
+    <div
+        v-else-if="tile.isGrave"
+        class="battle-initial-tile-view battle-map-tile"
+        :style="getTileBackgroundImage(tile)"
+    >
+      <div class="grave-tile">
+        <div class="grave-info-icon">i</div>
       </div>
     </div>
 
@@ -81,6 +89,7 @@ const getEnemyImage = (tile: TileModel) => {
 const enemyAlive = computed<EnemyModel | null>(() => {
   return props.tile.enemies.find(e => e.health > 0) || null
 })
+
 </script>
 
 <style scoped>
@@ -159,5 +168,56 @@ const enemyAlive = computed<EnemyModel | null>(() => {
 .battle-initial-tile-view:hover {
   transform: scale(1.01);
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.4);
+}
+
+.grave-tile {
+  width: 90%;
+  height: 90%;
+  background-image: url('/images/overlays/battlefield/dead-skeleton-tile-image.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  opacity: 0.9;
+  position: relative;
+  animation: graveAppear 0.5s ease-in-out;
+}
+
+.grave-info-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'MedievalSharp', cursive; /* 🔥 ігровий шрифт */
+  font-weight: bold;
+  font-size: 2.8vh;
+  color: #ffe600;
+  text-shadow:
+      0 0 4px rgba(255, 255, 150, 0.8),
+      0 0 8px rgba(255, 255, 100, 0.6);
+  animation: pulseIcon 1.5s infinite ease-in-out;
+  pointer-events: none;
+  user-select: none;
+}
+
+@keyframes pulseIcon {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 0.8;
+  }
+}
+
+@keyframes graveAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  to {
+    opacity: 0.9;
+    transform: scale(1);
+  }
 }
 </style>

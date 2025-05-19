@@ -41,6 +41,7 @@ export class TileModel implements ITile {
     isEnemyHere = false;
     isBlocked = false;
     isChestTile = false;
+    isGrave = false;
 
     constructor(id: number, coordinates: ICoordinates) {
         this.id = id;

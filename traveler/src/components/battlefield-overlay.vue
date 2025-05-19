@@ -10,7 +10,7 @@
         </button>
       </div>
       <div class="battle-area-container">
-        <battle-grid v-if="realBattleTile" :tile="realBattleTile" />
+        <battle-grid v-if="realBattleTile" :tile="realBattleTile"/>
       </div>
       <div class="battle-controls-gui">
         <div class="three-dices-container">
@@ -45,7 +45,7 @@ import DiceRoller from "@/components/dice-roller/dice-roller.vue";
 import {useDiceStore} from "@/stores/DiceStore";
 import {useHeroStore} from "@/stores/HeroStore";
 import {useMapLocationStore} from "@/stores/map-location-store";
-import { useRealBattleTile } from '@/composables/useRealBattleTile';
+import {useRealBattleTile} from '@/composables/useRealBattleTile';
 
 const battleStore = useBattleStore();
 const diceStore = useDiceStore();
@@ -55,7 +55,7 @@ const noEnemies = computed(() => {
   return tile?.enemies?.every(e => e.health <= 0) ?? true;
 });
 
-const { realBattleTile } = useRealBattleTile();
+const {realBattleTile} = useRealBattleTile();
 
 const roll = async () => {
   await diceStore.rollDices();
@@ -82,18 +82,34 @@ onMounted(() => {
 function attackEnemies() {
   const battleStore = useBattleStore()
   const heroStore = useHeroStore()
-  const mapLocationStore = useMapLocationStore()
-  const { hero } = heroStore
+  const {hero} = heroStore
 
-  const enemies = battleStore.enemies
-  if (!enemies || enemies.length === 0) return
+  const battleTiles = battleStore.tiles
+  if (!battleTiles || battleTiles.length === 0) return
 
-  enemies.forEach(enemy => {
+  for (const tile of battleTiles) {
+    const enemy = tile.enemies[0]
+    if (!enemy || enemy.health <= 0) continue
+
     enemy.health -= hero.attack
     if (enemy.health < 0) enemy.health = 0
-  })
 
-  battleStore.enemies = [...enemies]
+    // 🔔 ефекти:
+    // showDamage(tile.id, hero.attack)
+    // triggerBloodSplash(tile.id)
+
+    if (enemy.health <= 0) {
+      tile.enemies = []
+      tile.isGrave = true
+    }
+
+    updateMapTileState();
+  }
+}
+
+function updateMapTileState() {
+  const battleStore = useBattleStore()
+  const mapLocationStore = useMapLocationStore()
   const tile = mapLocationStore.currentLocation?.tiles.find(t => t.id === battleStore.battleTileId);
   if (tile && tile.enemies.every(e => e.health <= 0)) {
     tile.isEnemyHere = false;
