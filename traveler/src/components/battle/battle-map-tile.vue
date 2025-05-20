@@ -221,6 +221,13 @@ const enemyAlive = computed<EnemyModel | null>(() => {
   border-radius: 4px;
 }
 
+.grave-tile:hover {
+  cursor: url('/images/overlays/battlefield/magnifier-cursor-48x48.png') 16 16, auto;
+  box-shadow: 0 0 3px 1px rgba(255, 230, 0, 0.61);
+  border: 1px solid rgba(255, 230, 0, 0.48);
+  opacity: 1;
+}
+
 .grave-info-icon {
   position: absolute;
   top: 50%;
@@ -235,6 +242,12 @@ const enemyAlive = computed<EnemyModel | null>(() => {
   animation: pulseIcon 1.5s infinite ease-in-out;
   pointer-events: none;
   user-select: none;
+}
+
+.grave-tile:hover .grave-info-icon {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease;
 }
 
 @keyframes pulseIcon {
