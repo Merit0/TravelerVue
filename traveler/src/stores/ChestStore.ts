@@ -1,8 +1,12 @@
 import { defineStore } from "pinia";
 import { LootItemModel } from "@/models/LootItemModel";
 import TileModel from "@/models/TileModel";
+import EnemyModel from "@/models/EnemyModel";
+import {ChestModel} from "@/models/ChestModel";
+import {ItemType} from "@/enums/ItemType";
+import {CoinsProvider} from "@/providers/coins-provider";
 
-export const useChestStore = defineStore("chest", {
+export const useChestStore = defineStore("chest-store", {
     state: () => ({
         chestTile: null as TileModel | null,
         chestInventoryItems: [] as LootItemModel[],
@@ -19,21 +23,47 @@ export const useChestStore = defineStore("chest", {
     },
 
     actions: {
-        openChest(chestTile: TileModel) {
-            this.chestTile = chestTile;
-            this.chestInventoryItems = chestTile.chest.items;
+        openChest(graveTile: TileModel) {
+            this.graveTile = graveTile;
+            // this.chestInventoryItems = chestTile.chest.items;
         },
 
         resetChest() {
-            if (this.chestTile) {
-                this.chestTile.chest = null;
-                this.chestTile.isChestTile = false;
+            if (this.graveTile) {
+                // this.chestTile.chest = null;
             }
             this.chestInventoryItems = [];
         },
 
         removeItem(item: LootItemModel) {
             this.chestInventoryItems = this.chestInventoryItems.filter(i => i.id !== item.id);
-        }
+        },
+        generateChest(enemies: EnemyModel[], chestImage: string): ChestModel {
+            let totalCoins = 0;
+            const nonCoinLoot: LootItemModel[] = [];
+            const chest = new ChestModel();
+            chest.setImagePath(chestImage);
+            for (const enemy of enemies) {
+                for (const lootItem of enemy.loot) {
+                    lootItem.place = 'chest';
+
+                    if (lootItem.itemType === ItemType.COIN) {
+                        totalCoins += lootItem.value;
+                    } else {
+                        nonCoinLoot.push(lootItem);
+                    }
+                }
+            }
+
+            if (totalCoins > 0) {
+                const coinItem: LootItemModel = CoinsProvider.getCoins(totalCoins);
+                coinItem.place = 'chest';
+                chest.addLoot([coinItem]);
+            }
+
+            chest.addLoot(nonCoinLoot);
+
+            return chest.items.length > 0 ? chest : null;
+        },
     }
 });

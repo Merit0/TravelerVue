@@ -16,6 +16,7 @@
         <div class="damage-popup" v-if="damageValue">
           -{{ damageValue }}
         </div>
+        <div class="blood-splash" v-if="bloodSplash" />
       </div>
     </div>
     <div
@@ -49,8 +50,8 @@
 </template>
 
 <script setup lang="ts">
-import {defineProps, computed, ref} from 'vue'
-import TileModel from '@/models/TileModel'
+import {defineProps, computed, ref } from 'vue';
+import TileModel from '@/models/TileModel';
 import {useHeroStore} from "@/stores/HeroStore";
 import EnemyModel from "@/models/EnemyModel";
 import {useBattleStore} from "@/stores/battle-store";
@@ -65,7 +66,11 @@ const enemy = computed(() => props.tile.enemies[0] || null);
 
 const damageValue = computed(() => {
   return battleStore.damagePopups[props.tile.id] || null
-})
+});
+
+const bloodSplash = computed(() => {
+  return battleStore.bloodSplashTiles.includes(props.tile.id)
+});
 
 function handleMouse(e: MouseEvent) {
   const target = e.currentTarget as HTMLElement
@@ -302,6 +307,30 @@ const enemyAlive = computed<EnemyModel | null>(() => {
   100% {
     opacity: 0;
     transform: translate(-50%, -3.2vh) scale(1);
+  }
+}
+
+.blood-splash {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: url('/images/overlays/battlefield/blood-splash-effect-image.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  animation: bloodFadeOut 1s ease-out forwards;
+  pointer-events: none;
+  z-index: 2;
+}
+
+@keyframes bloodFadeOut {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.3);
   }
 }
 

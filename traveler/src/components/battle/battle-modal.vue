@@ -107,25 +107,14 @@ export default defineComponent({
         tile.inBattle = false;
 
         this.$emit("isBattle", false);
-        if (!tile.chest) {
-          this.mapLocationStore.moveHero(tile);
-        }
+        this.mapLocationStore.moveHero(tile);
       }
     },
     async closeBattlefield(tile: TileModel) {
       tile.inBattle = false;
-      if (!tile.enemies.length) {
-        tile.isChestTile = false;
-        tile.chest = null;
-      }
       this.$emit("isBattle", false);
       await this.mapLocationStore.saveProgress(this.mapLocationStore.mapLocationName);
     },
-    showEnemies() {
-      this.enemies.forEach(e => {
-        console.log(`[${e.name}] HP: ${e.health}, ATK: ${e.attack}`);
-      });
-    }
   }
 });
 </script>

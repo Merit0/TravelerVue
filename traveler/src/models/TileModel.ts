@@ -22,7 +22,6 @@ export interface ITile {
     isHeroHere: boolean;
     isEnemyHere: boolean;
     isBlocked: boolean;
-    isChestTile: boolean;
 }
 
 export class TileModel implements ITile {
@@ -34,13 +33,11 @@ export class TileModel implements ITile {
     isCamping = false;
     inBattle = false;
     hero?: HeroModel;
-    chest?: ChestModel;
     coordinates: ICoordinates;
     isReachable = false;
     isHeroHere = false;
     isEnemyHere = false;
     isBlocked = false;
-    isChestTile = false;
     isGrave = false;
 
     constructor(id: number, coordinates: ICoordinates) {
@@ -65,11 +62,6 @@ export class TileModel implements ITile {
         this.isEnemyHere = enemies.some(e => e.health > 0);
     }
 
-    setChest(chest: ChestModel) {
-        this.chest = chest;
-        this.isChestTile = this.enemies.every(e => e.health <= 0);
-    }
-
     setHero(hero: HeroModel) {
         this.hero = hero;
     }
@@ -78,12 +70,10 @@ export class TileModel implements ITile {
         console.log(`🟡 [DEBUG] isEmpty called for tile ${this.id}`, {
             hero: this.isHeroHere,
             enemy: this.isEnemyHere,
-            chest: this.isChestTile,
             initial: this.isInitial,
         });
         return !this.isHeroHere &&
             !this.isEnemyHere &&
-            !this.isChestTile &&
             !this.isInitial;
     }
 

@@ -38,14 +38,14 @@ export default {
       const chestStore = useChestStore();
       const overlayStore = useOverlayStore();
 
-      if (tile.isChestTile && tile.chest) {
+      if (tile.isGrave) {
         chestStore.openChest(tile);
         overlayStore.openOverlay("chest-inventory");
       }
     },
     getStyle(tile: TileModel) {
       return {
-        backgroundImage: `url(${tile.chest.imgPath})`,
+        // backgroundImage: `url(${tile.chest.imgPath})`,
       }
     },
     getTileBackground(tile: TileModel) {

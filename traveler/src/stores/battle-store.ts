@@ -13,6 +13,7 @@ interface BattleArena {
     previousHeroTileId: number | null;
     damagePopups: Record<number, number>;
     battleLog: string[];
+    bloodSplashTiles: number[];
 }
 
 export const useBattleStore = defineStore('battle-store', {
@@ -24,6 +25,7 @@ export const useBattleStore = defineStore('battle-store', {
         previousHeroTileId: null,
         damagePopups: {} as Record<number, number>,
         battleLog: [] as string[],
+        bloodSplashTiles: [] as number[]
     }),
 
     actions: {
@@ -102,24 +104,10 @@ export const useBattleStore = defineStore('battle-store', {
 
             if (this.battleTile) {
                 const battleTile = this.battleTile;
-                const hasChest = battleTile.isChestTile && !!battleTile.chest;
                 if (allEnemiesDead) {
                     battleTile.enemies = [];
                     battleTile.isEnemyHere = false;
-
-                    if (hasChest) {
-                        if (this.previousHeroTileId !== null && mapLocation) {
-                            const previousTile = mapLocation.tiles.find(t => t.id === this.previousHeroTileId);
-                            if (previousTile) {
-                                mapLocation.tiles.forEach(t => (t.isHeroHere = false));
-                                previousTile.isHeroHere = true;
-                                hero.currentTile = previousTile;
-                            }
-                        }
-                    } else {
-                        mapLocationStore.moveHero(battleTile);
-                    }
-
+                    mapLocationStore.moveHero(battleTile);
                 } else {
                     if (this.previousHeroTileId !== null && mapLocation) {
                         const previousTile = mapLocation.tiles.find(t => t.id === this.previousHeroTileId);
@@ -139,17 +127,8 @@ export const useBattleStore = defineStore('battle-store', {
             this.enemies = [];
             this.battleTile = null;
             this.battleTileId = null;
-            this.previousHeroTileId = null;
-        },
-
-        restoreAfterReload(allTiles: TileModel[]) {
-            if (this.battleTileId) {
-                const tile = allTiles.find(t => t.id === this.battleTileId);
-                if (tile) {
-                    tile.setEnemies(this.enemies.map(e => ({...e})));
-                    this.battleTile = tile;
-                }
-            }
+            this.bloodSplashTiles = [];
+            this.damagePopups = [];
         },
 
         showDamagePopup(tileId: number, value: number) {
@@ -157,6 +136,16 @@ export const useBattleStore = defineStore('battle-store', {
             setTimeout(() => {
                 delete this.damagePopups[tileId];
             }, 700);
+        },
+
+        triggerBloodSplash(tileId: number) {
+            if (!this.bloodSplashTiles.includes(tileId)) {
+                this.bloodSplashTiles.push(tileId);
+            }
+
+            setTimeout(() => {
+                this.bloodSplashTiles = this.bloodSplashTiles.filter((id: number) => id !== tileId);
+            }, 1000);
         },
 
         logEvent(message: string) {

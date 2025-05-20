@@ -1,6 +1,6 @@
 <template>
   <div
-      v-if="!tile.isInitial && !hasAliveEnemies && !tile.isHeroHere && !tile.isChestTile"
+      v-if="!tile.isInitial && !hasAliveEnemies && !tile.isHeroHere"
       class="mapTile"
       :style="getTileBackground(tile)"
   ></div>

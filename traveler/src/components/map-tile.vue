@@ -3,10 +3,6 @@
   <empty-tile :tile="tile"/>
   <enemy-tile :tile="tile"/>
   <hero-tile v-if="tile.isHeroHere" :tile="tile" :key="tile.id + '-' + tile.isHeroHere"/>
-  <chest-tile
-      v-if="tile.isChestTile && !hasAliveEnemies && !tile.isHeroHere && tile.chest"
-      :tile="tile"
-  />
   <camp-tile/>
 </template>
 
@@ -19,7 +15,6 @@ import {useHeroStore} from '@/stores/HeroStore';
 import HeroTile from './HeroTile.vue';
 import {useMapLocationStore} from '@/stores/map-location-store';
 import {PropType} from 'vue';
-import ChestTile from '@/components/chest-tile.vue';
 import CampTile from "@/components/camp-tile.vue";
 import EnemyModel from "@/models/EnemyModel";
 
@@ -33,7 +28,6 @@ export default {
   },
   components: {
     CampTile,
-    ChestTile,
     EnemyTile,
     ReliefTile,
     EmptyTile,

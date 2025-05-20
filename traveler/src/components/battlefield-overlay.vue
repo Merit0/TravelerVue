@@ -102,12 +102,11 @@ function attackEnemies() {
 
     enemy.health -= hero.attack
     if (enemy.health < 0) enemy.health = 0
-
-    //method for logs and visual attack effects
+    
     const percent = Math.round((enemy.health / enemy.maxHealth) * 100)
     battleStore.logEvent(`${hero.name} ⚔️ ${enemy.name} by ${hero.attack}. ${enemy.name} has ❤️ -> ${percent}%`)
     battleStore.showDamagePopup(tile.id, hero.attack)
-    // battleStore.triggerBloodSplash(tile.id) // якщо хочеш додати ефект
+    battleStore.triggerBloodSplash(tile.id)
 
     if (enemy.health <= 0) {
       battleStore.logEvent(`${enemy.name} has been defeated!`)
@@ -134,7 +133,6 @@ function updateMapTileState() {
     mapTile.isEnemyHere = false;
     mapTile.isHeroHere = false;
     mapTile.isInitial = false;
-    mapTile.isChestTile = true;
   }
 }
 
