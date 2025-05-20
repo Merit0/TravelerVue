@@ -64,7 +64,6 @@ const noEnemies = computed(() => {
 const {realBattleTile} = useRealBattleTile();
 
 const roll = async () => {
-  const hero = heroStore.hero;
   await diceStore.rollDices();
   const result: string[] = diceStore.lastResult;
   const combatFaces: string[] = result.slice(0, 3);
@@ -74,7 +73,18 @@ const roll = async () => {
   if (swordCount === 3) {
     attackEnemies(targetsCount);
   } else {
-    battleStore.logEvent(`${hero.name}  missed!`)
+    const battleTiles = battleStore.tiles;
+    const { hero } = heroStore;
+    if (!battleTiles || battleTiles.length === 0) return;
+    const aliveEnemyTiles = battleTiles.filter(tile => {
+      const enemy = tile.enemies[0];
+      return enemy && enemy.health > 0;
+    });
+    if (aliveEnemyTiles.length === 0) return;
+    aliveEnemyTiles.forEach(tile => {
+      battleStore.triggerDodgeEffect(tile.id);
+      battleStore.logEvent(`${tile.enemies[0]?.name} dodged the attack from ${hero.name}!`);
+    });
   }
 };
 
@@ -93,33 +103,45 @@ onMounted(() => {
 function attackEnemies(targetsNumber: number) {
   const battleStore = useBattleStore();
   const heroStore = useHeroStore();
-  const { hero } = heroStore;
+  const {hero} = heroStore;
 
   const battleTiles = battleStore.tiles;
   if (!battleTiles || battleTiles.length === 0) return;
 
-  const allEnemiesTiles = battleTiles.filter(tile => tile.enemies.length > 0 && tile.enemies[0].health > 0);
-  if (allEnemiesTiles.length === 0) return;
+  // Фільтруємо всі тайли з живими ворогами
+  const aliveEnemyTiles = battleTiles.filter(tile => {
+    const enemy = tile.enemies[0];
+    return enemy && enemy.health > 0;
+  });
 
-  // Якщо ворогів менше, ніж targetCount — обмежуємо
-  const numberOfTargets = Math.min(targetsNumber, allEnemiesTiles.length);
+  if (aliveEnemyTiles.length === 0) return;
 
-  // Випадково обираємо тайли з ворогами
-  const selectedTiles = allEnemiesTiles.sort(() => 0.5 - Math.random()).slice(0, numberOfTargets);
+  // Вибираємо скільки ворогів реально можна вдарити
+  const targets = Math.min(targetsNumber, aliveEnemyTiles.length);
+
+  // Рандомно обираємо тайли
+  const shuffledTiles = [...aliveEnemyTiles].sort(() => Math.random() - 0.5);
+  const selectedTiles = shuffledTiles.slice(0, targets);
+  const unSelectedTiles = shuffledTiles.slice(targets); // решта
+
+  for (const tile of unSelectedTiles) {
+    battleStore.triggerDodgeEffect(tile.id);
+    battleStore.logEvent(`${tile.enemies[0]?.name} dodged the attack!`);
+  }
 
   for (const tile of selectedTiles) {
     const enemy = tile.enemies[0];
-    if (!enemy || enemy.health <= 0) continue;
+    if (!enemy) continue;
 
-    enemy.health -= hero.attack;
-    if (enemy.health < 0) enemy.health = 0;
+    enemy.health = Math.max(0, enemy.health - hero.attack);
 
     const percent = Math.round((enemy.health / enemy.maxHealth) * 100);
-    battleStore.logEvent(`${hero.name} ⚔️ ${enemy.name} by ${hero.attack}. ${enemy.name} has ❤️ → ${percent}%`);
+    battleStore.logEvent(`${hero.name} ⚔️ ${enemy.name} for ${hero.attack}. ❤️ ${percent}% left`);
+
     battleStore.showDamagePopup(tile.id, hero.attack);
     battleStore.triggerBloodSplash(tile.id);
 
-    if (enemy.health <= 0) {
+    if (enemy.health === 0) {
       battleStore.logEvent(`${enemy.name} has been defeated!`);
       tile.enemies = [];
       tile.isGrave = true;

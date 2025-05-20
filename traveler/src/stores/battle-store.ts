@@ -14,6 +14,7 @@ interface BattleArena {
     damagePopups: Record<number, number>;
     battleLog: string[];
     bloodSplashTiles: number[];
+    missedEnemies: number[];
 }
 
 export const useBattleStore = defineStore('battle-store', {
@@ -25,7 +26,8 @@ export const useBattleStore = defineStore('battle-store', {
         previousHeroTileId: null,
         damagePopups: {} as Record<number, number>,
         battleLog: [] as string[],
-        bloodSplashTiles: [] as number[]
+        bloodSplashTiles: [] as number[],
+        missedEnemies: [] as number[],
     }),
 
     actions: {
@@ -146,6 +148,15 @@ export const useBattleStore = defineStore('battle-store', {
             setTimeout(() => {
                 this.bloodSplashTiles = this.bloodSplashTiles.filter((id: number) => id !== tileId);
             }, 1000);
+        },
+
+        triggerDodgeEffect(tileId: number) {
+            if (!this.missedEnemies.includes(tileId)) {
+                this.missedEnemies.push(tileId);
+                setTimeout(() => {
+                    this.missedEnemies = this.missedEnemies.filter(id => id !== tileId);
+                }, 600);
+            }
         },
 
         logEvent(message: string) {
