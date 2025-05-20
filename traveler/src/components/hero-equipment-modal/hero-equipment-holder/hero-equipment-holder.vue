@@ -93,7 +93,7 @@ export default {
     },
     getStyle(imagePath: string) {
       return {
-        backgroundImage: `url(/images/heroes_150_150/${imagePath})`,
+        backgroundImage: `url(${imagePath})`,
       };
     },
   }
