@@ -67,10 +67,12 @@ const roll = async () => {
   const hero = heroStore.hero;
   await diceStore.rollDices();
   const result: string[] = diceStore.lastResult;
-  const combatFaces = result.slice(0, 3);
+  const combatFaces: string[] = result.slice(0, 3);
+  const enemyCounterDiceFace: string = result[result.length - 1];
+  const targetsCount: number = parseInt(enemyCounterDiceFace?.replace('x', '') || '1');
   const swordCount = combatFaces.filter(face => face === 'sword').length;
   if (swordCount === 3) {
-    attackEnemies();
+    attackEnemies(targetsCount);
   } else {
     battleStore.logEvent(`${hero.name}  missed!`)
   }
@@ -88,30 +90,39 @@ onMounted(() => {
   diceStore.restoreState(saved);
 });
 
-function attackEnemies() {
-  const battleStore = useBattleStore()
-  const heroStore = useHeroStore()
-  const {hero} = heroStore
+function attackEnemies(targetsNumber: number) {
+  const battleStore = useBattleStore();
+  const heroStore = useHeroStore();
+  const { hero } = heroStore;
 
-  const battleTiles = battleStore.tiles
-  if (!battleTiles || battleTiles.length === 0) return
+  const battleTiles = battleStore.tiles;
+  if (!battleTiles || battleTiles.length === 0) return;
 
-  for (const tile of battleTiles) {
-    const enemy = tile.enemies[0]
-    if (!enemy || enemy.health <= 0) continue
+  const allEnemiesTiles = battleTiles.filter(tile => tile.enemies.length > 0 && tile.enemies[0].health > 0);
+  if (allEnemiesTiles.length === 0) return;
 
-    enemy.health -= hero.attack
-    if (enemy.health < 0) enemy.health = 0
-    
-    const percent = Math.round((enemy.health / enemy.maxHealth) * 100)
-    battleStore.logEvent(`${hero.name} ⚔️ ${enemy.name} by ${hero.attack}. ${enemy.name} has ❤️ -> ${percent}%`)
-    battleStore.showDamagePopup(tile.id, hero.attack)
-    battleStore.triggerBloodSplash(tile.id)
+  // Якщо ворогів менше, ніж targetCount — обмежуємо
+  const numberOfTargets = Math.min(targetsNumber, allEnemiesTiles.length);
+
+  // Випадково обираємо тайли з ворогами
+  const selectedTiles = allEnemiesTiles.sort(() => 0.5 - Math.random()).slice(0, numberOfTargets);
+
+  for (const tile of selectedTiles) {
+    const enemy = tile.enemies[0];
+    if (!enemy || enemy.health <= 0) continue;
+
+    enemy.health -= hero.attack;
+    if (enemy.health < 0) enemy.health = 0;
+
+    const percent = Math.round((enemy.health / enemy.maxHealth) * 100);
+    battleStore.logEvent(`${hero.name} ⚔️ ${enemy.name} by ${hero.attack}. ${enemy.name} has ❤️ → ${percent}%`);
+    battleStore.showDamagePopup(tile.id, hero.attack);
+    battleStore.triggerBloodSplash(tile.id);
 
     if (enemy.health <= 0) {
-      battleStore.logEvent(`${enemy.name} has been defeated!`)
-      tile.enemies = []
-      tile.isGrave = true
+      battleStore.logEvent(`${enemy.name} has been defeated!`);
+      tile.enemies = [];
+      tile.isGrave = true;
     }
   }
 
