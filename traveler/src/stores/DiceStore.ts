@@ -10,24 +10,37 @@ export const useDiceStore = defineStore('dice', {
             isRolling: false,
         }),
         actions: {
-            async rollDices() {
+            async rollDices(currentEnemies: { health: number }[]) {
                 this.isRolling = true;
+                const liveEnemies = currentEnemies.filter(e => e.health > 0);
+                const enemyFaces = Array.from({length: liveEnemies.length}, (_, i) => `x${i + 1}`);
+
+                const enemyDice = this.holder.dices[3];
+                if (enemyDice) {
+                    enemyDice.faces = enemyFaces;
+                }
+
                 this.lastResult = await this.holder.rollAll();
                 await new Promise(resolve => setTimeout(resolve, 1000));
 
                 this.isRolling = false;
             },
-            setDiceCountWithEnemyCount(enemyCount: number) {
+            setDiceCountWithEnemyCount(enemyModels: { health: number }[]) {
                 const actionFaces: DiceFace[] = ['sword', 'shield', 'energy'];
-                const enemyFaces = Array.from({length: enemyCount}, (_, i) => `x${i + 1}`);
-                const swordDice = [10, 1, 1]
-                this.testDice(actionFaces, swordDice)
+                const swordDiceWeights = [10, 1, 1]; // Наприклад: sword частіше
+
+                const liveEnemies = enemyModels.filter(e => e.health > 0);
+                const liveEnemyCount = liveEnemies.length;
+
+                const enemyFaces = Array.from({length: liveEnemyCount}, (_, i) => `x${i + 1}`);
+
+                this.testDice(actionFaces, swordDiceWeights);
 
                 this.holder.dices = [
-                    new DiceModel(actionFaces, swordDice),
-                    new DiceModel(actionFaces, swordDice),
-                    new DiceModel(actionFaces, swordDice),
-                    new DiceModel(enemyFaces), // Enemy Dice
+                    new DiceModel(actionFaces, swordDiceWeights),
+                    new DiceModel(actionFaces, swordDiceWeights),
+                    new DiceModel(actionFaces, swordDiceWeights),
+                    new DiceModel(enemyFaces), // Динамічний кубик кількості ворогів
                 ];
             },
             restoreState(saved: any) {

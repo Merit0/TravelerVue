@@ -54,8 +54,8 @@ export default defineComponent({
       battleStore.startBattleOnTile(tile);
       tile.inBattle = true;
 
-      const enemyCount = tile.enemies?.length || 1;
-      diceStore.setDiceCountWithEnemyCount(enemyCount);
+      const aliveEnemies = tile.enemies.filter(e => e.health > 0);
+      diceStore.setDiceCountWithEnemyCount(aliveEnemies);
 
       overlayStore.openOverlay('battle', {tile});
     },

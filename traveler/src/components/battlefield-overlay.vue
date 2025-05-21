@@ -51,6 +51,7 @@ import {useDiceStore} from "@/stores/DiceStore";
 import {useHeroStore} from "@/stores/HeroStore";
 import {useMapLocationStore} from "@/stores/map-location-store";
 import {useRealBattleTile} from '@/composables/useRealBattleTile';
+import EnemyModel from "@/models/EnemyModel";
 
 const battleStore = useBattleStore();
 const diceStore = useDiceStore();
@@ -64,23 +65,33 @@ const noEnemies = computed(() => {
 const {realBattleTile} = useRealBattleTile();
 
 const roll = async () => {
-  await diceStore.rollDices();
+  const currentEnemies: EnemyModel[] = battleStore.tiles.flatMap(tile => tile.enemies);
+  await diceStore.rollDices(currentEnemies);
   const result: string[] = diceStore.lastResult;
   const combatFaces: string[] = result.slice(0, 3);
   const enemyCounterDiceFace: string = result[result.length - 1];
-  const targetsCount: number = parseInt(enemyCounterDiceFace?.replace('x', '') || '1');
+
+  const requestedTargetsCount = parseInt(enemyCounterDiceFace?.replace('x', '') || '1');
   const swordCount = combatFaces.filter(face => face === 'sword').length;
+
+  const aliveEnemies = battleStore.enemies.filter(enemy => enemy.health > 0);
+
+  const actualTargetsCount = Math.min(aliveEnemies.length, requestedTargetsCount);
+
   if (swordCount === 3) {
-    attackEnemies(targetsCount);
+    attackEnemies(actualTargetsCount);
   } else {
     const battleTiles = battleStore.tiles;
     const { hero } = heroStore;
     if (!battleTiles || battleTiles.length === 0) return;
+
     const aliveEnemyTiles = battleTiles.filter(tile => {
       const enemy = tile.enemies[0];
       return enemy && enemy.health > 0;
     });
+
     if (aliveEnemyTiles.length === 0) return;
+
     aliveEnemyTiles.forEach(tile => {
       battleStore.triggerDodgeEffect(tile.id);
       battleStore.logEvent(`${tile.enemies[0]?.name} dodged the attack from ${hero.name}!`);
