@@ -101,12 +101,14 @@ export const useBattleStore = defineStore('battle-store', {
             const hero = heroStore.hero;
             const mapLocation = mapLocationStore.currentLocation;
 
-            const allEnemiesDead = this.enemies.every(e => e.isDead);
+            const aliveEnemyTiles: TileModel[] = this.tiles.filter((tile: TileModel) => {
+                const enemy = tile.enemies[0];
+                return enemy && enemy.health > 0;
+            });
             this.tiles.forEach(t => t.isHeroHere = false);
-
             if (this.battleTile) {
                 const battleTile = this.battleTile;
-                if (allEnemiesDead) {
+                if (aliveEnemyTiles.length === 0) {
                     battleTile.enemies = [];
                     battleTile.isEnemyHere = false;
                     mapLocationStore.moveHero(battleTile);

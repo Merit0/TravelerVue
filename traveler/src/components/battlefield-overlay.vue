@@ -108,7 +108,6 @@ function attackEnemies(targetsNumber: number) {
   const battleTiles = battleStore.tiles;
   if (!battleTiles || battleTiles.length === 0) return;
 
-  // Фільтруємо всі тайли з живими ворогами
   const aliveEnemyTiles = battleTiles.filter(tile => {
     const enemy = tile.enemies[0];
     return enemy && enemy.health > 0;
@@ -116,10 +115,8 @@ function attackEnemies(targetsNumber: number) {
 
   if (aliveEnemyTiles.length === 0) return;
 
-  // Вибираємо скільки ворогів реально можна вдарити
   const targets = Math.min(targetsNumber, aliveEnemyTiles.length);
 
-  // Рандомно обираємо тайли
   const shuffledTiles = [...aliveEnemyTiles].sort(() => Math.random() - 0.5);
   const selectedTiles = shuffledTiles.slice(0, targets);
   const unSelectedTiles = shuffledTiles.slice(targets); // решта
