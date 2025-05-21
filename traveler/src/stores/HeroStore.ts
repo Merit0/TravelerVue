@@ -37,6 +37,10 @@ export const useHeroStore = defineStore("hero", {
             return true;
         },
 
+        getHeroCoinsAmount(): number {
+            return this.hero.coins;
+        },
+
         isAlive(): boolean {
             return this.hero.getHealth() > 0;
         },

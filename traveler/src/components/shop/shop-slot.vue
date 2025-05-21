@@ -38,9 +38,9 @@
 <script lang="ts">
 import {PropType} from 'vue';
 import {LootItemModel} from "@/models/LootItemModel";
-import {useBagStore} from "@/stores/BagStore";
 import {Rarity} from "@/enums/Rarity";
 import ConfirmPurchaseModal from "@/components/shop/confirm-pusrchase-overlay.vue";
+import {useHeroStore} from "@/stores/HeroStore";
 
 export default {
   name: "shop-slot",
@@ -52,19 +52,20 @@ export default {
     }
   },
   data() {
-    const bagStore = useBagStore();
+    const heroStore = useHeroStore();
     let inShop = (this.lootItem.place === 'shop');
     const operationName = "Buy";
     return {
       showConfirmPurchasePopup: false,
-      bagStore,
+      heroStore,
       inShop,
       operationName
     }
   },
   computed: {
     canAfford(): boolean {
-      return this.bagStore.getCoins >= this.lootItem.price;
+      if (!this.lootItem || typeof this.lootItem.price !== 'number') return false;
+      return this.heroStore.getHeroCoinsAmount() >= this.lootItem.price;
     }
   },
   methods: {

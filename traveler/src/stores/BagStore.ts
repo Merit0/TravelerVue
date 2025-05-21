@@ -1,25 +1,16 @@
 import {defineStore} from "pinia";
 import {LootItemModel} from "@/models/LootItemModel";
-import {useHeroStore} from "@/stores/HeroStore";
 
 export const useBagStore = defineStore("bag", {
         state: () => {
-            const hero = useHeroStore().hero;
             const savedBagItems = JSON.parse(localStorage.getItem("bag") || "[]");
             return {
                 bagItems: savedBagItems,
                 isShown: false,
                 bagCapacity: 25 - savedBagItems.length,
-                hero
             };
         },
         getters: {
-            showBag: (state) => {
-                state.isShown = true;
-            },
-            getCoins: (state): number => {
-                return state.hero.getCoins();
-            },
             itemsNumber: (state): number => {return state.bagItems.length}
         },
         actions: {
