@@ -1,26 +1,40 @@
-import { defineStore } from 'pinia'
+import { defineStore } from 'pinia';
 
-export type OverlayType = 'battle' | 'chest-inventory' | 'shop' | 'mapInfo' | 'dialogue' | 'hero-inventory';
+export type OverlayType =
+    | 'battle'
+    | 'chest-inventory'
+    | 'shop'
+    | 'mapInfo'
+    | 'dialogue'
+    | 'hero-inventory'
+    | 'grave-inventory';
 
 export const useOverlayStore = defineStore('overlay-store', {
     state: () => ({
-        activeOverlay: null as OverlayType | null,
-        overlayData: {} as Record<string, any>
+        activeOverlays: [] as OverlayType[], // 🔄 замість одного
+        overlayData: {} as Record<OverlayType, any>, // типізована мапа
     }),
 
     actions: {
         openOverlay(name: OverlayType, data: Record<string, any> = {}) {
-            this.activeOverlay = name
-            this.overlayData = data
+            if (!this.activeOverlays.includes(name)) {
+                this.activeOverlays.push(name);
+            }
+            this.overlayData[name] = data;
         },
 
-        closeOverlay() {
-            this.activeOverlay = null
-            this.overlayData = {}
+        closeOverlay(name?: OverlayType) {
+            if (name) {
+                this.activeOverlays = this.activeOverlays.filter(o => o !== name);
+                delete this.overlayData[name];
+            } else {
+                this.activeOverlays = [];
+                this.overlayData = {};
+            }
         },
 
-        isOverlay(name: OverlayType) {
-            return this.activeOverlay === name
-        }
-    }
-})
+        isOverlay(name: OverlayType): boolean {
+            return this.activeOverlays.includes(name);
+        },
+    },
+});

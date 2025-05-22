@@ -1,6 +1,8 @@
 import {ChestModel} from "./ChestModel";
 import EnemyModel from "./EnemyModel";
 import {HeroModel} from "./HeroModel";
+import {GraveModel} from "@/models/grave-model";
+import {LootItemModel} from "@/models/LootItemModel";
 
 export interface ICoordinates {
     x: number;
@@ -17,6 +19,7 @@ export interface ITile {
     backgroundSrc: string;
     hero?: HeroModel;
     chest?: ChestModel;
+    grave?: GraveModel;
     coordinates: ICoordinates;
     isReachable: boolean;
     isHeroHere: boolean;
@@ -33,6 +36,7 @@ export class TileModel implements ITile {
     isCamping = false;
     inBattle = false;
     hero?: HeroModel;
+    grave?: GraveModel;
     coordinates: ICoordinates;
     isReachable = false;
     isHeroHere = false;
@@ -82,8 +86,23 @@ export class TileModel implements ITile {
         Object.assign(tile, data);
 
         if (Array.isArray(data.enemies)) {
-            console.log('data.enemies is aaray')
             tile.enemies = data.enemies.map((e: any) => EnemyModel.mapToModel(e));
+        }
+
+        if (data.grave) {
+            // Відновлюємо grave (якщо треба — можеш додати fromSaved)
+            const grave = new GraveModel();
+            grave.graveImgPath = data.grave.graveImgPath;
+
+            // Відновлення луту, якщо збережене
+            if (Array.isArray(data.grave.graveTreasureItems)) {
+                grave.graveTreasureItems = data.grave.graveTreasureItems.map(
+                    (i: any) => LootItemModel.mapToModel(i)
+                );
+            }
+
+            tile.grave = grave;
+            tile.isGrave = true;
         }
 
         return tile;

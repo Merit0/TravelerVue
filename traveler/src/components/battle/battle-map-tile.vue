@@ -17,7 +17,7 @@
         <div class="damage-popup" v-if="damageValue">
           -{{ damageValue }}
         </div>
-        <div class="blood-splash" v-if="bloodSplash" />
+        <div class="blood-splash" v-if="bloodSplash"/>
       </div>
     </div>
     <div
@@ -41,7 +41,9 @@
         class="battle-initial-tile-view battle-map-tile"
         :style="getTileBackgroundImage(tile)"
     >
-      <div class="grave-tile">
+      <div class="grave-tile"
+           @click="openGraveInventory(tile)"
+      >
         <div class="grave-info-icon">i</div>
       </div>
     </div>
@@ -51,13 +53,18 @@
 </template>
 
 <script setup lang="ts">
-import {defineProps, computed, ref } from 'vue';
+import {defineProps, computed, ref} from 'vue';
 import TileModel from '@/models/TileModel';
 import {useHeroStore} from "@/stores/HeroStore";
-import EnemyModel from "@/models/EnemyModel";
 import {useBattleStore} from "@/stores/battle-store";
+import {useGraveStore} from '@/stores/grave-store';
+import {useOverlayStore} from "@/stores/overlay-store";
 
-const battleStore = useBattleStore()
+const graveStore = useGraveStore();
+const battleStore = useBattleStore();
+const heroStore = useHeroStore();
+const overlayStore = useOverlayStore();
+
 const props = defineProps<{
   tile: TileModel
 }>()
@@ -90,8 +97,6 @@ const getTileBackgroundImage = (tile: TileModel) => {
   }
 }
 
-const heroStore = useHeroStore();
-
 const heroImgStyle = computed(() => ({
   backgroundImage: `url(${heroStore.hero.imgPath})`,
   backgroundSize: 'contain',
@@ -109,9 +114,16 @@ const getEnemyImage = (tile: TileModel) => {
   }
 };
 
-const enemyAlive = computed<EnemyModel | null>(() => {
-  return props.tile.enemies.find(e => e.health > 0) || null
-})
+const enemyAlive = computed(() => {
+  return props.tile.enemies.some(e => e.health > 0);
+});
+
+const openGraveInventory = (tile: TileModel) => {
+  if (tile.isGrave && tile.grave) {
+    graveStore.buildGraveFromTile(tile);
+    overlayStore.openOverlay('grave-inventory');
+  }
+};
 
 </script>
 
@@ -338,12 +350,24 @@ const enemyAlive = computed<EnemyModel | null>(() => {
 }
 
 @keyframes dodgeShake {
-  0% { transform: translateX(0); }
-  20% { transform: translateX(-4px); }
-  40% { transform: translateX(4px); }
-  60% { transform: translateX(-3px); }
-  80% { transform: translateX(3px); }
-  100% { transform: translateX(0); }
+  0% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-4px);
+  }
+  40% {
+    transform: translateX(4px);
+  }
+  60% {
+    transform: translateX(-3px);
+  }
+  80% {
+    transform: translateX(3px);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
 
 .battle-enemy-tile.dodged {

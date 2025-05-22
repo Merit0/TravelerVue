@@ -4,6 +4,7 @@ import EnemyModel from '@/models/EnemyModel';
 import {useHeroStore} from './HeroStore';
 import {useDiceStore} from '@/stores/DiceStore';
 import {useMapLocationStore} from '@/stores/map-location-store';
+import {useGraveStore} from "@/stores/grave-store";
 
 interface BattleArena {
     tiles: TileModel[];
@@ -167,6 +168,14 @@ export const useBattleStore = defineStore('battle-store', {
             if (this.battleLog.length > 30) {
                 this.battleLog.shift();
             }
+        },
+
+        handleEnemyDeath(enemy: EnemyModel, tile: TileModel) {
+            const graveStore = useGraveStore();
+
+            tile.grave = graveStore.generateGraveFromEnemy(enemy);
+            tile.isGrave = true;
+            tile.enemies = tile.enemies.filter(e => e !== enemy);
         }
     },
 });

@@ -20,7 +20,7 @@ export class EnemyLootProvider {
             loot.push(ElixirsProvider.getCommonElixir());
         } else {
             const coinsNumber = Randomizer.getRandomIntInRange(1, 3);
-            loot.push(CoinsProvider.getCoins(coinsNumber));
+            loot.push(CoinsProvider.getCoinsByEnemyType(null));
         }
 
         if (Randomizer.getChance(dropChanceConfig.equipmentDropChance)) {

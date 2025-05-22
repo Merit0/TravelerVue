@@ -57,7 +57,7 @@ export default defineComponent({
       const aliveEnemies = tile.enemies.filter(e => e.health > 0);
       diceStore.setDiceCountWithEnemyCount(aliveEnemies);
 
-      overlayStore.openOverlay('battle', {tile});
+      overlayStore.openOverlay('battle');
     },
     getEnemyImage(enemy: EnemyModel) {
       return {

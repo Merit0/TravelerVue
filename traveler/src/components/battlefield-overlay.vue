@@ -39,6 +39,7 @@
       </div>
     </div>
   </div>
+  <grave-treasure-inventory-overlay v-if="overlayStore.isOverlay('grave-inventory')" />
 </template>
 
 <script setup lang="ts">
@@ -52,8 +53,10 @@ import {useHeroStore} from "@/stores/HeroStore";
 import {useMapLocationStore} from "@/stores/map-location-store";
 import {useRealBattleTile} from '@/composables/useRealBattleTile';
 import EnemyModel from "@/models/EnemyModel";
+import GraveTreasureInventoryOverlay from "@/components/grave/grave-treasure-inventory-overlay.vue";
 
 const battleStore = useBattleStore();
+const overlayStore = useOverlayStore();
 const diceStore = useDiceStore();
 const heroStore = useHeroStore();
 
@@ -143,16 +146,15 @@ function attackEnemies(targetsNumber: number) {
 
     enemy.health = Math.max(0, enemy.health - hero.attack);
 
-    const percent = Math.round((enemy.health / enemy.maxHealth) * 100);
+    const percent = enemy.maxHealth > 0 ? Math.round((enemy.health / enemy.maxHealth) * 100) : 0;
     battleStore.logEvent(`${hero.name} ⚔️ ${enemy.name} for ${hero.attack}. ❤️ ${percent}% left`);
 
     battleStore.showDamagePopup(tile.id, hero.attack);
     battleStore.triggerBloodSplash(tile.id);
 
     if (enemy.health === 0) {
+      battleStore.handleEnemyDeath(enemy, tile);
       battleStore.logEvent(`${enemy.name} has been defeated!`);
-      tile.enemies = [];
-      tile.isGrave = true;
     }
   }
 

@@ -9,8 +9,6 @@ import MapModel from "@/models/MapModel";
 import {toKebabCase} from "@/utils/string-utils";
 import {MapProvider} from "@/providers/MapProvider";
 import {HeroModel} from "@/models/HeroModel";
-import {EnemyLootProvider, ILootChanceConfig} from "@/providers/loot-provider";
-import {DropLootChanceConfigProvider} from "@/providers/loot-chance-drop-provider";
 import {Randomizer} from "@/utils/Randomizer";
 import {reactive} from 'vue';
 
@@ -220,11 +218,8 @@ export const useMapLocationStore = defineStore("map-location-store", {
         },
 
         addBossOnTile(tiles: TileModel[], locationMap: MapLocationModel) {
-            const dropChanceConfig: ILootChanceConfig = DropLootChanceConfigProvider.getBossDropChanceConfig();
-            const bossLoot = EnemyLootProvider.getLoot(dropChanceConfig);
             const boss: EnemyModel = locationMap.boss;
             boss.setPowerModifierLvl(locationMap.enemyModifier);
-            boss.setLoot(bossLoot);
 
             const validTiles = tiles.filter(tile =>
                 !tile.isBlocked &&
@@ -261,11 +256,6 @@ export const useMapLocationStore = defineStore("map-location-store", {
                     .build();
 
                 enemy.setId(id + i);
-
-                const dropChanceConfig: ILootChanceConfig = DropLootChanceConfigProvider.getCommonDropChanceConfig()
-                const loot = EnemyLootProvider.getLoot(dropChanceConfig)
-
-                enemy.setLoot(loot);
                 createdEnemies.push(enemy);
             }
             return createdEnemies;

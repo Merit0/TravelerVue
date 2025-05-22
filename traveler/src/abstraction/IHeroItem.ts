@@ -10,5 +10,4 @@ export interface IHeroItem {
   itemType: ItemType;
   rarity: Rarity;
   id: string;
-  chance: boolean;
 }

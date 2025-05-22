@@ -23,8 +23,8 @@ export const useChestStore = defineStore("chest-store", {
     },
 
     actions: {
-        openChest(graveTile: TileModel) {
-            this.graveTile = graveTile;
+        openChest(chestTile: TileModel) {
+            this.graveTile = chestTile;
             // this.chestInventoryItems = chestTile.chest.items;
         },
 
@@ -56,7 +56,7 @@ export const useChestStore = defineStore("chest-store", {
             }
 
             if (totalCoins > 0) {
-                const coinItem: LootItemModel = CoinsProvider.getCoins(totalCoins);
+                const coinItem: LootItemModel = CoinsProvider.getCoinsByEnemyType(null);
                 coinItem.place = 'chest';
                 chest.addLoot([coinItem]);
             }

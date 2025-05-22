@@ -46,7 +46,7 @@ mapLocationStore.buildLocationMap(mapLocation);
 
 const tilesShown = true;
 
-const isBattleActive = computed(() => overlayStore.activeOverlay === 'battle');
+const isBattleActive = computed(() => overlayStore.isOverlay('battle'));
 
 onMounted(() => {
   overlayStore.closeOverlay();
