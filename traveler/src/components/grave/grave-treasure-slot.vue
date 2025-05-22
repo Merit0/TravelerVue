@@ -2,9 +2,10 @@
   <div class="graveInventorySlotContainer">
     <div class="graveInventoryFrameImage">
       <div
-          v-if="lootItem"
+          v-if="lootItem && lootItem.place === 'grave'"
           class="graveItemImg"
           :style="itemStyle"
+          :class="{ 'clickable': lootItem.place === 'grave' }"
           @click="lootItem.place === 'grave' && takeItem()"
       />
     </div>
@@ -50,8 +51,8 @@ export default defineComponent({
         bagStore.putIn(item);
       }
 
-      item.place = 'keeper';
-      graveStore.removeItem(item);
+      item.place = 'bag';
+      graveStore.removeGraveInventoryItem(item);
     };
 
     return {
@@ -87,11 +88,20 @@ export default defineComponent({
 .graveItemImg {
   width: 60%;
   height: 60%;
-  cursor: pointer;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  pointer-events: none;
   transition: transform 0.3s ease-in-out;
 }
 
-.graveItemImg:hover {
+.graveItemImg.clickable {
+  cursor: pointer;
+  pointer-events: auto;
+  transition: transform 0.2s;
+}
+
+.graveItemImg.clickable:hover {
   transform: scale(1.05);
 }
 </style>

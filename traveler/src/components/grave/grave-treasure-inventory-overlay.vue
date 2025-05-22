@@ -31,10 +31,6 @@ export default defineComponent({
     const graveStore = useGraveStore();
     const overlayStore = useOverlayStore();
 
-    // const graveHasItems = computed(() => {
-    //   return graveStore.graveInventoryItems.filter(item => item.name).length === 0;
-    // });
-
     const isGraveEmpty = computed(() => {
       return graveStore.graveInventoryItems.every(item => !item || !item.name);
     });
@@ -43,12 +39,6 @@ export default defineComponent({
       overlayStore.closeOverlay('grave-inventory');
       graveStore.resetGrave();
     };
-
-    // watch(graveHasItems, (empty) => {
-    //   if (overlayStore.isOverlay('grave-inventory') && empty) {
-    //     closeGraveInventory();
-    //   }
-    // });
 
     watch(isGraveEmpty, (empty) => {
       if (overlayStore.isOverlay('grave-inventory') && empty) {

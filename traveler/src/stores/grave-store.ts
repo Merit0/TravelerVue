@@ -32,10 +32,20 @@ export const useGraveStore = defineStore("grave-store", {
             this.graveTile = null;
         },
 
-        removeItem(item: LootItemModel) {
+        removeGraveInventoryItem(item: LootItemModel) {
             this.graveInventoryItems = this.graveInventoryItems.filter(
                 (treasureItem: LootItemModel) => treasureItem.id !== item.id
             );
+
+            const tile = this.graveTile;
+
+            if (tile?.grave) {
+                tile.grave.graveTreasureItems = tile.grave.graveTreasureItems.filter(
+                    (treasureItem: LootItemModel) => treasureItem.id !== item.id
+                );
+
+                tile.grave = { ...tile.grave };
+            }
         },
 
         generateGraveFromEnemy(enemy: EnemyModel): GraveModel {

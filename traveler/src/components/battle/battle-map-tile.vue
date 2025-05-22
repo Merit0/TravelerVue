@@ -42,9 +42,10 @@
         :style="getTileBackgroundImage(tile)"
     >
       <div class="grave-tile"
-           @click="openGraveInventory(tile)"
+           :class="{ glowing: hasGraveLoot }"
+           @click="hasGraveLoot && openGraveInventory(tile)"
       >
-        <div class="grave-info-icon">i</div>
+        <div v-if="hasGraveLoot" class="grave-info-icon">i</div>
       </div>
     </div>
 
@@ -67,7 +68,11 @@ const overlayStore = useOverlayStore();
 
 const props = defineProps<{
   tile: TileModel
-}>()
+}>();
+
+const hasGraveLoot = computed(() => {
+  return props.tile.grave?.graveTreasureItems.some(item => item?.name) ?? false;
+});
 
 const flipped = ref(false);
 const enemy = computed(() => props.tile.enemies[0] || null);
@@ -119,7 +124,11 @@ const enemyAlive = computed(() => {
 });
 
 const openGraveInventory = (tile: TileModel) => {
-  if (tile.isGrave && tile.grave) {
+  if (
+      tile.isGrave &&
+      tile.grave &&
+      tile.grave.graveTreasureItems.some(item => item.name)
+  ) {
     graveStore.buildGraveFromTile(tile);
     overlayStore.openOverlay('grave-inventory');
   }
@@ -241,10 +250,11 @@ const openGraveInventory = (tile: TileModel) => {
   border-radius: 4px;
 }
 
-.grave-tile:hover {
+.grave-tile.glowing {
   cursor: url('/images/overlays/battlefield/magnifier-cursor-48x48.png') 16 16, auto;
-  box-shadow: 0 0 3px 1px rgba(255, 230, 0, 0.61);
-  border: 1px solid rgba(255, 230, 0, 0.48);
+  box-shadow: 0 0 1px 1px rgb(255, 216, 0);
+  border-radius: 4px;
+  transition: box-shadow 0.3s ease-in-out;
   opacity: 1;
 }
 

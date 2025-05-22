@@ -34,10 +34,6 @@ export const useChestStore = defineStore("chest-store", {
             }
             this.chestInventoryItems = [];
         },
-
-        removeItem(item: LootItemModel) {
-            this.chestInventoryItems = this.chestInventoryItems.filter(i => i.id !== item.id);
-        },
         generateChest(enemies: EnemyModel[], chestImage: string): ChestModel {
             let totalCoins = 0;
             const nonCoinLoot: LootItemModel[] = [];
