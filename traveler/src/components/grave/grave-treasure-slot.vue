@@ -24,8 +24,8 @@ export default defineComponent({
   name: 'grave-treasure-slot',
   props: {
     lootItem: {
-      type: Object as PropType<LootItemModel | null>,
-      required: true,
+      type: [Object, null] as PropType<LootItemModel | null>, // ✅
+      required: false,
       default: null
     }
   },
@@ -44,14 +44,13 @@ export default defineComponent({
     const takeItem = async () => {
       const item = props.lootItem;
       if (!item) return;
+      item.place = 'bag';
 
       if (item.itemType === ItemType.COIN) {
         heroStore.collect(item.value);
       } else {
         bagStore.putIn(item);
       }
-
-      item.place = 'bag';
       graveStore.removeGraveInventoryItem(item);
     };
 
