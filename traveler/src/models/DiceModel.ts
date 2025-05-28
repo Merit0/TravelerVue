@@ -1,4 +1,4 @@
-export type DiceFace = 'sword' | 'shield' | 'energy' | `x${number}`;
+export type DiceFace = 'sword' | 'shield' | 'energy' | 'coin' | `x${number}`;
 
 export class DiceModel {
     face: DiceFace | string = 'sword';

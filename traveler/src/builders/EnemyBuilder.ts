@@ -1,6 +1,7 @@
 import EnemyModel from '@/models/EnemyModel';
 import {EnemyType} from '@/enums/EnemyType';
 import {LootItemModel} from '@/models/LootItemModel';
+import {DiceFace} from "@/models/DiceModel";
 
 interface IEnemyBuilder {
     enemyName(name: string): EnemyBuilder;
@@ -50,6 +51,16 @@ export class EnemyBuilder implements IEnemyBuilder {
 
     public enemyLoot(enemyLootItem: LootItemModel[]): EnemyBuilder {
         this.enemy.setLoot(enemyLootItem);
+        return this;
+    }
+
+    public diceFaces(diceFaces: DiceFace[]): EnemyBuilder {
+        this.enemy.enemyDiceFacesList = diceFaces;
+        return this;
+    }
+
+    public diceWeights(dicesWeightValue: number[]): EnemyBuilder {
+        this.enemy.enemyDiceWeightsList = dicesWeightValue;
         return this;
     }
 

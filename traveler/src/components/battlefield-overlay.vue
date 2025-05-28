@@ -68,7 +68,7 @@ const noEnemies = computed(() => {
 const {realBattleTile} = useRealBattleTile();
 
 const roll = async () => {
-  const currentEnemies: EnemyModel[] = battleStore.tiles.flatMap(tile => tile.enemies);
+  const currentEnemies: EnemyModel[] = battleStore.tiles.flatMap(tile => tile.enemies as EnemyModel[]);
   await diceStore.rollDices(currentEnemies);
   const result: string[] = diceStore.lastResult;
   const combatFaces: string[] = result.slice(0, 3);
@@ -141,7 +141,7 @@ function attackEnemies(targetsNumber: number) {
   }
 
   for (const tile of selectedTiles) {
-    const enemy = tile.enemies[0];
+    const enemy: EnemyModel = tile.enemies[0];
     if (!enemy) continue;
 
     enemy.health = Math.max(0, enemy.health - hero.attack);

@@ -38,6 +38,7 @@ export const useBattleStore = defineStore('battle-store', {
 
             const heroStore = useHeroStore();
             const hero = heroStore.hero;
+            const diceStore = useDiceStore();
 
             this.battleTile = tile;
             this.battleTileId = tile.id;
@@ -93,6 +94,54 @@ export const useBattleStore = defineStore('battle-store', {
 
             this.tiles = tiles;
             this.enemies = battleEnemies;
+            this.enemies.forEach((enemy: EnemyModel) => {
+                diceStore.initializeEnemyDice(enemy);
+            });
+            setTimeout(() => {
+                this.enemyAutoAttackLoop();
+            }, 500);
+        },
+
+        async enemyAutoAttackLoop() {
+            const diceStore = useDiceStore();
+            const heroStore = useHeroStore();
+            const {hero} = heroStore;
+
+            if (hero.currentHealth <= 0) return;
+
+            const results = await diceStore.rollAllEnemyDices();
+
+            this.enemies
+                .filter((enemy: EnemyModel) => enemy.health > 0)
+                .forEach((enemy: EnemyModel) => {
+                    const rolls: string[] = results[enemy.id];
+                    if (!rolls) return;
+
+                    this.logEvent(`🎲 ${enemy.name} кидає кубики: [${rolls.join(', ')}]`);
+
+                    const isTripleSword = rolls.every(r => r === 'sword');
+
+                    if (isTripleSword) {
+                        const heroTile = this.tiles.find(t => t.isHeroHere);
+                        hero.currentHealth = Math.max(0, hero.currentHealth - enemy.attack);
+                        this.logEvent(`${enemy.name} ⚔️ hits ${enemy.attack}`);
+                        if (heroTile) {
+                            this.triggerBloodSplash(heroTile.id);
+                            this.showDamagePopup(
+                                heroTile.id,
+                                enemy.attack
+                            );
+                        }
+                    } else {
+                        this.logEvent(`${enemy.name} missed...`);
+                    }
+                });
+
+            if (hero.currentHealth > 0) {
+                setTimeout(() => {
+                    this.enemyAutoAttackLoop();
+                }, 2000);
+            }
         },
 
         finishBattle() {

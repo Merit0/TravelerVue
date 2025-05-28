@@ -30,6 +30,10 @@
           :style="heroImgStyle"
           :class="{ flipped }"
           @mousemove="handleMouse">
+        <div class="damage-popup" v-if="damageValue">
+          -{{ damageValue }}
+        </div>
+        <div class="blood-splash" v-if="bloodSplash"/>
         <button
             class="battle-map-tile tileButton"
             @click="openInventory()"
