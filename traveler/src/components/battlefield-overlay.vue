@@ -155,6 +155,7 @@ function attackEnemies(targetsNumber: number) {
     if (enemy.health === 0) {
       battleStore.handleEnemyDeath(enemy, tile);
       battleStore.logEvent(`${enemy.name} has been defeated!`);
+      hero.addKilled();
     }
   }
 
