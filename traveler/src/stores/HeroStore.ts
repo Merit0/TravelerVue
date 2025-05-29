@@ -31,6 +31,8 @@ export const useHeroStore = defineStore("hero", {
                 .setDefense(hero.defense)
                 .setCoins(hero.coins)
                 .setKills(hero.kills)
+                .setCurrentEnergy(hero.currentEnergy)
+                .setMaxEnergy(hero.maxEnergy)
                 .setStats(hero.available)
                 .setEquipment(hero.equipment);
 

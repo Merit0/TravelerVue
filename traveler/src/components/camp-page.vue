@@ -63,6 +63,18 @@ export default {
         }
       }, 3000);
     },
+    restoreEnergy(energyAmount = 1) {
+      let count = 0;
+      this.time = setInterval(() => {
+        const hero = this.heroStore.hero;
+        if (hero.getCurrentEnergy() < hero.maxEnergy && count < hero.maxEnergy) {
+          hero.collectEnergy(energyAmount);
+          count++;
+        } else {
+          clearInterval(this.time);
+        }
+      }, 3000);
+    },
     goFight() {
       router.push('/home');
     },
@@ -81,6 +93,7 @@ export default {
   },
   mounted() {
     this.increaseHealth();
+    this.restoreEnergy();
   }
   ,
   unmounted() {

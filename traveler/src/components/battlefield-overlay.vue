@@ -14,7 +14,7 @@
           <div class="energy-image">
             <img src="/images/overlays/battlefield/energy-icon-image.png" alt="energy-icon-image">
           </div>
-          <div class="energy-counter">100</div>
+          <div class="energy-counter">{{ heroCurrentEnergy }}</div>
         </div>
         <button class="escape-button" @click="closeOverlay()">
           🏃
@@ -32,7 +32,7 @@
             <button
                 class="attack-button"
                 @click="roll"
-                :disabled="diceStore.isRolling || noEnemies">
+                :disabled="diceStore.isRolling || noEnemies || noEnergy">
               {{ diceStore.isRolling ? 'ROLLING...' : 'ROLL' }}
             </button>
           </div>
@@ -71,17 +71,27 @@ const noEnemies = computed(() => {
   return tile?.enemies?.every(e => e.health <= 0) ?? true;
 });
 
+const heroCurrentEnergy = computed(() => heroStore.hero.currentEnergy || 0);
+
+const noEnergy = computed(() => heroStore.hero.currentEnergy <= 0);
+
 const {realBattleTile} = useRealBattleTile();
 
 const roll = async () => {
+  const rollDiceCost = 1;
+  const {hero} = heroStore;
   const currentEnemies: EnemyModel[] = battleStore.tiles.flatMap(tile => tile.enemies as EnemyModel[]);
-  await diceStore.rollDices(currentEnemies);
+  hero.useEnergy(1);
+  if (hero.getCurrentEnergy() > rollDiceCost) {
+    await diceStore.rollDices(currentEnemies);
+  }
   const result: string[] = diceStore.lastResult;
   const combatFaces: string[] = result.slice(0, 3);
   const enemyCounterDiceFace: string = result[result.length - 1];
 
   const requestedTargetsCount = parseInt(enemyCounterDiceFace?.replace('x', '') || '1');
   const swordCount = combatFaces.filter(face => face === 'sword').length;
+  const collectEnergy = combatFaces.filter(face => face === 'energy').length;
 
   const aliveEnemies = battleStore.enemies.filter(enemy => enemy.health > 0);
 
@@ -89,9 +99,12 @@ const roll = async () => {
 
   if (swordCount === 3) {
     attackEnemies(actualTargetsCount);
+  } else if (collectEnergy === 3) {
+    const energyBoostValue = 10;
+    hero.collectEnergy(energyBoostValue);
+    battleStore.logEvent(`ENERGY BOOST -> ${hero.name} gained ${energyBoostValue} ⚡!`);
   } else {
     const battleTiles = battleStore.tiles;
-    const {hero} = heroStore;
     if (!battleTiles || battleTiles.length === 0) return;
 
     const aliveEnemyTiles = battleTiles.filter(tile => {
@@ -237,7 +250,7 @@ function updateMapTileState() {
   position: absolute;
   top: 10%;
   right: 1%;
-  height: 80%; /* Не вищий за .top-bar-hero-stats */
+  height: 80%;
   display: flex;
   align-items: center;
   padding: 0 0.8em;
@@ -245,7 +258,7 @@ function updateMapTileState() {
   box-shadow: 0 0 0.5em rgba(255, 200, 0, 0.6);
   gap: 0.5em;
   z-index: 10;
-  font-size: clamp(0.7rem, 1.2vh, 1rem); /* адаптивно */
+  font-size: clamp(0.7rem, 1.2vh, 1rem);
   transition: transform 0.2s ease-in-out;
 }
 

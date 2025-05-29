@@ -53,7 +53,7 @@ export const useDiceStore = defineStore('dice', {
 
             setDiceCountWithEnemyCount(enemyModels: { health: number }[]) {
                 const actionFaces: DiceFace[] = ['sword', 'shield', 'energy'];
-                const swordDiceWeights = [10, 1, 1]; // Наприклад: sword частіше
+                const swordDiceWeights = [6, 2, 3];
 
                 const liveEnemies = enemyModels.filter(e => e.health > 0);
                 const liveEnemyCount = liveEnemies.length;

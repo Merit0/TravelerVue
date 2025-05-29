@@ -10,6 +10,8 @@ export interface IHero {
   coins: number;
   stats: boolean;
   kills: number;
+  currentEnergy: number;
+  maxEnergy: number;
   id: number;
   imgPath: string;
   available: boolean;

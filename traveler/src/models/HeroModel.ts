@@ -11,6 +11,8 @@ export class HeroModel implements IHero {
     coins: number;
     stats: boolean;
     kills: number;
+    currentEnergy: number;
+    maxEnergy: number;
     available: boolean;
     id: number;
     imgPath = "/images/heroes_150_150/hero-tile-image.png";
@@ -21,6 +23,7 @@ export class HeroModel implements IHero {
 
     constructor() {
         this.maxHealth = 100;
+        this.maxEnergy = 100;
     }
 
     setFlipped(state: boolean) {
@@ -67,6 +70,16 @@ export class HeroModel implements IHero {
         return this;
     }
 
+    public setMaxEnergy(maxEnergyValue: number): HeroModel {
+        this.maxEnergy = maxEnergyValue;
+        return this;
+    }
+
+    public setCurrentEnergy(currentEnergyValue: number): HeroModel {
+        this.currentEnergy = currentEnergyValue;
+        return this;
+    }
+
     public setCoins(coins: number): HeroModel {
         this.coins = coins;
         return this;
@@ -88,6 +101,14 @@ export class HeroModel implements IHero {
 
     public getHealth(): number {
         return this.currentHealth;
+    }
+
+    public getCurrentEnergy(): number {
+        return this.currentEnergy;
+    }
+
+    public getMaxEnergy(): number {
+        return this.maxEnergy;
     }
 
     public getAttack(): number {
@@ -113,6 +134,14 @@ export class HeroModel implements IHero {
     public addKilled(): void {
         this.kills += 1;
         this.experienceCollector();
+    }
+
+    public collectEnergy(energyValue = 1): void {
+        this.currentEnergy = Math.min(this.currentEnergy + energyValue, this.maxEnergy);
+    }
+
+    public useEnergy(energyValue = 1): void {
+        this.currentEnergy -= energyValue;
     }
 
     public experienceCollector(): void {
