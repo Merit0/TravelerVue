@@ -26,13 +26,13 @@ const tiles = battleStore.tiles
 <style scoped>
 .battle-arena-wrapper {
   position: relative;
+  top: -1vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 26vw;
-  height: 54vh;
-  background: #401b01;
-  border-radius: 2vh;
+  width: 25vw;
+  height: 51vh;
+  background: rgb(175, 168, 138);
 }
 
 .battle-tiles-grid {
@@ -41,6 +41,5 @@ const tiles = battleStore.tiles
   grid-template-columns: repeat(5, 10vh);
   grid-template-rows: repeat(5, 10vh);
   gap: 3px;
-  padding: 1px;
 }
 </style>

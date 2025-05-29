@@ -9,37 +9,37 @@
       </div>
     </div>
     <div class="battlefield-overlay-content">
-      <div class="top-bar-hero-stats">
-        <div class="energy-holder">
-          <div class="energy-image">
-            <img src="/images/overlays/battlefield/energy-icon-image.png" alt="energy-icon-image">
-          </div>
-          <div class="energy-counter">{{ heroCurrentEnergy }}</div>
-        </div>
-        <div class="escape-button" @click="closeOverlay()"></div>
-      </div>
       <div class="battle-area-container">
+        <div class="top-bar-hero-stats">
+          <div class="energy-holder">
+            <div class="energy-image">
+              <img src="/images/overlays/battlefield/energy-icon-image.png" alt="energy-icon-image">
+            </div>
+            <div class="energy-counter">{{ heroCurrentEnergy }}</div>
+          </div>
+          <div class="escape-button" @click="closeOverlay()"></div>
+        </div>
         <battle-grid v-if="realBattleTile" :tile="realBattleTile"/>
       </div>
       <div class="battle-controls-gui">
         <div class="three-dices-container">
           <dice-roller></dice-roller>
-        </div>
-        <div class="controls">
-          <div class="attack-button-container">
-            <button
-                class="attack-button"
-                @click="roll"
-                :disabled="diceStore.isRolling || noEnemies || noEnergy">
-              {{ diceStore.isRolling ? 'ROLLING...' : 'ROLL' }}
-            </button>
           </div>
-          <div class="hero-health-shield-collector-bars-container">
-            <div class="health-percentage-vertical-bar">
-            </div>
-            <div class="shield-percentage-vertical-bar"></div>
-          </div>
+        <div class="attack-button-container">
+          <button
+              class="attack-button"
+              @click="roll"
+              :disabled="diceStore.isRolling || noEnemies || noEnergy"
+          >
+          </button>
         </div>
+        <!--        <div class="controls">-->
+        <!--          <div class="hero-health-shield-collector-bars-container">-->
+        <!--            <div class="health-percentage-vertical-bar">-->
+        <!--            </div>-->
+        <!--            <div class="shield-percentage-vertical-bar"></div>-->
+        <!--          </div>-->
+        <!--        </div>-->
       </div>
     </div>
   </div>
@@ -217,47 +217,50 @@ function updateMapTileState() {
 
 .battle-area-container {
   position: relative;
+  margin-top: 5%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 60vh;
-  background: #0800ff;
+  height: 80vh;
+  background-image: url("/images/overlays/battlefield/battlefield-background-image.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
 }
 
 .battlefield-overlay-content {
   position: absolute;
-  width: 30vw;
-  height: 96vh;
-  margin: 1%;
+  width: 40vw;
+  height: 92vh;
   background-size: cover;
-  box-shadow: 0 -3px 15px 4px rgba(255, 195, 195, 0.5);
-  border-radius: 20px;
-  background: #4b3670;
 }
 
 .top-bar-hero-stats {
-  position: relative;
-  width: 100%;
+  position: absolute;
+  top: 4vh;
+  width: 36vw;
   height: 5vh;
-  background: #401b01;
 }
 
 .energy-holder {
   position: absolute;
-  top: 10%;
-  right: 1%;
+  background: #1c0400;
+  right: 0.5vw;
   height: 80%;
   display: flex;
   align-items: center;
   padding: 0 0.8em;
   border-radius: 0.75em;
-  box-shadow: 0 0 0.5em rgba(255, 200, 0, 0.6);
+  border: 2px solid #ffd700; /* чистий золотий */
+  box-shadow: 0 0 4px rgba(255, 215, 0, 0.4),
+  0 0 8px rgba(255, 215, 0, 0.6),
+  0 0 12px rgba(255, 215, 0, 0.8);
   gap: 0.5em;
   z-index: 10;
   font-size: clamp(0.7rem, 1.2vh, 1rem);
-  transition: transform 0.2s ease-in-out;
+  transition: box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 
 .energy-holder:hover {
@@ -294,7 +297,6 @@ function updateMapTileState() {
 .escape-button {
   position: absolute;
   left: 1%;
-  top: 5%;
   width: 2.2vw;
   height: 90%;
   background-image: url("/images/overlays/battlefield/foots-icon.png");
@@ -302,11 +304,10 @@ function updateMapTileState() {
   background-repeat: no-repeat;
   border-radius: 20%;
   cursor: pointer;
-  border: 2px solid #ffd700; /* чистий золотий */
-  box-shadow:
-      0 0 4px rgba(255, 215, 0, 0.4),
-      0 0 8px rgba(255, 215, 0, 0.6),
-      0 0 12px rgba(255, 215, 0, 0.8);
+  border: 2px solid #ffd700;
+  box-shadow: 0 0 4px rgba(255, 215, 0, 0.4),
+  0 0 8px rgba(255, 215, 0, 0.6),
+  0 0 12px rgba(255, 215, 0, 0.8);
   transition: box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out, transform 0.3s ease-in-out;
   z-index: 1;
 }
@@ -317,12 +318,12 @@ function updateMapTileState() {
 
 .battlefield-logger-container {
   position: relative;
-  margin-top: 3%;
+  margin-top: 4%;
   margin-bottom: 3%;
-  right: -52vh;
-  width: 20vw;
-  height: 90vh;
-  background: rgba(92, 49, 0, 0.28);
+  right: -55vh;
+  width: 18vw;
+  height: 71vh;
+  background: rgb(64, 27, 1);
   border-radius: 5px;
   color: #ffe900;
   text-align: left;
@@ -330,8 +331,8 @@ function updateMapTileState() {
   overflow-y: auto;
   font-family: 'Crimson Pro', cursive;
   font-size: 1.4vh;
-  z-index: 1;
-  box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.1);
+  z-index: 0;
+  box-shadow: inset 0 0 5px rgb(0, 20, 115);
 }
 
 .logger-title {
@@ -361,38 +362,39 @@ function updateMapTileState() {
 }
 
 .battle-controls-gui {
-  position: absolute;
-  width: 100%;
-  height: 34%;
+  position: relative;
+  top: -18%;
+  left: 4%;
+  width: 94%;
+  height: 14%;
   padding: 0.1rem;
-  background: #025e3e;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  gap: 0.5rem;
+  justify-content: center;
+  gap: 1rem;
 }
 
 .three-dices-container {
-  width: 100%;
-  height: 40%;
-  background: #373735;
+  position: absolute;
+  bottom: -6%;
+  width: 50%;
+  height: 80%;
+  background: linear-gradient(145deg, rgba(48, 16, 16, 0.63), rgba(19, 7, 7, 0.69));
   border-radius: 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 1rem;
-}
 
-.controls {
-  width: 100%;
-  height: 100%;
-  background: #82fff0;
-  border-radius: 1rem;
-  padding: 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
+  box-shadow:
+      inset 0 0 8px rgba(0, 0, 0, 0.6),
+      0 4px 8px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(80, 80, 80, 0.4);
+  background-size: cover;
+  background-blend-mode: overlay;
+
+  transition: all 0.3s ease;
 }
 
 .hero-health-shield-collector-bars-container {
@@ -428,36 +430,35 @@ function updateMapTileState() {
 }
 
 .attack-button {
-  width: 5vw;
-  height: 5vh;
-  background: #bf00ff;
-  border: none;
-  border-radius: 0.5rem;
-  font-weight: bold;
-  color: white;
+  position: relative;
+  background: none;
+  width: 90%;
+  height: 92%;
+  border-radius: 1rem;
   cursor: pointer;
-  transition: 0.2s ease;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border: 2px solid #ffa600; /* чистий золотий */
+  box-shadow: 0 0 4px rgba(255, 145, 0, 0.4),
+  0 0 8px rgba(255, 153, 0, 0.6),
+  0 0 12px rgba(255, 166, 0, 0.8);
+  transition: box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 
-.attack-button:hover {
-  background: #a200d6;
-  transform: scale(1.05);
-}
-
-.attack-button:active {
-  transform: scale(0.95);
-  background: #8800bb;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) inset;
+.attack-button-container:hover {
+  transform: scale(1.02);
 }
 
 .attack-button-container {
-  flex: 1;
-  height: 100%;
-  background: #000c5a;
+  position: absolute;
+  right: 1vw;
+  height: 10vh;
+  width: 5vw;
+  background-image: url("/images/overlays/battlefield/atack-buton-image.png");
+  background-size: contain;
+  background-repeat: no-repeat;
   border-radius: 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 2;
 }
 </style>
