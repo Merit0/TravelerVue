@@ -34,7 +34,6 @@ import HeroDetailsBar from './hero-details-bar.vue';
 import {useHeroStore} from '@/stores/HeroStore';
 import router from "@/router";
 import ShopOverlay from "@/components/shop/shop-overlay.vue";
-import HeroBagInventory from "@/components/hero-equipment-modal/bag-inventory/hero-bag-inventory.vue";
 import HeroInventoryOverlay from "@/components/hero-equipment-modal/hero-inventory-overlay.vue";
 
 export default {
@@ -53,25 +52,25 @@ export default {
   methods: {
     increaseHealth() {
       let count = 0;
-      this.time = setInterval(() => {
+      this.timeHealth = setInterval(() => {
         const hero = this.heroStore.hero;
         if (hero.getHealth() < hero.maxHealth && count < hero.maxHealth) {
           hero.healthIncreaser();
           count++;
         } else {
-          clearInterval(this.time);
+          clearInterval(this.timeHealth);
         }
       }, 3000);
     },
     restoreEnergy(energyAmount = 1) {
       let count = 0;
-      this.time = setInterval(() => {
+      this.timeEnergy = setInterval(() => {
         const hero = this.heroStore.hero;
         if (hero.getCurrentEnergy() < hero.maxEnergy && count < hero.maxEnergy) {
           hero.collectEnergy(energyAmount);
           count++;
         } else {
-          clearInterval(this.time);
+          clearInterval(this.timeEnergy);
         }
       }, 3000);
     },
@@ -94,10 +93,14 @@ export default {
   mounted() {
     this.increaseHealth();
     this.restoreEnergy();
-  }
-  ,
+  },
   unmounted() {
-    clearInterval(this.time);
+    if (this.timeHealth) {
+      clearInterval(this.timeHealth);
+    }
+    if (this.timeEnergy) {
+      clearInterval(this.timeEnergy);
+    }
   }
 }
 ;

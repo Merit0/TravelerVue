@@ -16,9 +16,7 @@
           </div>
           <div class="energy-counter">{{ heroCurrentEnergy }}</div>
         </div>
-        <button class="escape-button" @click="closeOverlay()">
-          🏃
-        </button>
+        <div class="escape-button" @click="closeOverlay()"></div>
       </div>
       <div class="battle-area-container">
         <battle-grid v-if="realBattleTile" :tile="realBattleTile"/>
@@ -295,28 +293,26 @@ function updateMapTileState() {
 
 .escape-button {
   position: absolute;
-  left: 0;
-  top: 0;
-  width: 2vw;
-  height: 100%;
-  font-size: 1.5vw;
-  background: radial-gradient(circle at top left, #7a1f1f, #4a0d0d);
-  color: #fff3e0;
-  border-radius: 50%;
-  border: 2px solid rgba(255, 100, 100, 0.3);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4), inset 0 0 8px rgba(255, 180, 180, 0.2);
+  left: 1%;
+  top: 5%;
+  width: 2.2vw;
+  height: 90%;
+  background-image: url("/images/overlays/battlefield/foots-icon.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: 20%;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.25s ease;
+  border: 2px solid #ffd700; /* чистий золотий */
+  box-shadow:
+      0 0 4px rgba(255, 215, 0, 0.4),
+      0 0 8px rgba(255, 215, 0, 0.6),
+      0 0 12px rgba(255, 215, 0, 0.8);
+  transition: box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out, transform 0.3s ease-in-out;
   z-index: 1;
 }
 
 .escape-button:hover {
-  background: radial-gradient(circle at top left, #a62a2a, #6a1a1a);
-  transform: scale(1.1);
-  box-shadow: 0 0 12px rgba(255, 100, 100, 0.5), inset 0 0 10px rgba(255, 200, 200, 0.3);
+  transform: scale(1.02);
 }
 
 .battlefield-logger-container {

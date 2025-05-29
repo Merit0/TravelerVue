@@ -172,6 +172,7 @@ export const useBattleStore = defineStore('battle-store', {
                             hero.currentTile = previousTile;
                         }
                     }
+                    hero.useEnergy(50);
                 }
             }
 

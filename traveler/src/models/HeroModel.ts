@@ -141,7 +141,7 @@ export class HeroModel implements IHero {
     }
 
     public useEnergy(energyValue = 1): void {
-        this.currentEnergy -= energyValue;
+        this.currentEnergy = Math.max(this.currentEnergy - energyValue, 0);
     }
 
     public experienceCollector(): void {
