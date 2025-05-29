@@ -10,6 +10,12 @@
     </div>
     <div class="battlefield-overlay-content">
       <div class="top-bar-hero-stats">
+        <div class="energy-holder">
+          <div class="energy-image">
+            <img src="/images/overlays/battlefield/energy-icon-image.png" alt="energy-icon-image">
+          </div>
+          <div class="energy-counter">100</div>
+        </div>
         <button class="escape-button" @click="closeOverlay()">
           🏃
         </button>
@@ -39,7 +45,7 @@
       </div>
     </div>
   </div>
-  <grave-treasure-inventory-overlay v-if="overlayStore.isOverlay('grave-inventory')" />
+  <grave-treasure-inventory-overlay v-if="overlayStore.isOverlay('grave-inventory')"/>
 </template>
 
 <script setup lang="ts">
@@ -85,7 +91,7 @@ const roll = async () => {
     attackEnemies(actualTargetsCount);
   } else {
     const battleTiles = battleStore.tiles;
-    const { hero } = heroStore;
+    const {hero} = heroStore;
     if (!battleTiles || battleTiles.length === 0) return;
 
     const aliveEnemyTiles = battleTiles.filter(tile => {
@@ -192,7 +198,7 @@ function updateMapTileState() {
   right: 0;
   bottom: 0;
   z-index: 10;
-  background-color: rgba(83, 83, 83, 0.71);
+  background-color: rgba(83, 83, 83, 0.91);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -223,8 +229,55 @@ function updateMapTileState() {
 .top-bar-hero-stats {
   position: relative;
   width: 100%;
-  height: 4vh;
-  background: #00ff33;
+  height: 5vh;
+  background: #401b01;
+}
+
+.energy-holder {
+  position: absolute;
+  top: 10%;
+  right: 1%;
+  height: 80%; /* Не вищий за .top-bar-hero-stats */
+  display: flex;
+  align-items: center;
+  padding: 0 0.8em;
+  border-radius: 0.75em;
+  box-shadow: 0 0 0.5em rgba(255, 200, 0, 0.6);
+  gap: 0.5em;
+  z-index: 10;
+  font-size: clamp(0.7rem, 1.2vh, 1rem); /* адаптивно */
+  transition: transform 0.2s ease-in-out;
+}
+
+.energy-holder:hover {
+  transform: scale(1.05);
+}
+
+.energy-image {
+  height: 70%;
+  aspect-ratio: 1/1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.energy-image img {
+  width: 180%;
+  height: 180%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.3));
+}
+
+.energy-counter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: rgb(255, 223, 17);
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
+  font-size: 180%;
+  font-family: 'Crimson Pro', cursive;
+  line-height: 1;
 }
 
 .escape-button {
@@ -232,7 +285,7 @@ function updateMapTileState() {
   left: 0;
   top: 0;
   width: 2vw;
-  height: 4vh;
+  height: 100%;
   font-size: 1.5vw;
   background: radial-gradient(circle at top left, #7a1f1f, #4a0d0d);
   color: #fff3e0;
