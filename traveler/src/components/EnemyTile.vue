@@ -1,6 +1,9 @@
 <template>
-  <div class="initialTileView mapTile" v-if="(!tile.isInitial) && tile.enemies.length != 0 && enemyAlive"
-       :style="getTileBackground(tile)">
+  <div
+      class="initialTileView mapTile"
+      v-if="!tile.isInitial && hasAliveEnemies"
+      :style="getTileBackground(tile)"
+  >
     <div
         class="initialTileView mapTile enemyTile"
         :style="getEnemyImage(tile.enemies[0])"
@@ -10,37 +13,51 @@
           @click="startBattle(tile)"
           :disabled="!tile.isReachable"
           :class="{
-    unreachable: !tile.isReachable,
-    'reachable-tile': tile.isReachable && !tile.isHeroHere,
-  }"
+          unreachable: !tile.isReachable,
+          'reachable-tile': tile.isReachable && !tile.isHeroHere,
+        }"
       ></button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import TileModel from '@/models/TileModel';
-import {PropType} from 'vue';
-import EnemyModel from "@/models/EnemyModel";
+import {defineComponent, PropType} from 'vue'
+import TileModel from '@/models/TileModel'
+import EnemyModel from '@/models/EnemyModel'
+import {useBattleStore} from '@/stores/battle-store'
+import {useOverlayStore} from '@/stores/overlay-store'
+import {useDiceStore} from "@/stores/DiceStore";
 
-
-export default {
-  name: "enemy-tile",
+export default defineComponent({
+  name: 'enemy-tile',
   props: {
     tile: {
       type: Object as PropType<TileModel>,
-      required: true
+      required: true,
     },
-    enemyAlive: {
-      type: Boolean,
-      default: false,
-      required: true
+  },
+  computed: {
+    firstAliveEnemy(): EnemyModel | null {
+      return this.tile.enemies.find((e) => e.health > 0) || null;
+    },
+    hasAliveEnemies(): boolean {
+      return !!this.firstAliveEnemy && this.tile.enemies.length > 0;
     }
   },
   methods: {
-    async startBattle(tile: TileModel) {
+    startBattle(tile: TileModel) {
+      const battleStore = useBattleStore();
+      const overlayStore = useOverlayStore();
+      const diceStore = useDiceStore();
+
+      battleStore.startBattleOnTile(tile);
       tile.inBattle = true;
-      this.$emit('showBattlefield', true);
+
+      const aliveEnemies = tile.enemies.filter(e => e.health > 0);
+      diceStore.setDiceCountWithEnemyCount(aliveEnemies);
+
+      overlayStore.openOverlay('battle');
     },
     getEnemyImage(enemy: EnemyModel) {
       return {
@@ -51,10 +68,11 @@ export default {
       return {
         backgroundImage: `url(${tile.backgroundSrc})`,
       }
-    }
-  }
-}
+    },
+  },
+})
 </script>
+
 <style>
 @import '@/styles/animated-tile.css';
 

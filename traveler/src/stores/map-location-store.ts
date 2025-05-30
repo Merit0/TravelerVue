@@ -2,7 +2,6 @@ import {defineStore} from "pinia";
 import TileModel from "@/models/TileModel";
 import EnemyModel from "@/models/EnemyModel";
 import {EnemyProvider} from "@/providers/EnemyProvider";
-import {ChestModel} from "@/models/ChestModel";
 import {useHeroStore} from "./HeroStore";
 import {EnemyBuilder} from "@/builders/EnemyBuilder";
 import {MapLocationModel} from "@/models/map-location-model";
@@ -10,12 +9,8 @@ import MapModel from "@/models/MapModel";
 import {toKebabCase} from "@/utils/string-utils";
 import {MapProvider} from "@/providers/MapProvider";
 import {HeroModel} from "@/models/HeroModel";
-import {EnemyLootProvider, ILootChanceConfig} from "@/providers/loot-provider";
-import {DropLootChanceConfigProvider} from "@/providers/loot-chance-drop-provider";
 import {Randomizer} from "@/utils/Randomizer";
-import {LootItemModel} from "@/models/LootItemModel";
-import {ItemType} from "@/enums/ItemType";
-import {CoinsProvider} from "@/providers/coins-provider";
+import {reactive} from 'vue';
 
 interface MapLocationState {
     tiles: TileModel[];
@@ -111,7 +106,7 @@ export const useMapLocationStore = defineStore("map-location-store", {
                 if (saved) {
                     const parsed = JSON.parse(saved);
                     this.locationStates[locationMap.name] = {
-                        tiles: parsed.tiles,
+                        tiles: parsed.tiles.map((t: any) => reactive(TileModel.mapToModel(t))),
                         isCleared: parsed.isMapLocationCleared,
                         boss: parsed.boss,
                     };
@@ -152,7 +147,6 @@ export const useMapLocationStore = defineStore("map-location-store", {
                     tile.setImageSrc(locationMap.tileImage);
                     tile.setBackgroundSrc(locationMap.tileBackgroundSrc);
                     tile.isHeroHere = false;
-                    tile.isExit = false;
 
                     const isInCampZone = x >= blockStartX && x <= blockEndX &&
                         y >= blockStartY && y <= blockEndY;
@@ -193,10 +187,20 @@ export const useMapLocationStore = defineStore("map-location-store", {
                 return;
             }
 
+            this.tiles.forEach(tile => {
+                tile.isHeroHere = false;
+            });
+
+            if (nextTile.coordinates.x < currentTile.coordinates.x) {
+                hero.flippedImage = false; // turn Hero left
+            } else if (nextTile.coordinates.x > currentTile.coordinates.x) {
+                hero.flippedImage = true; // turn Hero right
+            }
+
             currentTile.isHeroHere = false;
-            currentTile.isEmpty = true;
 
             nextTile.isHeroHere = true;
+
             hero.currentTile = nextTile;
             hero.heroLocation = {...nextTile.coordinates};
 
@@ -210,20 +214,12 @@ export const useMapLocationStore = defineStore("map-location-store", {
 
                 const enemies = this.generateEnemies(index, locationMap.enemyModifier);
                 tile.setEnemies(enemies);
-
-                if (enemies.length > 0) {
-                    const chest: ChestModel = this.generateChest(enemies, locationMap.chestImage);
-                    tile.setChest(chest);
-                }
             });
         },
 
         addBossOnTile(tiles: TileModel[], locationMap: MapLocationModel) {
-            const dropChanceConfig: ILootChanceConfig = DropLootChanceConfigProvider.getBossDropChanceConfig();
-            const bossLoot = EnemyLootProvider.getLoot(dropChanceConfig);
             const boss: EnemyModel = locationMap.boss;
             boss.setPowerModifierLvl(locationMap.enemyModifier);
-            boss.setLoot(bossLoot);
 
             const validTiles = tiles.filter(tile =>
                 !tile.isBlocked &&
@@ -239,36 +235,6 @@ export const useMapLocationStore = defineStore("map-location-store", {
             const bossTile = validTiles[randomIndex];
             bossTile.enemies = [];
             bossTile.setEnemies([boss]);
-            const chest: ChestModel = this.generateChest([boss], locationMap.chestImage);
-            bossTile.setChest(chest);
-        },
-
-        generateChest(enemies: EnemyModel[], chestImage: string): ChestModel {
-            let totalCoins = 0;
-            const nonCoinLoot: LootItemModel[] = [];
-            const chest = new ChestModel();
-            chest.setImagePath(chestImage);
-            for (const enemy of enemies) {
-                for (const lootItem of enemy.loot) {
-                    lootItem.place = 'chest';
-
-                    if (lootItem.itemType === ItemType.COIN) {
-                        totalCoins += lootItem.value;
-                    } else {
-                        nonCoinLoot.push(lootItem);
-                    }
-                }
-            }
-
-            if (totalCoins > 0) {
-                const coinItem: LootItemModel = CoinsProvider.getCoins(totalCoins);
-                coinItem.place = 'chest';
-                chest.addLoot([coinItem]);
-            }
-
-            chest.addLoot(nonCoinLoot);
-
-            return chest.items.length > 0 ? chest : null;
         },
 
         generateEnemies(id: number, enemyPowerModifierNumber: number): EnemyModel[] {
@@ -290,19 +256,15 @@ export const useMapLocationStore = defineStore("map-location-store", {
                     .build();
 
                 enemy.setId(id + i);
-
-                const dropChanceConfig: ILootChanceConfig = DropLootChanceConfigProvider.getCommonDropChanceConfig()
-                const loot = EnemyLootProvider.getLoot(dropChanceConfig)
-
-                enemy.setLoot(loot);
                 createdEnemies.push(enemy);
             }
             return createdEnemies;
         },
 
         removeAllItemsFromTile(tile: TileModel) {
-            tile.isEmpty = false;
+            tile.isEnemyHere = false;
             tile.isInitial = false;
+            tile.inBattle = false;
         },
 
         calculateReachableTiles(heroTile: TileModel, allTiles: TileModel[]) {

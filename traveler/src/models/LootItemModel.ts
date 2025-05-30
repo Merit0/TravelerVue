@@ -12,6 +12,21 @@ export class LootItemModel implements IHeroItem {
   itemType: ItemType;
   rarity: Rarity;
   id = uuid();
-  chance: boolean;
-  place: "bag" | "chest" | "shop" | null;
+  place: "bag" | "chest" | "shop" | null | 'keeper' | 'grave';
+
+  static mapToModel(data: any): LootItemModel {
+    const item = new LootItemModel();
+
+    item.name = data.name;
+    item.value = data.value;
+    item.price = data.price;
+    item.imgPath = data.imgPath;
+    item.borderFrame = data.borderFrame;
+    item.itemType = data.itemType;
+    item.rarity = data.rarity;
+    item.id = data.id || uuid();
+    item.place = data.place ?? null;
+
+    return item;
+  }
 }

@@ -1,6 +1,5 @@
 <template>
   <div
-      v-if="tile.isInitial"
       class="initialTileView mapTile"
       :style="getTileImage(tile.backgroundSrc)"
       :class="`tile-id-${tile.id}`"
@@ -49,7 +48,7 @@ export default {
       if (!tile.isReachable) return;
       tile.isInitial = false;
 
-      if (tile.enemies.length === 0) {
+      if (!tile.isEnemyHere) {
         this.mapLocationStore.moveHero(tile);
       }
     }

@@ -3,6 +3,7 @@ import {LootItemBuilder} from "@/builders/LootItemBuilder";
 import {Randomizer} from "@/utils/Randomizer";
 import {ItemType} from "@/enums/ItemType";
 import {Rarity} from "@/enums/Rarity";
+import {EnemyType} from "@/enums/EnemyType";
 
 export class ElixirsProvider {
     private static elixirsFolderPath = "images/healing-items";
@@ -15,7 +16,6 @@ export class ElixirsProvider {
             .itemType(ItemType.HEAL)
             .lootRarity(Rarity.COMMON)
             .lootItemImgPath(`${this.elixirsFolderPath}/common-elixir.png`)
-            .dropChance(Randomizer.getChance(50))
             .build();
     }
 
@@ -27,7 +27,6 @@ export class ElixirsProvider {
             .itemType(ItemType.HEAL)
             .lootRarity(Rarity.RARE)
             .lootItemImgPath(`${this.elixirsFolderPath}/rare-elixir.png`)
-            .dropChance(Randomizer.getChance(70))
             .build();
     }
 
@@ -39,7 +38,6 @@ export class ElixirsProvider {
             .itemType(ItemType.HEAL)
             .lootRarity(Rarity.LEGEND)
             .lootItemImgPath(`${this.elixirsFolderPath}/mythic-elixir.png`)
-            .dropChance(Randomizer.getChance(30))
             .build();
     }
 
@@ -51,8 +49,16 @@ export class ElixirsProvider {
             .itemType(ItemType.HEAL)
             .lootRarity(Rarity.COMMON)
             .lootItemImgPath(`${this.elixirsFolderPath}/healSmall.png`)
-            .dropChance(Randomizer.getChance(100))
             .build();
+    }
+
+    public static getEnemyElixir(type: EnemyType): LootItemModel {
+        return {
+            [EnemyType.BOSS]: this.getMythicElixir(),
+            [EnemyType.CHEEF]: this.getRareElixir(),
+            [EnemyType.WARRIOR]: this.getCommonElixir(),
+            [EnemyType.ANIMAL]: this.getCommonElixir(),
+        }[type] ?? this.getCommonElixir();
     }
 
     public static getElixirsList(): LootItemModel[] {

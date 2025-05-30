@@ -30,6 +30,11 @@ export class EquipmentGroupProvider {
     }
 
     public static getMythicEquipment(): LootItemModel[] {
-        return []
+        return [
+            ...WeaponProvider.getMyths(),
+            ShieldProvider.getDreadwallShield(),
+            HelmetProvider.getOblivorHelm(),
+            ArmorProvider.getStormhideArmor()
+        ]
     }
 }

@@ -42,16 +42,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
+import {defineComponent, PropType} from "vue";
 import TileModel from "@/models/TileModel";
-import { useHeroStore } from "@/stores/HeroStore";
-import { useMapLocationStore } from "@/stores/map-location-store";
+import {useHeroStore} from "@/stores/HeroStore";
+import {useMapLocationStore} from "@/stores/map-location-store";
 import EnemyModel from "@/models/EnemyModel";
 import BattleEnemyTile from "./battle-enemy-tile.vue";
 
 export default defineComponent({
-  name: "battle-field",
-  components: { BattleEnemyTile },
+  name: "battlefield-modal",
+  components: {BattleEnemyTile},
   props: {
     tile: {
       type: Object as PropType<TileModel>,
@@ -106,27 +106,15 @@ export default defineComponent({
         this.enemyAlive = false;
         tile.inBattle = false;
 
-        tile.isEmpty = !tile.chest;
         this.$emit("isBattle", false);
-        if (!tile.chest) {
-          this.mapLocationStore.moveHero(tile);
-        }
+        this.mapLocationStore.moveHero(tile);
       }
     },
     async closeBattlefield(tile: TileModel) {
       tile.inBattle = false;
-      if (!tile.enemies.length) {
-        tile.isEmpty = true;
-        tile.chest = null;
-      }
       this.$emit("isBattle", false);
       await this.mapLocationStore.saveProgress(this.mapLocationStore.mapLocationName);
     },
-    showEnemies() {
-      this.enemies.forEach(e => {
-        console.log(`[${e.name}] HP: ${e.health}, ATK: ${e.attack}`);
-      });
-    }
   }
 });
 </script>

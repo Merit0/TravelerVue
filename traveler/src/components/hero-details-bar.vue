@@ -5,20 +5,24 @@
         <p class="heroDetailsText" label="heroName"> {{ hero.name }} </p>
       </div>
       <div class="item">
-        <div class="iconImg heart"></div>
+        <div class="topBarIconImg heart"></div>
         <p class="heroDetailsText" label="heroHealth">{{ hero.currentHealth }} / {{ hero.maxHealth }}</p>
       </div>
       <div class="item">
-        <div class="iconImg doubleSword" label="heroAttack"></div>
+        <div class="topBarIconImg doubleSword" label="heroAttack"></div>
         <p class="heroDetailsText">{{ hero.attack }}</p>
       </div>
       <div class="item">
-        <div class="iconImg skull" label="heroKills"></div>
+        <div class="topBarIconImg skull" label="heroKills"></div>
         <p class="heroDetailsText">{{ hero.kills }}</p>
       </div>
       <div class="item">
-        <div class="iconImg coin" label="heroCoins"></div>
+        <div class="topBarIconImg coin" label="heroCoins"></div>
         <p class="heroDetailsText">{{ hero.coins }}</p>
+      </div>
+      <div class="item">
+        <div class="topBarEnergyIconImg energy" label="heroEnergy"></div>
+        <p class="heroDetailsText">{{ hero.currentEnergy }}</p>
       </div>
     </div>
     <button @click="userStore.logout()" class="logout">Logout</button>
@@ -27,7 +31,6 @@
 
 <script setup lang="ts">
 import { defineProps } from 'vue';
-import { useRouter } from 'vue-router';
 import { useUserStore } from '@/stores/UserStore';
 import { IHero } from '@/abstraction/IHero';
 

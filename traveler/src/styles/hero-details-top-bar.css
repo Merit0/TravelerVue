@@ -25,6 +25,7 @@
     margin: 0.5em;
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .heroDetailsText {
@@ -35,8 +36,16 @@
     margin-left: 10px;
 }
 
-.iconImg {
+.topBarIconImg {
+    position: relative;
     width: 15%;
+    height: 100%;
+}
+
+.topBarEnergyIconImg {
+    position: relative;
+    top: -18%;
+    width: 18%;
     height: 100%;
 }
 
@@ -60,6 +69,12 @@
 
 .coin {
     background-image: url("/images/top-bar-items/coin-icon.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.energy {
+    background-image: url("/images/overlays/battlefield/energy-icon-image.png");
     background-repeat: no-repeat;
     background-size: cover;
 }

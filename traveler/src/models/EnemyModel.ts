@@ -2,6 +2,7 @@ import {EnemyType} from "@/enums/EnemyType";
 import {IEnemy} from "@/abstraction/IEnemy";
 import {Randomizer} from "@/utils/Randomizer";
 import {LootItemModel} from "./LootItemModel";
+import {DiceFace} from "@/models/DiceModel";
 
 export default class EnemyModel implements IEnemy {
     name: string;
@@ -16,11 +17,36 @@ export default class EnemyModel implements IEnemy {
     imgPath: string;
     enemyBackgroundColor: string;
     loot: LootItemModel[];
+    enemyDiceFacesList: DiceFace[];
+    enemyDiceWeightsList: number[];
+
 
     constructor() {
         this.id = 1;
         this.defense = 0;
         this.attack = 5;
+        this.enemyDiceFacesList = ['sword', 'coin'];
+        this.enemyDiceWeightsList = [1, 1];
+    }
+
+    public setDiceFaces(diceFaces: DiceFace[]): void {
+        this.enemyDiceFacesList = diceFaces;
+    }
+
+    public getDiceFaces(): DiceFace[] {
+        if (!this.enemyDiceFacesList) {
+            this.enemyDiceFacesList = ['sword', 'coin'];
+        }
+
+        return this.enemyDiceFacesList;
+    }
+
+    get isAlive(): boolean {
+        return this.health > 0;
+    }
+
+    get isDead(): boolean {
+        return this.health <= 0;
     }
 
     public getName(): string {
@@ -93,7 +119,7 @@ export default class EnemyModel implements IEnemy {
         if (this.enemyType === EnemyType.BOSS) {
             this.maxHealth = 300 * (this.powerModifierLvl + 1);
         } else {
-            this.maxHealth = 20  * (this.powerModifierLvl + 1);
+            this.maxHealth = 20 * (this.powerModifierLvl + 1);
         }
         this.minHealth = Math.floor(this.maxHealth / 2);
         const randomHealth = Randomizer.getRandomIntInRange(
@@ -115,5 +141,11 @@ export default class EnemyModel implements IEnemy {
                 this.attack * (this.powerModifierLvl + 1)
             );
         }
+    }
+
+    static mapToModel(data: any): EnemyModel {
+        const enemy = new EnemyModel();
+        Object.assign(enemy, data);
+        return enemy;
     }
 }
