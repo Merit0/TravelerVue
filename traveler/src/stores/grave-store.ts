@@ -4,11 +4,13 @@ import EnemyModel from "@/models/EnemyModel";
 import TileModel from "@/models/TileModel";
 import {GraveModel} from "@/models/grave-model";
 import {LootFactory} from "@/factory/loot-factory";
+import {EnemyType} from "@/enums/EnemyType";
 
 export const useGraveStore = defineStore("grave-store", {
     state: () => ({
         graveTile: null as TileModel | null,
         graveInventoryItems: [] as LootItemModel[],
+        killedEnemyType: null as EnemyType,
     }),
 
     getters: {
@@ -50,11 +52,12 @@ export const useGraveStore = defineStore("grave-store", {
 
         generateGraveFromEnemy(enemy: EnemyModel): GraveModel {
             const grave = new GraveModel();
-            const generatedLoot: LootItemModel[] = LootFactory.getLootFromEnemy(enemy.enemyType);
+            const generatedLoot: LootItemModel[] = LootFactory.getLootFromEnemy(enemy);
 
             for (const item of generatedLoot) {
                 item.place = 'grave';
             }
+            this.killedEnemyType = enemy.enemyType;
             grave.addLoot(generatedLoot);
 
             return grave;

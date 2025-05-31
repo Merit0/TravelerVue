@@ -13,7 +13,7 @@ export class ArmorProvider {
             .itemType(ItemType.ARMOR)
             .lootRarity(Rarity.COMMON)
             .lootItemImgPath(this.heroArmorFolderPath + "common-type/robe.png")
-            .price(20)
+            .price(70)
             .build();
     }
 

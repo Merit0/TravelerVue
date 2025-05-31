@@ -21,7 +21,7 @@ export class WeaponProvider {
     public static getWoodCopperAxe(): LootItemModel {
         return new LootItemBuilder()
             .lootItemName("Wood Axe")
-            .price(20)
+            .price(70)
             .itemType(ItemType.WEAPON)
             .lootRarity(Rarity.COMMON)
             .lootItemImgPath(this.heroWeaponsFolderPath + "/axes/common-type/common_axe.png")

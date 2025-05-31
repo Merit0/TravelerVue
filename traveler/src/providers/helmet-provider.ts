@@ -11,7 +11,7 @@ export class HelmetProvider {
         return new LootItemBuilder()
             .lootItemName("Leather Helmet")
             .lootValue(Randomizer.getRandomIntInRange(20, 30))
-            .price(20)
+            .price(70)
             .itemType(ItemType.HELM)
             .lootRarity(Rarity.COMMON)
             .lootItemImgPath(`${this.helmetsFolderPath}/common-type/pure-cap.png`)

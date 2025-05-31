@@ -22,7 +22,7 @@ export class DropChanceGenerator {
             case EnemyType.WARRIOR:
                 return {coinChance: 60, potionChance: 25, itemDropChance: 50};
             case EnemyType.ANIMAL:
-                return {coinChance: 50, potionChance: 50, itemDropChance: 20};
+                return {coinChance: 0, potionChance: 0, itemDropChance: 100};
             default:
                 return {coinChance: 50, potionChance: 0, itemDropChance: 30};
         }

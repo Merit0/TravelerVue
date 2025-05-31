@@ -46,6 +46,7 @@
         :style="getTileBackgroundImage(tile)"
     >
       <div class="grave-tile"
+           :style="getGraveImage(tile)"
            :class="{ glowing: hasGraveLoot }"
            @click="hasGraveLoot && openGraveInventory(tile)"
       >
@@ -58,12 +59,13 @@
 </template>
 
 <script setup lang="ts">
-import {defineProps, computed, ref} from 'vue';
+import {computed, defineProps, ref} from 'vue';
 import TileModel from '@/models/TileModel';
 import {useHeroStore} from "@/stores/HeroStore";
 import {useBattleStore} from "@/stores/battle-store";
 import {useGraveStore} from '@/stores/grave-store';
 import {useOverlayStore} from "@/stores/overlay-store";
+import {EnemyType} from "@/enums/EnemyType";
 
 const graveStore = useGraveStore();
 const battleStore = useBattleStore();
@@ -120,6 +122,14 @@ const openInventory = () => {
 const getEnemyImage = (tile: TileModel) => {
   return {
     backgroundImage: `url(${tile.enemies[0].imgPath})`,
+  }
+};
+
+const getGraveImage = () => {
+  const skeletonType: string = graveStore.killedEnemyType !== EnemyType.ANIMAL ? 'skeleton' : 'animal';
+  const path = `/images/overlays/battlefield/dead-${skeletonType}-tile-image.png`;
+  return {
+    backgroundImage: `url(${path})`,
   }
 };
 
@@ -252,7 +262,6 @@ const openGraveInventory = (tile: TileModel) => {
 .grave-tile {
   width: 100%;
   height: 100%;
-  background-image: url('/images/overlays/battlefield/dead-skeleton-tile-image.png');
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;

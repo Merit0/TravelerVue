@@ -1,7 +1,6 @@
 import {defineStore} from "pinia";
 import TileModel from "@/models/TileModel";
 import EnemyModel from "@/models/EnemyModel";
-import {EnemyProvider} from "@/providers/EnemyProvider";
 import {useHeroStore} from "./HeroStore";
 import {EnemyBuilder} from "@/builders/EnemyBuilder";
 import {MapLocationModel} from "@/models/map-location-model";
@@ -11,6 +10,7 @@ import {MapProvider} from "@/providers/MapProvider";
 import {HeroModel} from "@/models/HeroModel";
 import {Randomizer} from "@/utils/Randomizer";
 import {reactive} from 'vue';
+import {AnimalProvider} from "@/providers/creatures-provider/animal-provider";
 
 interface MapLocationState {
     tiles: TileModel[];
@@ -187,7 +187,7 @@ export const useMapLocationStore = defineStore("map-location-store", {
                 return;
             }
 
-            this.tiles.forEach(tile => {
+            this.tiles.forEach((tile: TileModel) => {
                 tile.isHeroHere = false;
             });
 
@@ -240,8 +240,8 @@ export const useMapLocationStore = defineStore("map-location-store", {
         generateEnemies(id: number, enemyPowerModifierNumber: number): EnemyModel[] {
             if (!Randomizer.getChance(20)) return [];
             const createdEnemies: EnemyModel[] = [];
-            const enemiesList = EnemyProvider.getEvilLandsEnemies();
-            const numberOfEnemiesOnTile = Math.floor(Math.random() * 5) + 1;
+            const enemiesList = AnimalProvider.getForestAnimals()
+            const numberOfEnemiesOnTile = Math.floor(Math.random() * 3) + 1;
 
             for (let i = 0; i < numberOfEnemiesOnTile; i++) {
                 const randIndex = Math.floor(Math.random() * enemiesList.length);
