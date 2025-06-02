@@ -199,10 +199,10 @@ const openGraveInventory = (tile: TileModel) => {
 
 .enemy-stats-hover {
   position: absolute;
-  top: 4%;
+  bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  background: rgb(64, 27, 1);
+  background: rgba(64, 27, 1, 0.51);
   color: #ffef8a;
   padding: 0.3vh 0.8vh;
   border-radius: 5px;
@@ -220,7 +220,7 @@ const openGraveInventory = (tile: TileModel) => {
 }
 
 .battle-map-tile {
-  height: 10vh;
+  height: 11vh;
   aspect-ratio: 1 / 1;
   box-sizing: border-box;
   flex-shrink: 0;
@@ -243,15 +243,13 @@ const openGraveInventory = (tile: TileModel) => {
 
 .battle-initial-tile-view {
   will-change: transform;
-  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2),
-  0 4px 6px rgba(0, 0, 0, 0.3);
   background-size: 100% 100%;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .battle-hero-tile,
 .battle-enemy-tile {
-  image-rendering: pixelated; /* або crisp-edges */
+  image-rendering: crisp-edges;
 }
 
 .battle-initial-tile-view:hover {
@@ -273,8 +271,8 @@ const openGraveInventory = (tile: TileModel) => {
 
 .grave-tile.glowing {
   cursor: url('/images/overlays/battlefield/magnifier-cursor-48x48.png') 16 16, auto;
-  box-shadow: 0 0 1px 1px rgb(255, 216, 0);
   border-radius: 4px;
+  border: 2px solid rgb(12, 5, 2);
   transition: box-shadow 0.3s ease-in-out;
   opacity: 1;
 }

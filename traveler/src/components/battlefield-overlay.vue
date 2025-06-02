@@ -24,8 +24,11 @@
       <div class="battle-controls-gui">
         <div class="three-dices-container">
           <dice-roller></dice-roller>
-          </div>
-        <div class="attack-button-container">
+        </div>
+        <div
+            class="attack-button-container"
+            :style="getAttackBtnImage()"
+        >
           <button
               class="attack-button"
               @click="roll"
@@ -74,6 +77,13 @@ const heroCurrentEnergy = computed(() => heroStore.hero.currentEnergy || 0);
 const noEnergy = computed(() => heroStore.hero.currentEnergy <= 0);
 
 const {realBattleTile} = useRealBattleTile();
+
+const getAttackBtnImage = () => {
+  const btnImag: string = diceStore.isRolling ? 'inactive' : 'active';
+  return {
+    backgroundImage: `url(/images/overlays/battlefield/${btnImag}-attack-button-image.png)`,
+  }
+}
 
 const roll = async () => {
   const rollDiceCost = 1;
@@ -209,7 +219,7 @@ function updateMapTileState() {
   right: 0;
   bottom: 0;
   z-index: 10;
-  background-color: rgba(83, 83, 83, 0.91);
+  background-color: rgba(83, 83, 83, 0.95);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -228,6 +238,7 @@ function updateMapTileState() {
   background-repeat: no-repeat;
   background-position: center center;
   background-size: contain;
+  border-radius: 5%;
 }
 
 .battlefield-overlay-content {
@@ -320,7 +331,7 @@ function updateMapTileState() {
   position: relative;
   margin-top: 4%;
   margin-bottom: 3%;
-  right: -55vh;
+  right: -58vh;
   width: 18vw;
   height: 71vh;
   background: rgb(64, 27, 1);
@@ -377,7 +388,7 @@ function updateMapTileState() {
 
 .three-dices-container {
   position: absolute;
-  bottom: -6%;
+  bottom: -27%;
   width: 50%;
   height: 80%;
   background: linear-gradient(145deg, rgba(48, 16, 16, 0.63), rgba(19, 7, 7, 0.69));
@@ -387,9 +398,8 @@ function updateMapTileState() {
   align-items: center;
   gap: 1rem;
 
-  box-shadow:
-      inset 0 0 8px rgba(0, 0, 0, 0.6),
-      0 4px 8px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.6),
+  0 4px 8px rgba(0, 0, 0, 0.5);
   border: 1px solid rgba(80, 80, 80, 0.4);
   background-size: cover;
   background-blend-mode: overlay;
@@ -449,10 +459,10 @@ function updateMapTileState() {
 
 .attack-button-container {
   position: absolute;
-  right: 1vw;
+  right: 0.8vw;
   height: 10vh;
   width: 5vw;
-  background-image: url("/images/overlays/battlefield/atack-buton-image.png");
+  //background-image: url("/images/overlays/battlefield/active-attack-button-image.png");
   background-size: contain;
   background-repeat: no-repeat;
   border-radius: 1rem;

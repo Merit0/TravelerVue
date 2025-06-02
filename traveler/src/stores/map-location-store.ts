@@ -11,6 +11,8 @@ import {HeroModel} from "@/models/HeroModel";
 import {Randomizer} from "@/utils/Randomizer";
 import {reactive} from 'vue';
 import {AnimalProvider} from "@/providers/creatures-provider/animal-provider";
+import {EnemyType} from "@/enums/EnemyType";
+import {HumanEnemiesProvider} from "@/providers/creatures-provider/human-enemies-provider";
 
 interface MapLocationState {
     tiles: TileModel[];
@@ -240,11 +242,23 @@ export const useMapLocationStore = defineStore("map-location-store", {
         generateEnemies(id: number, enemyPowerModifierNumber: number): EnemyModel[] {
             if (!Randomizer.getChance(20)) return [];
             const createdEnemies: EnemyModel[] = [];
-            const enemiesList = AnimalProvider.getForestAnimals()
+            const enemyKindsList: EnemyType[] = [EnemyType.ANIMAL, EnemyType.WARRIOR]
+            const animalsList: EnemyModel[] = AnimalProvider.getForestAnimals();
+            const humansList: EnemyModel[] = HumanEnemiesProvider.getHumansEnemies();
+            let enemiesList: EnemyModel[];
+
             const numberOfEnemiesOnTile = Math.floor(Math.random() * 3) + 1;
+
+            const chosenKind = enemyKindsList[Math.floor(Math.random() * enemyKindsList.length)];
+            if (chosenKind === EnemyType.ANIMAL) {
+                enemiesList = animalsList;
+            } else {
+                enemiesList = humansList;
+            }
 
             for (let i = 0; i < numberOfEnemiesOnTile; i++) {
                 const randIndex = Math.floor(Math.random() * enemiesList.length);
+
                 const base = enemiesList[randIndex];
 
                 const enemy = new EnemyBuilder()

@@ -49,7 +49,6 @@ export const useBattleStore = defineStore('battle-store', {
                 for (let x = 0; x < GRID_SIZE; x++) {
                     const index = y * GRID_SIZE + x;
                     const t = new TileModel(index, {x, y});
-                    t.setBackgroundSrc(tile.backgroundSrc);
                     tiles.push(t);
                 }
             }

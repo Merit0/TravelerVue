@@ -32,7 +32,6 @@ const tiles = battleStore.tiles
   align-items: center;
   width: 25vw;
   height: 51vh;
-  background: rgb(175, 168, 138);
 }
 
 .battle-tiles-grid {
