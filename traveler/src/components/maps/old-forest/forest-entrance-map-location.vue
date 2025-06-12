@@ -25,7 +25,7 @@ import MapModel from '@/models/MapModel';
 import TilesGrid from '@/components/tiles-grid.vue';
 import HeroInventory from '../../hero-equipment-modal/hero-inventory-overlay.vue';
 import HeroDeathOverlay from '@/components/hero-death-overlay.vue';
-import BattlefieldOverlay from '@/components/battlefield-overlay.vue';
+import BattlefieldOverlay from '@/components/battle/battlefield-overlay.vue';
 
 const heroStore = useHeroStore();
 const userStore = useUserStore();

@@ -7,7 +7,8 @@ export type OverlayType =
     | 'mapInfo'
     | 'dialogue'
     | 'hero-inventory'
-    | 'grave-inventory';
+    | 'grave-inventory'
+    | 'confirm-escape-battle';
 
 export const useOverlayStore = defineStore('overlay-store', {
     state: () => ({

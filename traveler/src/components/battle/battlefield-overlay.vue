@@ -17,7 +17,7 @@
             </div>
             <div class="energy-counter">{{ heroCurrentEnergy }}</div>
           </div>
-          <div class="escape-button" @click="closeOverlay()"></div>
+          <div class="escape-button" @click="openConfirmEscapeBattleOverlay()"></div>
         </div>
         <battle-grid v-if="realBattleTile" :tile="realBattleTile"/>
       </div>
@@ -36,17 +36,11 @@
           >
           </button>
         </div>
-        <!--        <div class="controls">-->
-        <!--          <div class="hero-health-shield-collector-bars-container">-->
-        <!--            <div class="health-percentage-vertical-bar">-->
-        <!--            </div>-->
-        <!--            <div class="shield-percentage-vertical-bar"></div>-->
-        <!--          </div>-->
-        <!--        </div>-->
       </div>
     </div>
   </div>
   <grave-treasure-inventory-overlay v-if="overlayStore.isOverlay('grave-inventory')"/>
+  <confirm-escape-battle-overlay v-if="overlayStore.isOverlay('confirm-escape-battle')"></confirm-escape-battle-overlay>
 </template>
 
 <script setup lang="ts">
@@ -61,6 +55,7 @@ import {useMapLocationStore} from "@/stores/map-location-store";
 import {useRealBattleTile} from '@/composables/useRealBattleTile';
 import EnemyModel from "@/models/EnemyModel";
 import GraveTreasureInventoryOverlay from "@/components/grave/grave-treasure-inventory-overlay.vue";
+import ConfirmEscapeBattleOverlay from "@/components/battle/confirm-escape-battle-overlay.vue";
 
 const battleStore = useBattleStore();
 const overlayStore = useOverlayStore();
@@ -129,11 +124,9 @@ const roll = async () => {
   }
 };
 
-const closeOverlay = () => {
+const openConfirmEscapeBattleOverlay = () => {
   const overlayStore = useOverlayStore();
-  const battleStore = useBattleStore();
-  battleStore.finishBattle();
-  overlayStore.closeOverlay();
+  overlayStore.openOverlay('confirm-escape-battle');
 }
 
 onMounted(() => {
@@ -446,7 +439,7 @@ function updateMapTileState() {
   height: 92%;
   border-radius: 1rem;
   cursor: pointer;
-  border: 2px solid #ffa600; /* чистий золотий */
+  border: 2px solid #ffa600;
   box-shadow: 0 0 4px rgba(255, 145, 0, 0.4),
   0 0 8px rgba(255, 153, 0, 0.6),
   0 0 12px rgba(255, 166, 0, 0.8);
@@ -462,7 +455,6 @@ function updateMapTileState() {
   right: 0.8vw;
   height: 10vh;
   width: 5vw;
-  //background-image: url("/images/overlays/battlefield/active-attack-button-image.png");
   background-size: contain;
   background-repeat: no-repeat;
   border-radius: 1rem;
