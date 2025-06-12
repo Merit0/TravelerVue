@@ -17,7 +17,7 @@
             </div>
             <div class="energy-counter">{{ heroCurrentEnergy }}</div>
           </div>
-          <div class="escape-button" @click="openConfirmEscapeBattleOverlay()"></div>
+          <div class="escape-button" @click="escapeBattle()"></div>
         </div>
         <battle-grid v-if="realBattleTile" :tile="realBattleTile"/>
       </div>
@@ -124,9 +124,20 @@ const roll = async () => {
   }
 };
 
-const openConfirmEscapeBattleOverlay = () => {
-  const overlayStore = useOverlayStore();
-  overlayStore.openOverlay('confirm-escape-battle');
+const escapeBattle = () => {
+  const aliveEnemies = (battleStore.enemies ?? []).filter(
+      (enemy: EnemyModel) => enemy.health > 0
+  );
+  try {
+    if (aliveEnemies.length) {
+      overlayStore.openOverlay('confirm-escape-battle');
+    } else {
+      battleStore.finishBattle();
+      overlayStore.closeOverlay();
+    }
+  } catch (error) {
+    console.error('Failed to handle battle escape:', error);
+  }
 }
 
 onMounted(() => {
@@ -439,7 +450,7 @@ function updateMapTileState() {
   height: 92%;
   border-radius: 1rem;
   cursor: pointer;
-  border: 2px solid #ffa600;
+  border: 2px solid #ffa600; /* чистий золотий */
   box-shadow: 0 0 4px rgba(255, 145, 0, 0.4),
   0 0 8px rgba(255, 153, 0, 0.6),
   0 0 12px rgba(255, 166, 0, 0.8);
@@ -455,6 +466,7 @@ function updateMapTileState() {
   right: 0.8vw;
   height: 10vh;
   width: 5vw;
+  //background-image: url("/images/overlays/battlefield/active-attack-button-image.png");
   background-size: contain;
   background-repeat: no-repeat;
   border-radius: 1rem;
