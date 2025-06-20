@@ -1,7 +1,10 @@
 <template>
   <div v-if="showConfirmPurchaseOverlay" class="confirmOverlay">
     <div class="confirmPopup">
-      <p v-if="lootItem" class="popupText">{{ operationName }} <strong>{{ lootItem.name }}</strong> for {{ operationName === 'Buy' ? lootItem.price : (Math.ceil(lootItem.price * 0.1)) }}
+      <p v-if="lootItem" class="popupText">{{ operationName }} <strong>{{ lootItem.name }}</strong> for
+        {{
+          operationName === 'Buy' ? lootItem.price : getTradePrice(lootItem)
+        }}
         <img class="modalCoinIcon" src="/images/top-bar-items/coin-icon.png" alt="coin-icon"/> ?</p>
       <div class="popupActions">
         <button class="confirmBtn" @click="confirmAction(lootItem)">{{ operationName.toUpperCase() }}</button>
@@ -17,6 +20,7 @@ import {PropType} from 'vue';
 import {LootItemModel} from "@/models/LootItemModel";
 import {useBagStore} from "@/stores/BagStore";
 import {useHeroStore} from "@/stores/HeroStore";
+import {ItemType} from "@/enums/ItemType";
 
 export default {
   name: "confirm-purchase-modal",
@@ -61,13 +65,17 @@ export default {
         this.$emit("closeModal");
         this.$emit("outOfStock");
       } else {
-        const sellPrice: number = Math.ceil(lootItem.price * 0.1);
+        const sellPrice: number = this.getTradePrice(lootItem);
         this.heroStore.collect(sellPrice);
         this.bagStore.removeItem(lootItem);
         console.log(`Продано: ${lootItem.name} for ${sellPrice} coins!`);
         this.$emit("closeModal");
       }
     },
+
+    getTradePrice(lootItem: LootItemModel): number {
+      return lootItem.itemType !== ItemType.SKIN ? Math.ceil(lootItem.price * 0.1) : lootItem.price
+    }
   }
 }
 </script>

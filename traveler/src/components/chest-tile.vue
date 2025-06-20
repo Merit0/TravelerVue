@@ -1,13 +1,12 @@
 <template>
   <div
-      v-if="tile.chest && !tile.isHeroHere && tile.enemies.length === 0"
       class="initialTileView mapTile"
       :style="getTileBackground(tile)"
   >
     <div class="initialTileView mapTile chestTile" :style="getStyle(tile)">
       <button
           class="mapTile tileButton"
-          @click="$emit('chestInventory', true)"
+          @click="openChestInventory(tile)"
           :disabled="!tile.isReachable"
           :class="{
     unreachable: !tile.isReachable,
@@ -23,6 +22,8 @@
 
 import TileModel from '@/models/TileModel';
 import {PropType} from "vue";
+import {useOverlayStore} from "@/stores/overlay-store";
+import {useChestStore} from "@/stores/ChestStore";
 
 export default {
   name: "chest-tile",
@@ -33,9 +34,18 @@ export default {
     }
   },
   methods: {
+    openChestInventory(tile: TileModel) {
+      const chestStore = useChestStore();
+      const overlayStore = useOverlayStore();
+
+      if (tile.isGrave) {
+        chestStore.openChest(tile);
+        overlayStore.openOverlay("chest-inventory");
+      }
+    },
     getStyle(tile: TileModel) {
       return {
-        backgroundImage: `url(${tile.chest.imgPath})`,
+        // backgroundImage: `url(${tile.chest.imgPath})`,
       }
     },
     getTileBackground(tile: TileModel) {

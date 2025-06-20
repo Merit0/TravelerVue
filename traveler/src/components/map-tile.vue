@@ -1,16 +1,8 @@
 <template>
-  <relief-tile :tile="tile"/>
-  <enemy-tile :tile="tile" :enemyAlive="enemyAlive" @showBattlefield="isBattle($event)"/>
-  <empty-tile :emptyTile="tile.isEmpty" :tile="tile"/>
-  <hero-tile :tile="tile" :show-hero="tile.isHeroHere" :key="tile.id + '-' + tile.isHeroHere"/>
-  <chest-tile :tile="tile" @chestInventory="openChestInventory($event)"/>
-  <chest-inventory
-      v-if="tile.chest"
-      :chest="tile.chest"
-      :show-chest-inventory="showChestInventory"
-      @chestInventory="closeChestInventory(tile, $event)"
-  />
-  <battlefield :showOverlay="tile.inBattle" :tile="tile" @isBattle="isBattle($event)"/>
+  <relief-tile v-if="tile.isInitial" :tile="tile"/>
+  <empty-tile :tile="tile"/>
+  <enemy-tile :tile="tile"/>
+  <hero-tile v-if="tile.isHeroHere" :tile="tile" :key="tile.id + '-' + tile.isHeroHere"/>
   <camp-tile/>
 </template>
 
@@ -19,14 +11,12 @@ import TileModel from '@/models/TileModel';
 import EnemyTile from '@/components/EnemyTile.vue';
 import ReliefTile from '@/components/relief-tile.vue';
 import EmptyTile from '@/components/EmptyTile.vue';
-import Battlefield from '@/components/battlefield.vue';
 import {useHeroStore} from '@/stores/HeroStore';
 import HeroTile from './HeroTile.vue';
 import {useMapLocationStore} from '@/stores/map-location-store';
 import {PropType} from 'vue';
-import ChestInventory from '@/components/chest-inventory.vue';
-import ChestTile from '@/components/chest-tile.vue';
 import CampTile from "@/components/camp-tile.vue";
+import EnemyModel from "@/models/EnemyModel";
 
 export default {
   name: 'map-tile',
@@ -38,12 +28,9 @@ export default {
   },
   components: {
     CampTile,
-    ChestTile,
-    ChestInventory,
     EnemyTile,
     ReliefTile,
     EmptyTile,
-    Battlefield,
     HeroTile
   },
   data() {
@@ -54,35 +41,16 @@ export default {
       hero,
       heroStore,
       mapLocationStore,
-      showBattlefield: false,
       showChestInventory: false,
       enemyAlive: true
     };
   },
-  methods: {
-    isBattle(status: boolean) {
-      this.showBattlefield = status;
+  computed: {
+    firstAliveEnemy(): EnemyModel | null {
+      return this.tile.enemies.find((e) => e.health > 0) || null;
     },
-    openChestInventory(status: boolean) {
-      this.showChestInventory = status;
-    },
-    closeChestInventory(tile: TileModel, status: boolean) {
-      this.showChestInventory = status;
-      tile.chest = null;
-      this.moveHeroTo(tile);
-    },
-    moveHeroTo(targetTile: TileModel) {
-      const currentTile: TileModel = this.hero.currentTile;
-      if (currentTile) {
-        currentTile.isHeroHere = false;
-        currentTile.isEmpty = true;
-      }
-      targetTile.isHeroHere = true;
-      targetTile.isEmpty = false;
-      this.hero.currentTile = targetTile;
-      this.hero.heroLocation = targetTile.coordinates;
-      this.mapLocationStore.calculateReachableTiles(targetTile, this.mapLocationStore.tiles);
-      this.heroStore.persistHeroLocation();
+    hasAliveEnemies(): boolean {
+      return !!this.firstAliveEnemy && this.tile.enemies.length > 0;
     }
   },
   mounted() {

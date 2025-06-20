@@ -9,6 +9,8 @@
         "available": true,
         "id": 1,
         "kills": 0,
+        "maxEnergy": 100,
+        "currentEnergy": 100,
         "equipment": {
             "weapon": null,
             "shield": null,
@@ -28,6 +30,8 @@
         "available": true,
         "id": 2,
         "kills": 0,
+        "maxEnergy": 100,
+        "currentEnergy": 100,
         "equipment": {
             "sword": null,
             "shield": null,
@@ -46,6 +50,8 @@
         "available": true,
         "id": 4,
         "kills": 0,
+        "maxEnergy": 100,
+        "currentEnergy": 100,
         "stats": true,
         "equipment": {
             "sword": null,

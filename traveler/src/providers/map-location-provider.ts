@@ -8,7 +8,8 @@ import EnemyModel from "@/models/EnemyModel";
 export class MapLocationProvider {
     private static readonly OLD_FOREST_FILES_PATH = '/images/map-location/old-forest-location/'
     static getOldForestLocations(): MapLocationModel[] {
-        const boss: EnemyModel = BossProvider.getSkeletonBoss();
+        const bosses: EnemyModel[] = BossProvider.getHumansBosses();
+        const randIndex = Math.floor(Math.random() * bosses.length);
         const mapLocationsList: MapLocationModel[] = [];
         const mapLocations: {
             name: string,
@@ -32,7 +33,7 @@ export class MapLocationProvider {
                     top: "15%",
                     left: "35%"
                 },
-                boss: boss,
+                boss: bosses[randIndex],
                 enemiesStatsModifier: 0
             },
             {
@@ -46,7 +47,7 @@ export class MapLocationProvider {
                     top: "30%",
                     left: "65%"
                 },
-                boss: boss,
+                boss: bosses[randIndex],
                 enemiesStatsModifier: 1
             },
             {
@@ -60,7 +61,7 @@ export class MapLocationProvider {
                     top: "45%",
                     left: "20%"
                 },
-                boss: boss,
+                boss: bosses[randIndex],
                 enemiesStatsModifier: 2
             },
             {
@@ -74,7 +75,7 @@ export class MapLocationProvider {
                     top: "62%",
                     left: "58%"
                 },
-                boss: boss,
+                boss: bosses[randIndex],
                 enemiesStatsModifier: 3
             },
             {
@@ -88,7 +89,7 @@ export class MapLocationProvider {
                     top: "90%",
                     left: "40%"
                 },
-                boss: boss,
+                boss: bosses[randIndex],
                 enemiesStatsModifier: 4
             }
         ];

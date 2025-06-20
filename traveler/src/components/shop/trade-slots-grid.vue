@@ -62,7 +62,6 @@ export default {
   methods: {
     confirmSell(item: LootItemModel) {
       this.selectedItem = item;
-      console.log(this.selectedItem);
       this.showConfirmModal = true;
     },
     cancelSell() {

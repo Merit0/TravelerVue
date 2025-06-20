@@ -65,6 +65,8 @@ export class EnemyProvider {
             .enemyType(EnemyType.WARRIOR)
             .enemyImgPath(this.enemyImageRootFolder + "skeleton_warior.png")
             .enemyBackgroundSrc("rgb(201,255,156)")
+            .diceFaces(['sword', 'coin', "shield"])
+            .diceWeights([1, 1, 1])
             .build();
     }
 
@@ -74,6 +76,8 @@ export class EnemyProvider {
             .enemyType(EnemyType.WARRIOR)
             .enemyImgPath(this.enemyImageRootFolder + "skeleton_mage.png")
             .enemyBackgroundSrc("rgb(201,255,156)")
+            .diceFaces(['sword', 'coin', "shield"])
+            .diceWeights([1, 1, 1])
             .build();
     }
 
@@ -83,6 +87,8 @@ export class EnemyProvider {
             .enemyType(EnemyType.WARRIOR)
             .enemyImgPath(this.enemyImageRootFolder + "skeleton_berserk.png")
             .enemyBackgroundSrc("rgb(201,255,156)")
+            .diceFaces(['sword', 'coin', "shield"])
+            .diceWeights([1, 1, 1])
             .build();
     }
 

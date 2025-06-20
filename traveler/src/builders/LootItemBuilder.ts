@@ -10,7 +10,6 @@ interface ILootItemBuilder {
   lootItemImgPath(imgPath: string): LootItemBuilder;
   lootRarity(rarity: Rarity): LootItemBuilder;
   lootValue(value: number): LootItemBuilder;
-  dropChance(chance: boolean): LootItemBuilder;
 }
 
 export class LootItemBuilder implements ILootItemBuilder {
@@ -46,11 +45,6 @@ export class LootItemBuilder implements ILootItemBuilder {
 
   public lootValue(value: number): LootItemBuilder {
     this.loot.value = value;
-    return this;
-  }
-
-  public dropChance(chance: boolean): LootItemBuilder {
-    this.loot.chance = chance;
     return this;
   }
 

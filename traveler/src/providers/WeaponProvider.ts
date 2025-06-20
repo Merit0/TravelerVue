@@ -15,18 +15,16 @@ export class WeaponProvider {
             .itemType(ItemType.WEAPON)
             .lootRarity(Rarity.LEGEND)
             .lootItemImgPath(this.heroWeaponsFolderPath + "/knives/legend-type/sword_soul_ripper.png")
-            .dropChance(Randomizer.getChance(100))
             .build();
     }
 
     public static getWoodCopperAxe(): LootItemModel {
         return new LootItemBuilder()
             .lootItemName("Wood Axe")
-            .price(20)
+            .price(70)
             .itemType(ItemType.WEAPON)
             .lootRarity(Rarity.COMMON)
             .lootItemImgPath(this.heroWeaponsFolderPath + "/axes/common-type/common_axe.png")
-            .dropChance(Randomizer.getChance(100))
             .generateAmount()
             .build();
     }
@@ -53,7 +51,7 @@ export class WeaponProvider {
             .build();
     }
 
-    public static getVenomspireKnife(): LootItemModel {
+    public static getVenomSpireKnife(): LootItemModel {
         return new LootItemBuilder()
             .lootItemName("Venom Spire")
             .lootValue(100)
@@ -86,6 +84,13 @@ export class WeaponProvider {
             this.getSoulRipper(),
             this.getProtectorArmor(),
             this.getZombieSlasherAxe()
+        );
+    }
+
+    public static getMyths(): LootItemModel[] {
+        return Array.of(
+            this.getSkyDestroyerAxe(),
+            this.getVenomSpireKnife()
         );
     }
 

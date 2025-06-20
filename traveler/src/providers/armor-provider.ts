@@ -13,8 +13,7 @@ export class ArmorProvider {
             .itemType(ItemType.ARMOR)
             .lootRarity(Rarity.COMMON)
             .lootItemImgPath(this.heroArmorFolderPath + "common-type/robe.png")
-            .dropChance(Randomizer.getChance(100))
-            .price(20)
+            .price(70)
             .build();
     }
 
@@ -26,7 +25,6 @@ export class ArmorProvider {
             .itemType(ItemType.ARMOR)
             .lootRarity(Rarity.MYTHIC)
             .lootItemImgPath(this.heroArmorFolderPath + "mythic-type/stormhide-armor.png")
-            .dropChance(Randomizer.getChance(100))
             .build();
     }
 
