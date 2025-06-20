@@ -72,68 +72,7 @@ const openInventory = () => {
 </script>
 
 <style scoped>
-
-.battle-hero-tile {
-  background-size: cover;
-  animation: heroJump 0.5s ease-out;
-  background-repeat: no-repeat;
-  transition: transform 0.3s ease, opacity 0.3s ease;
-}
-
-.battle-hero-tile.flipped {
-  transform: scaleX(-1);
-}
-
-.battle-map-tile {
-  height: 11vh;
-  aspect-ratio: 1 / 1;
-  box-sizing: border-box;
-  flex-shrink: 0;
-  border-radius: 4px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.battle-initial-tile-view {
-  will-change: transform;
-  background-size: 100% 100%;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.battle-hero-tile {
-  image-rendering: crisp-edges;
-}
-
-.battle-initial-tile-view:hover {
-  transform: scale(1.01);
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.4);
-}
-
-.damage-popup {
-  position: absolute;
-  top: -5%;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 2vh;
-  color: #ff4a4a;
-  font-weight: bold;
-  text-shadow: 0 0 5px black;
-  animation: damageFloat 1.2s ease-out;
-  pointer-events: none;
-  z-index: 15;
-}
-
-.blood-splash {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-image: url('/images/overlays/battlefield/blood-splash-effect-image.png');
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-  animation: bloodFadeOut 1s ease-out forwards;
-  pointer-events: none;
-  z-index: 2;
-}
+@import "@/styles/battlefield-style/battlefield-map-tile-style.css";
+@import "@/styles/battlefield-style/battle-hero-tile-style.css";
+@import "@/styles/battlefield-style/battle-effects-style.css";
 </style>

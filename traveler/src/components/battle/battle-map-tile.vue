@@ -44,16 +44,5 @@ const enemyAlive = computed(() => {
 </script>
 
 <style scoped>
-
-.battle-map-tile {
-  height: 11vh;
-  aspect-ratio: 1 / 1;
-  box-sizing: border-box;
-  flex-shrink: 0;
-  border-radius: 4px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
+@import "@/styles/battlefield-style/battlefield-map-tile-style.css";
 </style>

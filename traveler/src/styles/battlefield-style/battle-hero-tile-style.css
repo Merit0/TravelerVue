@@ -1,0 +1,11 @@
+.battle-hero-tile {
+    background-size: cover;
+    animation: heroJump 0.5s ease-out;
+    background-repeat: no-repeat;
+    image-rendering: crisp-edges;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.battle-hero-tile.flipped {
+    transform: scaleX(-1);
+}
