@@ -138,14 +138,6 @@ const enemyAlive = computed(() => {
 });
 
 const openGraveInventory = (tile: TileModel) => {
-  const aliveEnemiesExist = battleStore.tiles.some(tile =>
-      tile.enemies.some(e => e.health > 0)
-  );
-  if (aliveEnemiesExist) {
-    heroStore.hero.currentHealth = 0;
-    battleStore.logEvent(`${heroStore.hero.name} was slain when stopped fighting and search the treasures`);
-    return;
-  }
   if (
       tile.isGrave &&
       tile.grave &&
