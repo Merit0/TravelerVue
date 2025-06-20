@@ -1,45 +1,15 @@
 <template>
   <transition name="fade-in-scale" mode="out-in">
-    <div
+    <battle-enemy-tile
         v-if="tile.isEnemyHere && enemyAlive"
-        class="battle-initial-tile-view battle-map-tile"
-        :style="getTileBackgroundImage(tile)"
+        :tile="tile"
     >
-      <div
-          class="battle-enemy-tile"
-          :style="getEnemyImage(tile)"
-          :class="{ 'dodged': wasDodged }"
-      >
-        <div class="enemy-stats-hover">
-          ❤️ {{ enemy?.health }}
-          ⚔️ {{ enemy?.attack }}
-        </div>
-        <div class="damage-popup" v-if="damageValue">
-          -{{ damageValue }}
-        </div>
-        <div class="blood-splash" v-if="bloodSplash"/>
-      </div>
-    </div>
-    <div
+    </battle-enemy-tile>
+    <battle-hero-tile
         v-else-if="tile.isHeroHere"
-        class="battle-initial-tile-view battle-map-tile"
-        :style="getTileBackgroundImage(tile)"
+        :tile="tile"
     >
-      <div
-          class="battle-hero-tile"
-          :style="heroImgStyle"
-          :class="{ flipped }"
-          @mousemove="handleMouse">
-        <div class="damage-popup" v-if="damageValue">
-          -{{ damageValue }}
-        </div>
-        <div class="blood-splash" v-if="bloodSplash"/>
-        <button
-            class="battle-map-tile tileButton"
-            @click="openInventory()"
-        />
-      </div>
-    </div>
+    </battle-hero-tile>
     <div
         v-else-if="tile.isGrave"
         class="battle-initial-tile-view battle-map-tile"
@@ -59,17 +29,15 @@
 </template>
 
 <script setup lang="ts">
-import {computed, defineProps, ref} from 'vue';
+import {computed, defineProps} from 'vue';
 import TileModel from '@/models/TileModel';
-import {useHeroStore} from "@/stores/HeroStore";
-import {useBattleStore} from "@/stores/battle-store";
 import {useGraveStore} from '@/stores/grave-store';
 import {useOverlayStore} from "@/stores/overlay-store";
 import {EnemyType} from "@/enums/EnemyType";
+import BattleEnemyTile from "@/components/battle/battle-enemy-tile.vue";
+import BattleHeroTile from "@/components/battle/battle-hero-tile.vue";
 
 const graveStore = useGraveStore();
-const battleStore = useBattleStore();
-const heroStore = useHeroStore();
 const overlayStore = useOverlayStore();
 
 const props = defineProps<{
@@ -80,50 +48,12 @@ const hasGraveLoot = computed(() => {
   return props.tile.grave?.graveTreasureItems.some(item => item?.name) ?? false;
 });
 
-const flipped = ref(false);
-const enemy = computed(() => props.tile.enemies[0] || null);
-
-const damageValue = computed(() => {
-  return battleStore.damagePopups[props.tile.id] || null
-});
-
-const wasDodged = computed(() => battleStore.missedEnemies.includes(props.tile.id));
-
-const bloodSplash = computed(() => {
-  return battleStore.bloodSplashTiles.includes(props.tile.id)
-});
-
-function handleMouse(e: MouseEvent) {
-  const target = e.currentTarget as HTMLElement
-  const rect = target.getBoundingClientRect()
-  const centerX = rect.left + rect.width / 2
-
-  flipped.value = e.clientX > centerX
-}
-
 const getTileBackgroundImage = (tile: TileModel) => {
   return {
     backgroundImage: `url(${tile.backgroundSrc})`,
     'background-size': '100% 100%'
   }
 }
-
-const heroImgStyle = computed(() => ({
-  backgroundImage: `url(${heroStore.hero.imgPath})`,
-  backgroundSize: 'contain',
-  backgroundRepeat: 'no-repeat',
-  backgroundPosition: 'center',
-}));
-
-const openInventory = () => {
-  heroStore.inventoryShown = true;
-};
-
-const getEnemyImage = (tile: TileModel) => {
-  return {
-    backgroundImage: `url(${tile.enemies[0].imgPath})`,
-  }
-};
 
 const getGraveImage = () => {
   const skeletonType: string = graveStore.killedEnemyType !== EnemyType.ANIMAL ? 'skeleton' : 'animal';
@@ -151,65 +81,6 @@ const openGraveInventory = (tile: TileModel) => {
 </script>
 
 <style scoped>
-@keyframes heroJump {
-  0% {
-    transform: translateY(0);
-  }
-  25% {
-    transform: translateY(-8px);
-  }
-  50% {
-    transform: translateY(0);
-  }
-  75% {
-    transform: translateY(-4px);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
-
-.battle-hero-tile {
-  background-size: cover;
-  animation: heroJump 0.5s ease-out;
-  background-repeat: no-repeat;
-  transition: transform 0.3s ease, opacity 0.3s ease;
-}
-
-.battle-hero-tile.flipped {
-  transform: scaleX(-1);
-}
-
-.battle-enemy-tile {
-  width: 100%;
-  height: 100%;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  position: relative;
-}
-
-.enemy-stats-hover {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(64, 27, 1, 0.51);
-  color: #ffef8a;
-  padding: 0.3vh 0.8vh;
-  border-radius: 5px;
-  font-size: 1.4vh;
-  font-weight: bold;
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s ease;
-  z-index: 12;
-}
-
-.battle-enemy-tile:hover .enemy-stats-hover {
-  opacity: 1;
-}
 
 .battle-map-tile {
   height: 11vh;
@@ -222,26 +93,10 @@ const openGraveInventory = (tile: TileModel) => {
   align-items: center;
 }
 
-.fade-in-scale-enter-active,
-.fade-in-scale-leave-active {
-  transition: all 0.3s ease;
-}
-
-.fade-in-scale-enter-from,
-.fade-in-scale-leave-to {
-  opacity: 0;
-  transform: scale(0.8);
-}
-
 .battle-initial-tile-view {
   will-change: transform;
   background-size: 100% 100%;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.battle-hero-tile,
-.battle-enemy-tile {
-  image-rendering: crisp-edges;
 }
 
 .battle-initial-tile-view:hover {
@@ -311,88 +166,6 @@ const openGraveInventory = (tile: TileModel) => {
     opacity: 0.9;
     transform: scale(1);
   }
-}
-
-.damage-popup {
-  position: absolute;
-  top: -5%;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 2vh;
-  color: #ff4a4a;
-  font-weight: bold;
-  text-shadow: 0 0 5px black;
-  animation: damageFloat 1.2s ease-out;
-  pointer-events: none;
-  z-index: 15;
-}
-
-@keyframes damageFloat {
-  0% {
-    opacity: 1;
-    transform: translate(-50%, 0) scale(1);
-  }
-  30% {
-    transform: translate(-50%, -1.2vh) scale(1.25);
-    opacity: 1;
-  }
-  60% {
-    transform: translate(-50%, -2vh) scale(1.1);
-    opacity: 0.8;
-  }
-  100% {
-    opacity: 0;
-    transform: translate(-50%, -3.2vh) scale(1);
-  }
-}
-
-.blood-splash {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-image: url('/images/overlays/battlefield/blood-splash-effect-image.png');
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-  animation: bloodFadeOut 1s ease-out forwards;
-  pointer-events: none;
-  z-index: 2;
-}
-
-@keyframes bloodFadeOut {
-  0% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  100% {
-    opacity: 0;
-    transform: scale(1.3);
-  }
-}
-
-@keyframes dodgeShake {
-  0% {
-    transform: translateX(0);
-  }
-  20% {
-    transform: translateX(-4px);
-  }
-  40% {
-    transform: translateX(4px);
-  }
-  60% {
-    transform: translateX(-3px);
-  }
-  80% {
-    transform: translateX(3px);
-  }
-  100% {
-    transform: translateX(0);
-  }
-}
-
-.battle-enemy-tile.dodged {
-  animation: dodgeShake 0.6s ease-in-out;
 }
 
 </style>

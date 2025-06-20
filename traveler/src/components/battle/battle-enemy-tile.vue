@@ -1,103 +1,212 @@
 <template>
-  <div class="battleEnemyTile" :style="getStyle(enemy)" v-if="enemyShown && enemyAlive">
-    <div class="infoBlock">
-      ℹ️
-      <div class="tooltipText">
-        <h3>Enemy Info</h3>
-        <p><strong>ID:</strong> {{ enemy.id }}</p>
-        <p><strong>Health:</strong> {{ enemy.health }}</p>
-        <p><strong>Attack:</strong> {{ enemy.attack }}</p>
+  <div
+      class="battle-initial-tile-view battle-map-tile"
+      :style="getTileBackgroundImage(tile)"
+  >
+    <div
+        class="battle-enemy-tile"
+        :style="getEnemyImage(tile)"
+        :class="{ 'dodged': wasDodged }"
+    >
+      <div class="enemy-stats-hover">
+        ❤️ {{ enemy?.health }}
+        ⚔️ {{ enemy?.attack }}
       </div>
+      <div class="damage-popup" v-if="damageValue">
+        -{{ damageValue }}
+      </div>
+      <div class="blood-splash" v-if="bloodSplash"/>
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import EnemyModel from '@/models/EnemyModel';
+<script setup lang="ts">
+import {computed, defineProps} from 'vue';
+import TileModel from '@/models/TileModel';
+import {useBattleStore} from "@/stores/battle-store";
+const battleStore = useBattleStore();
 
-export default {
-  name: "battle-enemy-tile",
-  props: {
-    enemy: {
-      type: Object,
-      required: true
-    },
-    enemyShown: {
-      type: Boolean,
-      default: false
-    },
-    enemyAlive: {
-      type: Boolean,
-      default: false
-    }
-  },
-  methods: {
-    getStyle(enemy: EnemyModel) {
-      return {
-        backgroundImage: `url(${enemy.imgPath})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        boxShadow: '0 0 12px rgba(255, 0, 0, 0.5)',
-        transition: 'transform 0.2s ease, box-shadow 0.2s ease'
-      };
-    }
+const props = defineProps<{
+  tile: TileModel
+}>();
+
+const enemy = computed(() => props.tile.enemies[0] || null);
+
+const damageValue = computed(() => {
+  return battleStore.damagePopups[props.tile.id] || null
+});
+
+const wasDodged = computed(() => battleStore.missedEnemies.includes(props.tile.id));
+
+const bloodSplash = computed(() => {
+  return battleStore.bloodSplashTiles.includes(props.tile.id)
+});
+
+const getTileBackgroundImage = (tile: TileModel) => {
+  return {
+    backgroundImage: `url(${tile.backgroundSrc})`,
+    'background-size': '100% 100%'
   }
 }
+
+const getEnemyImage = (tile: TileModel) => {
+  return {
+    backgroundImage: `url(${tile.enemies[0].imgPath})`,
+  }
+};
+
+const enemyAlive = computed(() => {
+  return props.tile.enemies.some(e => e.health > 0);
+});
+
 </script>
 
 <style scoped>
-.battleEnemyTile {
-  width: 6vw;
-  height: 12vh;
-  border-radius: 50%;
+.battle-enemy-tile {
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
   position: relative;
-  cursor: pointer;
-  transition: transform 0.3s ease;
+  image-rendering: crisp-edges;
 }
 
-.battleEnemyTile:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
-}
-
-/* Info badge */
-.infoBlock {
+.enemy-stats-hover {
   position: absolute;
-  background-color: #fff;
-  color: #333;
-  font-size: 1.2vw;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(64, 27, 1, 0.51);
+  color: #ffef8a;
+  padding: 0.3vh 0.8vh;
+  border-radius: 5px;
+  font-size: 1.4vh;
   font-weight: bold;
-  width: 2vw;
-  height: 2vw;
-  border-radius: 50%;
-  text-align: center;
-  line-height: 2vw;
-  box-shadow: 0 0 6px rgba(0,0,0,0.2);
-  z-index: 5;
-}
-
-/* Tooltip */
-.tooltipText {
-  visibility: hidden;
+  white-space: nowrap;
   opacity: 0;
-  position: absolute;
-  bottom: 110%;
-  right: 50%;
-  transform: translateX(50%);
-  background: rgba(255, 255, 255, 0.95);
-  color: #333;
-  padding: 10px;
-  border-radius: 10px;
-  text-align: left;
-  width: max-content;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-  transition: opacity 0.3s ease;
-  font-size: 0.8vw;
-  z-index: 10;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 12;
 }
 
-.infoBlock:hover .tooltipText {
-  visibility: visible;
+.battle-enemy-tile:hover .enemy-stats-hover {
   opacity: 1;
 }
+
+.battle-map-tile {
+  height: 11vh;
+  aspect-ratio: 1 / 1;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.battle-initial-tile-view {
+  will-change: transform;
+  background-size: 100% 100%;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.battle-initial-tile-view:hover {
+  transform: scale(1.01);
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.4);
+}
+
+.damage-popup {
+  position: absolute;
+  top: -5%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2vh;
+  color: #ff4a4a;
+  font-weight: bold;
+  text-shadow: 0 0 5px black;
+  animation: damageFloat 1.2s ease-out;
+  pointer-events: none;
+  z-index: 15;
+}
+
+.blood-splash {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: url('/images/overlays/battlefield/blood-splash-effect-image.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  animation: bloodFadeOut 1s ease-out forwards;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.battle-enemy-tile.dodged {
+  animation: dodgeShake 0.6s ease-in-out;
+}
+
+@keyframes damageFloat {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+  30% {
+    transform: translate(-50%, -1.2vh) scale(1.25);
+    opacity: 1;
+  }
+  60% {
+    transform: translate(-50%, -2vh) scale(1.1);
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -3.2vh) scale(1);
+  }
+}
+
+@keyframes bloodFadeOut {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.3);
+  }
+}
+
+@keyframes dodgeShake {
+  0% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-4px);
+  }
+  40% {
+    transform: translateX(4px);
+  }
+  60% {
+    transform: translateX(-3px);
+  }
+  80% {
+    transform: translateX(3px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes graveAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  to {
+    opacity: 0.9;
+    transform: scale(1);
+  }
+}
+
 </style>
