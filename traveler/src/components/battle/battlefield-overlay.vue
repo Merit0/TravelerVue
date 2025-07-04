@@ -1,13 +1,6 @@
 <template>
   <div class="battlefield-overlay">
-    <div class="battlefield-logger-container">
-      <p class="logger-title">Battle Log:</p>
-      <div class="logger-list">
-        <p v-for="(log, index) in battleStore.battleLog" :key="index">
-          {{ log }}
-        </p>
-      </div>
-    </div>
+    <battle-info-logger></battle-info-logger>
     <div class="battlefield-overlay-content">
       <div class="battle-area-container">
         <div class="top-bar-hero-stats">
@@ -56,6 +49,7 @@ import {useRealBattleTile} from '@/composables/useRealBattleTile';
 import EnemyModel from "@/models/EnemyModel";
 import GraveTreasureInventoryOverlay from "@/components/grave/grave-treasure-inventory-overlay.vue";
 import ConfirmEscapeBattleOverlay from "@/components/battle/confirm-escape-battle-overlay.vue";
+import BattleInfoLogger from "@/components/battle/battle-info-logger.vue";
 
 const battleStore = useBattleStore();
 const overlayStore = useOverlayStore();
@@ -216,42 +210,6 @@ function updateMapTileState() {
 <style scoped>
 @import "@/styles/battlefield-style/battlefield-overlay-stile.css";
 
-.battlefield-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 10;
-  background-color: rgba(83, 83, 83, 0.95);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.battle-area-container {
-  position: relative;
-  margin-top: 5%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 80vh;
-  background-image: url("/images/overlays/battlefield/battlefield-background-image.png");
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: contain;
-  border-radius: 5%;
-}
-
-.battlefield-overlay-content {
-  position: absolute;
-  width: 40vw;
-  height: 92vh;
-  background-size: cover;
-}
-
 .top-bar-hero-stats {
   position: absolute;
   top: 4vh;
@@ -268,7 +226,7 @@ function updateMapTileState() {
   align-items: center;
   padding: 0 0.8em;
   border-radius: 0.75em;
-  border: 2px solid #ffd700; /* чистий золотий */
+  border: 2px solid #ffd700;
   box-shadow: 0 0 4px rgba(255, 215, 0, 0.4),
   0 0 8px rgba(255, 215, 0, 0.6),
   0 0 12px rgba(255, 215, 0, 0.8);
@@ -331,51 +289,6 @@ function updateMapTileState() {
   transform: scale(1.02);
 }
 
-.battlefield-logger-container {
-  position: relative;
-  margin-top: 4%;
-  margin-bottom: 3%;
-  right: -58vh;
-  width: 18vw;
-  height: 71vh;
-  background: rgb(64, 27, 1);
-  border-radius: 5px;
-  color: #ffe900;
-  text-align: left;
-  padding: 1vh;
-  overflow-y: auto;
-  font-family: 'Crimson Pro', cursive;
-  font-size: 1.4vh;
-  z-index: 0;
-  box-shadow: inset 0 0 5px rgb(0, 20, 115);
-}
-
-.logger-title {
-  font-weight: bold;
-  margin-bottom: 0.5vh;
-  color: #fff300;
-  font-size: 1.4vh;
-  text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
-  font-family: 'IM Fell English SC', cursive;
-  text-align: center;
-}
-
-.logger-list p {
-  margin: 0.2vh 0;
-  animation: fadeLog 0.3s ease-in;
-}
-
-@keyframes fadeLog {
-  from {
-    opacity: 0;
-    transform: translateY(4px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 .battle-controls-gui {
   position: relative;
   top: -18%;
@@ -411,33 +324,6 @@ function updateMapTileState() {
   transition: all 0.3s ease;
 }
 
-.hero-health-shield-collector-bars-container {
-  height: 100%;
-  flex: 0.2;
-  background: #ffb4b4;
-  border-radius: 1rem;
-  padding: 0.5rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.health-percentage-vertical-bar,
-.shield-percentage-vertical-bar {
-  flex: 1;
-  height: 100%;
-  border-radius: 1rem;
-}
-
-.health-percentage-vertical-bar {
-  background: #ff0000;
-}
-
-.shield-percentage-vertical-bar {
-  background: #4a75ff;
-}
-
 .attack-button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
@@ -466,7 +352,6 @@ function updateMapTileState() {
   right: 0.8vw;
   height: 10vh;
   width: 5vw;
-  //background-image: url("/images/overlays/battlefield/active-attack-button-image.png");
   background-size: contain;
   background-repeat: no-repeat;
   border-radius: 1rem;
