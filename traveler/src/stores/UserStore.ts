@@ -47,17 +47,16 @@ export const useUserStore = defineStore('user', {
 
             const mapLocationStore = useMapLocationStore();
             const bagStore = useBagStore();
-            const chestStore = useChestStore();
             const heroStore = useHeroStore();
 
             mapLocationStore.initMapsList();
 
-            const oldForestMap: MapModel | undefined = mapLocationStore.mapsList.find(map => map.name === 'Old Forest') as MapModel;
+            const silesiaMap: MapModel | undefined = mapLocationStore.mapsList.find(map => map.name === 'Silesia') as MapModel;
 
-            if (oldForestMap) {
+            if (silesiaMap) {
                 try {
                     await Promise.all([
-                        mapLocationStore.resetAllMapLocations(oldForestMap),
+                        mapLocationStore.resetAllMapLocations(silesiaMap),
                         bagStore.resetBag(),
                     ]);
 
@@ -69,7 +68,7 @@ export const useUserStore = defineStore('user', {
                     console.error("Error during logout:", error);
                 }
             } else {
-                console.error('Old Forest map not found');
+                console.error('Silesia map not found');
             }
             heroStore.resetHero();
             localStorage.clear();

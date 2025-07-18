@@ -32,12 +32,12 @@ const userStore = useUserStore();
 const mapLocationStore = useMapLocationStore();
 const overlayStore = useOverlayStore();
 
-const mapLocationName = 'Forest Entrance';
+const mapLocationName = 'Camping Place';
 mapLocationStore.initMapsList();
 
-const oldForest: MapModel = mapLocationStore.getOldForestMap();
-const locations: MapLocationModel[] = oldForest.mapLocations;
-const mapLocation: MapLocationModel = locations.find(
+const silesia: MapModel = mapLocationStore.getSilesia();
+const silesiaLocations: MapLocationModel[] = silesia.mapLocations;
+const mapLocation: MapLocationModel = silesiaLocations.find(
     location => location.name === mapLocationName
 )!;
 

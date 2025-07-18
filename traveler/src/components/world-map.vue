@@ -1,13 +1,8 @@
 <template>
   <div class="map" :style="getMapBackground(map.imgPath)" v-if="!map.isLocked">
-    <map-location-spot v-for="mapLocation in map.mapLocations" :key="mapLocation.uuid" :mapLocation="mapLocation"></map-location-spot>
+    <map-location-spot v-for="mapLocation in map.mapLocations" :key="mapLocation.uuid"
+                       :mapLocation="mapLocation"></map-location-spot>
     <div class="map-name">{{ map.name }}</div>
-  </div>
-  <div class="map" :style="getMapBackground(map.imgPath)" v-if="map.isLocked">
-    <div class="map-overlay">
-      <p class="lock-text">🔒 Замкнуто</p>
-      <div class="map-name">{{ map.name }}</div>
-    </div>
   </div>
 </template>
 
@@ -17,7 +12,7 @@ import MapModel from "@/models/MapModel";
 import {PropType} from "vue";
 
 export default {
-  name: "MapView",
+  name: "WorldMap",
   props: {
     map: {
       type: Object as PropType<MapModel>,
@@ -47,23 +42,6 @@ export default {
   background-size: 100% 100%;
 }
 
-.map-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(50, 50, 50, 0.6); /* Semi-transparent gray */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 10;
-}
-
-.map-overlay {
-  pointer-events: all;
-}
-
 .map-name {
   position: absolute;
   top: 1vh;
@@ -80,11 +58,5 @@ export default {
   font-family: 'Cinzel', serif; /* Medieval-style font */
   text-align: center;
   white-space: nowrap;
-}
-
-.lock-text {
-  color: white;
-  font-size: 1.5rem;
-  font-weight: bold;
 }
 </style>

@@ -57,16 +57,14 @@ export const useMapLocationStore = defineStore("map-location-store", {
         getMapsList(state) {
             return state.mapsList;
         },
-        getOldForestMap: (state) => (): MapModel | undefined => {
-            return state.mapsList.find((map) => map.name === 'Old Forest') as MapModel;
+        getSilesia: (state) => (): MapModel | undefined => {
+            return state.mapsList.find((map) => map.name === 'Silesia') as MapModel;
         },
     },
     actions: {
         initMapsList() {
             this.mapsList = [
-                MapProvider.getOldForest(),
-                MapProvider.getEvilTree(),
-                MapProvider.getMagicCircle(),
+                MapProvider.getSilesiaMap(),
             ];
 
             this.mapLocationName = "";
@@ -108,7 +106,7 @@ export const useMapLocationStore = defineStore("map-location-store", {
                 if (saved) {
                     const parsed = JSON.parse(saved);
                     this.locationStates[locationMap.name] = {
-                        tiles: parsed.tiles.map((t: any) => reactive(TileModel.mapToModel(t))),
+                        tiles: parsed.tiles.map((t: TileModel) => reactive(TileModel.mapToModel(t))),
                         isCleared: parsed.isMapLocationCleared,
                         boss: parsed.boss,
                     };
