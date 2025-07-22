@@ -1,0 +1,122 @@
+.hex-tile.grass {
+    background-color: #dd00ff;
+}
+
+.hex-tile.field {
+    background-color: #7eaa98;
+}
+
+.hex-tile.camp {
+    background-color: #b58b2f;
+}
+
+.hex-tile.forest {
+    background: radial-gradient(
+            circle,
+            #b0d582 35%,
+            #7bb661 70%,
+            #4f8038 100%
+    );
+    box-shadow: inset 0 0 6px rgba(30, 60, 30, 0.4);
+}
+
+.hex-tile-img-forest {
+    width: 80%;
+    height: 90%;
+    position: absolute;
+}
+
+.hex-tile.deep-forest {
+    background: radial-gradient(
+            circle,
+            #85aa5e 30%,
+            #598342 70%,
+            #324e25 100%
+    );
+    box-shadow: inset 0 0 8px rgba(0, 20, 0, 0.6);
+}
+
+.hex-tile-img-deep-forest {
+    width: 80%;
+    height: 90%;
+    position: absolute;
+}
+
+.hex-tile.sea {
+    background: radial-gradient(
+            circle,
+            #92bfff 30%,
+            #6494ff 70%,
+            #3b69b7 100%
+    );
+    box-shadow: inset 0 0 6px rgba(0, 0, 50, 0.4);
+    z-index: 0;
+}
+
+.hex-tile.deep-sea {
+    background: radial-gradient(
+            circle,
+            #5fa0cf 20%,
+            #41729f 60%,
+            #264d6b 100%
+    );
+    box-shadow: inset 0 0 8px rgba(0, 0, 30, 0.5);
+    z-index: 0;
+}
+
+.hex-tile.mountain {
+        background: radial-gradient(
+                circle,
+                #a39b8e 10%,
+                #918a7e 50%,
+                #5a554d 100%
+        );
+        box-shadow: inset 0 0 8px rgba(20, 20, 20, 0.5);
+}
+
+.hex-tile-img-mountain {
+    width: 90%;
+    height: 90%;
+    position: absolute;
+}
+
+.hex-tile.desert {
+    background: radial-gradient(
+            circle,
+            #f3e2a1 15%,
+            #e0ce75 60%,
+            #cab94d 100%
+    );
+    box-shadow: inset 0 0 6px rgba(100, 70, 20, 0.4);
+}
+
+.hex-tile-img-desert {
+    width: 70%;
+    height: 90%;
+    position: absolute;
+}
+
+
+.hex-tile.deep-desert {
+    background: radial-gradient(
+            circle,
+            #e3c27a 20%,
+            #c99e4b 55%,
+            #805b24 100%
+    );
+    box-shadow: inset 0 0 8px rgba(70, 40, 10, 0.5);
+}
+
+.hex-tile-img-deep-desert {
+    width: 75%;
+    height: 90%;
+    position: absolute;
+}
+
+.hex-tile.swamp {
+    background-color: #373330;
+}
+
+.hex-tile.evil-portal {
+    background-color: #ff0000;
+}
