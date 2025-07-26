@@ -32,7 +32,7 @@ const userStore = useUserStore();
 const mapLocationStore = useMapLocationStore();
 const overlayStore = useOverlayStore();
 
-const mapLocationName = 'Camping Place';
+const mapLocationName = 'Forest';
 mapLocationStore.initMapsList();
 
 const silesia: MapModel = mapLocationStore.getSilesia();

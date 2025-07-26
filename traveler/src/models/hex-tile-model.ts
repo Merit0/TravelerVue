@@ -12,7 +12,7 @@ export class HexTileModel {
     constructor(q: number, r: number) {
         this.q = q;
         this.r = r;
-        this.isBlocked = false;
+        this.isBlocked = true;
         this.terrain = 'no-terrain';
         this.imagePath = '';
     }

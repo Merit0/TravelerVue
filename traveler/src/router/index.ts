@@ -2,7 +2,7 @@ import {createRouter, createWebHistory} from "vue-router";
 import {useUserStore} from '@/stores/UserStore';
 import LoginPage from "@/components/login-page.vue";
 import HomePage from "@/components/home-page.vue";
-import CampingPlaceLocation from "@/components/maps/silesia-map/camping-place-location.vue";
+import ForestLocation from "@/components/maps/silesia-map/forest-location.vue";
 import EntireWorld from "@/components/entire-world.vue";
 import CampPage from "@/components/camp-page.vue";
 
@@ -31,9 +31,9 @@ const routes = [
         meta: {requiresAuth: true}
     },
     {
-        path: "/forest-entrance",
-        name: "forest-entrance",
-        component: CampingPlaceLocation,
+        path: "/map/forest",
+        name: "Forest",
+        component: ForestLocation,
         meta: {requiresAuth: true}
     },
 ];
