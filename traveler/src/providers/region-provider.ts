@@ -14,6 +14,11 @@ const silesiaRegions: IRegionConfig[] = [
             [23, 3], [23, 4],
             [24, 3], [24, 4],
         ],
+        images: [
+            'public/images/maps/lost-forest/couple-taives-img.png',
+            'public/images/maps/lost-forest/3-taives-img.png',
+            'public/images/maps/lost-forest/taive-img.png'
+        ],
     },
     {
         key: 'sea-1',
@@ -88,7 +93,7 @@ const silesiaRegions: IRegionConfig[] = [
             [4, 0],
             [7, 2], [7, 3], [7, 4],
             [8, 2], [8, 3], [8, 5],
-            [9, 1], [9, 4],
+            [9, 1], [9, 2], [9, 4],
             [10, 1], [10, 4],
             [11, 0], [11, 3],
             [12, 0], [12, 1], [12, 2], [12, 3],
@@ -178,7 +183,10 @@ const silesiaRegions: IRegionConfig[] = [
             [2, 2], [2, 3],
             [3, 1], [3, 2], [3, 3],
             [10, 5], [11, 4], [12, 4],
-        ]
+        ],
+        images: [
+            'public/images/maps/lost-forest/dry-tree-img.png',
+        ],
     },
     {
         key: 'camping',
@@ -186,16 +194,31 @@ const silesiaRegions: IRegionConfig[] = [
         name: 'Camping',
         coordinates: [
             [5, 2]
-        ]
+        ],
+        images: [
+            'public/images/maps/lost-forest/house-img.png',
+        ],
     },
     {
         key: 'evil-portal',
         terrain: 'evil-portal',
         name: 'Evil Portal',
         coordinates: [
-            [9, 2],
             [13, 4],
+        ],
+        images: [
+            'public/images/maps/lost-forest/dragon-eye.gif',
+        ]
+    },
+    {
+        key: 'monster-prison',
+        terrain: 'monster-prison',
+        name: 'Monster Prison',
+        coordinates: [
             [22, 1],
+        ],
+        images: [
+            'public/images/maps/lost-forest/monster.gif',
         ]
     }
 ];

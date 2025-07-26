@@ -28,13 +28,14 @@ function getTileTerrainImage(tile: HexTileModel) {
   return {
     backgroundImage: `url(${tile.imagePath})`,
     'background-size': 'cover',
-    'background-repeat': 'no-repeat'
+    'background-repeat': 'no-repeat',
+    backgroundPosition: 'center'
   };
 }
 
 function getHexTileTransformStyle(tile: HexTileModel) {
   const x = 50 * (3 / 2) * tile.q;
-  const y = Math.sqrt(3) * 51 * tile.r + (tile.q % 2 ? Math.sqrt(3) * 51.5 / 2 : 0);
+  const y = Math.sqrt(3) * 50 * tile.r + (tile.q % 2 ? Math.sqrt(3) * 50.5 / 2 : 0);
   return {
     transform: `translate(${x}px, ${y}px)`,
   };
@@ -55,16 +56,16 @@ function onTileClick(tile: HexTileModel) {
 @import "@/styles/hex-map/hex-tile-terrain-background-style.css";
 
 .hex-map {
-  position: absolute;
-  background: #27201c;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  aspect-ratio: 2 / 1;
+  background: #2e231d;
 }
 
 .hex-tile {
-  width: 5vw;
-  height: 9vh;
+  width: 98px;
+  height: 86px;
   position: absolute;
   margin: 1%;
   clip-path: polygon(
@@ -74,10 +75,15 @@ function onTileClick(tile: HexTileModel) {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
-  color: white;
-  font-weight: bold;
-  user-select: none;
-  transition: transform 0.2s;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  overflow: visible;
+  cursor: pointer;
+  transform-origin: center; /* ВАЖЛИВО: центр масштабування */
+}
+
+.hex-tile:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
+  z-index: 10;
 }
 </style>

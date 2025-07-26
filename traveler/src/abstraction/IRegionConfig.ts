@@ -10,6 +10,7 @@ export type TerrainType =
     | 'swamp'
     | 'evil-portal'
     | 'field'
+    | 'monster-prison'
     | 'camp';
 
 export interface IRegionConfig {
