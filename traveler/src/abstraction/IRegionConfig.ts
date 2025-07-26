@@ -1,5 +1,5 @@
 export type TerrainType =
-    'grass'
+    'no-terrain'
     | 'forest'
     | 'deep-forest'
     | 'deep-sea'

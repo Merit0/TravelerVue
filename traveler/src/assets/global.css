@@ -5,6 +5,11 @@
     align-items :center;
 }
 
+ :root {
+     --hex-tile-width: 4.4vw;
+     --hex-tile-height: calc(var(--hex-tile-width) * 0.88);
+ }
+
 * {
     margin: 0;
     padding: 0;

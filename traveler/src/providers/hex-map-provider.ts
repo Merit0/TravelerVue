@@ -4,7 +4,7 @@ import silesiaRegions from "@/providers/region-provider";
 
 export class HexMapProvider {
     static getSilesia(): HexMapModel {
-        const map = new HexMapModel('silesia', 25, 10, silesiaRegions);
+        const map = new HexMapModel('silesia', 25, 11, silesiaRegions);
 
         this.generateTiles(map);
         this.applyRegionTerrain(map);

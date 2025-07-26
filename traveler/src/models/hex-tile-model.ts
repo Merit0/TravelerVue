@@ -13,7 +13,7 @@ export class HexTileModel {
         this.q = q;
         this.r = r;
         this.isBlocked = false;
-        this.terrain = 'grass';
+        this.terrain = 'no-terrain';
         this.imagePath = '';
     }
 

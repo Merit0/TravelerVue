@@ -1,22 +1,27 @@
 <template>
   <div class="hex-map">
-    <div
-        v-for="tile in tiles"
-        :key="tile.id"
-        class="hex-tile"
-        :class="tile.terrain"
-        :style="getHexTileTransformStyle(tile)"
-        @click="onTileClick(tile)"
-    >
-      <div :class="`hex-tile-img-${tile.terrain}`" :style="getTileTerrainImage(tile)"></div>
+    <div class="hex-map-wrapper" :style="{ transform: `scale(${scale})` }">
+      <div
+          v-for="tile in tiles"
+          :key="tile.id"
+          class="hex-tile"
+          :class="tile.terrain"
+          :style="getHexTileTransformStyle(tile)"
+          @click="onTileClick(tile)"
+      >
+        <div
+            :class="`hex-tile-img-${tile.terrain}`"
+            :style="getTileTerrainImage(tile)"
+        ></div>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import {useRouter} from 'vue-router';
-import {defineProps} from 'vue';
-import type {HexTileModel} from '@/models/hex-tile-model';
+import { ref, onMounted, onBeforeUnmount, defineProps } from 'vue';
+import { useRouter } from 'vue-router';
+import type { HexTileModel } from '@/models/hex-tile-model';
 
 const props = defineProps<{
   tiles: HexTileModel[];
@@ -24,20 +29,34 @@ const props = defineProps<{
 
 const router = useRouter();
 
-function getTileTerrainImage(tile: HexTileModel) {
-  return {
-    backgroundImage: `url(${tile.imagePath})`,
-    'background-size': 'cover',
-    'background-repeat': 'no-repeat',
-    backgroundPosition: 'center'
-  };
+const baseWidth = 1600;
+const baseHeight = 800;
+const scale = ref(1);
+
+function updateScale() {
+  const scaleX = window.innerWidth / baseWidth;
+  const scaleY = window.innerHeight / baseHeight;
+  scale.value = Math.min(scaleX, scaleY); // однаковий масштаб по обом осям
 }
 
 function getHexTileTransformStyle(tile: HexTileModel) {
-  const x = 50 * (3 / 2) * tile.q;
-  const y = Math.sqrt(3) * 50 * tile.r + (tile.q % 2 ? Math.sqrt(3) * 50.5 / 2 : 0);
+  const tileWidth = window.innerWidth / 44.6;
+  const tileHeight = tileWidth * 1.01;
+
+  const x = tileWidth * (3 / 2) * tile.q;
+  const y = Math.sqrt(3) * tileHeight * tile.r + (tile.q % 2 ? Math.sqrt(3) * tileHeight / 2 : 0);
+
   return {
-    transform: `translate(${x}px, ${y}px)`,
+    transform: `translate(${x}px, ${y}px)`
+  };
+}
+
+function getTileTerrainImage(tile: HexTileModel) {
+  return {
+    backgroundImage: `url(${tile.imagePath})`,
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
   };
 }
 
@@ -50,24 +69,40 @@ function onTileClick(tile: HexTileModel) {
     return new Error('Map region is not supported');
   }
 }
+
+onMounted(() => {
+  updateScale();
+  window.addEventListener('resize', updateScale);
+});
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', updateScale);
+});
 </script>
 
 <style scoped>
 @import "@/styles/hex-map/hex-tile-terrain-background-style.css";
 
 .hex-map {
-  position: relative;
   width: 100vw;
   height: 100vh;
-  aspect-ratio: 2 / 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background: #2e231d;
+  overflow: hidden;
+}
+
+.hex-map-wrapper {
+  position: relative;
+  width: 85vw;
+  height: 80vh;
+  transform-origin: center center;
 }
 
 .hex-tile {
-  width: 98px;
-  height: 86px;
+  width: var(--hex-tile-width);
+  height: var(--hex-tile-height);
   position: absolute;
-  margin: 1%;
   clip-path: polygon(
       25% 0%, 75% 0%, 100% 50%,
       75% 100%, 25% 100%, 0% 50%
@@ -76,9 +111,8 @@ function onTileClick(tile: HexTileModel) {
   align-items: center;
   justify-content: center;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
-  overflow: visible;
   cursor: pointer;
-  transform-origin: center; /* ВАЖЛИВО: центр масштабування */
+  transform-origin: center;
 }
 
 .hex-tile:hover {
