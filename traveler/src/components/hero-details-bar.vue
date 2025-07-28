@@ -24,6 +24,10 @@
         <div class="topBarEnergyIconImg energy" label="heroEnergy"></div>
         <p class="heroDetailsText">{{ hero.currentEnergy }}</p>
       </div>
+      <div class="item">
+        <div class="topBarEnergyIconImg steps" label="heroSteps"></div>
+        <p class="heroDetailsText">{{ hero.heroSteps }}</p>
+      </div>
     </div>
     <button @click="userStore.logout()" class="logout">Logout</button>
   </div>

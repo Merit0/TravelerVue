@@ -18,5 +18,6 @@ export interface IHero {
   equipment: Equipment;
   currentTile: TileModel;
   heroLocation: ICoordinates;
+  heroSteps: number;
   experienceCollector(): void;
 }

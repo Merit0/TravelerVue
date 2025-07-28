@@ -34,7 +34,8 @@ export const useHeroStore = defineStore("hero", {
                 .setCurrentEnergy(hero.currentEnergy)
                 .setMaxEnergy(hero.maxEnergy)
                 .setStats(hero.available)
-                .setEquipment(hero.equipment);
+                .setEquipment(hero.equipment)
+                .setSteps(hero.heroSteps);
 
             return true;
         },

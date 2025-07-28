@@ -20,10 +20,12 @@ export class HeroModel implements IHero {
     currentTile: TileModel;
     heroLocation: ICoordinates;
     flippedImage = false;
+    heroSteps: number;
 
     constructor() {
         this.maxHealth = 100;
         this.maxEnergy = 100;
+        this.heroSteps = 0;
     }
 
     setFlipped(state: boolean) {
@@ -95,6 +97,11 @@ export class HeroModel implements IHero {
         return this;
     }
 
+    public setSteps(steps: number): HeroModel {
+        this.heroSteps = steps;
+        return this;
+    }
+
     public getName(): string {
         return this.name;
     }
@@ -105,6 +112,10 @@ export class HeroModel implements IHero {
 
     public getCurrentEnergy(): number {
         return this.currentEnergy;
+    }
+
+    public getHeroMyriads(): number {
+        return Math.round((this.heroSteps / 10) * 10) / 10;
     }
 
     public getMaxEnergy(): number {

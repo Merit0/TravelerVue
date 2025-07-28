@@ -78,7 +78,8 @@ export default {
       router.push('/home');
     },
     exitOnMap() {
-      router.push('/forest-entrance');
+      // router.push('/forest-entrance');
+      router.push('/maps');
     },
     openInventory() {
       this.heroStore.inventoryShown = true;
