@@ -37,6 +37,7 @@ export const useWorldMapStore = defineStore('world-map-store', {
                 tile.imagePath = t.imagePath;
                 tile.regionKey = t.regionKey;
                 tile.name = t.name;
+                tile.requiredMyriads = t.requiredMyriads;
                 return tile;
             });
             this.map = map;

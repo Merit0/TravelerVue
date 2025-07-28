@@ -192,9 +192,9 @@ export const useMapLocationStore = defineStore("map-location-store", {
             });
 
             if (nextTile.coordinates.x < currentTile.coordinates.x) {
-                hero.flippedImage = false; // turn Hero left
+                hero.flippedImage = false;
             } else if (nextTile.coordinates.x > currentTile.coordinates.x) {
-                hero.flippedImage = true; // turn Hero right
+                hero.flippedImage = true;
             }
 
             currentTile.isHeroHere = false;
@@ -203,6 +203,7 @@ export const useMapLocationStore = defineStore("map-location-store", {
 
             hero.currentTile = nextTile;
             hero.heroLocation = {...nextTile.coordinates};
+            hero.heroSteps++;
 
             this.removeAllItemsFromTile(nextTile);
             this.calculateReachableTiles(nextTile, this.tiles);

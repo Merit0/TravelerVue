@@ -2,6 +2,15 @@ import type {IRegionConfig} from '@/abstraction/IRegionConfig';
 
 const silesiaRegions: IRegionConfig[] = [
     {
+        key: 'forest',
+        terrain: 'forest',
+        coordinates: [
+            [5, 1]
+        ],
+        images: ['public/images/maps/lost-forest/single-tree-shadow.png'],
+        requiredMyriads: 0,
+    },
+    {
         key: 'field',
         terrain: 'field',
         name: 'Field',
@@ -19,6 +28,7 @@ const silesiaRegions: IRegionConfig[] = [
             'public/images/maps/lost-forest/3-taives-img.png',
             'public/images/maps/lost-forest/taive-img.png'
         ],
+        requiredMyriads: 45,
     },
     {
         key: 'sea-1',
@@ -31,6 +41,7 @@ const silesiaRegions: IRegionConfig[] = [
             [17, 8], [18, 9], [19, 8], [20, 8], [21, 7],
             [22, 7], [23, 7], [24, 7],
         ],
+        requiredMyriads: 0,
     },
     {
         key: 'deep-sea-1',
@@ -63,6 +74,7 @@ const silesiaRegions: IRegionConfig[] = [
             [23, 8], [23, 9], [23, 10],
             [24, 8], [24, 9], [24, 10],
         ],
+        requiredMyriads: 0,
     },
     {
         key: 'forest',
@@ -70,7 +82,7 @@ const silesiaRegions: IRegionConfig[] = [
         coordinates: [
             [0, 0], [0, 1], [0, 2], [0, 3], [0, 4], [0, 5],
             [4, 1], [4, 2], [4, 3],
-            [5, 0], [5, 1], [5, 2], [5, 3],
+            [5, 0], [5, 3],
             [6, 0], [6, 1], [6, 2], [6, 3], [6, 4], [6, 5],
             [13, 0],
             [14, 0], [14, 3],
@@ -85,7 +97,8 @@ const silesiaRegions: IRegionConfig[] = [
             [23, 0], [23, 1], [23, 5],
             [24, 5],
         ],
-        images: ['public/images/maps/lost-forest/single-tree-shadow.png']
+        images: ['public/images/maps/lost-forest/single-tree-shadow.png'],
+        requiredMyriads: 10,
     },
     {
         key: 'deep-forest-1',
@@ -110,7 +123,8 @@ const silesiaRegions: IRegionConfig[] = [
             [19, 0], [19, 1], [19, 2],
             [20, 0], [20, 1], [20, 3],
         ],
-        images: ['public/images/maps/lost-forest/group-tree-shadow.png']
+        images: ['public/images/maps/lost-forest/group-tree-shadow.png'],
+        requiredMyriads: 30,
     },
     {
         key: 'desert-1',
@@ -141,7 +155,8 @@ const silesiaRegions: IRegionConfig[] = [
             'public/images/maps/lost-forest/kuschi-shadow.png',
             'public/images/maps/lost-forest/kuschi-3-shadow.png',
             'public/images/maps/lost-forest/kuschi-4-shadow.png'
-        ]
+        ],
+        requiredMyriads: 50,
     },
     {
         key: 'deep-desert-1',
@@ -160,7 +175,8 @@ const silesiaRegions: IRegionConfig[] = [
         ],
         images: [
             'public/images/maps/lost-forest/single-palm-shadow.png',
-        ]
+        ],
+        requiredMyriads: 50,
     },
     {
         key: 'mountain-1',
@@ -176,7 +192,8 @@ const silesiaRegions: IRegionConfig[] = [
             [23, 2],
             [24, 0], [24, 1], [24, 2],
         ],
-        images: ['public/images/maps/lost-forest/mountain-3-img.png']
+        images: ['public/images/maps/lost-forest/mountain-3-img.png'],
+        requiredMyriads: 80,
     },
     {
         key: 'swamp-1',
@@ -191,6 +208,7 @@ const silesiaRegions: IRegionConfig[] = [
         images: [
             'public/images/maps/lost-forest/dry-tree-img.png',
         ],
+        requiredMyriads: 20,
     },
     {
         key: 'camping',
@@ -202,6 +220,7 @@ const silesiaRegions: IRegionConfig[] = [
         images: [
             'public/images/maps/lost-forest/house-img.png',
         ],
+        requiredMyriads: 0,
     },
     {
         key: 'evil-portal',
@@ -212,7 +231,8 @@ const silesiaRegions: IRegionConfig[] = [
         ],
         images: [
             'public/images/maps/lost-forest/dragon-eye.gif',
-        ]
+        ],
+        requiredMyriads: 100,
     },
     {
         key: 'monster-prison',
@@ -223,7 +243,8 @@ const silesiaRegions: IRegionConfig[] = [
         ],
         images: [
             'public/images/maps/lost-forest/monster.gif',
-        ]
+        ],
+        requiredMyriads: 100,
     }
 ];
 

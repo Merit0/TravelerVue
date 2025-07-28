@@ -20,4 +20,5 @@ export interface IRegionConfig {
     coordinates: [number, number][];
     images?: string[];
     backgroundImgPath?: string;
+    requiredMyriads?: number;
 }

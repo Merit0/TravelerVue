@@ -7,12 +7,15 @@
           class="hex-tile"
           :class="tile.terrain"
           :style="getHexTileTransformStyle(tile)"
-          @click="onTileClick(tile)"
+          @click="tile.terrain !== 'sea' && tile.terrain !== 'deep-sea' ? onTileClick(tile) : null"
       >
         <div
             :class="`hex-tile-img-${tile.terrain}`"
             :style="getTileTerrainImage(tile)"
         ></div>
+        <div v-if="tile.isBlocked" class="tile-lock">
+          <span class="lock-icon">🔒</span>
+        </div>
       </div>
     </div>
   </div>
@@ -22,6 +25,9 @@
 import { ref, onMounted, onBeforeUnmount, defineProps } from 'vue';
 import { useRouter } from 'vue-router';
 import type { HexTileModel } from '@/models/hex-tile-model';
+import {useHeroStore} from "@/stores/HeroStore";
+import {HeroModel} from "@/models/HeroModel";
+import {useWorldMapStore} from "@/stores/world-map-store";
 
 const props = defineProps<{
   tiles: HexTileModel[];
@@ -61,6 +67,25 @@ function getTileTerrainImage(tile: HexTileModel) {
 }
 
 function onTileClick(tile: HexTileModel) {
+  const roundTo = (num: number, decimals = 1): number => {
+    const factor = Math.pow(10, decimals);
+    return Math.round(num * factor) / factor;
+  }
+
+  if (tile.terrain === 'sea' || tile.terrain === 'deep-sea') {
+    return;
+  }
+  const hero: HeroModel = useHeroStore().hero;
+  const worldMapStore = useWorldMapStore();
+  if (tile.isBlocked) {
+    if (hero.getHeroMyriads() >= tile.requiredMyriads) {
+      tile.isBlocked = false;
+      worldMapStore.saveToStorage();
+    } else {
+      alert(`Need more ${ roundTo(tile.requiredMyriads - hero.getHeroMyriads())} myriads, to unlock location.`);
+      return;
+    }
+  }
   if (tile.regionKey && tile.regionKey !== 'camping') {
     router.push(`/map/${tile.regionKey}`);
   } else if (tile.regionKey && tile.regionKey === 'camping') {
@@ -119,5 +144,25 @@ onBeforeUnmount(() => {
   transform: scale(1.1);
   box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
   z-index: 10;
+}
+
+.tile-lock {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(128, 127, 127, 0.33);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: #fff;
+  border-radius: 8px;
+  pointer-events: none; /* блок тільки візуальний */
+  z-index: 5;
+}
+
+.lock-icon {
+  position: absolute;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
 }
 </style>

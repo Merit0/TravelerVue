@@ -37,7 +37,7 @@ export class HexMapProvider {
                     ? region.images[Math.floor(Math.random() * region.images.length)]
                     : '';
 
-                tile.setTerrain(region.terrain, imagePath, region.key, region.name);
+                tile.setTerrain(region.terrain, imagePath, region.key, region.name, region.requiredMyriads);
             }
         }
     }

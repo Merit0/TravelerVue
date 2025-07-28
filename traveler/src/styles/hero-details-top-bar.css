@@ -79,6 +79,13 @@
     background-size: cover;
 }
 
+.steps {
+    top: -5%;
+    background-image: url("/images/top-bar-items/foots-icon.png");
+    background-repeat: no-repeat;
+    background-size: 100%, 100%;
+}
+
 .logout {
     width: 5vw;
     height: 2vw;
