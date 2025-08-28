@@ -7,6 +7,7 @@ import {ArmorProvider} from "@/providers/armor-provider";
 import {ShieldProvider} from "@/providers/shield-provider";
 import {EquipmentGroupProvider} from "@/providers/equipment-group-provider";
 import {Randomizer} from "@/utils/Randomizer";
+import {BootsProvider} from "@/providers/boots-provider";
 
 export const useShopStore = defineStore('shop', {
     state: () => ({
@@ -59,13 +60,13 @@ export const useShopStore = defineStore('shop', {
         generateInitialItems(): LootItemModel[] {
             return [
                 WeaponProvider.getWoodCopperAxe(),
-                ArmorProvider.getRobe(),
-                HelmetProvider.getLeatherHelmet(),
+                ArmorProvider.getLeatherArmor(),
+                HelmetProvider.getIronHat(),
                 ShieldProvider.getDreadwallShield(),
                 EquipmentGroupProvider.getLegendEquipment()[Randomizer.getRandomIntInRange(0, 3)],
                 ElixirsProvider.getRareElixir(),
                 ElixirsProvider.getCommonElixir(),
-                ElixirsProvider.getMythicElixir(),
+                BootsProvider.getLeatherBoots(),
             ];
         },
         getShopItems(): LootItemModel[] {

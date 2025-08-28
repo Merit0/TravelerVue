@@ -8,6 +8,7 @@ export class LootItemModel implements IHeroItem {
   value: number;
   price: number;
   imgPath: string;
+  poseImgPath: string;
   borderFrame: string;
   itemType: ItemType;
   rarity: Rarity;
@@ -21,6 +22,7 @@ export class LootItemModel implements IHeroItem {
     item.value = data.value;
     item.price = data.price;
     item.imgPath = data.imgPath;
+    item.poseImgPath = data.poseImgPath;
     item.borderFrame = data.borderFrame;
     item.itemType = data.itemType;
     item.rarity = data.rarity;

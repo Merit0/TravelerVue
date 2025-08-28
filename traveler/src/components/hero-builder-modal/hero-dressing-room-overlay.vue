@@ -6,11 +6,11 @@
         <div class="hero-podium-board">
           <div class="view-switcher" @click="toggleView">
             <p class="switcher-label">
-              {{ showGrid ? 'On Map' : 'Hero' }}
+              {{ showGrid ? 'Hero' : 'On Map'}}
             </p>
             <div class="viewSwitcher-toggle" :class="{ active: showGrid }"></div>
           </div>
-          <div v-if="showGrid" class="hero-podium-tiles-grid">
+          <div v-if="!showGrid" class="hero-podium-tiles-grid">
             <podium-tile
                 v-for="mapTile in validMapTiles"
                 :key="mapTile.id"

@@ -126,6 +126,10 @@ export default defineComponent({
         await this.bagStore.putIn(item);
         this.hero.maxHealth -= equipment.shield.value;
         equipment.shield = null;
+      } else if (itemType === ItemType.BOOTS && equipment.boots) {
+        await this.bagStore.putIn(item);
+        this.hero.maxHealth -= equipment.boots.value;
+        equipment.boots = null;
       }
 
       this.hero.adjustHealthOnStatChange();

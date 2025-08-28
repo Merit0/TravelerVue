@@ -6,13 +6,14 @@ import {Rarity} from "@/enums/Rarity";
 
 export class ArmorProvider {
     private static heroArmorFolderPath = "images/hero-equipment/armor/";
-    public static getRobe(): LootItemModel {
+    public static getLeatherArmor(): LootItemModel {
         return new LootItemBuilder()
-            .lootItemName("Robe")
+            .lootItemName("Leather Armor")
             .lootValue(Randomizer.getRandomIntInRange(0, 20))
             .itemType(ItemType.ARMOR)
             .lootRarity(Rarity.COMMON)
-            .lootItemImgPath(this.heroArmorFolderPath + "common-type/robe.png")
+            .lootItemImgPath(this.heroArmorFolderPath + "common-type/leather-armor/leather-armor.png")
+            .lootItemPoseImgPath(this.heroArmorFolderPath + "common-type/leather-armor/leather-armor-pose.png")
             .price(70)
             .build();
     }
@@ -29,6 +30,6 @@ export class ArmorProvider {
     }
 
     public static getCommonArmorsList(): LootItemModel[] {
-        return Array.of(this.getRobe());
+        return Array.of(this.getLeatherArmor());
     }
 }
