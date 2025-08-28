@@ -1,6 +1,6 @@
 <template>
   <div class="globalOverlay" v-if="heroStore.inventoryShown">
-    <div class="inventoryContent">
+    <div class="heroInventoryOverlayContent">
       <close-hero-inventory-modal-button @heroInventory="closeInventory($event)"/>
       <inventory-top-element/>
       <div class="left-side-wooden-plank"></div>
@@ -46,7 +46,7 @@ export default {
 </script>
 
 <style>
-.inventoryContent {
+.heroInventoryOverlayContent {
   position: relative;
   width: 51vw;
   height: 70vh;

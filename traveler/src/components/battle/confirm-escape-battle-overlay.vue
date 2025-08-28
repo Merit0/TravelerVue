@@ -25,7 +25,6 @@ export default defineComponent({
     };
 
     const escapeBattle = () => {
-      const overlayStore = useOverlayStore();
       const battleStore = useBattleStore();
       battleStore.finishBattle();
       overlayStore.closeOverlay();

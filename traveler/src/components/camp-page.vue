@@ -1,6 +1,6 @@
 <template>
   <title>Camp</title>
-  <HeroDetailsBar :hero="hero"/>
+  <hero-details-bar :hero="hero"/>
   <section class="campContent">
     <div class="scalableGridWrapper">
       <div class="buildingGrid">
@@ -9,6 +9,9 @@
             :key="n"
             class="buildingTile tileBackground"
         ></div>
+        <div class="buildingTile initBuildingTile tileBackground" @click="openDressingRoom">
+          <div class="icon dressing-room-icon"/>
+        </div>
         <div class="buildingTile initBuildingTile tileBackground" @click="openInventory">
           <div class="icon bag-icon"/>
         </div>
@@ -27,24 +30,29 @@
       @closeShop="closeShop"
   />
   <hero-inventory-overlay></hero-inventory-overlay>
+  <hero-dressing-room-overlay v-if="overlayStore.isOverlay('hero-dressing-room')"></hero-dressing-room-overlay>
 </template>
 
 <script lang="ts">
-import HeroDetailsBar from './hero-details-bar.vue';
 import {useHeroStore} from '@/stores/HeroStore';
 import router from "@/router";
 import ShopOverlay from "@/components/shop/shop-overlay.vue";
 import HeroInventoryOverlay from "@/components/hero-equipment-modal/hero-inventory-overlay.vue";
+import HeroDetailsBar from "@/components/hero-details-bar.vue";
+import HeroDressingRoomOverlay from "@/components/hero-builder-modal/hero-dressing-room-overlay.vue";
+import {useOverlayStore} from "@/stores/overlay-store";
 
 export default {
   name: "camping-page",
-  components: {HeroInventoryOverlay, ShopOverlay, HeroDetailsBar: HeroDetailsBar},
+  components: {HeroDressingRoomOverlay, HeroDetailsBar, HeroInventoryOverlay, ShopOverlay},
   data() {
     const heroStore = useHeroStore();
+    const overlayStore = useOverlayStore();
     return {
       hero: heroStore.hero,
       heroStore,
-      numberOfTiles: 76,
+      overlayStore,
+      numberOfTiles: 75,
       showShop: false,
       time: '',
     };
@@ -83,6 +91,9 @@ export default {
     },
     openInventory() {
       this.heroStore.inventoryShown = true;
+    },
+    openDressingRoom() {
+      this.overlayStore.openOverlay('hero-dressing-room');
     },
     openShop() {
       this.showShop = true;
@@ -162,8 +173,8 @@ export default {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.crossed-swords-icon {
-  background-image: url('/images/camping-place/crossed-swords.png');
+.dressing-room-icon {
+  background-image: url('/images/camping-place/hero-painting-icon.png');
 }
 
 .bag-icon {
