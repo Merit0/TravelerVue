@@ -5,7 +5,7 @@ import {ItemType} from "@/enums/ItemType";
 import {Rarity} from "@/enums/Rarity";
 
 export class HelmetProvider {
-    private static helmetsFolderPath = "images/hero-equipment/helmets";
+    private static helmetsFolderPath = "/images/hero-equipment/helmets";
 
     public static getIronHat(): LootItemModel {
         return new LootItemBuilder()

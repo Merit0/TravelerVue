@@ -5,7 +5,7 @@ import {ItemType} from "@/enums/ItemType";
 import {Rarity} from "@/enums/Rarity";
 
 export class ArmorProvider {
-    private static heroArmorFolderPath = "images/hero-equipment/armor/";
+    private static heroArmorFolderPath = "/images/hero-equipment/armor/";
     public static getLeatherArmor(): LootItemModel {
         return new LootItemBuilder()
             .lootItemName("Leather Armor")

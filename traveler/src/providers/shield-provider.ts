@@ -5,7 +5,7 @@ import {ItemType} from "@/enums/ItemType";
 import {Rarity} from "@/enums/Rarity";
 
 export class ShieldProvider {
-    private static shieldsFolderPath = "images/hero-equipment/shields";
+    private static shieldsFolderPath = "/images/hero-equipment/shields";
 
     public static getRoundWoodenShield(): LootItemModel {
         return new LootItemBuilder()

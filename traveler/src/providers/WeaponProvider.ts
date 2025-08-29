@@ -5,7 +5,7 @@ import {ItemType} from "@/enums/ItemType";
 import {Randomizer} from "@/utils/Randomizer";
 
 export class WeaponProvider {
-    private static heroWeaponsFolderPath = "images/hero-equipment/weapons";
+    private static heroWeaponsFolderPath = "/images/hero-equipment/weapons";
 
     public static getSoulRipper(): LootItemModel {
         return new LootItemBuilder()
