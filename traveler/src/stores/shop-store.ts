@@ -59,10 +59,10 @@ export const useShopStore = defineStore('shop', {
 
         generateInitialItems(): LootItemModel[] {
             return [
-                WeaponProvider.getWoodCopperAxe(),
+                WeaponProvider.getMolner(),
                 ArmorProvider.getLeatherArmor(),
+                ShieldProvider.getRoundWoodenShield(),
                 HelmetProvider.getIronHat(),
-                ShieldProvider.getDreadwallShield(),
                 EquipmentGroupProvider.getLegendEquipment()[Randomizer.getRandomIntInRange(0, 3)],
                 ElixirsProvider.getRareElixir(),
                 ElixirsProvider.getCommonElixir(),

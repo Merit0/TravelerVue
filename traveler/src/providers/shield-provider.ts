@@ -9,12 +9,13 @@ export class ShieldProvider {
 
     public static getRoundWoodenShield(): LootItemModel {
         return new LootItemBuilder()
-            .lootItemName("Wooden Shield")
+            .lootItemName("Warrior Shield")
             .lootValue(Randomizer.getRandomIntInRange(20, 30))
-            .price(20)
+            .price(54)
             .itemType(ItemType.SHIELD)
             .lootRarity(Rarity.COMMON)
-            .lootItemImgPath(`${this.shieldsFolderPath}/common-type/wooden-shield.png`)
+            .lootItemImgPath(`${this.shieldsFolderPath}/common-type/warrior-shield/warrior-shield.png`)
+            .lootItemPoseImgPath(`${this.shieldsFolderPath}/common-type/warrior-shield/warrior-shield-pose.png`)
             .build();
     }
 

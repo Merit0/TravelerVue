@@ -18,6 +18,18 @@ export class WeaponProvider {
             .build();
     }
 
+    public static getMolner(): LootItemModel {
+        return new LootItemBuilder()
+            .lootItemName("Molner")
+            .lootValue(Randomizer.getRandomIntInRange(15, 30))
+            .price(140)
+            .itemType(ItemType.WEAPON)
+            .lootRarity(Rarity.RARE)
+            .lootItemImgPath(this.heroWeaponsFolderPath + "/hammers/rare-type/molner/molner-hammer.png")
+            .lootItemPoseImgPath(this.heroWeaponsFolderPath + "/hammers/rare-type/molner/molner-hammer-pose.png")
+            .build();
+    }
+
     public static getWoodCopperAxe(): LootItemModel {
         return new LootItemBuilder()
             .lootItemName("Wood Axe")
