@@ -6,5 +6,8 @@ export interface IEquipment {
   shield: LootItemModel;
   helm: LootItemModel;
   armor: LootItemModel;
+  boots: LootItemModel;
+  belt: LootItemModel;
+  pants: LootItemModel;
   ring: LootItemModel;
 }
