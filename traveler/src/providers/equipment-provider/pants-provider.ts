@@ -15,11 +15,11 @@ export class PantsProvider {
             .lootRarity(Rarity.RARE)
             .lootItemImgPath(this.pantsFolderPath + "common-type/elf-pants/elf-pants.png")
             .lootItemPoseImgPath(this.pantsFolderPath + "common-type/elf-pants/elf-pants-pose.png")
-            .price(27)
+            .price(100)
             .build();
     }
 
-    public static getPantsList(): LootItemModel[] {
+    public static getRarePantsList(): LootItemModel[] {
         return Array.of(this.getElfPants());
     }
 }

@@ -11,7 +11,7 @@ export class ShieldProvider {
         return new LootItemBuilder()
             .lootItemName("Warrior Shield")
             .lootValue(Randomizer.getRandomIntInRange(20, 30))
-            .price(54)
+            .price(100)
             .itemType(ItemType.SHIELD)
             .lootRarity(Rarity.COMMON)
             .lootItemImgPath(`${this.shieldsFolderPath}/common-type/warrior-shield/warrior-shield.png`)
@@ -19,29 +19,32 @@ export class ShieldProvider {
             .build();
     }
 
-    public static getSquareWoodenShield(): LootItemModel {
-        return new LootItemBuilder()
-            .lootItemName("Wooden Shield")
-            .lootValue(Randomizer.getRandomIntInRange(20, 30))
-            .price(20)
-            .itemType(ItemType.SHIELD)
-            .lootRarity(Rarity.COMMON)
-            .lootItemImgPath(`${this.shieldsFolderPath}/common-type/square-wooden-shield.png`)
-            .build();
-    }
+    // public static getSquareWoodenShield(): LootItemModel {
+    //     return new LootItemBuilder()
+    //         .lootItemName("Wooden Shield")
+    //         .lootValue(Randomizer.getRandomIntInRange(20, 30))
+    //         .price(20)
+    //         .itemType(ItemType.SHIELD)
+    //         .lootRarity(Rarity.COMMON)
+    //         .lootItemImgPath(`${this.shieldsFolderPath}/common-type/square-wooden-shield.png`)
+    //         .build();
+    // }
 
-    public static getDreadwallShield(): LootItemModel {
-        return new LootItemBuilder()
-            .lootItemName("Dreadwall")
-            .lootValue(Randomizer.getRandomIntInRange(200, 400))
-            .price(2500)
-            .itemType(ItemType.SHIELD)
-            .lootRarity(Rarity.MYTHIC)
-            .lootItemImgPath(`${this.shieldsFolderPath}/mythic-type/dreadwall-shield.png`)
-            .build();
-    }
+    // public static getDreadwallShield(): LootItemModel {
+    //     return new LootItemBuilder()
+    //         .lootItemName("Dreadwall")
+    //         .lootValue(Randomizer.getRandomIntInRange(200, 400))
+    //         .price(2500)
+    //         .itemType(ItemType.SHIELD)
+    //         .lootRarity(Rarity.MYTHIC)
+    //         .lootItemImgPath(`${this.shieldsFolderPath}/mythic-type/dreadwall-shield.png`)
+    //         .build();
+    // }
 
     public static getCommonShieldsList(): LootItemModel[] {
-        return Array.of(this.getRoundWoodenShield(), this.getSquareWoodenShield());
+        return Array.of(
+            this.getRoundWoodenShield(),
+            // this.getSquareWoodenShield()
+        );
     }
 }

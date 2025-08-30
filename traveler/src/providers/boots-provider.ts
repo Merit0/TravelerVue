@@ -14,7 +14,7 @@ export class BootsProvider {
             .lootRarity(Rarity.COMMON)
             .lootItemImgPath(this.heroBootsFolderPath + "common-type-boots/leather-boots/leather-boots.png")
             .lootItemPoseImgPath(this.heroBootsFolderPath + "common-type-boots/leather-boots/leather-boots-pose.png")
-            .price(65)
+            .price(100)
             .build();
     }
 

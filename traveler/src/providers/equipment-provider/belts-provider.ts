@@ -15,11 +15,15 @@ export class BeltsProvider {
             .lootRarity(Rarity.RARE)
             .lootItemImgPath(this.beltsFolderPath + "rare-type/leather-belt/leather-belt.png")
             .lootItemPoseImgPath(this.beltsFolderPath + "rare-type/leather-belt/leather-belt-pose.png")
-            .price(43)
+            .price(100)
             .build();
     }
 
-    public static getBeltsList(): LootItemModel[] {
+    public static getCommonBeltsList(): LootItemModel[] {
+        return Array.of(this.getLeatherBelt());
+    }
+
+    public static getRareBeltsList(): LootItemModel[] {
         return Array.of(this.getLeatherBelt());
     }
 }
