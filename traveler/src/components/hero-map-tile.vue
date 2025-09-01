@@ -1,12 +1,8 @@
 <template>
   <div
-      class="battle-initial-tile-view battle-map-tile"
-      :style="getTileBackgroundImage(tile)"
+      class="initialTileView mapTile"
+      :style="tileBackgroundStyle"
   >
-    <div class="damage-popup" v-if="damageValue">
-      -{{ damageValue }}
-    </div>
-    <div class="blood-splash" v-if="bloodSplash"/>
     <div class="tile-bottom-shadow inventory-button">
       <div
           class="hero-body-tile-image"
@@ -50,22 +46,17 @@
 </template>
 
 <script setup lang="ts">
-import {computed, defineProps} from 'vue';
-import TileModel from '@/models/TileModel';
-import {useHeroStore} from "@/stores/HeroStore";
-import {useBattleStore} from "@/stores/battle-store";
+import {computed, defineProps} from 'vue'
+import TileModel from '@/models/TileModel'
+import {useHeroStore} from '@/stores/HeroStore'
 import {LootItemModel} from "@/models/LootItemModel";
 
-const battleStore = useBattleStore();
-const heroStore = useHeroStore();
+const heroStore = useHeroStore()
 
 const props = defineProps<{
   tile: TileModel
-}>();
+}>()
 
-const damageValue = computed(() => {
-  return battleStore.damagePopups[props.tile.id] || null
-});
 
 const getItemImageStyle = (equipment: LootItemModel) => {
   if (!equipment?.poseImgPath) return {}
@@ -74,27 +65,17 @@ const getItemImageStyle = (equipment: LootItemModel) => {
   };
 }
 
-const bloodSplash = computed(() => {
-  return battleStore.bloodSplashTiles.includes(props.tile.id)
-});
-
-const getTileBackgroundImage = (tile: TileModel) => {
-  return {
-    backgroundImage: `url(${tile.backgroundSrc})`,
-    'background-size': '100% 100%'
-  }
-}
+const tileBackgroundStyle = computed(() => ({
+  backgroundImage: `url(${props.tile.backgroundSrc})`,
+  backgroundSize: '100% 100%',
+}))
 
 const openInventory = () => {
-  heroStore.inventoryShown = true;
-};
-
+  heroStore.inventoryShown = true
+}
 </script>
 
 <style scoped>
-@import "@/styles/battlefield-style/battlefield-map-tile-style.css";
-@import "@/styles/battlefield-style/battle-hero-tile-style.css";
-@import "@/styles/battlefield-style/battle-effects-style.css";
 .hero-body-tile-image {
   position: relative;
   width: 100%;
@@ -130,5 +111,23 @@ const openInventory = () => {
   align-items: center;
   pointer-events: auto;
   cursor: pointer;
+}
+
+@keyframes heroJump {
+  0% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(-8px);
+  }
+  50% {
+    transform: translateY(0);
+  }
+  75% {
+    transform: translateY(-4px);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }
 </style>

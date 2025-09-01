@@ -131,6 +131,15 @@ export default {
         case ItemType.SHIELD:
           equip('shield', 'maxHealth');
           break;
+        case ItemType.BOOTS:
+          equip('boots', 'maxHealth');
+          break;
+        case ItemType.PANTS:
+          equip('pants', 'maxHealth');
+          break;
+        case ItemType.BELT:
+          equip('belt', 'maxHealth');
+          break;
         case ItemType.HEAL:
           hero.currentHealth = Math.min(hero.currentHealth + item.value, hero.maxHealth);
           bag.removeItem(item);

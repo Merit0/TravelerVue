@@ -1,13 +1,13 @@
 <template>
   <div class="close-button-container">
-    <div class="closeInventoryBtn" @click="$emit('heroInventory')">CLOSE</div>
+    <div class="closeInventoryBtn" @click="$emit('heroInventory'); $emit('heroDressingRoom')">CLOSE</div>
   </div>
 </template>
 <script lang="ts">
 
 export default {
   name: "CloseHeroInventoryModalButton",
-  emits: ["heroInventory"],
+  emits: ["heroInventory", "heroDressingRoom"],
 }
 </script>
 

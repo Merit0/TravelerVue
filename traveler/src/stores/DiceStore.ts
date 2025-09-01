@@ -31,6 +31,7 @@ export const useDiceStore = defineStore('dice', {
 
                 this.isRolling = false;
             },
+
             async rollAllEnemyDices(): Promise<Record<number, string[]>> {
                 const results: Record<number, string[]> = {};
 

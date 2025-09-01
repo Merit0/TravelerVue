@@ -84,18 +84,24 @@ export default defineComponent({
 .dressing-room-content {
   position: relative;
   width: 66vw;
-  height: 70vh;
+  height: 80vh;
   margin: 12vh auto auto;
 }
 
 .hero-content {
-  background: #392e26;
+  background: radial-gradient(
+      circle at center,
+      #233342 0%,
+      #1b2c3e 30%,
+      #132537 70%,
+      #0d1627 100%
+  );
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 85vh;
+  height: 75vh;
   border-radius: 5vh;
 }
 
@@ -113,8 +119,8 @@ export default defineComponent({
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  height: 80%;
+  width: 102%;
+  height: 83%;
 }
 
 .hero-inventory-slots {

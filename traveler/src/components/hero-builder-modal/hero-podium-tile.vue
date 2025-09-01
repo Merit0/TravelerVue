@@ -1,15 +1,11 @@
 <template>
   <div
-      class="battle-initial-tile-view battle-map-tile"
-      :style="getTileBackgroundImage(tile)"
+      class="initialTileView mapTile"
+      :style="tileBackgroundStyle"
   >
-    <div class="damage-popup" v-if="damageValue">
-      -{{ damageValue }}
-    </div>
-    <div class="blood-splash" v-if="bloodSplash"/>
     <div class="tile-bottom-shadow inventory-button">
       <div
-          class="hero-body-tile-image"
+          class="tiles-podium-hero-slot"
           @click="openInventory"
       >
         <div class="podium-hero-image stand-base"/>
@@ -50,22 +46,16 @@
 </template>
 
 <script setup lang="ts">
-import {computed, defineProps} from 'vue';
-import TileModel from '@/models/TileModel';
-import {useHeroStore} from "@/stores/HeroStore";
-import {useBattleStore} from "@/stores/battle-store";
+import {computed, defineProps} from 'vue'
+import TileModel from '@/models/TileModel'
+import {useHeroStore} from '@/stores/HeroStore'
 import {LootItemModel} from "@/models/LootItemModel";
-
-const battleStore = useBattleStore();
-const heroStore = useHeroStore();
 
 const props = defineProps<{
   tile: TileModel
-}>();
+}>()
 
-const damageValue = computed(() => {
-  return battleStore.damagePopups[props.tile.id] || null
-});
+const heroStore = useHeroStore()
 
 const getItemImageStyle = (equipment: LootItemModel) => {
   if (!equipment?.poseImgPath) return {}
@@ -74,28 +64,18 @@ const getItemImageStyle = (equipment: LootItemModel) => {
   };
 }
 
-const bloodSplash = computed(() => {
-  return battleStore.bloodSplashTiles.includes(props.tile.id)
-});
-
-const getTileBackgroundImage = (tile: TileModel) => {
-  return {
-    backgroundImage: `url(${tile.backgroundSrc})`,
-    'background-size': '100% 100%'
-  }
-}
+const tileBackgroundStyle = computed(() => ({
+  backgroundImage: `url(${props.tile.backgroundSrc})`,
+  backgroundSize: '100% 100%',
+}))
 
 const openInventory = () => {
-  heroStore.inventoryShown = true;
-};
-
+  heroStore.inventoryShown = true
+}
 </script>
 
 <style scoped>
-@import "@/styles/battlefield-style/battlefield-map-tile-style.css";
-@import "@/styles/battlefield-style/battle-hero-tile-style.css";
-@import "@/styles/battlefield-style/battle-effects-style.css";
-.hero-body-tile-image {
+.tiles-podium-hero-slot {
   position: relative;
   width: 100%;
   height: 100%;
@@ -106,7 +86,6 @@ const openInventory = () => {
   transform-origin: center center;
   bottom: 20%;
   filter: drop-shadow(10px 20px 12px rgba(0, 0, 0, 0.7));
-  z-index: 2;
 }
 
 .tile-bottom-shadow::after {
@@ -116,7 +95,7 @@ const openInventory = () => {
   left: 0;
   width: 100%;
   height: 30%;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.4), transparent);
+  background: linear-gradient(to top, rgba(0,0,0,0.4), transparent);
   pointer-events: none;
   z-index: 1;
 }

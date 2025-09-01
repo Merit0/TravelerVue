@@ -1,25 +1,21 @@
 <template>
-  <relief-tile v-if="tile.isInitial" :tile="tile"/>
-  <empty-tile :tile="tile"/>
-  <enemy-tile :tile="tile"/>
-  <hero-map-tile v-if="tile.isHeroHere" :tile="tile" :key="tile.id + '-' + tile.isHeroHere"/>
-  <camp-tile/>
+  <div class="hero-podium-base-tile">
+    <relief-tile v-if="tile.isInitial" :tile="tile"/>
+    <hero-podium-tile v-if="tile.isHeroHere" :tile="tile" :key="tile.id + '-' + tile.isHeroHere"/>
+  </div>
 </template>
 
 <script lang="ts">
 import TileModel from '@/models/TileModel';
-import EnemyTile from '@/components/EnemyTile.vue';
 import ReliefTile from '@/components/relief-tile.vue';
-import EmptyTile from '@/components/EmptyTile.vue';
 import {useHeroStore} from '@/stores/HeroStore';
-import HeroMapTile from './hero-map-tile.vue';
 import {useMapLocationStore} from '@/stores/map-location-store';
 import {PropType} from 'vue';
-import CampTile from "@/components/camp-tile.vue";
 import EnemyModel from "@/models/EnemyModel";
+import HeroPodiumTile from "@/components/hero-builder-modal/hero-podium-tile.vue";
 
 export default {
-  name: 'map-tile',
+  name: 'podium-tile',
   props: {
     tile: {
       type: Object as PropType<TileModel>,
@@ -27,11 +23,8 @@ export default {
     }
   },
   components: {
-    CampTile,
-    EnemyTile,
+    HeroPodiumTile,
     ReliefTile,
-    EmptyTile,
-    HeroMapTile
   },
   data() {
     const heroStore = useHeroStore();
@@ -68,3 +61,13 @@ export default {
   }
 };
 </script>
+<style scoped>
+.hero-podium-base-tile {
+  display: flex;
+  align-items: center;   /* по вертикалі */
+  justify-content: center; /* по горизонталі */
+  position: relative; /* залишаємо для абсолютного позиціонування дітей, якщо потрібно */
+  width: 100%;
+  height: 100%;
+}
+</style>
