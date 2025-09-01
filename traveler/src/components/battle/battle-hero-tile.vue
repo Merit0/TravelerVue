@@ -93,7 +93,6 @@ const openInventory = () => {
 
 <style>
 @import "@/styles/battlefield-style/battlefield-map-tile-style.css";
-@import "@/styles/battlefield-style/battle-hero-tile-style.css";
 @import "@/styles/battlefield-style/battle-effects-style.css";
 
 .battle-inventory-button {
