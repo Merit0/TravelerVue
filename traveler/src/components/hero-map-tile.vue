@@ -3,11 +3,11 @@
       class="initialTileView mapTile"
       :style="tileBackgroundStyle"
   >
-    <div class="tile-bottom-shadow inventory-button">
-      <div
-          class="hero-body-tile-image"
-          @click="openInventory"
-      >
+    <div
+        class="tile-bottom-shadow inventory-button"
+        @click="openInventory"
+    >
+      <div class="hero-body-tile-image">
         <div class="podium-hero-image stand-base"/>
         <div class="podium-hero-image base-hand-l"/>
         <div

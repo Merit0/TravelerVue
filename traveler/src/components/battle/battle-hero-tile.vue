@@ -7,7 +7,7 @@
       -{{ damageValue }}
     </div>
     <div class="blood-splash" v-if="bloodSplash"/>
-    <div class="tile-bottom-shadow inventory-button">
+    <div class="battle-map-tile tile-bottom-shadow inventory-button">
       <div
           class="hero-body-tile-image"
           @click="openInventory"
@@ -119,16 +119,5 @@ const openInventory = () => {
   background: linear-gradient(to top, rgba(0, 0, 0, 0.4), transparent);
   pointer-events: none;
   z-index: 1;
-}
-
-.inventory-button {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  pointer-events: auto;
-  cursor: pointer;
 }
 </style>
