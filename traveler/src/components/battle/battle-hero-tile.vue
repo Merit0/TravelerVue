@@ -7,11 +7,11 @@
       -{{ damageValue }}
     </div>
     <div class="blood-splash" v-if="bloodSplash"/>
-    <div class="battle-map-tile tile-bottom-shadow inventory-button">
-      <div
-          class="hero-body-tile-image"
-          @click="openInventory"
-      >
+    <div
+        class="battle-inventory-button"
+        @click="openInventory"
+    >
+      <div class="battle-map-tile  battle-hero-body-tile-image">
         <div class="podium-hero-image stand-base"/>
         <div class="podium-hero-image base-hand-l"/>
         <div
@@ -91,32 +91,44 @@ const openInventory = () => {
 
 </script>
 
-<style scoped>
+<style>
 @import "@/styles/battlefield-style/battlefield-map-tile-style.css";
 @import "@/styles/battlefield-style/battle-hero-tile-style.css";
 @import "@/styles/battlefield-style/battle-effects-style.css";
-.hero-body-tile-image {
+
+.battle-inventory-button {
   position: relative;
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  transform: scale(0.4);
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.battle-hero-body-tile-image {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: scale(0.3);
   transform-origin: center center;
   bottom: 20%;
   filter: drop-shadow(10px 20px 12px rgba(0, 0, 0, 0.7));
   z-index: 2;
 }
 
-.tile-bottom-shadow::after {
+.battle-tile-bottom-shadow::after {
   content: "";
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 30%;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.4), transparent);
+  height: 20%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.3), transparent);
   pointer-events: none;
   z-index: 1;
 }
