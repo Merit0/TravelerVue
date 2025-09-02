@@ -19,28 +19,6 @@ export class HelmetProvider {
             .build();
     }
 
-    // public static getExecutorHelm(): LootItemModel {
-    //     return new LootItemBuilder()
-    //         .lootItemName("Executor")
-    //         .lootValue(50)
-    //         .price(300)
-    //         .itemType(ItemType.HELM)
-    //         .lootRarity(Rarity.LEGEND)
-    //         .lootItemImgPath(`${this.helmetsFolderPath}/legend-type/executor_helm.png`)
-    //         .build();
-    // }
-
-    // public static getOblivorHelm(): LootItemModel {
-    //     return new LootItemBuilder()
-    //         .lootItemName("Oblivor")
-    //         .lootValue(Randomizer.getRandomIntInRange(50, 100))
-    //         .price(1500)
-    //         .itemType(ItemType.HELM)
-    //         .lootRarity(Rarity.MYTHIC)
-    //         .lootItemImgPath(`${this.helmetsFolderPath}/mythic-type/oblivor-helm.png`)
-    //         .build();
-    // }
-
     public static getCommonHelmetsList(): LootItemModel[] {
         return Array.of(this.getIronHat());
     }

@@ -18,17 +18,6 @@ export class ArmorProvider {
             .build();
     }
 
-    public static getStormhideArmor(): LootItemModel {
-        return new LootItemBuilder()
-            .lootItemName("Stormhide")
-            .lootValue(Randomizer.getRandomIntInRange(100, 200))
-            .price(2000)
-            .itemType(ItemType.ARMOR)
-            .lootRarity(Rarity.MYTHIC)
-            .lootItemImgPath(this.heroArmorFolderPath + "mythic-type/stormhide-armor.png")
-            .build();
-    }
-
     public static getCommonArmorsList(): LootItemModel[] {
         return Array.of(this.getLeatherArmor());
     }
