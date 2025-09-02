@@ -38,7 +38,7 @@ export default {
     },
     async animateEquip(item: LootItemModel) {
         const itemEl = this.$refs['item-' + item.id] as HTMLElement;
-        const heroImageEl = document.querySelector('.hero-image') as HTMLElement;
+        const heroImageEl = document.querySelector('.equipment-holder-hero-image') as HTMLElement;
         const itemRect = itemEl.getBoundingClientRect();
         const heroRect = heroImageEl.getBoundingClientRect();
 

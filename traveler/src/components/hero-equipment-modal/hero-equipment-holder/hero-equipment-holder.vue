@@ -1,36 +1,36 @@
 <template>
   <div class="hero-equipment-container">
     <div class="hero-slot">
-      <div class="podium-hero-image stand-base"/>
-      <div class="podium-hero-image base-hand-l  breath"/>
+      <div class="equipment-holder-hero-image stand-base"/>
+      <div class="equipment-holder-hero-image base-hand-l  breath"/>
       <div
-          class="podium-hero-image breath"
+          class="equipment-holder-hero-image breath"
           :class="{ 'base-hand-r' : !equipment.weapon }"
           :style="getItemImage(equipment.weapon)"
       />
       <div
-          class="podium-hero-image"
+          class="equipment-holder-hero-image"
           :class="{ 'base-boots': !equipment.boots }"
           :style="getItemImage(equipment.boots)"
       />
       <div
-          class="podium-hero-image"
+          class="equipment-holder-hero-image"
           :class="{ 'base-legs': !equipment.pants }"
           :style="getItemImage(equipment.pants)"
       />
       <div
-          class="podium-hero-image breath"
+          class="equipment-holder-hero-image breath"
           :class="{ 'base-armor': !equipment.armor }"
           :style="getItemImage(equipment.armor)"
       />
       <div
-          class="podium-hero-image"
+          class="equipment-holder-hero-image"
           :class="{ 'base-belt': !equipment.belt }"
           :style="getItemImage(equipment.belt)"
       />
-      <div class="podium-hero-image base-head"/>
-      <div class="podium-hero-image" v-if="equipment.helm" :style="getItemImage(equipment.helm)"/>
-      <div class="podium-hero-image breath" v-if="equipment.shield" :style="getItemImage(equipment.shield)"/>
+      <div class="equipment-holder-hero-image base-head"/>
+      <div class="equipment-holder-hero-image" v-if="equipment.helm" :style="getItemImage(equipment.helm)"/>
+      <div class="equipment-holder-hero-image breath" v-if="equipment.shield" :style="getItemImage(equipment.shield)"/>
     </div>
     <hero-core-details></hero-core-details>
     <div class="equipment-row first-equipment-row">
