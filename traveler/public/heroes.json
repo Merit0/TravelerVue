@@ -53,6 +53,7 @@
         "kills": 0,
         "maxEnergy": 100,
         "currentEnergy": 100,
+        "heroSteps": 0,
         "stats": true,
         "equipment": {
             "sword": null,

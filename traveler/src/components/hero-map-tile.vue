@@ -36,10 +36,14 @@
             :style="getItemImageStyle(heroStore.hero.equipment.belt)"
         />
         <div class="podium-hero-image base-head"/>
-        <div class="podium-hero-image" v-if="heroStore.hero.equipment.helm"
-             :style="getItemImage(heroStore.hero.equipment.helm)"/>
-        <div class="podium-hero-image" v-if="heroStore.hero.equipment.shield"
-             :style="getItemImage(heroStore.hero.equipment.shield)"/>
+        <div
+            class="podium-hero-image"
+            v-if="heroStore.hero.equipment.helm"
+            :style="getItemImageStyle(heroStore.hero.equipment.helm)"/>
+        <div
+            class="podium-hero-image"
+            v-if="heroStore.hero.equipment.shield"
+            :style="getItemImageStyle(heroStore.hero.equipment.shield)"/>
       </div>
     </div>
   </div>
