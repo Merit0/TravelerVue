@@ -1,8 +1,8 @@
 <template>
   <div class="globalOverlay">
-    <div class="dressing-room-content">
+    <div class="dressing-room-overlay">
       <close-hero-inventory-modal-button @heroDressingRoom="closeDressingRoomOverlay()"/>
-      <div class="hero-content">
+      <div class="hero-builder-content">
         <div class="hero-podium-board">
           <div class="view-switcher" @click="toggleView">
             <p class="switcher-label">
@@ -17,7 +17,7 @@
                 :tile="mapTile"
             />
           </div>
-          <div v-else class="hero-body-view">
+          <div v-else class="hero-podium-view">
             <hero-podium :equipment="hero.equipment" :hero-image-path="hero.imgPath"/>
           </div>
         </div>
@@ -81,14 +81,14 @@ export default defineComponent({
 </script>
 
 <style>
-.dressing-room-content {
+.dressing-room-overlay {
   position: relative;
   width: 66vw;
   height: 80vh;
   margin: 12vh auto auto;
 }
 
-.hero-content {
+.hero-builder-content {
   background: radial-gradient(
       circle at center,
       #233342 0%,
@@ -114,13 +114,13 @@ export default defineComponent({
   align-items: center;
 }
 
-.hero-body-view {
+.hero-podium-view {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 102%;
-  height: 83%;
+  height: 96%;
 }
 
 .hero-inventory-slots {
@@ -152,6 +152,7 @@ export default defineComponent({
   align-items: center;
   justify-content: space-between;
   padding: 0 8px;
+  z-index: 1;
 }
 
 .switcher-label {
@@ -174,5 +175,4 @@ export default defineComponent({
   background: radial-gradient(circle, #ffd400 20%, #b5b5b5 70%, #7c7c7c 100%);
   transform: translateX(-8px); /* трохи зміщуємо вліво, якщо треба */
 }
-
 </style>

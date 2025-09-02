@@ -35,21 +35,7 @@ export class MapLocationProvider {
                 },
                 boss: bosses[randIndex],
                 enemiesStatsModifier: 0
-            },
-            {
-                name: 'Dressing Room',
-                backgroundImagePath: `${this.CAMPING_MAP_LOCATIONS_IMAGE_PATH}tiles-grid-background/tiles-grid-background.png`,
-                chestImage: '/images/chests/map_chest.png',
-                tileImage: `${this.CAMPING_MAP_LOCATIONS_IMAGE_PATH}tile-image-500-500/tree-tile-image.png`,
-                tileBackground: `${this.CAMPING_MAP_LOCATIONS_IMAGE_PATH}tile-background-500-500/ground-tile-background-2.png`,
-                endPoint: 'forest',
-                position: {
-                    top: "15%",
-                    left: "35%"
-                },
-                boss: bosses[randIndex],
-                enemiesStatsModifier: 0
-            },
+            }
         ];
         mapLocations.forEach((mapLocation: {
             name: string,

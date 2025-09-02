@@ -2,7 +2,7 @@
   <div class="hero-podium-container">
     <div class="podium-hero-slot">
       <div class="podium-hero-image stand-base"/>
-      <div class="podium-hero-image base-hand-l"/>
+      <div class="podium-hero-image base-hand-l breath"/>
       <div
           class="podium-hero-image breath"
           :class="{ 'base-hand-r' : !equipment.weapon }"
@@ -30,7 +30,7 @@
       />
       <div class="podium-hero-image base-head"/>
       <div class="podium-hero-image" v-if="equipment.helm" :style="getItemImage(equipment.helm)"/>
-      <div class="podium-hero-image" v-if="equipment.shield" :style="getItemImage(equipment.shield)"/>
+      <div class="podium-hero-image breath" v-if="equipment.shield" :style="getItemImage(equipment.shield)"/>
     </div>
     <hero-core-details></hero-core-details>
     <div class="podium-equipment-row podium-first-equipment-row">
@@ -109,10 +109,6 @@ export default {
       type: Object as PropType<Equipment>,
       required: true
     },
-    heroImagePath: {
-      type: String,
-      required: true
-    }
   },
   data() {
     const placeholderImages: Record<string, string> = {
