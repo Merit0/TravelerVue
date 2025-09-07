@@ -15,7 +15,7 @@ export class WeaponProvider {
             .itemType(ItemType.WEAPON)
             .lootRarity(Rarity.RARE)
             .lootItemImgPath(this.heroWeaponsFolderPath + "/hammers/rare-type/molner/molner-hammer.png")
-            .lootItemPoseImgPath(this.heroWeaponsFolderPath + "/hammers/rare-type/molner/molner-hammer-pose.png")
+            .lootItemPoseImgPath(this.heroWeaponsFolderPath + "/hammers/rare-type/molner/molner-hammer")
             .build();
     }
 

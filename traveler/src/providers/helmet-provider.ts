@@ -15,7 +15,7 @@ export class HelmetProvider {
             .itemType(ItemType.HELM)
             .lootRarity(Rarity.COMMON)
             .lootItemImgPath(`${this.helmetsFolderPath}/common-type/iron-hat/iron-hat.png`)
-            .lootItemPoseImgPath(`${this.helmetsFolderPath}/common-type/iron-hat/iron-hat-pose.png`)
+            .lootItemPoseImgPath(`${this.helmetsFolderPath}/common-type/iron-hat/iron-hat`)
             .build();
     }
 

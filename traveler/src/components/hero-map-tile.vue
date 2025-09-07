@@ -8,42 +8,25 @@
         @click="openInventory"
     >
       <div class="hero-body-tile-image">
-        <div class="podium-hero-image stand-base"/>
-        <div class="podium-hero-image base-hand-l"/>
+        <div class="podium-hero-image stand-base-top-view"/>
+        <div class="podium-hero-image base-hand-l-top-view breath"/>
         <div
             class="podium-hero-image breath"
-            :class="{ 'base-hand-r' : !heroStore.hero.equipment.weapon }"
-            :style="getItemImageStyle(heroStore.hero.equipment.weapon)"
-        />
-        <div
-            class="podium-hero-image"
-            :class="{ 'base-boots': !heroStore.hero.equipment.boots }"
-            :style="getItemImageStyle(heroStore.hero.equipment.boots)"
-        />
-        <div
-            class="podium-hero-image"
-            :class="{ 'base-legs': !heroStore.hero.equipment.pants }"
-            :style="getItemImageStyle(heroStore.hero.equipment.pants)"
+            :class="{ 'base-hand-r-top-view' : !heroStore.hero.equipment.weapon }"
+            :style="getItemTopViewImageStyle(heroStore.hero.equipment.weapon)"
         />
         <div
             class="podium-hero-image breath"
-            :class="{ 'base-armor': !heroStore.hero.equipment.armor }"
-            :style="getItemImageStyle(heroStore.hero.equipment.armor)"
+            :class="{ 'base-armor-top-view': !heroStore.hero.equipment.armor }"
+            :style="getItemTopViewImageStyle(heroStore.hero.equipment.armor)"
         />
         <div
             class="podium-hero-image"
-            :class="{ 'base-belt': !heroStore.hero.equipment.belt }"
-            :style="getItemImageStyle(heroStore.hero.equipment.belt)"
+            :class="{ 'base-belt-top-view': !heroStore.hero.equipment.belt }"
+            :style="getItemTopViewImageStyle(heroStore.hero.equipment.belt)"
         />
-        <div class="podium-hero-image base-head"/>
-        <div
-            class="podium-hero-image"
-            v-if="heroStore.hero.equipment.helm"
-            :style="getItemImageStyle(heroStore.hero.equipment.helm)"/>
-        <div
-            class="podium-hero-image"
-            v-if="heroStore.hero.equipment.shield"
-            :style="getItemImageStyle(heroStore.hero.equipment.shield)"/>
+        <div class="podium-hero-image breath" v-if="heroStore.hero.equipment.shield" :style="getItemTopViewImageStyle(heroStore.hero.equipment.shield)"/>
+        <div class="podium-hero-image base-head-top-view"/>
       </div>
     </div>
   </div>
@@ -62,10 +45,10 @@ const props = defineProps<{
 }>()
 
 
-const getItemImageStyle = (equipment: LootItemModel) => {
+const getItemTopViewImageStyle = (equipment: LootItemModel) => {
   if (!equipment?.poseImgPath) return {}
   return {
-    backgroundImage: `url(${equipment.poseImgPath})`,
+    backgroundImage: `url(${equipment.poseImgPath}-top-view.png)`,
   };
 }
 
@@ -87,23 +70,9 @@ const openInventory = () => {
   display: flex;
   justify-content: center;
   align-items: center;
-  transform: scale(0.4);
+  transform: scale(0.35);
   transform-origin: center center;
-  bottom: 20%;
-  filter: drop-shadow(10px 20px 12px rgba(0, 0, 0, 0.7));
-  z-index: 2;
-}
-
-.tile-bottom-shadow::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 30%;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.4), transparent);
-  pointer-events: none;
-  z-index: 1;
+  z-index: 10;
 }
 
 .inventory-button {
@@ -115,6 +84,30 @@ const openInventory = () => {
   align-items: center;
   pointer-events: auto;
   cursor: pointer;
+}
+
+.base-hand-l-top-view {
+  background-image: url("/images/creatures_500_500/humans_500_500/hero-asmodei/body-parts/hand-l-top-view.png");
+}
+
+.base-hand-r-top-view {
+  background-image: url("/images/creatures_500_500/humans_500_500/hero-asmodei/body-parts/hand-r-top-view.png");
+}
+
+.base-armor-top-view {
+  background-image: url("/images/creatures_500_500/humans_500_500/hero-asmodei/body-parts/base-torso-top-view.png");
+}
+
+.base-belt-top-view {
+  background-image: url("/images/creatures_500_500/humans_500_500/hero-asmodei/body-parts");
+}
+
+.base-head-top-view {
+  background-image: url("/images/creatures_500_500/humans_500_500/hero-asmodei/body-parts/head-up-top-view.png");
+}
+
+.stand-base-top-view {
+  background-image: url("/images/podiums/stand-base-top-view.png");
 }
 
 @keyframes heroJump {

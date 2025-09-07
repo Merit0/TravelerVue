@@ -15,7 +15,7 @@ export class ShieldProvider {
             .itemType(ItemType.SHIELD)
             .lootRarity(Rarity.COMMON)
             .lootItemImgPath(`${this.shieldsFolderPath}/common-type/warrior-shield/warrior-shield.png`)
-            .lootItemPoseImgPath(`${this.shieldsFolderPath}/common-type/warrior-shield/warrior-shield-pose.png`)
+            .lootItemPoseImgPath(`${this.shieldsFolderPath}/common-type/warrior-shield/warrior-shield`)
             .build();
     }
 

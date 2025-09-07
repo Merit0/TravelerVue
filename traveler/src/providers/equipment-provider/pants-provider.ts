@@ -14,7 +14,7 @@ export class PantsProvider {
             .itemType(ItemType.PANTS)
             .lootRarity(Rarity.RARE)
             .lootItemImgPath(this.pantsFolderPath + "common-type/elf-pants/elf-pants.png")
-            .lootItemPoseImgPath(this.pantsFolderPath + "common-type/elf-pants/elf-pants-pose.png")
+            .lootItemPoseImgPath(this.pantsFolderPath + "common-type/elf-pants/elf-pants")
             .price(100)
             .build();
     }

@@ -14,7 +14,7 @@ export class BeltsProvider {
             .itemType(ItemType.BELT)
             .lootRarity(Rarity.RARE)
             .lootItemImgPath(this.beltsFolderPath + "rare-type/leather-belt/leather-belt.png")
-            .lootItemPoseImgPath(this.beltsFolderPath + "rare-type/leather-belt/leather-belt-pose.png")
+            .lootItemPoseImgPath(this.beltsFolderPath + "rare-type/leather-belt/leather-belt")
             .price(100)
             .build();
     }

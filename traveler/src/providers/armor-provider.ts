@@ -13,7 +13,7 @@ export class ArmorProvider {
             .itemType(ItemType.ARMOR)
             .lootRarity(Rarity.COMMON)
             .lootItemImgPath(this.heroArmorFolderPath + "common-type/leather-armor/leather-armor.png")
-            .lootItemPoseImgPath(this.heroArmorFolderPath + "common-type/leather-armor/leather-armor-pose.png")
+            .lootItemPoseImgPath(this.heroArmorFolderPath + "common-type/leather-armor/leather-armor")
             .price(100)
             .build();
     }

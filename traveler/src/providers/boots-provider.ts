@@ -13,7 +13,7 @@ export class BootsProvider {
             .itemType(ItemType.BOOTS)
             .lootRarity(Rarity.COMMON)
             .lootItemImgPath(this.heroBootsFolderPath + "common-type-boots/leather-boots/leather-boots.png")
-            .lootItemPoseImgPath(this.heroBootsFolderPath + "common-type-boots/leather-boots/leather-boots-pose.png")
+            .lootItemPoseImgPath(this.heroBootsFolderPath + "common-type-boots/leather-boots/leather-boots")
             .price(100)
             .build();
     }

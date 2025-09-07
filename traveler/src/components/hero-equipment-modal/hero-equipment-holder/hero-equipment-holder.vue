@@ -6,31 +6,31 @@
       <div
           class="equipment-holder-hero-image breath"
           :class="{ 'base-hand-r' : !equipment.weapon }"
-          :style="getItemImage(equipment.weapon)"
+          :style="getPoseItemImage(equipment.weapon)"
       />
       <div
           class="equipment-holder-hero-image"
           :class="{ 'base-boots': !equipment.boots }"
-          :style="getItemImage(equipment.boots)"
+          :style="getPoseItemImage(equipment.boots)"
       />
       <div
           class="equipment-holder-hero-image"
           :class="{ 'base-legs': !equipment.pants }"
-          :style="getItemImage(equipment.pants)"
+          :style="getPoseItemImage(equipment.pants)"
       />
       <div
           class="equipment-holder-hero-image breath"
           :class="{ 'base-armor': !equipment.armor }"
-          :style="getItemImage(equipment.armor)"
+          :style="getPoseItemImage(equipment.armor)"
       />
       <div
           class="equipment-holder-hero-image"
           :class="{ 'base-belt': !equipment.belt }"
-          :style="getItemImage(equipment.belt)"
+          :style="getPoseItemImage(equipment.belt)"
       />
       <div class="equipment-holder-hero-image base-head"/>
-      <div class="equipment-holder-hero-image" v-if="equipment.helm" :style="getItemImage(equipment.helm)"/>
-      <div class="equipment-holder-hero-image breath" v-if="equipment.shield" :style="getItemImage(equipment.shield)"/>
+      <div class="equipment-holder-hero-image" v-if="equipment.helm" :style="getPoseItemImage(equipment.helm)"/>
+      <div class="equipment-holder-hero-image breath" v-if="equipment.shield" :style="getPoseItemImage(equipment.shield)"/>
     </div>
     <hero-core-details></hero-core-details>
     <div class="equipment-row first-equipment-row">
@@ -126,10 +126,10 @@ export default {
     };
   },
   methods: {
-    getItemImage(equipment: LootItemModel) {
+    getPoseItemImage(equipment: LootItemModel) {
       if (!equipment?.poseImgPath) return {}
       return {
-        backgroundImage: `url(${equipment.poseImgPath})`,
+        backgroundImage: `url(${equipment.poseImgPath}-pose.png)`,
       };
     },
   }
