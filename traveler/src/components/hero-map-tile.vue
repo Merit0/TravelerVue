@@ -2,12 +2,17 @@
   <div
       class="initialTileView mapTile"
       :style="tileBackgroundStyle"
+      @mouseenter="isHoveringHero = true"
+      @mouseleave="isHoveringHero = false"
   >
     <div
         class="tile-bottom-shadow inventory-button"
         @click="openInventory"
     >
-      <div class="hero-body-tile-image">
+      <div
+          class="hero-body-tile-image"
+          :style="heroTransformStyle"
+      >
         <div class="podium-hero-image stand-base-top-view"/>
         <div class="podium-hero-image base-hand-l-top-view breath"/>
         <div
@@ -20,20 +25,18 @@
             :class="{ 'base-armor-top-view': !heroStore.hero.equipment.armor }"
             :style="getItemTopViewImageStyle(heroStore.hero.equipment.armor)"
         />
+        <div class="podium-hero-image breath" v-if="heroStore.hero.equipment.shield" :style="getItemTopViewImageStyle(heroStore.hero.equipment.shield)"/>
         <div
             class="podium-hero-image"
-            :class="{ 'base-belt-top-view': !heroStore.hero.equipment.belt }"
-            :style="getItemTopViewImageStyle(heroStore.hero.equipment.belt)"
+            :class="headClass"
         />
-        <div class="podium-hero-image breath" v-if="heroStore.hero.equipment.shield" :style="getItemTopViewImageStyle(heroStore.hero.equipment.shield)"/>
-        <div class="podium-hero-image base-head-top-view"/>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import {computed, defineProps} from 'vue'
+import {computed, defineProps, onMounted, onUnmounted, ref} from "vue";
 import TileModel from '@/models/TileModel'
 import {useHeroStore} from '@/stores/HeroStore'
 import {LootItemModel} from "@/models/LootItemModel";
@@ -42,8 +45,62 @@ const heroStore = useHeroStore()
 
 const props = defineProps<{
   tile: TileModel
-}>()
+}>();
 
+const rotation = ref(0);
+const targetRotation = ref(0);
+const isHoveringHero = ref(false);
+const isIdle = ref(true);
+let idleTimer: number | null = null;
+
+const headClass = computed(() => {
+  return isIdle.value ? "base-head-up-top-view" : "base-head-top-view";
+});
+
+const heroTransformStyle = computed(() => ({
+  transform: `scale(0.3) rotate(${rotation.value}deg)`,
+  transformOrigin: "center center",
+}));
+
+const updateRotation = (e: MouseEvent) => {
+  if (isHoveringHero.value) return;
+
+  const heroEl = document.querySelector(
+      ".hero-body-tile-image"
+  ) as HTMLElement | null;
+  if (!heroEl) return;
+
+  const rect = heroEl.getBoundingClientRect();
+  const centerX = rect.left + rect.width / 2;
+  const centerY = rect.top + rect.height / 2;
+
+  const dx = e.clientX - centerX;
+  const dy = e.clientY - centerY;
+
+  const angle = Math.atan2(dy, dx) * (180 / Math.PI);
+
+  targetRotation.value = angle + 270;
+  isIdle.value = false;
+  if (idleTimer) window.clearTimeout(idleTimer);
+  idleTimer = window.setTimeout(() => {
+    isIdle.value = true;
+  }, 1000);
+};
+
+const animate = () => {
+  rotation.value += (targetRotation.value - rotation.value);
+  requestAnimationFrame(animate);
+};
+
+onMounted(() => {
+  window.addEventListener("mousemove", updateRotation);
+  animate();
+});
+
+onUnmounted(() => {
+  window.removeEventListener("mousemove", updateRotation);
+  if (idleTimer) window.clearTimeout(idleTimer);
+});
 
 const getItemTopViewImageStyle = (equipment: LootItemModel) => {
   if (!equipment?.poseImgPath) return {}
@@ -70,7 +127,7 @@ const openInventory = () => {
   display: flex;
   justify-content: center;
   align-items: center;
-  transform: scale(0.35);
+  transform: scale(0.3);
   transform-origin: center center;
   z-index: 10;
 }
@@ -98,33 +155,15 @@ const openInventory = () => {
   background-image: url("/images/creatures_500_500/humans_500_500/hero-asmodei/body-parts/base-torso-top-view.png");
 }
 
-.base-belt-top-view {
-  background-image: url("/images/creatures_500_500/humans_500_500/hero-asmodei/body-parts");
+.base-head-top-view {
+  background-image: url("/images/creatures_500_500/humans_500_500/hero-asmodei/body-parts/head-top-view.png");
 }
 
-.base-head-top-view {
+.base-head-up-top-view {
   background-image: url("/images/creatures_500_500/humans_500_500/hero-asmodei/body-parts/head-up-top-view.png");
 }
 
 .stand-base-top-view {
   background-image: url("/images/podiums/stand-base-top-view.png");
-}
-
-@keyframes heroJump {
-  0% {
-    transform: translateY(0);
-  }
-  25% {
-    transform: translateY(-8px);
-  }
-  50% {
-    transform: translateY(0);
-  }
-  75% {
-    transform: translateY(-4px);
-  }
-  100% {
-    transform: translateY(0);
-  }
 }
 </style>
