@@ -6,7 +6,7 @@
       @mouseleave="isHoveringHero = false"
   >
     <div
-        class="tile-bottom-shadow inventory-button"
+        class="inventory-button"
         @click="openInventory"
     >
       <div

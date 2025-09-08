@@ -55,7 +55,8 @@ export default defineComponent({
       tile.inBattle = true;
 
       const aliveEnemies = tile.enemies.filter(e => e.health > 0);
-      diceStore.setDiceCountWithEnemyCount(aliveEnemies);
+      diceStore.setupDiceHeroActions();
+      diceStore.setupEnemyCounterDice(aliveEnemies);
 
       overlayStore.openOverlay('battle');
     },

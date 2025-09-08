@@ -1,63 +1,23 @@
 <template>
   <div
-      class="battle-initial-tile-view battle-map-tile"
+      class="battle-map-tile"
       :style="getTileBackgroundImage(tile)"
   >
     <div class="damage-popup" v-if="damageValue">
       -{{ damageValue }}
     </div>
     <div class="blood-splash" v-if="bloodSplash"/>
-    <div
-        class="battle-inventory-button"
-        @click="openInventory"
-    >
-      <div class="battle-map-tile  battle-hero-body-tile-image">
-        <div class="podium-hero-image stand-base"/>
-        <div class="podium-hero-image base-hand-l"/>
-        <div
-            class="podium-hero-image breath"
-            :class="{ 'base-hand-r' : !heroStore.hero.equipment.weapon }"
-            :style="getItemImageStyle(heroStore.hero.equipment.weapon)"
-        />
-        <div
-            class="podium-hero-image"
-            :class="{ 'base-boots': !heroStore.hero.equipment.boots }"
-            :style="getItemImageStyle(heroStore.hero.equipment.boots)"
-        />
-        <div
-            class="podium-hero-image"
-            :class="{ 'base-legs': !heroStore.hero.equipment.pants }"
-            :style="getItemImageStyle(heroStore.hero.equipment.pants)"
-        />
-        <div
-            class="podium-hero-image breath"
-            :class="{ 'base-armor': !heroStore.hero.equipment.armor }"
-            :style="getItemImageStyle(heroStore.hero.equipment.armor)"
-        />
-        <div
-            class="podium-hero-image"
-            :class="{ 'base-belt': !heroStore.hero.equipment.belt }"
-            :style="getItemImageStyle(heroStore.hero.equipment.belt)"
-        />
-        <div class="podium-hero-image base-head"/>
-        <div class="podium-hero-image" v-if="heroStore.hero.equipment.helm"
-             :style="getItemImage(heroStore.hero.equipment.helm)"/>
-        <div class="podium-hero-image" v-if="heroStore.hero.equipment.shield"
-             :style="getItemImage(heroStore.hero.equipment.shield)"/>
-      </div>
-    </div>
+    <hero-map-tile :tile="tile"/>
   </div>
 </template>
 
 <script setup lang="ts">
 import {computed, defineProps} from 'vue';
 import TileModel from '@/models/TileModel';
-import {useHeroStore} from "@/stores/HeroStore";
 import {useBattleStore} from "@/stores/battle-store";
-import {LootItemModel} from "@/models/LootItemModel";
+import HeroMapTile from "@/components/hero-map-tile.vue";
 
 const battleStore = useBattleStore();
-const heroStore = useHeroStore();
 
 const props = defineProps<{
   tile: TileModel
@@ -66,13 +26,6 @@ const props = defineProps<{
 const damageValue = computed(() => {
   return battleStore.damagePopups[props.tile.id] || null
 });
-
-const getItemImageStyle = (equipment: LootItemModel) => {
-  if (!equipment?.poseImgPath) return {}
-  return {
-    backgroundImage: `url(${equipment.poseImgPath})`,
-  };
-}
 
 const bloodSplash = computed(() => {
   return battleStore.bloodSplashTiles.includes(props.tile.id)
@@ -84,10 +37,6 @@ const getTileBackgroundImage = (tile: TileModel) => {
     'background-size': '100% 100%'
   }
 }
-
-const openInventory = () => {
-  heroStore.inventoryShown = true;
-};
 
 </script>
 

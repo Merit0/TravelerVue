@@ -1,5 +1,6 @@
 import { Equipment } from "@/models/Equipment";
 import TileModel, {ICoordinates} from "@/models/TileModel";
+import {DiceModel} from "@/models/DiceModel";
 
 export interface IHero {
   name: string;
@@ -19,5 +20,6 @@ export interface IHero {
   currentTile: TileModel;
   heroLocation: ICoordinates;
   heroSteps: number;
+  heroDices: DiceModel[]
   experienceCollector(): void;
 }
