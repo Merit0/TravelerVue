@@ -11,6 +11,8 @@ export const useHeroStore = defineStore("hero", {
         inventoryShown: false,
         heroPositionsByMap: {} as Record<string, any>,
         flippedMy: true,
+        heroMapTileBodyRotationAngle: 270,
+        heroTargetRotation: 270
     }),
 
     actions: {
@@ -84,5 +86,13 @@ export const useHeroStore = defineStore("hero", {
             this.hero = new HeroModel();
             this.heroPositionsByMap = {};
         },
+
+        setTargetRotation(angle: number) {
+            this.heroTargetRotation = angle;
+        },
+        tickRotation() {
+            this.heroMapTileBodyRotationAngle +=
+                (this.heroTargetRotation - this.heroMapTileBodyRotationAngle);
+        }
     },
 });

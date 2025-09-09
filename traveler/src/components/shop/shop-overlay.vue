@@ -1,6 +1,6 @@
 <template>
   <div class="globalOverlay" v-if="showShopOverlay">
-    <div class="shopOverlay">
+    <div class="shopOverlay" data-testid="shop-overlay">
       <div class="closeShopBtn" @click="$emit('closeShop')"></div>
       <shop-mode-switcher v-model:isBuyMode="isBuyMode"></shop-mode-switcher>
       <shop-slots-grid v-if="isBuyMode"></shop-slots-grid>

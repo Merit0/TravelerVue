@@ -158,7 +158,7 @@ function attackEnemies(targetsNumber: number) {
 
   const shuffledTiles = [...aliveEnemyTiles].sort(() => Math.random() - 0.5);
   const selectedTiles = shuffledTiles.slice(0, targets);
-  const unSelectedTiles = shuffledTiles.slice(targets); // решта
+  const unSelectedTiles = shuffledTiles.slice(targets);
 
   for (const tile of unSelectedTiles) {
     battleStore.triggerDodgeEffect(tile.id);

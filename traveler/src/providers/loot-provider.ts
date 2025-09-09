@@ -33,9 +33,9 @@ export class EnemyLootProvider {
             } else if (roll < (accumulated += dropChanceConfig.rare)) {
                 item = Randomizer.getRandomEquipment(EquipmentGroupProvider.getRareEquipment());
             } else if (roll < (accumulated += dropChanceConfig.epic)) {
-                item = Randomizer.getRandomEquipment(EquipmentGroupProvider.getEpicEquipment());
+                item = Randomizer.getRandomEquipment(EquipmentGroupProvider.getRareEquipment());
             } else if (roll < (accumulated + dropChanceConfig.legend)) {
-                item = Randomizer.getRandomEquipment(EquipmentGroupProvider.getLegendEquipment());
+                item = Randomizer.getRandomEquipment(EquipmentGroupProvider.getRareEquipment());
             }
 
             if (item) loot.push(item);

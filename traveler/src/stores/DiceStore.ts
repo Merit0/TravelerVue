@@ -4,6 +4,7 @@ import {DiceFace, DiceModel} from "@/models/DiceModel";
 import {RollDiceTester} from "@/utils/roll-dice-tester";
 import {EnemyDiceGenerator} from "@/utils/enemy-utils/enemy-dice-generator";
 import EnemyModel from "@/models/EnemyModel";
+import {useHeroStore} from "@/stores/HeroStore";
 
 export const useDiceStore = defineStore('dice', {
         state: () => ({
@@ -31,6 +32,7 @@ export const useDiceStore = defineStore('dice', {
 
                 this.isRolling = false;
             },
+
             async rollAllEnemyDices(): Promise<Record<number, string[]>> {
                 const results: Record<number, string[]> = {};
 
@@ -51,24 +53,29 @@ export const useDiceStore = defineStore('dice', {
                 return results;
             },
 
-            setDiceCountWithEnemyCount(enemyModels: { health: number }[]) {
-                const actionFaces: DiceFace[] = ['sword', 'shield', 'energy'];
-                const swordDiceWeights = [6, 2, 3];
-
-                const liveEnemies = enemyModels.filter(e => e.health > 0);
-                const liveEnemyCount = liveEnemies.length;
-
-                const enemyFaces = Array.from({length: liveEnemyCount}, (_, i) => `x${i + 1}`);
-
-                this.testDice(actionFaces, swordDiceWeights);
+            setupDiceHeroActions() {
+                const hero = useHeroStore().hero;
+                const heroDices = hero.getHeroDices();
+                this.testDice(heroDices[0].faces, heroDices[0].weights);
 
                 this.holder.dices = [
-                    new DiceModel(actionFaces, swordDiceWeights),
-                    new DiceModel(actionFaces, swordDiceWeights),
-                    new DiceModel(actionFaces, swordDiceWeights),
-                    new DiceModel(enemyFaces), // Динамічний кубик кількості ворогів
+                    new DiceModel(heroDices[0].faces, heroDices[0].weights),
+                    new DiceModel(heroDices[1].faces, heroDices[1].weights),
+                    new DiceModel(heroDices[2].faces, heroDices[2].weights),
                 ];
             },
+
+            setupEnemyCounterDice(enemyModels: { health: number }[]) {
+                const liveEnemies = enemyModels.filter(e => e.health > 0);
+                const liveEnemyCount = liveEnemies.length;
+                const enemyFaces = Array.from({length: liveEnemyCount}, (_, i) => `x${i + 1}`);
+                if (this.holder.dices.length === 3) {
+                    this.holder.dices.push(new DiceModel(enemyFaces));// dynamic dice with enemy counter
+                } else {
+                    console.warn('Three Hero Action Dices are not added!')
+                }
+            },
+
             restoreState(saved: any) {
                 if (saved?.holder?.dices?.length > 0) {
                     this.holder = DicesHolderModel.fromSaved(saved.holder);

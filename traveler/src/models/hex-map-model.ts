@@ -1,4 +1,4 @@
-import {IRegionConfig} from "@/abstraction/IRegionConfig";
+import {IRegionConfig} from "@/abstraction/region-config-interface";
 import {HexTileModel} from "@/models/hex-tile-model";
 
 export class HexMapModel {

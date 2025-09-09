@@ -4,6 +4,8 @@ export enum ItemType {
   HELM,
   SHIELD,
   BOOTS,
+  PANTS,
+  BELT,
   GLOWS,
   RING,
   NECKLACE,

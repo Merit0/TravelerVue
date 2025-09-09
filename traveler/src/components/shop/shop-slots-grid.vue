@@ -1,6 +1,6 @@
 <template>
   <div class="shopGridContainer">
-    <div class="lootItemsGrid">
+    <div class="lootItemsGrid" data-testid="buy-loot-items-grid">
       <shop-slot
           v-for="lootItem in itemsList"
           :key="lootItem.id"

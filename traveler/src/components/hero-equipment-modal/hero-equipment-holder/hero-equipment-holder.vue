@@ -1,7 +1,36 @@
 <template>
   <div class="hero-equipment-container">
     <div class="hero-slot">
-      <div class="hero-image" :style="getStyle(heroImagePath)" ref="heroImage"></div>
+      <div class="equipment-holder-hero-image stand-base"/>
+      <div class="equipment-holder-hero-image base-hand-l  breath"/>
+      <div
+          class="equipment-holder-hero-image breath"
+          :class="{ 'base-hand-r' : !equipment.weapon }"
+          :style="getPoseItemImage(equipment.weapon)"
+      />
+      <div
+          class="equipment-holder-hero-image"
+          :class="{ 'base-boots': !equipment.boots }"
+          :style="getPoseItemImage(equipment.boots)"
+      />
+      <div
+          class="equipment-holder-hero-image"
+          :class="{ 'base-legs': !equipment.pants }"
+          :style="getPoseItemImage(equipment.pants)"
+      />
+      <div
+          class="equipment-holder-hero-image breath"
+          :class="{ 'base-armor': !equipment.armor }"
+          :style="getPoseItemImage(equipment.armor)"
+      />
+      <div
+          class="equipment-holder-hero-image"
+          :class="{ 'base-belt': !equipment.belt }"
+          :style="getPoseItemImage(equipment.belt)"
+      />
+      <div class="equipment-holder-hero-image base-head"/>
+      <div class="equipment-holder-hero-image" v-if="equipment.helm" :style="getPoseItemImage(equipment.helm)"/>
+      <div class="equipment-holder-hero-image breath" v-if="equipment.shield" :style="getPoseItemImage(equipment.shield)"/>
     </div>
     <hero-core-details></hero-core-details>
     <div class="equipment-row first-equipment-row">
@@ -20,16 +49,15 @@
     </div>
     <div class="equipment-row second-equipment-row">
       <equipment-placeholder-slot
-          :equipment-item="equipment.shield"
-          :empty-placeholder-image="placeholderImages.shield"
-          slot-type="shield"
+          :equipment-item="equipment.weapon"
+          :empty-placeholder-image="placeholderImages.weapon"
+          slot-type="weapon"
       >
       </equipment-placeholder-slot>
       <equipment-placeholder-slot
-          :equipment-item="equipment.weapon"
-          :empty-placeholder-image="placeholderImages.weapon"
-          :move-image-move-right="String('16%')"
-          slot-type="weapon"
+          :equipment-item="equipment.shield"
+          :empty-placeholder-image="placeholderImages.shield"
+          slot-type="shield"
       >
       </equipment-placeholder-slot>
     </div>
@@ -41,8 +69,22 @@
       >
       </equipment-placeholder-slot>
       <equipment-placeholder-slot
-          :equipment-item="equipment.gloves"
-          :empty-placeholder-image="placeholderImages.gloves"
+          :equipment-item="equipment.belt"
+          :empty-placeholder-image="placeholderImages.belt"
+          slot-type="gloves"
+      >
+      </equipment-placeholder-slot>
+    </div>
+    <div class="equipment-row fourth-equipment-row">
+      <equipment-placeholder-slot
+          :equipment-item="equipment.pants"
+          :empty-placeholder-image="placeholderImages.pants"
+          slot-type="boots"
+      >
+      </equipment-placeholder-slot>
+      <equipment-placeholder-slot
+          :equipment-item="equipment.ring"
+          :empty-placeholder-image="placeholderImages.ring"
           slot-type="gloves"
       >
       </equipment-placeholder-slot>
@@ -66,10 +108,6 @@ export default {
     equipment: {
       type: Object as PropType<Equipment>,
       required: true
-    },
-    heroImagePath: {
-      type: String,
-      required: true
     }
   },
   data() {
@@ -79,21 +117,19 @@ export default {
       shield: 'shield-placeholder-image.png',
       weapon: 'sword-placeholder-image.png',
       boots: 'boots-placeholder-image.png',
-      gloves: 'gloves-placeholder-image.png',
+      belt: 'belt-placeholder-image.png',
+      pants: 'pants-placeholder-image.png',
+      ring: 'ring-placeholder-image.png',
     };
     return {
       placeholderImages,
     };
   },
   methods: {
-    getItemImage(equipment: LootItemModel) {
+    getPoseItemImage(equipment: LootItemModel) {
+      if (!equipment?.poseImgPath) return {}
       return {
-        backgroundImage: `url(${equipment.imgPath})`,
-      };
-    },
-    getStyle(imagePath: string) {
-      return {
-        backgroundImage: `url(${imagePath})`,
+        backgroundImage: `url(${equipment.poseImgPath}-pose.png)`,
       };
     },
   }

@@ -6,7 +6,7 @@ import {Rarity} from "@/enums/Rarity";
 import {EnemyType} from "@/enums/EnemyType";
 
 export class ElixirsProvider {
-    private static elixirsFolderPath = "images/healing-items";
+    private static elixirsFolderPath = "/images/healing-items";
 
     public static getCommonElixir(): LootItemModel {
         return new LootItemBuilder()

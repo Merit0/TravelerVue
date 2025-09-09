@@ -126,6 +126,18 @@ export default defineComponent({
         await this.bagStore.putIn(item);
         this.hero.maxHealth -= equipment.shield.value;
         equipment.shield = null;
+      } else if (itemType === ItemType.BOOTS && equipment.boots) {
+        await this.bagStore.putIn(item);
+        this.hero.maxHealth -= equipment.boots.value;
+        equipment.boots = null;
+      } else if (itemType === ItemType.PANTS && equipment.pants) {
+        await this.bagStore.putIn(item);
+        this.hero.maxHealth -= equipment.pants.value;
+        equipment.pants = null;
+      } else if (itemType === ItemType.BELT && equipment.belt) {
+        await this.bagStore.putIn(item);
+        this.hero.maxHealth -= equipment.belt.value;
+        equipment.belt = null;
       }
 
       this.hero.adjustHealthOnStatChange();

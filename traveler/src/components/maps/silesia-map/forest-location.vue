@@ -35,8 +35,8 @@ const overlayStore = useOverlayStore();
 const mapLocationName = 'Forest';
 mapLocationStore.initMapsList();
 
-const silesia: MapModel = mapLocationStore.getSilesia();
-const silesiaLocations: MapLocationModel[] = silesia.mapLocations;
+  const silesia: MapModel = mapLocationStore.getSilesia();
+  const silesiaLocations: MapLocationModel[] = silesia.mapLocations;
 const mapLocation: MapLocationModel = silesiaLocations.find(
     location => location.name === mapLocationName
 )!;

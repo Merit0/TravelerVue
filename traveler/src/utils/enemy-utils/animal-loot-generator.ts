@@ -29,7 +29,7 @@ export class AnimalLootGenerator {
             .price(price)
             .lootValue(1)
             .lootRarity(Rarity.COMMON)
-            .lootItemImgPath('images/loot-icons/animal-leather-icon-image.png')
+            .lootItemImgPath('/images/loot-icons/animal-leather-icon-image.png')
             .build();
     }
 }
