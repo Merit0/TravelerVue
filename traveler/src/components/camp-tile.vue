@@ -44,7 +44,7 @@ export default {
 }
 
 .campingTileImage {
-  background-image: url("/images/camping-place/camp-tile-background.png");
+  background-image: url("/src/a-game-scenes/home-scene/assets/camp-tile-background.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   width: 100%;

@@ -39,7 +39,7 @@ export default {
 </script>
 
 <style scoped>
-@import '@/styles/hero-details-top-bar.css';
+@import '@/a-game-scenes/home-scene/styles/hero-details-top-bar-style.css';
 
 .bag-content {
   position: absolute;

@@ -46,6 +46,6 @@ const userStore = useUserStore();
 
 </script>
 
-<style>
-@import '@/styles/hero-details-top-bar.css';
+<style scoped>
+@import '@/a-game-scenes/home-scene/styles/hero-details-top-bar-style.css';
 </style>

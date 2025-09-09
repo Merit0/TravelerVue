@@ -25,7 +25,7 @@
 <script lang="ts">
 import {useHeroStore} from '@/stores/HeroStore'
 import router from "@/router";
-import HeroDetailsBar from "@/components/hero-details-bar.vue";
+import HeroDetailsBar from "@/a-game-scenes/home-scene/components/hero-details-bar.vue";
 
 export default {
   name: "home-page",
@@ -45,6 +45,6 @@ export default {
 }
 </script>
 <style>
-@import '@/styles/home-page.css';
+@import '@/poc-project/game-mode-selector-style.css';
 </style>
       

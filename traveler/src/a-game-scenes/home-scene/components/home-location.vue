@@ -38,7 +38,7 @@ import {useHeroStore} from '@/stores/HeroStore';
 import router from "@/router";
 import ShopOverlay from "@/components/shop/shop-overlay.vue";
 import HeroInventoryOverlay from "@/components/hero-equipment-modal/hero-inventory-overlay.vue";
-import HeroDetailsBar from "@/components/hero-details-bar.vue";
+import HeroDetailsBar from "@/a-game-scenes/home-scene/components/hero-details-bar.vue";
 import HeroDressingRoomOverlay from "@/components/hero-builder-modal/hero-dressing-room-overlay.vue";
 import {useOverlayStore} from "@/stores/overlay-store";
 
@@ -150,7 +150,7 @@ export default {
 }
 
 .tileBackground {
-  background-image: url('/images/camping-place/stone-tile-baground.png');
+  background-image: url('/src/a-game-scenes/home-scene/assets/stone-tile-baground.png');
   background-size: cover;
 }
 
@@ -174,15 +174,15 @@ export default {
 }
 
 .dressing-room-icon {
-  background-image: url('/images/camping-place/hero-painting-icon.png');
+  background-image: url('/src/a-game-scenes/home-scene/assets/hero-painting-icon.png');
 }
 
 .bag-icon {
-  background-image: url('/images/camping-place/bag-icon-image.png');
+  background-image: url('/src/a-game-scenes/home-scene/assets/bag-icon-image.png');
 }
 
 .map-icon {
-  background-image: url('/images/camping-place/map-icon-image.png');
+  background-image: url('/src/a-game-scenes/home-scene/assets/map-icon-image.png');
 }
 
 .shopPlace {
