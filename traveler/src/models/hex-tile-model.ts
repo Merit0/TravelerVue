@@ -1,4 +1,4 @@
-import {TerrainType} from "@/abstraction/IRegionConfig";
+import {TerrainType} from "@/abstraction/region-config-interface";
 
 export class HexTileModel {
     q: number;

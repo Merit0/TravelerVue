@@ -1,5 +1,5 @@
 <template>
-  <div class="bag-content">
+  <div class="bag-content" data-testid="bag-content">
     <div class="bag-title-container">
       <span class="bag-title">Bag</span>
     </div>

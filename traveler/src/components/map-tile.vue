@@ -2,7 +2,7 @@
   <relief-tile v-if="tile.isInitial" :tile="tile"/>
   <empty-tile :tile="tile"/>
   <enemy-tile :tile="tile"/>
-  <hero-tile v-if="tile.isHeroHere" :tile="tile" :key="tile.id + '-' + tile.isHeroHere"/>
+  <hero-map-tile v-if="tile.isHeroHere" :tile="tile" :key="tile.id + '-' + tile.isHeroHere"/>
   <camp-tile/>
 </template>
 
@@ -12,7 +12,7 @@ import EnemyTile from '@/components/EnemyTile.vue';
 import ReliefTile from '@/components/relief-tile.vue';
 import EmptyTile from '@/components/EmptyTile.vue';
 import {useHeroStore} from '@/stores/HeroStore';
-import HeroTile from './HeroTile.vue';
+import HeroMapTile from './hero-map-tile.vue';
 import {useMapLocationStore} from '@/stores/map-location-store';
 import {PropType} from 'vue';
 import CampTile from "@/components/camp-tile.vue";
@@ -31,7 +31,7 @@ export default {
     EnemyTile,
     ReliefTile,
     EmptyTile,
-    HeroTile
+    HeroMapTile
   },
   data() {
     const heroStore = useHeroStore();

@@ -165,6 +165,29 @@ export const useMapLocationStore = defineStore("map-location-store", {
             return tiles;
         },
 
+        generatePodiumTiles(): TileModel[] {
+            const GRID_SIZE = 3;
+            const CENTER = {x: 1, y: 1};
+
+            const podiumTiles: TileModel[] = [];
+
+            for (let y = 0; y < GRID_SIZE; y++) {
+                for (let x = 0; x < GRID_SIZE; x++) {
+                    const index = y * GRID_SIZE + x;
+                    const t = new TileModel(index, {x, y});
+                    t.isInitial = true;
+                    t.backgroundSrc = '/images/map-location/camping-map-location/tile-background-500-500/ground-tile-background-2.png';
+                    podiumTiles.push(t);
+                }
+            }
+
+            const centerIndex = CENTER.y * GRID_SIZE + CENTER.x;
+            podiumTiles[centerIndex].isHeroHere = true;
+            podiumTiles[centerIndex].isInitial = false;
+
+            return podiumTiles;
+        },
+
         addHeroToTiles(tiles: TileModel[], hero: HeroModel) {
             tiles.forEach((tile: TileModel) => {
                 tile.isHeroHere = false;

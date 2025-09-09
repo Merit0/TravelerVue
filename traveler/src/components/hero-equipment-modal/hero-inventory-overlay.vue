@@ -1,12 +1,14 @@
 <template>
   <div class="globalOverlay" v-if="heroStore.inventoryShown">
-    <div class="inventoryContent">
+    <div class="heroInventoryOverlayContent">
       <close-hero-inventory-modal-button @heroInventory="closeInventory($event)"/>
       <inventory-top-element/>
       <div class="left-side-wooden-plank"></div>
       <div class="bottom-wooden-plank"></div>
       <hero-bag-inventory/>
-      <HeroEquipmentHolder :equipment="hero.equipment" :hero-image-path="hero.imgPath"/>
+      <div class="hero-content">
+        <HeroEquipmentHolder :equipment="hero.equipment"/>
+      </div>
     </div>
   </div>
 </template>
@@ -46,11 +48,11 @@ export default {
 </script>
 
 <style>
-.inventoryContent {
+.heroInventoryOverlayContent {
   position: relative;
-  width: 51vw;
-  height: 70vh;
-  margin: 15vh auto auto;
+  width: 66vw;
+  height: 80vh;
+  margin: 12vh auto auto;
 }
 
 .left-side-wooden-plank {
@@ -83,6 +85,14 @@ export default {
   border-radius: 10px;
   z-index: 10;
   box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.4), /* верхня зовнішня тінь */ inset 0 2px 4px rgba(255, 255, 255, 0.1), /* внутрішній світлий блиск */ inset 0 -2px 6px rgba(0, 0, 0, 0.3); /* внутрішня глибина */
+}
+
+.hero-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  height: 75vh;
 }
 
 </style>

@@ -1,6 +1,8 @@
 import {IHero} from "@/abstraction/IHero";
 import {Equipment} from "./Equipment";
 import TileModel, {ICoordinates} from "./TileModel";
+import {DiceModel} from "@/models/DiceModel";
+
 
 export class HeroModel implements IHero {
     name: string;
@@ -21,11 +23,18 @@ export class HeroModel implements IHero {
     heroLocation: ICoordinates;
     flippedImage = false;
     heroSteps: number;
+    heroDices: DiceModel[] = [];
 
     constructor() {
         this.maxHealth = 100;
         this.maxEnergy = 100;
         this.heroSteps = 0;
+    }
+
+    getHeroDices(): DiceModel[] {
+        const actionFaces = ['sword', 'shield', 'energy'];
+        const diceWeights = [10, 2, 3]
+        return Array.from({length: 3}, () => new DiceModel(actionFaces, diceWeights));
     }
 
     setFlipped(state: boolean) {

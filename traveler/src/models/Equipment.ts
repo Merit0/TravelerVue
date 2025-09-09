@@ -9,5 +9,6 @@ export class Equipment implements IEquipment {
   armor: LootItemModel;
   ring: LootItemModel;
   boots: LootItemModel;
-  gloves: LootItemModel;
+  belt: LootItemModel;
+  pants: LootItemModel;
 }

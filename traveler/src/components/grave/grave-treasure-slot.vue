@@ -24,7 +24,7 @@ export default defineComponent({
   name: 'grave-treasure-slot',
   props: {
     lootItem: {
-      type: [Object, null] as PropType<LootItemModel | null>, // ✅
+      type: [Object, null] as PropType<LootItemModel | null>,
       required: false,
       default: null
     }

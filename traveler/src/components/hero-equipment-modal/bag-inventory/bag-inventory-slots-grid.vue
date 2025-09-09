@@ -1,6 +1,6 @@
 <template>
   <div class="bagGridContainer">
-    <div class="bagInventoryGrid">
+    <div class="bagInventoryGrid" data-testid="bag-inventory-slots-grid">
       <BagItemTile v-for="bagItem in bagStore.bagItems" :key="bagItem.id" :lootItem="bagItem"></BagItemTile>
       <div
           v-for="n in allSlotsNumber - bagStore.itemsNumber"

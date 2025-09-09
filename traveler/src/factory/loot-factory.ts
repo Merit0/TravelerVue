@@ -1,6 +1,5 @@
 import {EnemyType} from "@/enums/EnemyType";
 import {LootItemModel} from "@/models/LootItemModel";
-import {WeaponProvider} from "@/providers/WeaponProvider";
 import {CoinsProvider} from "@/providers/coins-provider";
 import {Randomizer} from "@/utils/Randomizer";
 import {Rarity} from "@/enums/Rarity";
@@ -43,10 +42,10 @@ export class LootFactory {
 
     private static getRandomItemByRarity(rarity: Rarity): LootItemModel | null {
         const pool: LootItemModel[] = {
-            [Rarity.MYTHIC]: EquipmentGroupProvider.getMythicEquipment?.() ?? [],
-            [Rarity.LEGEND]: WeaponProvider.getLegends?.() ?? [],
-            [Rarity.EPIC]: EquipmentGroupProvider.getCommonEquipment?.() ?? [],
-            [Rarity.RARE]: EquipmentGroupProvider.getCommonEquipment?.() ?? [],
+            // [Rarity.MYTHIC]: EquipmentGroupProvider.getMythicEquipment?.() ?? [],
+            // [Rarity.LEGEND]: WeaponProvider.getLegends?.() ?? [],
+            // [Rarity.EPIC]: EquipmentGroupProvider.getCommonEquipment?.() ?? [],
+            [Rarity.RARE]: EquipmentGroupProvider.getRareEquipment?.() ?? [],
             [Rarity.COMMON]: EquipmentGroupProvider.getCommonEquipment?.() ?? [],
         }[rarity];
 

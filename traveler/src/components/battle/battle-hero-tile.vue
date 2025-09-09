@@ -1,39 +1,27 @@
 <template>
   <div
-      class="battle-initial-tile-view battle-map-tile"
+      class="battle-map-tile"
       :style="getTileBackgroundImage(tile)"
   >
-    <div
-        class="battle-hero-tile"
-        :style="heroImgStyle"
-        :class="{ flipped }"
-        @mousemove="handleMouse">
-      <div class="damage-popup" v-if="damageValue">
-        -{{ damageValue }}
-      </div>
-      <div class="blood-splash" v-if="bloodSplash"/>
-      <button
-          class="battle-map-tile tileButton"
-          @click="openInventory()"
-      />
+    <div class="damage-popup" v-if="damageValue">
+      -{{ damageValue }}
     </div>
+    <div class="blood-splash" v-if="bloodSplash"/>
+    <hero-map-tile :tile="tile"/>
   </div>
 </template>
 
 <script setup lang="ts">
-import {computed, defineProps, ref} from 'vue';
+import {computed, defineProps} from 'vue';
 import TileModel from '@/models/TileModel';
-import {useHeroStore} from "@/stores/HeroStore";
 import {useBattleStore} from "@/stores/battle-store";
+import HeroMapTile from "@/components/hero-map-tile.vue";
 
 const battleStore = useBattleStore();
-const heroStore = useHeroStore();
 
 const props = defineProps<{
   tile: TileModel
 }>();
-
-const flipped = ref(false);
 
 const damageValue = computed(() => {
   return battleStore.damagePopups[props.tile.id] || null
@@ -43,14 +31,6 @@ const bloodSplash = computed(() => {
   return battleStore.bloodSplashTiles.includes(props.tile.id)
 });
 
-function handleMouse(e: MouseEvent) {
-  const target = e.currentTarget as HTMLElement
-  const rect = target.getBoundingClientRect()
-  const centerX = rect.left + rect.width / 2
-
-  flipped.value = e.clientX > centerX
-}
-
 const getTileBackgroundImage = (tile: TileModel) => {
   return {
     backgroundImage: `url(${tile.backgroundSrc})`,
@@ -58,21 +38,46 @@ const getTileBackgroundImage = (tile: TileModel) => {
   }
 }
 
-const heroImgStyle = computed(() => ({
-  backgroundImage: `url(${heroStore.hero.imgPath})`,
-  backgroundSize: 'contain',
-  backgroundRepeat: 'no-repeat',
-  backgroundPosition: 'center',
-}));
-
-const openInventory = () => {
-  heroStore.inventoryShown = true;
-};
-
 </script>
 
-<style scoped>
+<style>
 @import "@/styles/battlefield-style/battlefield-map-tile-style.css";
-@import "@/styles/battlefield-style/battle-hero-tile-style.css";
 @import "@/styles/battlefield-style/battle-effects-style.css";
+
+.battle-inventory-button {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.battle-hero-body-tile-image {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: scale(0.3);
+  transform-origin: center center;
+  bottom: 20%;
+  filter: drop-shadow(10px 20px 12px rgba(0, 0, 0, 0.7));
+  z-index: 2;
+}
+
+.battle-tile-bottom-shadow::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 20%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.3), transparent);
+  pointer-events: none;
+  z-index: 1;
+}
 </style>

@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 
-export type OverlayType =
+export type OverlayType = 'hero-dressing-room'
     | 'battle'
     | 'chest-inventory'
     | 'shop'
@@ -12,8 +12,8 @@ export type OverlayType =
 
 export const useOverlayStore = defineStore('overlay-store', {
     state: () => ({
-        activeOverlays: [] as OverlayType[], // 🔄 замість одного
-        overlayData: {} as Record<OverlayType, any>, // типізована мапа
+        activeOverlays: [] as OverlayType[],
+        overlayData: {} as Record<OverlayType, any>,
     }),
 
     actions: {

@@ -1,4 +1,4 @@
-import type {IRegionConfig} from '@/abstraction/IRegionConfig';
+import type {IRegionConfig} from '@/abstraction/region-config-interface';
 
 const silesiaRegions: IRegionConfig[] = [
     {
