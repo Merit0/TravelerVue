@@ -47,18 +47,18 @@ const props = defineProps<{
   tile: TileModel
 }>();
 
-const rotation = ref(0);
 const targetRotation = ref(0);
 const isHoveringHero = ref(false);
-const isIdle = ref(true);
+const isIdle = ref(false);
 let idleTimer: number | null = null;
+let frameId: number;
 
 const headClass = computed(() => {
   return isIdle.value ? "base-head-up-top-view" : "base-head-top-view";
 });
 
 const heroTransformStyle = computed(() => ({
-  transform: `scale(0.3) rotate(${rotation.value}deg)`,
+  transform: `scale(0.3) rotate(${heroStore.heroMapTileBodyRotationAngle}deg)`,
   transformOrigin: "center center",
 }));
 
@@ -78,8 +78,8 @@ const updateRotation = (e: MouseEvent) => {
   const dy = e.clientY - centerY;
 
   const angle = Math.atan2(dy, dx) * (180 / Math.PI);
-
   targetRotation.value = angle + 270;
+  heroStore.setTargetRotation(targetRotation.value);
   isIdle.value = false;
   if (idleTimer) window.clearTimeout(idleTimer);
   idleTimer = window.setTimeout(() => {
@@ -88,18 +88,19 @@ const updateRotation = (e: MouseEvent) => {
 };
 
 const animate = () => {
-  rotation.value += (targetRotation.value - rotation.value);
-  requestAnimationFrame(animate);
+  heroStore.tickRotation();
+  frameId = requestAnimationFrame(animate);
 };
 
 onMounted(() => {
   window.addEventListener("mousemove", updateRotation);
-  animate();
+  frameId = requestAnimationFrame(animate);
 });
 
 onUnmounted(() => {
   window.removeEventListener("mousemove", updateRotation);
   if (idleTimer) window.clearTimeout(idleTimer);
+  cancelAnimationFrame(frameId);
 });
 
 const getItemTopViewImageStyle = (equipment: LootItemModel) => {
