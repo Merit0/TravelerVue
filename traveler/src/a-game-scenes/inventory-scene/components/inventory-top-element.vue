@@ -76,7 +76,7 @@ export default {
   position: absolute;
   width: 100%;
   height: 75%;
-  background-image: url("/images/hero-inventary/hero-inventory-header-image/middle-part.png");
+  background-image: url("/src/a-game-scenes/inventory-scene/assets/hero-inventory-header-image/middle-part.png");
   background-repeat: repeat;
   background-size: contain;
   display: flex;
@@ -91,7 +91,7 @@ export default {
   left: -2%;
   width: 5%;
   height: 100%;
-  background-image: url("/images/hero-inventary/hero-inventory-header-image/left-part-top-bar.png");
+  background-image: url("/src/a-game-scenes/inventory-scene/assets/hero-inventory-header-image/left-part-top-bar.png");
   background-repeat: no-repeat;
   background-size: contain;
   z-index: 1;
@@ -102,7 +102,7 @@ export default {
   right: -3%;
   width: 5%;
   height: 100%;
-  background-image: url("/images/hero-inventary/hero-inventory-header-image/right-part-top-bar.png");
+  background-image: url("/src/a-game-scenes/inventory-scene/assets/hero-inventory-header-image/right-part-top-bar.png");
   background-repeat: no-repeat;
   background-size: contain;
 }

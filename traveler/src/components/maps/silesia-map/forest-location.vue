@@ -23,7 +23,7 @@ import { MapLocationModel } from '@/models/map-location-model';
 import MapModel from '@/models/MapModel';
 
 import TilesGrid from '@/components/tiles-grid.vue';
-import HeroInventory from '../../hero-equipment-modal/hero-inventory-overlay.vue';
+import HeroInventory from '../../../a-game-scenes/inventory-scene/components/hero-inventory-overlay.vue';
 import HeroDeathOverlay from '@/components/hero-death-overlay.vue';
 import BattlefieldOverlay from '@/components/battle/battlefield-overlay.vue';
 

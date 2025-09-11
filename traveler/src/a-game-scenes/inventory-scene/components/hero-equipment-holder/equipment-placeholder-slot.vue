@@ -147,5 +147,5 @@ export default defineComponent({
 </script>
 
 <style scoped>
-@import "@/styles/inventory-style/equipment-placeholder-slot-style.css";
+@import "@/a-game-scenes/inventory-scene/styles/equipment-placeholder-slot-style.css";
 </style>

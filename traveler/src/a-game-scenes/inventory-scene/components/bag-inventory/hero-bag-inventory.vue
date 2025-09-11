@@ -22,7 +22,7 @@
 </template>
 <script lang="ts">
 
-import BagInventorySlotsGrid from "@/components/hero-equipment-modal/bag-inventory/bag-inventory-slots-grid.vue";
+import BagInventorySlotsGrid from "@/a-game-scenes/inventory-scene/components/bag-inventory/bag-inventory-slots-grid.vue";
 import {useHeroStore} from "@/stores/HeroStore";
 
 export default {

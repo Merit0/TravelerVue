@@ -34,12 +34,12 @@ import {defineComponent} from 'vue';
 import {useOverlayStore} from "@/stores/overlay-store";
 import {useBattleStore} from "@/stores/battle-store";
 import CloseHeroInventoryModalButton from "@/components/gui/buttons/close-hero-inventory-modal-button.vue";
-import BagInventorySlotsGrid from "@/components/hero-equipment-modal/bag-inventory/bag-inventory-slots-grid.vue";
+import BagInventorySlotsGrid from "@/a-game-scenes/inventory-scene/components/bag-inventory/bag-inventory-slots-grid.vue";
 import {useMapLocationStore} from "@/stores/map-location-store";
 import PodiumTile from "@/components/hero-builder-modal/podium-tile.vue";
 import {ref} from 'vue';
 import {useHeroStore} from "@/stores/HeroStore";
-import HeroPodium from "@/components/hero-equipment-modal/hero-equipment-holder/hero-podium.vue";
+import HeroPodium from "@/a-game-scenes/inventory-scene/components/hero-equipment-holder/hero-podium.vue";
 
 
 export default defineComponent({

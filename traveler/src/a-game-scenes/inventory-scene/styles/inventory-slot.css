@@ -12,7 +12,7 @@
     position: absolute;
     width: 130%;
     height: 130%;
-    background-image: url("src/a-game-scenes/shop-scene/assets/shop-inventory-frame-image.png");
+    background-image: url("../../shop-scene/assets/shop-inventory-frame-image.png");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;

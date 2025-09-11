@@ -15,7 +15,7 @@
 
 <script lang="ts">
 
-import BagItemTile from "@/components/hero-equipment-modal/bag-inventory/bag-item-tile.vue";
+import BagItemTile from "@/a-game-scenes/inventory-scene/components/bag-inventory/bag-item-tile.vue";
 import {useHeroStore} from "@/stores/HeroStore";
 import {useBagStore} from "@/stores/BagStore";
 
@@ -35,6 +35,6 @@ export default {
 </script>
 
 <style>
-@import "@/styles/inventory-style/inventory-slot.css";
-@import "@/styles/inventory-style/bag-inventory-grid-style.css";
+@import "@/a-game-scenes/inventory-scene/styles/inventory-slot.css";
+@import "@/a-game-scenes/inventory-scene/styles/bag-inventory-grid-style.css";
 </style>

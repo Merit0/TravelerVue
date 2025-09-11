@@ -12,7 +12,7 @@
     position: absolute;
     width: 110%;
     height: 110%;
-    background-image: url('/images/hero-inventary/slots/brown-slot.png');
+    background-image: url('src/a-game-scenes/inventory-scene/assets/slots/brown-slot.png');
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;

@@ -16,11 +16,11 @@
 <script lang="ts">
 import {LootItemModel} from '@/models/LootItemModel';
 import {useBagStore} from '@/stores/BagStore';
-import HeroEquipmentHolder from '@/components/hero-equipment-modal/hero-equipment-holder/hero-equipment-holder.vue'
+import HeroEquipmentHolder from '@/a-game-scenes/inventory-scene/components/hero-equipment-holder/hero-equipment-holder.vue'
 import {useHeroStore} from '@/stores/HeroStore';
-import InventoryTopElement from "@/components/hero-equipment-modal/inventory-top-element.vue";
+import InventoryTopElement from "@/a-game-scenes/inventory-scene/components/inventory-top-element.vue";
 import CloseHeroInventoryModalButton from "@/components/gui/buttons/close-hero-inventory-modal-button.vue";
-import HeroBagInventory from "@/components/hero-equipment-modal/bag-inventory/hero-bag-inventory.vue";
+import HeroBagInventory from "@/a-game-scenes/inventory-scene/components/bag-inventory/hero-bag-inventory.vue";
 
 
 export default {
@@ -79,12 +79,12 @@ export default {
   left: -1vh;
   width: 102%;
   height: 3vh;
-  background-image: url("/images/hero-inventary/dark-wood.jpg");
+  background-image: url("/src/a-game-scenes/inventory-scene/assets/dark-wood.jpg");
   background-size: contain;
   background-repeat: repeat;
   border-radius: 10px;
   z-index: 10;
-  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.4), /* верхня зовнішня тінь */ inset 0 2px 4px rgba(255, 255, 255, 0.1), /* внутрішній світлий блиск */ inset 0 -2px 6px rgba(0, 0, 0, 0.3); /* внутрішня глибина */
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.1), inset 0 -2px 6px rgba(0, 0, 0, 0.3);
 }
 
 .hero-content {

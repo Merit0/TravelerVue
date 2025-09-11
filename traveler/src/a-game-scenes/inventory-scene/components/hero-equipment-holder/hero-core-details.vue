@@ -64,5 +64,5 @@ export default defineComponent({
 </script>
 
 <style scoped>
-@import '@/styles/inventory-style/hero-core-details-style.css';
+@import '@/a-game-scenes/inventory-scene/styles/hero-core-details-style.css';
 </style>

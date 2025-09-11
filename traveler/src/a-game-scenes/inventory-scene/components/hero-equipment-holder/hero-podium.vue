@@ -97,8 +97,8 @@ import {LootItemModel} from '@/models/LootItemModel';
 import {Equipment} from "@/models/Equipment";
 import {PropType} from 'vue'
 import EquipmentPlaceholderSlot
-  from "@/components/hero-equipment-modal/hero-equipment-holder/equipment-placeholder-slot.vue";
-import HeroCoreDetails from "@/components/hero-equipment-modal/hero-equipment-holder/hero-core-details.vue";
+  from "@/a-game-scenes/inventory-scene/components/hero-equipment-holder/equipment-placeholder-slot.vue";
+import HeroCoreDetails from "@/a-game-scenes/inventory-scene/components/hero-equipment-holder/hero-core-details.vue";
 
 
 export default {
@@ -143,5 +143,5 @@ export default {
 </script>
 
 <style>
-@import "@/styles/inventory-style/hero-podium-style.css";
+@import "@/a-game-scenes/inventory-scene/styles/hero-podium-style.css";
 </style>

@@ -74,5 +74,5 @@ export default {
 
 <style>
 @import "@/a-game-scenes/shop-scene/styles/trade-slots-grid-style.css";
-@import "@/styles/inventory-style/inventory-slot.css";
+@import "@/a-game-scenes/inventory-scene/styles/inventory-slot.css";
 </style>
