@@ -41,7 +41,7 @@
 .slotFrameImage {
     width: 100%;
     height: 100%;
-    background-image: url("/images/overlays/shop-place/shop-item-frame.png");
+    background-image: url("src/a-game-scenes/shop-scene/assets/shop-item-frame.png");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;

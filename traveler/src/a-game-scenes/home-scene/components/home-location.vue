@@ -36,7 +36,7 @@
 <script lang="ts">
 import {useHeroStore} from '@/stores/HeroStore';
 import router from "@/router";
-import ShopOverlay from "@/components/shop/shop-overlay.vue";
+import ShopOverlay from "@/a-game-scenes/shop-scene/components/shop-overlay.vue";
 import HeroInventoryOverlay from "@/components/hero-equipment-modal/hero-inventory-overlay.vue";
 import HeroDetailsBar from "@/a-game-scenes/home-scene/components/hero-details-bar.vue";
 import HeroDressingRoomOverlay from "@/components/hero-builder-modal/hero-dressing-room-overlay.vue";

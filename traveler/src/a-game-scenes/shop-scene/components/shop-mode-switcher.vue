@@ -42,5 +42,5 @@ export default {
 </script>
 
 <style scoped>
-@import "@/styles/shop-styles/shop-trade-switcher.css";
+@import "@/a-game-scenes/shop-scene/styles/shop-trade-switcher.css";
 </style>

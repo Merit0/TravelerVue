@@ -21,7 +21,7 @@
     height: 40%;
     background-size: contain;
     background-repeat: no-repeat;
-    background-image: url("/images/overlays/shop-place/trade-sell-icon-image.png");
+    background-image: url("src/a-game-scenes/shop-scene/assets/trade-sell-icon-image.png");
     cursor: pointer;
     transform: translateY(20px) scale(0.9);
     opacity: 0;

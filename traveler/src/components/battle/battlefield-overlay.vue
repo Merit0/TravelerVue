@@ -6,7 +6,7 @@
         <div class="top-bar-hero-stats">
           <div class="energy-holder">
             <div class="energy-image">
-              <img src="/images/overlays/battlefield/energy-icon-image.png" alt="energy-icon-image">
+              <img src="/src/a-game-scenes/home-scene/assets/hero-properties-icons/energy-icon-image.png" alt="energy-icon-image">
             </div>
             <div class="energy-counter">{{ heroCurrentEnergy }}</div>
           </div>

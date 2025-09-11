@@ -76,7 +76,7 @@ export default defineComponent({
 .chestInventoryFrameImage {
   width: 100%;
   height: 100%;
-  background-image: url("/images/overlays/shop-place/shop-inventory-frame-image.png");
+  background-image: url("/src/a-game-scenes/shop-scene/assets/shop-inventory-frame-image.png");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;

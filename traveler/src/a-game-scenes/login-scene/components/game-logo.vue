@@ -18,5 +18,5 @@ export default {
 </script>
 
 <style scoped>
-@import '@/styles/game-logo-style.css';
+@import '@/a-game-scenes/login-scene/styles/game-logo-style.css';
 </style>

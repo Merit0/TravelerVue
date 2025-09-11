@@ -12,7 +12,7 @@
 
 <script lang="ts">
 import {LootItemModel} from "@/models/LootItemModel"
-import ShopSlot from "@/components/shop/shop-slot.vue"
+import ShopSlot from "@/a-game-scenes/shop-scene/components/shop-slot.vue"
 import {useShopStore} from "@/stores/shop-store";
 
 export default {
@@ -31,5 +31,5 @@ export default {
 </script>
 
 <style>
-@import "@/styles/shop-styles/shop-slots-grid-style.css";
+@import "@/a-game-scenes/shop-scene/styles/shop-slots-grid-style.css";
 </style>

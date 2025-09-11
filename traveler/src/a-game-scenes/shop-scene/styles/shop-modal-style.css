@@ -4,7 +4,7 @@
     right: 23%;
     width: 3vw;
     height: 3vw;
-    background-image: url("/images/overlays/shop-place/shop-close-btn-image.png");
+    background-image: url("src/a-game-scenes/shop-scene/assets/shop-close-btn-image.png");
     background-size: cover;
     background-position: center;
     cursor: pointer;
@@ -22,7 +22,7 @@
     padding: 2vw;
     align-content: center;
     justify-content: center;
-    background-image: url("/images/overlays/shop-place/shop-background.png");
+    background-image: url("/src/a-game-scenes/shop-scene/assets/shop-background.png");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

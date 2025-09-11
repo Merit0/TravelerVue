@@ -10,9 +10,9 @@
 </template>
 
 <script lang="ts">
-import ShopSlotsGrid from "@/components/shop/shop-slots-grid.vue";
-import ShopModeSwitcher from "@/components/shop/shop-mode-switcher.vue";
-import TradeSlotsGrid from "@/components/shop/trade-slots-grid.vue";
+import ShopSlotsGrid from "@/a-game-scenes/shop-scene/components/shop-slots-grid.vue";
+import ShopModeSwitcher from "@/a-game-scenes/shop-scene/components/shop-mode-switcher.vue";
+import TradeSlotsGrid from "@/a-game-scenes/shop-scene/components/trade-slots-grid.vue";
 
 export default {
   name: "shop-overlay",
@@ -40,5 +40,5 @@ export default {
 </script>
 
 <style>
-@import "@/styles/shop-styles/shop-modal-style.css";
+@import "@/a-game-scenes/shop-scene/styles/shop-modal-style.css";
 </style>

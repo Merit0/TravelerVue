@@ -19,7 +19,7 @@
       canAfford: canAfford
     }" @click="handleBuy(lootItem)">
           <span class="itemPrice">{{ lootItem.price }}</span>
-          <img class="coinIcon" src="/images/top-bar-items/coin-icon.png" alt="coin-icon"/>
+          <img class="coinIcon" src="/src/a-game-scenes/home-scene/assets/hero-properties-icons/coin-icon.png" alt="coin-icon"/>
         </div>
       </div>
     </div>
@@ -39,7 +39,7 @@
 import {PropType} from 'vue';
 import {LootItemModel} from "@/models/LootItemModel";
 import {Rarity} from "@/enums/Rarity";
-import ConfirmPurchaseModal from "@/components/shop/confirm-pusrchase-overlay.vue";
+import ConfirmPurchaseModal from "@/a-game-scenes/shop-scene/components/confirm-pusrchase-overlay.vue";
 import {useHeroStore} from "@/stores/HeroStore";
 
 export default {
@@ -135,5 +135,5 @@ export default {
 </script>
 
 <style>
-@import '@/styles/shop-styles/shop-slot-style.css';
+@import '@/a-game-scenes/shop-scene/styles/shop-slot-style.css';
 </style>

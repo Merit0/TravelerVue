@@ -48,7 +48,7 @@
 }
 
 .confirmBtn {
-    background: rgba(180, 255, 238, 0.15); /* прозорий льодовий */
+    background: rgba(180, 255, 238, 0.15);
     border: 2px solid rgba(188, 255, 180, 0.4);
     color: #dffbff;
     text-shadow: 0 0 4px rgba(200, 240, 255, 0.6);
@@ -65,7 +65,7 @@
 }
 
 .cancelBtn {
-    background: rgba(200, 150, 150, 0.1); /* холодно-рожевий */
+    background: rgba(200, 150, 150, 0.1);
     border: 2px solid rgba(255, 180, 180, 0.3);
     color: #ffd6d6;
     text-shadow: 0 0 4px rgba(255, 200, 200, 0.4);

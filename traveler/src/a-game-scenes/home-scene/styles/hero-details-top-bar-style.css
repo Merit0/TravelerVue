@@ -56,32 +56,32 @@
 }
 
 .doubleSword {
-    background-image: url("/images/top-bar-items/crossed-swords-icon.png");
+    background-image: url("src/a-game-scenes/home-scene/assets/hero-properties-icons/crossed-swords-icon.png");
     background-repeat: no-repeat;
     background-size: cover;
 }
 
 .skull {
-    background-image: url("/images/top-bar-items/skull-icon.png");
+    background-image: url("src/a-game-scenes/home-scene/assets/hero-properties-icons/skull-icon.png");
     background-size: 110%, 110%;
     background-repeat: no-repeat;
 }
 
 .coin {
-    background-image: url("/images/top-bar-items/coin-icon.png");
+    background-image: url("src/a-game-scenes/home-scene/assets/hero-properties-icons/coin-icon.png");
     background-repeat: no-repeat;
     background-size: cover;
 }
 
 .energy {
-    background-image: url("/images/overlays/battlefield/energy-icon-image.png");
+    background-image: url("src/a-game-scenes/home-scene/assets/hero-properties-icons/energy-icon-image.png");
     background-repeat: no-repeat;
     background-size: cover;
 }
 
 .steps {
     top: -5%;
-    background-image: url("/images/top-bar-items/foots-icon.png");
+    background-image: url("src/a-game-scenes/home-scene/assets/hero-properties-icons/foots-icon.png");
     background-repeat: no-repeat;
     background-size: 100%, 100%;
 }

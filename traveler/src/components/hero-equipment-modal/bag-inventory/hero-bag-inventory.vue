@@ -151,13 +151,13 @@ export default {
 }
 
 .coins-icon {
-  background-image: url("/images/top-bar-items/coin-icon.png");
+  background-image: url("/src/a-game-scenes/home-scene/assets/hero-properties-icons/coin-icon.png");
   background-repeat: no-repeat;
   background-size: contain;
 }
 
 .gems-icon {
-  background-image: url("/images/top-bar-items/gem-icon.png");
+  background-image: url("/src/a-game-scenes/home-scene/assets/hero-properties-icons/gem-icon.png");
   background-repeat: no-repeat;
   background-size: cover;
 }

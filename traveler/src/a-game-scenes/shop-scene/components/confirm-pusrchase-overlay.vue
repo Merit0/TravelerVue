@@ -5,7 +5,7 @@
         {{
           operationName === 'Buy' ? lootItem.price : getTradePrice(lootItem)
         }}
-        <img class="modalCoinIcon" src="/images/top-bar-items/coin-icon.png" alt="coin-icon"/> ?</p>
+        <img class="modalCoinIcon" src="/src/a-game-scenes/home-scene/assets/hero-properties-icons/coin-icon.png" alt="coin-icon"/> ?</p>
       <div class="popupActions">
         <button class="confirmBtn" @click="confirmAction(lootItem)">{{ operationName.toUpperCase() }}</button>
         <button class="cancelBtn" @click="$emit('closeModal')">CANCEL</button>
@@ -81,5 +81,5 @@ export default {
 </script>
 
 <style>
-@import '@/styles/shop-styles/confirm-shop-action-modal-style.css';
+@import '@/a-game-scenes/shop-scene/styles/confirm-shop-action-modal-style.css';
 </style>

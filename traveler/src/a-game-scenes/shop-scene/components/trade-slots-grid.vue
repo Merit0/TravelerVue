@@ -38,7 +38,7 @@
 import {LootItemModel} from "@/models/LootItemModel"
 import {useHeroStore} from "@/stores/HeroStore";
 import {useBagStore} from "@/stores/BagStore";
-import ConfirmPurchaseModal from "@/components/shop/confirm-pusrchase-overlay.vue";
+import ConfirmPurchaseModal from "@/a-game-scenes/shop-scene/components/confirm-pusrchase-overlay.vue";
 
 export default {
   name: "trade-slots-grid",
@@ -73,6 +73,6 @@ export default {
 </script>
 
 <style>
-@import "@/styles/shop-styles/trade-slots-grid-style.css";
+@import "@/a-game-scenes/shop-scene/styles/trade-slots-grid-style.css";
 @import "@/styles/inventory-style/inventory-slot.css";
 </style>
