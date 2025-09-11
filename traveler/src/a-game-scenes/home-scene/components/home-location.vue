@@ -198,7 +198,7 @@ export default {
 .shopBackground {
   width: 100%;
   height: 100%;
-  background-image: url('/images/buildings/shop/shop.png');
+  background-image: url('/src/a-game-scenes/home-scene/assets/shop.png');
   background-size: cover;
   background-position: center;
   border-radius: 8px;
