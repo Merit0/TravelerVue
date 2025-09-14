@@ -84,7 +84,7 @@ export default defineComponent({
     },
     getEmptyPlaceholderImage(placeholderSlotImage: string) {
       return {
-        backgroundImage: `url(/images/hero-inventary/equipment-placeholder-slots/${placeholderSlotImage})`,
+        backgroundImage: `url(/src/a-game-scenes/inventory-scene/assets/equipment-placeholder-slots/${placeholderSlotImage})`,
       };
     },
     getItemBackgroundColorByRarity(itemRarity: Rarity) {

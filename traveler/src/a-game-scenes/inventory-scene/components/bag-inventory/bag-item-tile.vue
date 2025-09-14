@@ -20,6 +20,7 @@ import {LootItemModel} from '@/models/LootItemModel';
 import {useBagStore} from '@/stores/BagStore';
 import {useHeroStore} from '@/stores/HeroStore';
 import {PropType} from 'vue';
+import {EquipmentModel} from "@/a-game-scenes/inventory-scene/models/equipment-model";
 
 export default {
   name: "BagItemTile",
@@ -157,32 +158,11 @@ export default {
     verifyItemPower(item: LootItemModel): boolean {
       const hero = this.hero;
 
-      const checkItem = (slotKey: keyof typeof hero.equipment): boolean => {
-        if (hero.equipment[slotKey]) {
-          return hero.equipment[slotKey].value < item.value;
-        } else {
-          return true;
-        }
-      };
+      const slot = EquipmentModel.slotMap[item.itemType];
+      if (!slot) return false;
 
-      switch (item.itemType) {
-        case ItemType.WEAPON:
-          return checkItem('weapon');
-        case ItemType.ARMOR:
-          return checkItem('armor');
-        case ItemType.HELM:
-          return checkItem('helm');
-        case ItemType.SHIELD:
-          return checkItem('shield');
-        case ItemType.BOOTS:
-          return checkItem('boots');
-        case ItemType.PANTS:
-          return checkItem('pants');
-        case ItemType.BELT:
-          return checkItem('belt');
-        case ItemType.HEAL:
-          return false;
-      }
+      const equipped = hero.equipment[slot];
+      return equipped ? equipped.value < item.value : true;
     }
   }
 }
