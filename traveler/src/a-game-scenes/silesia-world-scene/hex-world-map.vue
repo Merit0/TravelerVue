@@ -87,7 +87,7 @@ function onTileClick(tile: HexTileModel) {
     }
   }
   if (tile.regionKey && tile.regionKey !== 'camping') {
-    router.push(`/map/${tile.regionKey}`);
+    router.push(`/location/${tile.regionKey}`);
   } else if (tile.regionKey && tile.regionKey === 'camping') {
     router.push(`/${tile.regionKey}`);
   } else {

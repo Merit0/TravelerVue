@@ -15,7 +15,7 @@
 <script lang="ts">
 import TileModel from '../../../models/TileModel';
 import {PropType} from 'vue';
-import MapTile from "@/a-game-scenes/location-scene/components/map-tile.vue";
+import MapTile from "@/a-game-scenes/location-scene/components/tile-components/map-tile.vue";
 
 export default {
   name: "tiles-grid",

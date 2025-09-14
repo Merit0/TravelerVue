@@ -87,7 +87,7 @@ export default {
     },
     exitOnMap() {
       // router.push('/forest-entrance');
-      router.push('/maps');
+      router.push('/silesia');
     },
     openInventory() {
       this.heroStore.inventoryShown = true;

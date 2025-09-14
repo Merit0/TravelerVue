@@ -15,7 +15,7 @@
 import {computed, defineProps} from 'vue';
 import TileModel from '@/models/TileModel';
 import {useBattleStore} from "@/stores/battle-store";
-import HeroTile from "@/a-game-scenes/location-scene/components/hero-tile.vue";
+import HeroTile from "@/a-game-scenes/location-scene/components/tile-components/hero-tile.vue";
 
 const battleStore = useBattleStore();
 

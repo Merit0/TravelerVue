@@ -24,13 +24,13 @@ const routes = [
         meta: {requiresAuth: true}
     },
     {
-        path: "/maps",
-        name: "maps-page",
+        path: "/silesia",
+        name: "silesia-world",
         component: EntireWorld,
         meta: {requiresAuth: true}
     },
     {
-        path: "/map/forest",
+        path: "/location/forest",
         name: "Forest",
         component: ForestLocation,
         meta: {requiresAuth: true}
