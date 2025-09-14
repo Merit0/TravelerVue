@@ -1,6 +1,10 @@
 <template>
   <div class="inventorySlotContainer">
     <div
+        v-if="verifyItemPower(lootItem)"
+        class="powerIdentifier"
+    ></div>
+    <div
         class="bagItemImg"
         :style="getItemStyle(lootItem)"
         @click="animateEquip(lootItem)"
@@ -105,6 +109,7 @@ export default {
         }, 300);
       });
     },
+
     useItem(item: LootItemModel) {
       const bag = this.bagStore;
       const hero = this.hero;
@@ -148,6 +153,36 @@ export default {
           bag.removeItem(item);
           break;
       }
+    },
+    verifyItemPower(item: LootItemModel): boolean {
+      const hero = this.hero;
+
+      const checkItem = (slotKey: keyof typeof hero.equipment): boolean => {
+        if (hero.equipment[slotKey]) {
+          return hero.equipment[slotKey].value < item.value;
+        } else {
+          return true;
+        }
+      };
+
+      switch (item.itemType) {
+        case ItemType.WEAPON:
+          return checkItem('weapon');
+        case ItemType.ARMOR:
+          return checkItem('armor');
+        case ItemType.HELM:
+          return checkItem('helm');
+        case ItemType.SHIELD:
+          return checkItem('shield');
+        case ItemType.BOOTS:
+          return checkItem('boots');
+        case ItemType.PANTS:
+          return checkItem('pants');
+        case ItemType.BELT:
+          return checkItem('belt');
+        case ItemType.HEAL:
+          return false;
+      }
     }
   }
 }
@@ -175,5 +210,30 @@ export default {
   box-shadow: 0 0 10px rgba(255, 204, 69, 0.6);
   transform: scale(1.05);
   cursor: pointer;
+}
+
+.powerIdentifier {
+  position: absolute;
+  bottom: 2%;
+  right: -2%;
+  width: 30%;
+  height: 30%;
+  background-image: url("@/a-game-scenes/inventory-scene/assets/green-arrow-up-image.png");
+  background-size: cover;
+  border-radius: 10%;
+  z-index: 1;
+  animation: floatUpDown 1.5s ease-in-out infinite;
+}
+
+@keyframes floatUpDown {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10%);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }
 </style>

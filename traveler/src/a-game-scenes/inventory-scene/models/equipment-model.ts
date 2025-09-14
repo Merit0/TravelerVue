@@ -1,6 +1,6 @@
 import { IEquipment } from "@/abstraction/IEquipment";
 import { ItemType } from "@/enums/ItemType";
-import { LootItemModel } from "../../../models/LootItemModel";
+import { LootItemModel } from "@/models/LootItemModel";
 
 export class EquipmentModel implements IEquipment {
   weapon: LootItemModel & { itemType: ItemType.WEAPON };
