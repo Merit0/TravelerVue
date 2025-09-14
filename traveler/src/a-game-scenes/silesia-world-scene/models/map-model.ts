@@ -1,4 +1,4 @@
-import {MapLocationModel} from "@/models/map-location-model";
+import {MapLocationModel} from "@/a-game-scenes/location-scene/models/map-location-model";
 
 import {Complexity} from "@/enums/complexity";
 import {v4 as uuid} from "uuid";
@@ -8,13 +8,11 @@ interface IMap {
     readonly mapLocations: MapLocationModel[];
     readonly uuid: string;
     readonly complexity: Complexity;
-    readonly imgPath: string;
     readonly isLocked: boolean;
 }
 
 export class MapModel implements IMap {
     private _mapName: string;
-    private _imgPath: string;
     private _mapLocationsList: MapLocationModel[];
     private readonly _mapId: string;
     private _mapComplexity: Complexity;
@@ -34,14 +32,6 @@ export class MapModel implements IMap {
 
     set name(mapName: string) {
         this._mapName = mapName;
-    }
-
-    public get imgPath(): string {
-        return this._imgPath;
-    }
-
-    set imgPath(path: string) {
-        this._imgPath = path;
     }
 
     public get mapLocations(): MapLocationModel[] {

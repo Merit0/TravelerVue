@@ -3,8 +3,8 @@ import TileModel from "@/models/TileModel";
 import EnemyModel from "@/models/EnemyModel";
 import {useHeroStore} from "./HeroStore";
 import {EnemyBuilder} from "@/builders/EnemyBuilder";
-import {MapLocationModel} from "@/models/map-location-model";
-import MapModel from "@/models/MapModel";
+import {MapLocationModel} from "@/a-game-scenes/location-scene/models/map-location-model";
+import MapModel from "@/a-game-scenes/silesia-world-scene/models/map-model";
 import {toKebabCase} from "@/utils/string-utils";
 import {MapProvider} from "@/providers/MapProvider";
 import {HeroModel} from "@/models/HeroModel";
@@ -176,7 +176,7 @@ export const useMapLocationStore = defineStore("map-location-store", {
                     const index = y * GRID_SIZE + x;
                     const t = new TileModel(index, {x, y});
                     t.isInitial = true;
-                    t.backgroundSrc = '/images/map-location/camping-map-location/tile-background-500-500/ground-tile-background-2.png';
+                    t.backgroundSrc = '/images/map-location/camping-map-location/tile-background-500-500/ground-tile-background.png';
                     podiumTiles.push(t);
                 }
             }

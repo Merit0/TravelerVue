@@ -1,19 +1,16 @@
 import {Complexity} from '@/enums/complexity';
-import {MapLocationModel} from "@/models/map-location-model";
-import {IPosition} from "@/interfaces/el-position-interface";
 import {IEnemy} from "@/abstraction/IEnemy";
 import EnemyModel from "@/models/EnemyModel";
+import {MapLocationModel} from "@/a-game-scenes/location-scene/models/map-location-model";
 
 interface IMapLocationBuilder {
     name(name: string): this;
     tilesNumber(num: number): this;
     tilesGridBackgroundImagePath(imagePath: string): this;
-    chestImage(imagePath: string): this;
     tileImage(imagePath: string): this;
     tileBackground(imagePath: string): this;
     endPoint(endPointPath: string): this;
     complexity(complexityLevel: Complexity): this;
-    position(position: IPosition): this;
     boss(bossModel: IEnemy): this;
     enemiesStatsModifier(modifierNumber: number): this;
     build(): MapLocationModel;
@@ -50,11 +47,6 @@ export class MapLocationBuilder implements IMapLocationBuilder {
         return this;
     }
 
-    public position(position: IPosition): this {
-        this._mapLocation.position = position;
-        return this;
-    }
-
     public endPoint(endPointPath: string): this {
         this._mapLocation.endPoint = endPointPath;
         return this;
@@ -62,11 +54,6 @@ export class MapLocationBuilder implements IMapLocationBuilder {
 
     public tilesGridBackgroundImagePath(imagePath: string): this {
         this._mapLocation.imgPath = imagePath;
-        return this;
-    }
-
-    public chestImage(imagePath: string): this {
-        this._mapLocation.chestImage = imagePath;
         return this;
     }
 

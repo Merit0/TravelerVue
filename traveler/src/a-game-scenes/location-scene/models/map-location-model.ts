@@ -1,7 +1,6 @@
 import {Complexity} from "@/enums/complexity";
 import {IHero} from "@/abstraction/IHero";
 import {v4 as uuid} from "uuid";
-import {IPosition} from "@/interfaces/el-position-interface";
 import EnemyModel from "@/models/EnemyModel";
 
 export interface IMapLocation {
@@ -11,10 +10,8 @@ export interface IMapLocation {
     readonly uuid: string;
     readonly complexity: Complexity;
     readonly hero: IHero;
-    readonly position: IPosition
     readonly imgPath: string;
     readonly endPoint: string;
-    readonly chestImage: string;
     readonly tileImage: string;
     readonly tileBackgroundSrc: string;
     readonly boss: EnemyModel;
@@ -27,11 +24,9 @@ export class MapLocationModel implements IMapLocation {
     private readonly _id: string;
     private _imgPath: string;
     private _endPoint: string;
-    private _chestImage: string;
     private _tileImage: string;
     private _tileBackgroundSrc: string;
     private _complexity: Complexity;
-    private _position: IPosition;
     private _hero: IHero;
     private _bose: EnemyModel;
 
@@ -41,14 +36,6 @@ export class MapLocationModel implements IMapLocation {
 
     get uuid(): string {
         return this._id;
-    }
-
-    get chestImage(): string {
-        return this._chestImage;
-    }
-
-    set chestImage(chestImage: string) {
-        this._chestImage = chestImage;
     }
 
     get tileImage(): string {
@@ -113,14 +100,6 @@ export class MapLocationModel implements IMapLocation {
 
     set complexity(complexityValue: Complexity) {
         this._complexity = complexityValue;
-    }
-
-    get position(): IPosition {
-        return this._position;
-    }
-
-    set position(position: IPosition) {
-        this._position = position;
     }
 
     get imgPath(): string {

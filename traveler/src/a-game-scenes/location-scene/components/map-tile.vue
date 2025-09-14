@@ -8,14 +8,14 @@
 
 <script lang="ts">
 import TileModel from '@/models/TileModel';
-import EnemyTile from '@/components/EnemyTile.vue';
-import ReliefTile from '@/components/relief-tile.vue';
-import EmptyTile from '@/components/EmptyTile.vue';
+import EnemyTile from '@/a-game-scenes/location-scene/components/enemy-tile.vue';
+import ReliefTile from '@/a-game-scenes/location-scene/components/relief-tile.vue';
+import EmptyTile from '@/a-game-scenes/location-scene/components/empty-tile.vue';
 import {useHeroStore} from '@/stores/HeroStore';
-import HeroMapTile from './hero-map-tile.vue';
+import HeroTile from './hero-tile.vue';
 import {useMapLocationStore} from '@/stores/map-location-store';
 import {PropType} from 'vue';
-import CampTile from "@/components/camp-tile.vue";
+import CampTile from "@/a-game-scenes/location-scene/components/camp-tile.vue";
 import EnemyModel from "@/models/EnemyModel";
 
 export default {
@@ -28,10 +28,10 @@ export default {
   },
   components: {
     CampTile,
-    EnemyTile,
+    EnemyTile: EnemyTile,
     ReliefTile,
-    EmptyTile,
-    HeroMapTile
+    EmptyTile: EmptyTile,
+    HeroMapTile: HeroTile
   },
   data() {
     const heroStore = useHeroStore();

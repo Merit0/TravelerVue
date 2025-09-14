@@ -7,7 +7,7 @@
       -{{ damageValue }}
     </div>
     <div class="blood-splash" v-if="bloodSplash"/>
-    <hero-map-tile :tile="tile"/>
+    <hero-tile :tile="tile"/>
   </div>
 </template>
 
@@ -15,7 +15,7 @@
 import {computed, defineProps} from 'vue';
 import TileModel from '@/models/TileModel';
 import {useBattleStore} from "@/stores/battle-store";
-import HeroMapTile from "@/components/hero-map-tile.vue";
+import HeroTile from "@/a-game-scenes/location-scene/components/hero-tile.vue";
 
 const battleStore = useBattleStore();
 

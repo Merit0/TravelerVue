@@ -57,5 +57,5 @@ export default {
 </script>
 
 <style scoped>
-@import '@/styles/animated-tile.css';
+@import '@/a-game-scenes/location-scene/styles/animated-tile.css';
 </style>

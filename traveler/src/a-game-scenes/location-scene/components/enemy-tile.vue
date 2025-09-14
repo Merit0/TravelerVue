@@ -75,7 +75,7 @@ export default defineComponent({
 </script>
 
 <style>
-@import '@/styles/animated-tile.css';
+@import '@/a-game-scenes/location-scene/styles/animated-tile.css';
 
 .enemyTile {
   background-size: 90% 90%;

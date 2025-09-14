@@ -1,7 +1,7 @@
 import {createRouter, createWebHistory} from "vue-router";
 import {useUserStore} from '@/stores/UserStore';
 import LoginPage from "@/a-game-scenes/login-scene/components/login-page.vue";
-import ForestLocation from "@/components/maps/silesia-map/forest-location.vue";
+import ForestLocation from "@/a-game-scenes/location-scene/components/forest-location.vue";
 import EntireWorld from "@/components/entire-world.vue";
 import HomeLocation from "@/a-game-scenes/home-scene/components/home-location.vue";
 

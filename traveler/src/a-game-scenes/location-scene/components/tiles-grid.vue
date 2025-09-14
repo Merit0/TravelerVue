@@ -13,9 +13,9 @@
 </template>
 
 <script lang="ts">
-import TileModel from '../models/TileModel';
+import TileModel from '../../../models/TileModel';
 import {PropType} from 'vue';
-import MapTile from "@/components/map-tile.vue";
+import MapTile from "@/a-game-scenes/location-scene/components/map-tile.vue";
 
 export default {
   name: "tiles-grid",
@@ -48,5 +48,5 @@ export default {
 </script>
 
 <style>
-@import "@/styles/map-tiles-style/map-tiles-grid-style.css";
+@import "@/a-game-scenes/location-scene/styles/map-tiles-grid-style.css";
 </style>

@@ -1,5 +1,5 @@
-import MapModel from '../models/MapModel';
-import {MapLocationModel} from "@/models/map-location-model";
+import MapModel from '../models/map-model';
+import {MapLocationModel} from "@/a-game-scenes/location-scene/models/map-location-model";
 import {Complexity} from "@/enums/complexity";
 
 interface IMapBuilder {
@@ -7,7 +7,6 @@ interface IMapBuilder {
     mapLocations(mapLocationsList: MapLocationModel[]): this;
     complexity(complexityLevel: Complexity): this;
     isLocked(status: boolean): this;
-    imagePath(path: string): this;
 }
 
 export class MapBuilder implements IMapBuilder {
@@ -33,11 +32,6 @@ export class MapBuilder implements IMapBuilder {
 
     public complexity(complexityLevel: Complexity): this {
         this.map.complexity = complexityLevel;
-        return this;
-    }
-
-    public imagePath(path: string): this {
-        this.map.imgPath = path;
         return this;
     }
 

@@ -19,11 +19,11 @@ import { useHeroStore } from '@/stores/HeroStore';
 import { useMapLocationStore } from '@/stores/map-location-store';
 import { useUserStore } from '@/stores/UserStore';
 import { useOverlayStore } from '@/stores/overlay-store';
-import { MapLocationModel } from '@/models/map-location-model';
-import MapModel from '@/models/MapModel';
+import { MapLocationModel } from '@/a-game-scenes/location-scene/models/map-location-model';
+import MapModel from '@/a-game-scenes/silesia-world-scene/models/map-model';
 
-import TilesGrid from '@/components/tiles-grid.vue';
-import HeroInventory from '../../../a-game-scenes/inventory-scene/components/hero-inventory-overlay.vue';
+import TilesGrid from '@/a-game-scenes/location-scene/components/tiles-grid.vue';
+import HeroInventory from '../../inventory-scene/components/hero-inventory-overlay.vue';
 import HeroDeathOverlay from '@/components/hero-death-overlay.vue';
 import BattlefieldOverlay from '@/components/battle/battlefield-overlay.vue';
 

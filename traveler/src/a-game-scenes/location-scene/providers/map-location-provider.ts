@@ -1,12 +1,11 @@
-import {MapLocationModel} from "@/models/map-location-model";
-import {MapLocationBuilder} from "@/builders/map-location-builder";
+import {MapLocationBuilder} from "@/a-game-scenes/location-scene/builders/map-location-builder";
 import {Complexity} from "@/enums/complexity";
-import {IPosition} from "@/interfaces/el-position-interface";
 import {BossProvider} from "@/providers/BossProvider";
 import EnemyModel from "@/models/EnemyModel";
+import {MapLocationModel} from "@/a-game-scenes/location-scene/models/map-location-model";
 
 export class MapLocationProvider {
-    private static readonly CAMPING_MAP_LOCATIONS_IMAGE_PATH = '/images/map-location/camping-map-location/'
+    private static readonly LOCATION_CONTENT_IMAGES_PATH = '/src/a-game-scenes/location-scene/assets/'
     static getSilesiaLocations(): MapLocationModel[] {
         const bosses: EnemyModel[] = BossProvider.getHumansBosses();
         const randIndex = Math.floor(Math.random() * bosses.length);
@@ -14,25 +13,18 @@ export class MapLocationProvider {
         const mapLocations: {
             name: string,
             backgroundImagePath: string,
-            chestImage: string,
             tileImage: string,
             tileBackground: string,
             endPoint: string,
-            position: IPosition,
             boss: EnemyModel,
             enemiesStatsModifier: number
         }[] = [
             {
                 name: 'Forest',
-                backgroundImagePath: `${this.CAMPING_MAP_LOCATIONS_IMAGE_PATH}tiles-grid-background/tiles-grid-background.png`,
-                chestImage: '/images/chests/map_chest.png',
-                tileImage: `${this.CAMPING_MAP_LOCATIONS_IMAGE_PATH}tile-image-500-500/tree-tile-image.png`,
-                tileBackground: `${this.CAMPING_MAP_LOCATIONS_IMAGE_PATH}tile-background-500-500/ground-tile-background-2.png`,
+                backgroundImagePath: `${this.LOCATION_CONTENT_IMAGES_PATH}tiles-grid-background.png`,
+                tileImage: `${this.LOCATION_CONTENT_IMAGES_PATH}tree-tile-image.png`,
+                tileBackground: `${this.LOCATION_CONTENT_IMAGES_PATH}ground-tile-background.png`,
                 endPoint: 'forest',
-                position: {
-                    top: "15%",
-                    left: "35%"
-                },
                 boss: bosses[randIndex],
                 enemiesStatsModifier: 0
             }
@@ -44,7 +36,6 @@ export class MapLocationProvider {
             tileImage: string,
             tileBackground: string,
             endPoint: string,
-            position: IPosition,
             enemiesStatsModifier: number
             boss: EnemyModel
         }) => {
@@ -52,9 +43,7 @@ export class MapLocationProvider {
                 .name(mapLocation.name)
                 .tilesNumber(56)
                 .complexity(Complexity.EASY)
-                .position(mapLocation.position)
                 .tilesGridBackgroundImagePath(mapLocation.backgroundImagePath)
-                .chestImage(mapLocation.chestImage)
                 .tileImage(mapLocation.tileImage)
                 .tileBackground(mapLocation.tileBackground)
                 .endPoint(mapLocation.endPoint)

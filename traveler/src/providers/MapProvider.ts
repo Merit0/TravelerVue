@@ -1,13 +1,12 @@
-import MapModel from '../models/MapModel';
-import {MapBuilder} from '@/builders/MapBuilder';
+import MapModel from '../a-game-scenes/silesia-world-scene/models/map-model';
+import {MapBuilder} from '@/a-game-scenes/silesia-world-scene/builders/map-builder';
 import {Complexity} from '@/enums/complexity';
-import {MapLocationProvider} from "@/providers/map-location-provider";
+import {MapLocationProvider} from "@/a-game-scenes/location-scene/providers/map-location-provider";
 
 export class MapProvider {
     static getSilesiaMap(): MapModel {
         return new MapBuilder()
             .name("Silesia")
-            .imagePath('/images/maps-page/map-1-old-forest.png')
             .mapLocations(MapLocationProvider.getSilesiaLocations())
             .complexity(Complexity.EASY)
             .isLocked(false)

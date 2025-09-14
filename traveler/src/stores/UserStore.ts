@@ -6,7 +6,7 @@ import {useHeroStore} from '@/stores/HeroStore';
 import {useMapLocationStore} from '@/stores/map-location-store';
 import {useBagStore} from '@/stores/BagStore';
 import {useChestStore} from '@/stores/ChestStore';
-import MapModel from "@/models/MapModel";
+import MapModel from "@/a-game-scenes/silesia-world-scene/models/map-model";
 
 export const useUserStore = defineStore('user', {
     state: () => ({
