@@ -24,7 +24,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount, defineProps } from 'vue';
 import { useRouter } from 'vue-router';
-import type { HexTileModel } from '@/models/hex-tile-model';
+import type { HexTileModel } from '@/a-game-scenes/silesia-world-scene/models/hex-tile-model';
 import {useHeroStore} from "@/stores/HeroStore";
 import {HeroModel} from "@/models/HeroModel";
 import {useWorldMapStore} from "@/stores/world-map-store";
@@ -105,7 +105,7 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
-@import "@/styles/hex-map/hex-tile-terrain-background-style.css";
+@import "@/a-game-scenes/silesia-world-scene/styles/hex-tile-terrain-background-style.css";
 
 .hex-map {
   width: 100vw;
@@ -157,7 +157,7 @@ onBeforeUnmount(() => {
   font-size: 1.5rem;
   color: #fff;
   border-radius: 8px;
-  pointer-events: none; /* блок тільки візуальний */
+  pointer-events: none;
   z-index: 5;
 }
 

@@ -22,4 +22,5 @@ export interface IHero {
   heroSteps: number;
   heroDices: DiceModel[]
   experienceCollector(): void;
+  getHeroDices(): DiceModel[];
 }

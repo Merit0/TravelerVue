@@ -1,5 +1,5 @@
-import {IRegionConfig} from "@/abstraction/region-config-interface";
-import {HexTileModel} from "@/models/hex-tile-model";
+import {IRegionConfig} from "@/a-game-scenes/silesia-world-scene/interfaces/region-config-interface";
+import {HexTileModel} from "@/a-game-scenes/silesia-world-scene/models/hex-tile-model";
 
 export class HexMapModel {
     name: string;

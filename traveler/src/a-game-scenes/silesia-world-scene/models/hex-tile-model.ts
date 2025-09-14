@@ -1,4 +1,4 @@
-import {TerrainType} from "@/abstraction/region-config-interface";
+import {TerrainType} from "@/a-game-scenes/silesia-world-scene/interfaces/region-config-interface";
 
 export class HexTileModel {
     q: number;

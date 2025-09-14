@@ -4,8 +4,8 @@
 
 <script setup lang="ts">
 import {ref} from 'vue';
-import type {HexTileModel} from '@/models/hex-tile-model';
-import HexWorldMap from "@/components/maps/hex-world-map.vue";
+import type {HexTileModel} from '@/a-game-scenes/silesia-world-scene/models/hex-tile-model';
+import HexWorldMap from "@/a-game-scenes/silesia-world-scene/hex-world-map.vue";
 import { useWorldMapStore } from '@/stores/world-map-store';
 
 const store = useWorldMapStore();

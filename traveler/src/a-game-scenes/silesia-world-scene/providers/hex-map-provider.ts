@@ -1,6 +1,6 @@
-import {HexMapModel} from '@/models/hex-map-model';
-import {HexTileModel} from '@/models/hex-tile-model';
-import silesiaRegions from "@/providers/region-provider";
+import {HexMapModel} from '@/a-game-scenes/silesia-world-scene/models/hex-map-model';
+import {HexTileModel} from '@/a-game-scenes/silesia-world-scene/models/hex-tile-model';
+import silesiaRegions from "@/a-game-scenes/silesia-world-scene/providers/region-provider";
 
 export class HexMapProvider {
     static getSilesia(): HexMapModel {

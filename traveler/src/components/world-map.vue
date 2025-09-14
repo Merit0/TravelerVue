@@ -55,7 +55,7 @@ export default {
   padding: 1vh 2vw;
   border-radius: 8px;
   border: 1px solid rgba(255, 215, 0, 0.8);
-  font-family: 'Cinzel', serif; /* Medieval-style font */
+  font-family: 'Cinzel', serif; /* Medieval-styles font */
   text-align: center;
   white-space: nowrap;
 }

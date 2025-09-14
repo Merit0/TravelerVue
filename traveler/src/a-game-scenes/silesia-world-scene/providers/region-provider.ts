@@ -1,4 +1,4 @@
-import type {IRegionConfig} from '@/abstraction/region-config-interface';
+import type {IRegionConfig} from '@/a-game-scenes/silesia-world-scene/interfaces/region-config-interface';
 
 const silesiaRegions: IRegionConfig[] = [
     {
@@ -7,7 +7,7 @@ const silesiaRegions: IRegionConfig[] = [
         coordinates: [
             [5, 1]
         ],
-        images: ['public/images/maps/lost-forest/single-tree-shadow.png'],
+        images: ['src/a-game-scenes/silesia-world-scene/assets/hex-tile-terrain-images/single-tree-shadow.png'],
         requiredMyriads: 0,
     },
     {
@@ -24,9 +24,9 @@ const silesiaRegions: IRegionConfig[] = [
             [24, 3], [24, 4],
         ],
         images: [
-            'public/images/maps/lost-forest/couple-taives-img.png',
-            'public/images/maps/lost-forest/3-taives-img.png',
-            'public/images/maps/lost-forest/taive-img.png'
+            'src/a-game-scenes/silesia-world-scene/assets/hex-tile-terrain-images/couple-taives-img.png',
+            'src/a-game-scenes/silesia-world-scene/assets/hex-tile-terrain-images/3-taives-img.png',
+            'src/a-game-scenes/silesia-world-scene/assets/hex-tile-terrain-images/taive-img.png'
         ],
         requiredMyriads: 45,
     },
@@ -97,7 +97,7 @@ const silesiaRegions: IRegionConfig[] = [
             [23, 0], [23, 1], [23, 5],
             [24, 5],
         ],
-        images: ['public/images/maps/lost-forest/single-tree-shadow.png'],
+        images: ['src/a-game-scenes/silesia-world-scene/assets/hex-tile-terrain-images/single-tree-shadow.png'],
         requiredMyriads: 10,
     },
     {
@@ -123,7 +123,7 @@ const silesiaRegions: IRegionConfig[] = [
             [19, 0], [19, 1], [19, 2],
             [20, 0], [20, 1], [20, 3],
         ],
-        images: ['public/images/maps/lost-forest/group-tree-shadow.png'],
+        images: ['src/a-game-scenes/silesia-world-scene/assets/hex-tile-terrain-images/group-tree-shadow.png'],
         requiredMyriads: 30,
     },
     {
@@ -151,10 +151,10 @@ const silesiaRegions: IRegionConfig[] = [
             [24, 6],
         ],
         images: [
-            'public/images/maps/lost-forest/kuschi-2-shadow.png',
-            'public/images/maps/lost-forest/kuschi-shadow.png',
-            'public/images/maps/lost-forest/kuschi-3-shadow.png',
-            'public/images/maps/lost-forest/kuschi-4-shadow.png'
+            'src/a-game-scenes/silesia-world-scene/assets/hex-tile-terrain-images/kuschi-2-shadow.png',
+            'src/a-game-scenes/silesia-world-scene/assets/hex-tile-terrain-images/kuschi-shadow.png',
+            'src/a-game-scenes/silesia-world-scene/assets/hex-tile-terrain-images/kuschi-3-shadow.png',
+            'src/a-game-scenes/silesia-world-scene/assets/hex-tile-terrain-images/kuschi-4-shadow.png'
         ],
         requiredMyriads: 50,
     },
@@ -174,7 +174,7 @@ const silesiaRegions: IRegionConfig[] = [
             [18, 7],
         ],
         images: [
-            'public/images/maps/lost-forest/single-palm-shadow.png',
+            'src/a-game-scenes/silesia-world-scene/assets/hex-tile-terrain-images/single-palm-shadow.png',
         ],
         requiredMyriads: 50,
     },
@@ -192,7 +192,7 @@ const silesiaRegions: IRegionConfig[] = [
             [23, 2],
             [24, 0], [24, 1], [24, 2],
         ],
-        images: ['public/images/maps/lost-forest/mountain-3-img.png'],
+        images: ['src/a-game-scenes/silesia-world-scene/assets/hex-tile-terrain-images/mountain-3-img.png'],
         requiredMyriads: 80,
     },
     {
@@ -206,7 +206,7 @@ const silesiaRegions: IRegionConfig[] = [
             [10, 5], [11, 4], [12, 4],
         ],
         images: [
-            'public/images/maps/lost-forest/dry-tree-img.png',
+            'src/a-game-scenes/silesia-world-scene/assets/hex-tile-terrain-images/dry-tree-img.png',
         ],
         requiredMyriads: 20,
     },
@@ -218,7 +218,7 @@ const silesiaRegions: IRegionConfig[] = [
             [5, 2]
         ],
         images: [
-            'public/images/maps/lost-forest/house-img.png',
+            'src/a-game-scenes/silesia-world-scene/assets/hex-tile-terrain-images/house-img.png',
         ],
         requiredMyriads: 0,
     },
@@ -230,7 +230,7 @@ const silesiaRegions: IRegionConfig[] = [
             [13, 4],
         ],
         images: [
-            'public/images/maps/lost-forest/dragon-eye.gif',
+            'src/a-game-scenes/silesia-world-scene/assets/hex-tile-terrain-images/dragon-eye.gif',
         ],
         requiredMyriads: 100,
     },
@@ -242,7 +242,7 @@ const silesiaRegions: IRegionConfig[] = [
             [22, 1],
         ],
         images: [
-            'public/images/maps/lost-forest/monster.gif',
+            'src/a-game-scenes/silesia-world-scene/assets/hex-tile-terrain-images/monster.gif',
         ],
         requiredMyriads: 100,
     }

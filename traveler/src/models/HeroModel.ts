@@ -37,15 +37,6 @@ export class HeroModel implements IHero {
         return Array.from({length: 3}, () => new DiceModel(actionFaces, diceWeights));
     }
 
-    setFlipped(state: boolean) {
-        this.flippedImage = state;
-        return this;
-    }
-
-    getFlipped(): boolean {
-        return this.flippedImage;
-    }
-
     public setName(name: string): HeroModel {
         this.name = name;
         return this;
