@@ -1,4 +1,4 @@
-import {DiceFace, DiceModel} from "@/models/DiceModel";
+import {DiceFace, DiceModel} from "@/a-game-scenes/battlefield-scene/dice-roller/models/DiceModel";
 
 export class RollDiceTester {
     model: DiceModel;

@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { LootItemModel } from "@/models/LootItemModel";
-import TileModel from "@/models/TileModel";
+import TileModel from "@/a-game-scenes/silesia-world-scene/models/tile-model";
 import EnemyModel from "@/models/EnemyModel";
 import {ChestModel} from "@/models/ChestModel";
 import {ItemType} from "@/enums/ItemType";

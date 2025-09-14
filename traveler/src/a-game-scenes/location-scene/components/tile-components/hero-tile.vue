@@ -37,7 +37,7 @@
 
 <script setup lang="ts">
 import {computed, defineProps, onMounted, onUnmounted, ref} from "vue";
-import TileModel from '@/models/TileModel'
+import TileModel from '@/a-game-scenes/silesia-world-scene/models/tile-model'
 import {useHeroStore} from '@/stores/HeroStore'
 import {LootItemModel} from "@/models/LootItemModel";
 

@@ -10,7 +10,7 @@
 
 <script setup lang="ts">
 import {defineProps} from 'vue';
-import {DiceFace} from "@/models/DiceModel";
+import {DiceFace} from "@/a-game-scenes/battlefield-scene/dice-roller/models/DiceModel";
 import DiceEnemyFace from "@/a-game-scenes/battlefield-scene/dice-roller/components/dice-enemy-face.vue";
 
 defineProps<{

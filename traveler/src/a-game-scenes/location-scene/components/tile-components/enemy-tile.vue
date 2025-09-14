@@ -23,7 +23,7 @@
 
 <script lang="ts">
 import {defineComponent, PropType} from 'vue'
-import TileModel from '@/models/TileModel'
+import TileModel from '@/a-game-scenes/silesia-world-scene/models/tile-model'
 import EnemyModel from '@/models/EnemyModel'
 import {useBattleStore} from '@/stores/battle-store'
 import {useOverlayStore} from '@/stores/overlay-store'

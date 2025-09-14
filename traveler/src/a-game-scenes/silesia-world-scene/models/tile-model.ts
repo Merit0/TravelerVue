@@ -1,7 +1,7 @@
-import {ChestModel} from "./ChestModel";
-import EnemyModel from "./EnemyModel";
-import {HeroModel} from "./HeroModel";
-import {GraveModel} from "@/models/grave-model";
+import {ChestModel} from "../../../models/ChestModel";
+import EnemyModel from "../../../models/EnemyModel";
+import {HeroModel} from "../../../models/HeroModel";
+import {GraveModel} from "@/a-game-scenes/battlefield-scene/grave/models/grave-model";
 import {LootItemModel} from "@/models/LootItemModel";
 
 export interface ICoordinates {
@@ -90,11 +90,9 @@ export class TileModel implements ITile {
         }
 
         if (data.grave) {
-            // Відновлюємо grave (якщо треба — можеш додати fromSaved)
             const grave = new GraveModel();
             grave.graveImgPath = data.grave.graveImgPath;
 
-            // Відновлення луту, якщо збережене
             if (Array.isArray(data.grave.graveTreasureItems)) {
                 grave.graveTreasureItems = data.grave.graveTreasureItems.map(
                     (i: any) => LootItemModel.mapToModel(i)

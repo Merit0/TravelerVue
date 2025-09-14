@@ -1,4 +1,4 @@
-import MapModel from '../a-game-scenes/silesia-world-scene/models/map-model';
+import MapModel from '../models/map-model';
 import {MapBuilder} from '@/a-game-scenes/silesia-world-scene/builders/map-builder';
 import {Complexity} from '@/enums/complexity';
 import {MapLocationProvider} from "@/a-game-scenes/location-scene/providers/map-location-provider";

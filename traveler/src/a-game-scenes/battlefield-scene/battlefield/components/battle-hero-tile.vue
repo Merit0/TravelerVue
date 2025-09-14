@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
 import {computed, defineProps} from 'vue';
-import TileModel from '@/models/TileModel';
+import TileModel from '@/a-game-scenes/silesia-world-scene/models/tile-model';
 import {useBattleStore} from "@/stores/battle-store";
 import HeroTile from "@/a-game-scenes/location-scene/components/tile-components/hero-tile.vue";
 

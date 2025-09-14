@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts">
-import TileModel from '@/models/TileModel';
+import TileModel from '@/a-game-scenes/silesia-world-scene/models/tile-model';
 import ReliefTile from '@/a-game-scenes/location-scene/components/tile-components/relief-tile.vue';
 import {useHeroStore} from '@/stores/HeroStore';
 import {useMapLocationStore} from '@/stores/map-location-store';

@@ -94,7 +94,7 @@
 
 <script lang="ts">
 import {LootItemModel} from '@/models/LootItemModel';
-import {Equipment} from "@/models/Equipment";
+import {EquipmentModel} from "@/a-game-scenes/inventory-scene/models/equipment-model";
 import {PropType} from 'vue'
 import EquipmentPlaceholderSlot
   from "@/a-game-scenes/inventory-scene/components/hero-equipment-holder/equipment-placeholder-slot.vue";
@@ -106,7 +106,7 @@ export default {
   components: {HeroCoreDetails, EquipmentPlaceholderSlot},
   props: {
     equipment: {
-      type: Object as PropType<Equipment>,
+      type: Object as PropType<EquipmentModel>,
       required: true
     },
   },

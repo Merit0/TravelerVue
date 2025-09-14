@@ -3,7 +3,7 @@ import { HeroModel } from "@/models/HeroModel";
 import { useUserStore } from "./UserStore";
 import * as Request from "@/api/Requests";
 import { IHero } from "@/abstraction/IHero";
-import TileModel from "@/models/TileModel";
+import TileModel from "@/a-game-scenes/silesia-world-scene/models/tile-model";
 
 export const useHeroStore = defineStore("hero", {
     state: () => ({

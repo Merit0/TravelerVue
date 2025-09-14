@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts">
-import TileModel from '@/models/TileModel';
+import TileModel from '@/a-game-scenes/silesia-world-scene/models/tile-model';
 import EnemyTile from '@/a-game-scenes/location-scene/components/tile-components/enemy-tile.vue';
 import ReliefTile from '@/a-game-scenes/location-scene/components/tile-components/relief-tile.vue';
 import EmptyTile from '@/a-game-scenes/location-scene/components/tile-components/empty-tile.vue';

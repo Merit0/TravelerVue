@@ -1,4 +1,4 @@
-import {LootItemModel} from "./LootItemModel";
+import {LootItemModel} from "../../../../models/LootItemModel";
 import {IGrave} from "@/abstraction/grave-interface";
 
 export class GraveModel implements IGrave {

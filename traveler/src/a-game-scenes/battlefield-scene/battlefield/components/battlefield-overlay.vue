@@ -50,7 +50,7 @@ import EnemyModel from "@/models/EnemyModel";
 import GraveTreasureInventoryOverlay from "@/a-game-scenes/battlefield-scene/grave/components/grave-treasure-inventory-overlay.vue";
 import ConfirmEscapeBattleOverlay from "@/a-game-scenes/battlefield-scene/battlefield/components/confirm-escape-battle-overlay.vue";
 import BattleInfoLogger from "@/a-game-scenes/battlefield-scene/battle-logger/components/battle-info-logger.vue";
-import TileModel from "@/models/TileModel";
+import TileModel from "@/a-game-scenes/silesia-world-scene/models/tile-model";
 
 const battleStore = useBattleStore();
 const overlayStore = useOverlayStore();

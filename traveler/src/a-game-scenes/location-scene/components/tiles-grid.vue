@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import TileModel from '../../../models/TileModel';
+import TileModel from '../../silesia-world-scene/models/tile-model';
 import {PropType} from 'vue';
 import MapTile from "@/a-game-scenes/location-scene/components/tile-components/map-tile.vue";
 

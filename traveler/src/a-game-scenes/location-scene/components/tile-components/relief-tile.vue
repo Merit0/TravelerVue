@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts">
-import TileModel from '@/models/TileModel';
+import TileModel from '@/a-game-scenes/silesia-world-scene/models/tile-model';
 import {useHeroStore} from '@/stores/HeroStore';
 import {useMapLocationStore} from '@/stores/map-location-store';
 import {PropType} from 'vue';

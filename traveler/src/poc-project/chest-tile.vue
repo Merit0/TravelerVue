@@ -20,7 +20,7 @@
 
 <script lang="ts">
 
-import TileModel from '@/models/TileModel';
+import TileModel from '@/a-game-scenes/silesia-world-scene/models/tile-model';
 import {PropType} from "vue";
 import {useOverlayStore} from "@/stores/overlay-store";
 import {useChestStore} from "@/stores/ChestStore";

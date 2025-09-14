@@ -12,7 +12,7 @@
 
 <script setup lang="ts">
 import {useBattleStore} from '@/stores/battle-store'
-import TileModel from "@/models/TileModel";
+import TileModel from "@/a-game-scenes/silesia-world-scene/models/tile-model";
 import {defineProps} from "vue";
 import BattleMapTile from "@/a-game-scenes/battlefield-scene/battlefield/components/battle-map-tile.vue";
 
