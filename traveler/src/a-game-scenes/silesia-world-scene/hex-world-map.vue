@@ -29,11 +29,15 @@ import {useHeroStore} from "@/stores/HeroStore";
 import {HeroModel} from "@/models/HeroModel";
 import {useWorldMapStore} from "@/stores/world-map-store";
 
-const props = defineProps<{
-  tiles: HexTileModel[];
-}>();
-
 const router = useRouter();
+const store = useWorldMapStore();
+store.loadFromStorage();
+store.generateIfEmpty();
+
+
+const tiles = ref<HexTileModel[]>([]);
+tiles.value = store.map.tiles;
+
 
 const baseWidth = 1600;
 const baseHeight = 800;

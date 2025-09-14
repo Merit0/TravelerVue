@@ -25,7 +25,7 @@ import {useChestStore} from '@/stores/ChestStore';
 import {useOverlayStore} from '@/stores/overlay-store';
 import {useMapLocationStore} from "@/stores/map-location-store";
 import {useHeroStore} from "@/stores/HeroStore";
-import ChestSlotTile from "@/components/chest-slot-tile.vue";
+import ChestSlotTile from "@/poc-project/chest-slot-tile.vue";
 
 export default defineComponent({
   name: 'chest-inventory',

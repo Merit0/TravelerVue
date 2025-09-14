@@ -24,7 +24,7 @@ import MapModel from '@/a-game-scenes/silesia-world-scene/models/map-model';
 
 import TilesGrid from '@/a-game-scenes/location-scene/components/tiles-grid.vue';
 import HeroInventory from '../../inventory-scene/components/hero-inventory-overlay.vue';
-import HeroDeathOverlay from '@/components/hero-death-overlay.vue';
+import HeroDeathOverlay from '@/a-game-scenes/hearo-death-scene/components/hero-death-overlay.vue';
 import BattlefieldOverlay from '@/components/battle/battlefield-overlay.vue';
 
 const heroStore = useHeroStore();

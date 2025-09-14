@@ -6,7 +6,7 @@ import {EnemyBuilder} from "@/builders/EnemyBuilder";
 import {MapLocationModel} from "@/a-game-scenes/location-scene/models/map-location-model";
 import MapModel from "@/a-game-scenes/silesia-world-scene/models/map-model";
 import {toKebabCase} from "@/utils/string-utils";
-import {MapProvider} from "@/providers/MapProvider";
+import {MapProvider} from "@/providers/map-provider";
 import {HeroModel} from "@/models/HeroModel";
 import {Randomizer} from "@/utils/Randomizer";
 import {reactive} from 'vue';

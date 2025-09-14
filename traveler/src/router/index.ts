@@ -2,8 +2,8 @@ import {createRouter, createWebHistory} from "vue-router";
 import {useUserStore} from '@/stores/UserStore';
 import LoginPage from "@/a-game-scenes/login-scene/components/login-page.vue";
 import ForestLocation from "@/a-game-scenes/location-scene/components/forest-location.vue";
-import EntireWorld from "@/components/entire-world.vue";
 import HomeLocation from "@/a-game-scenes/home-scene/components/home-location.vue";
+import HexWorldMap from "@/a-game-scenes/silesia-world-scene/hex-world-map.vue";
 
 const routes = [
     {path: '/', component: LoginPage},
@@ -26,7 +26,7 @@ const routes = [
     {
         path: "/silesia",
         name: "silesia-world",
-        component: EntireWorld,
+        component: HexWorldMap,
         meta: {requiresAuth: true}
     },
     {
