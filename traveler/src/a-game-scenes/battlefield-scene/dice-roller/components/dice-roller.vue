@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
 import { useDiceStore } from '@/stores/DiceStore';
-import Dice3d from "@/components/dice-roller/dice-3d.vue";
+import Dice3d from "@/a-game-scenes/battlefield-scene/dice-roller/components/dice-3d.vue";
 
 const diceStore = useDiceStore();
 </script>

@@ -59,7 +59,7 @@ const getEnemyImage = (tile: TileModel) => {
 </script>
 
 <style scoped>
-@import "@/styles/battlefield-style/battlefield-map-tile-style.css";
-@import "@/styles/battlefield-style/battle-enemy-tile-style.css";
-@import "@/styles/battlefield-style/battle-effects-style.css";
+@import "@/a-game-scenes/battlefield-scene/battlefield/styles/battlefield-map-tile-style.css";
+@import "@/a-game-scenes/battlefield-scene/battlefield/styles/battle-enemy-tile-style.css";
+@import "@/a-game-scenes/battlefield-scene/battlefield/styles/battle-effects-style.css";
 </style>

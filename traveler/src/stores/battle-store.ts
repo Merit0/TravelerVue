@@ -20,7 +20,7 @@ interface BattleArena {
 
 export const useBattleStore = defineStore('battle-store', {
     state: (): BattleArena => ({
-        tiles: [],
+        tiles: [] as TileModel[],
         battleTile: null,
         battleTileId: null,
         enemies: [],

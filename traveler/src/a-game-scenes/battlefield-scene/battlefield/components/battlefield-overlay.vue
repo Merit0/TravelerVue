@@ -39,17 +39,18 @@
 <script setup lang="ts">
 import {useBattleStore} from '@/stores/battle-store'
 import {computed, onMounted} from 'vue'
-import BattleGrid from "@/components/battle/battle-grid.vue";
+import BattleGrid from "@/a-game-scenes/battlefield-scene/battlefield/components/battle-grid.vue";
 import {useOverlayStore} from "@/stores/overlay-store";
-import DiceRoller from "@/components/dice-roller/dice-roller.vue";
+import DiceRoller from "@/a-game-scenes/battlefield-scene/dice-roller/components/dice-roller.vue";
 import {useDiceStore} from "@/stores/DiceStore";
 import {useHeroStore} from "@/stores/HeroStore";
 import {useMapLocationStore} from "@/stores/map-location-store";
 import {useRealBattleTile} from '@/composables/useRealBattleTile';
 import EnemyModel from "@/models/EnemyModel";
-import GraveTreasureInventoryOverlay from "@/components/grave/grave-treasure-inventory-overlay.vue";
-import ConfirmEscapeBattleOverlay from "@/components/battle/confirm-escape-battle-overlay.vue";
-import BattleInfoLogger from "@/components/battle/battle-info-logger.vue";
+import GraveTreasureInventoryOverlay from "@/a-game-scenes/battlefield-scene/grave/components/grave-treasure-inventory-overlay.vue";
+import ConfirmEscapeBattleOverlay from "@/a-game-scenes/battlefield-scene/battlefield/components/confirm-escape-battle-overlay.vue";
+import BattleInfoLogger from "@/a-game-scenes/battlefield-scene/battle-logger/components/battle-info-logger.vue";
+import TileModel from "@/models/TileModel";
 
 const battleStore = useBattleStore();
 const overlayStore = useOverlayStore();
@@ -70,7 +71,7 @@ const {realBattleTile} = useRealBattleTile();
 const getAttackBtnImage = () => {
   const btnImag: string = diceStore.isRolling ? 'inactive' : 'active';
   return {
-    backgroundImage: `url(/images/overlays/battlefield/${btnImag}-attack-button-image.png)`,
+    backgroundImage: `url(/src/a-game-scenes/battlefield-scene/battlefield/assets/${btnImag}-attack-button-image.png)`,
   }
 }
 
@@ -144,10 +145,10 @@ function attackEnemies(targetsNumber: number) {
   const heroStore = useHeroStore();
   const {hero} = heroStore;
 
-  const battleTiles = battleStore.tiles;
+  const battleTiles: TileModel[] = battleStore.tiles;
   if (!battleTiles || battleTiles.length === 0) return;
 
-  const aliveEnemyTiles = battleTiles.filter(tile => {
+  const aliveEnemyTiles: TileModel[] = battleTiles.filter((tile: TileModel) => {
     const enemy = tile.enemies[0];
     return enemy && enemy.health > 0;
   });
@@ -156,8 +157,8 @@ function attackEnemies(targetsNumber: number) {
 
   const targets = Math.min(targetsNumber, aliveEnemyTiles.length);
 
-  const shuffledTiles = [...aliveEnemyTiles].sort(() => Math.random() - 0.5);
-  const selectedTiles = shuffledTiles.slice(0, targets);
+  const shuffledTiles: TileModel[] = [...aliveEnemyTiles].sort(() => Math.random() - 0.5);
+  const selectedTiles: TileModel[] = shuffledTiles.slice(0, targets);
   const unSelectedTiles = shuffledTiles.slice(targets);
 
   for (const tile of unSelectedTiles) {
@@ -208,7 +209,7 @@ function updateMapTileState() {
 </script>
 
 <style scoped>
-@import "@/styles/battlefield-style/battlefield-overlay-stile.css";
+@import "@/a-game-scenes/battlefield-scene/battlefield/styles/battlefield-overlay-stile.css";
 
 .top-bar-hero-stats {
   position: absolute;
@@ -272,7 +273,7 @@ function updateMapTileState() {
   left: 1%;
   width: 2.2vw;
   height: 90%;
-  background-image: url("/images/overlays/battlefield/foots-icon.png");
+  background-image: url("/src/a-game-scenes/battlefield-scene/battlefield/assets/runaway-btn-icon.png");
   background-size: cover;
   background-repeat: no-repeat;
   border-radius: 20%;
@@ -336,7 +337,7 @@ function updateMapTileState() {
   height: 92%;
   border-radius: 1rem;
   cursor: pointer;
-  border: 2px solid #ffa600; /* чистий золотий */
+  border: 2px solid #ffa600;
   box-shadow: 0 0 4px rgba(255, 145, 0, 0.4),
   0 0 8px rgba(255, 153, 0, 0.6),
   0 0 12px rgba(255, 166, 0, 0.8);

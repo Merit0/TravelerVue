@@ -39,7 +39,7 @@ export default {
   height: 100%  ;
   border-radius: 20px;
   margin: auto;
-  background-image: url("/src/a-game-scenes/hearo-death-scene/assets/hero-death-overlay-background.png");
+  background-image: url("/src/a-game-scenes/hearo-death-scene/components/hearo-death-scene/assets/hero-death-overlay-background.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

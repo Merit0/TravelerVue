@@ -40,7 +40,7 @@ const getTileBackgroundImage = (tile: TileModel) => {
 
 const getGraveImage = () => {
   const skeletonType: string = graveStore.killedEnemyType !== EnemyType.ANIMAL ? 'skeleton' : 'animal';
-  const path = `/images/overlays/battlefield/dead-${skeletonType}-tile-image.png`;
+  const path = `/src/a-game-scenes/battlefield-scene/battlefield/assets/dead-${skeletonType}-tile-image.png`;
   return {
     backgroundImage: `url(${path})`,
   }
@@ -60,6 +60,6 @@ const openGraveInventory = (tile: TileModel) => {
 </script>
 
 <style scoped>
-@import "@/styles/battlefield-style/battlefield-map-tile-style.css";
-@import "@/styles/battlefield-style/battle-grave-tile-style.css";
+@import "@/a-game-scenes/battlefield-scene/battlefield/styles/battlefield-map-tile-style.css";
+@import "@/a-game-scenes/battlefield-scene/battlefield/styles/battle-grave-tile-style.css";
 </style>

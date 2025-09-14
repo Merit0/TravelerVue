@@ -22,9 +22,9 @@
 <script setup lang="ts">
 import {computed, defineProps} from 'vue';
 import TileModel from '@/models/TileModel';
-import BattleEnemyTile from "@/components/battle/battle-enemy-tile.vue";
-import BattleHeroTile from "@/components/battle/battle-hero-tile.vue";
-import BattleGraveTile from "@/components/battle/battle-grave-tile.vue";
+import BattleEnemyTile from "@/a-game-scenes/battlefield-scene/battlefield/components/battle-enemy-tile.vue";
+import BattleHeroTile from "@/a-game-scenes/battlefield-scene/battlefield/components/battle-hero-tile.vue";
+import BattleGraveTile from "@/a-game-scenes/battlefield-scene/battlefield/components/battle-grave-tile.vue";
 
 const props = defineProps<{
   tile: TileModel
@@ -44,5 +44,5 @@ const enemyAlive = computed(() => {
 </script>
 
 <style scoped>
-@import "@/styles/battlefield-style/battlefield-map-tile-style.css";
+@import "@/a-game-scenes/battlefield-scene/battlefield/styles/battlefield-map-tile-style.css";
 </style>

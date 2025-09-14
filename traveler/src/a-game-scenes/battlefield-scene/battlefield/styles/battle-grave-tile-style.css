@@ -11,7 +11,7 @@
 }
 
 .grave-tile.glowing {
-    cursor: url('/images/overlays/battlefield/magnifier-cursor-48x48.png') 16 16, auto;
+    cursor: url('src/a-game-scenes/battlefield-scene/battlefield/assets/magnifier-cursor-48x48.png') 16 16, auto;
     border-radius: 4px;
     border: 2px solid rgb(12, 5, 2);
     transition: box-shadow 0.3s ease-in-out;

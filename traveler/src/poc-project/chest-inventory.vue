@@ -124,7 +124,7 @@ export default defineComponent({
 .deadSkeletonImage {
   width: 130%;
   height: 130%;
-  background-image: url("/images/chests/dead-skeleton-image.png");
+  background-image: url("/src/a-game-scenes/battlefield-scene/grave/assets/dead-skeleton-image.png");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;

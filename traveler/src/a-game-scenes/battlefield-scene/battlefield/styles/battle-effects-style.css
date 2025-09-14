@@ -14,7 +14,7 @@
     position: absolute;
     width: 20%;
     height: 20%;
-    background-image: url('/images/overlays/battlefield/blood-splash-effect-image.png');
+    background-image: url('../assets/battle-effects/blood-splash-effect-image.png');
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;

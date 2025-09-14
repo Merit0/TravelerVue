@@ -25,7 +25,7 @@
 
 <script setup lang="ts">
 import {computed, defineProps, ref, watch} from 'vue';
-import DiceFaceContent from "@/components/dice-roller/dice-face-content.vue";
+import DiceFaceContent from "@/a-game-scenes/battlefield-scene/dice-roller/components/dice-face-content.vue";
 
 const props = defineProps<{
   face: 'sword' | 'shield' | 'energy';

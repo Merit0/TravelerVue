@@ -1,6 +1,6 @@
 <template>
   <div class="enemy-face">
-    <img src="/images/dice-face-icons/enemy-dice-face-image.png" alt="enemy-face-icon"/>
+    <img src="/src/a-game-scenes/battlefield-scene/dice-roller/assets/dice-face-icons/enemy-dice-face-image.png" alt="enemy-face-icon"/>
     <span class="enemy-count">{{ number }}</span>
   </div>
 </template>

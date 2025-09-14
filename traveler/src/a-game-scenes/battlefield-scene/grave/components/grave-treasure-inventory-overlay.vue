@@ -22,7 +22,7 @@
 import {defineComponent, watch, computed} from 'vue';
 import {useOverlayStore} from '@/stores/overlay-store';
 import {useGraveStore} from "@/stores/grave-store";
-import GraveTreasureSlot from "@/components/grave/grave-treasure-slot.vue";
+import GraveTreasureSlot from "@/a-game-scenes/battlefield-scene/grave/components/grave-treasure-slot.vue";
 
 export default defineComponent({
   name: 'grave-treasure-inventory-overlay',
@@ -113,7 +113,7 @@ export default defineComponent({
 .deadSkeletonImage {
   width: 130%;
   height: 130%;
-  background-image: url("/images/chests/dead-skeleton-image.png");
+  background-image: url("/src/a-game-scenes/battlefield-scene/grave/assets/dead-skeleton-image.png");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;

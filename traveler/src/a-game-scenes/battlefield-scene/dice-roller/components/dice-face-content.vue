@@ -1,7 +1,7 @@
 <template>
   <img
       v-if="isActionFace(face)"
-      :src="`/images/dice-face-icons/dice-${face}-face-image.png`"
+      :src="`/src/a-game-scenes/battlefield-scene/dice-roller/assets/dice-face-icons/dice-${face}-face-image.png`"
       :alt="face"
       class="dice-face-image"
   />
@@ -11,7 +11,7 @@
 <script setup lang="ts">
 import {defineProps} from 'vue';
 import {DiceFace} from "@/models/DiceModel";
-import DiceEnemyFace from "@/components/dice-roller/dice-enemy-face.vue";
+import DiceEnemyFace from "@/a-game-scenes/battlefield-scene/dice-roller/components/dice-enemy-face.vue";
 
 defineProps<{
   face: 'sword' | 'shield' | 'energy' | `x${number}`;

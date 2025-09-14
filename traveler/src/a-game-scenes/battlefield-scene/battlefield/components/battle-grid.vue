@@ -14,7 +14,7 @@
 import {useBattleStore} from '@/stores/battle-store'
 import TileModel from "@/models/TileModel";
 import {defineProps} from "vue";
-import BattleMapTile from "@/components/battle/battle-map-tile.vue";
+import BattleMapTile from "@/a-game-scenes/battlefield-scene/battlefield/components/battle-map-tile.vue";
 
 const props = defineProps<{
   tile: TileModel | null

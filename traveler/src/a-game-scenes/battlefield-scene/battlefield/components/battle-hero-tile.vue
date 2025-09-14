@@ -41,8 +41,8 @@ const getTileBackgroundImage = (tile: TileModel) => {
 </script>
 
 <style>
-@import "@/styles/battlefield-style/battlefield-map-tile-style.css";
-@import "@/styles/battlefield-style/battle-effects-style.css";
+@import "@/a-game-scenes/battlefield-scene/battlefield/styles/battlefield-map-tile-style.css";
+@import "@/a-game-scenes/battlefield-scene/battlefield/styles/battle-effects-style.css";
 
 .battle-inventory-button {
   position: relative;
