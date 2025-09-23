@@ -7,7 +7,7 @@ import {MapLocationModel} from "@/a-game-scenes/location-scene/models/map-locati
 export class MapLocationProvider {
     private static readonly LOCATION_CONTENT_IMAGES_PATH = '/src/a-game-scenes/location-scene/assets/'
     static getSilesiaLocations(): MapLocationModel[] {
-        const bosses: EnemyModel[] = BossProvider.getHumansBosses();
+        const bosses: EnemyModel[] = BossProvider.getBosses();
         const randIndex = Math.floor(Math.random() * bosses.length);
         const mapLocationsList: MapLocationModel[] = [];
         const mapLocations: {

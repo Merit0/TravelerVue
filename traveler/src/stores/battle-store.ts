@@ -33,6 +33,7 @@ export const useBattleStore = defineStore('battle-store', {
 
     actions: {
         startBattleOnTile(tile: TileModel) {
+            tile.inBattle = true;
             const GRID_SIZE = 5;
             const CENTER = {x: 2, y: 2};
 
