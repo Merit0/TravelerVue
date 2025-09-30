@@ -11,6 +11,7 @@
         "kills": 0,
         "maxEnergy": 100,
         "currentEnergy": 100,
+        "heroSteps": 90,
         "equipment": {
             "weapon": null,
             "shield": null,
@@ -52,6 +53,7 @@
         "kills": 0,
         "maxEnergy": 100,
         "currentEnergy": 100,
+        "heroSteps": 0,
         "stats": true,
         "equipment": {
             "sword": null,

@@ -6,6 +6,7 @@ export interface IHeroItem {
   value: number;
   price: number;
   imgPath: string;
+  poseImgPath: string;
   borderFrame: string;
   itemType: ItemType;
   rarity: Rarity;

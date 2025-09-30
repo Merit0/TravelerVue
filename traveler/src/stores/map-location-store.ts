@@ -1,18 +1,18 @@
 import {defineStore} from "pinia";
-import TileModel from "@/models/TileModel";
+import TileModel from "@/a-game-scenes/silesia-world-scene/models/tile-model";
 import EnemyModel from "@/models/EnemyModel";
 import {useHeroStore} from "./HeroStore";
 import {EnemyBuilder} from "@/builders/EnemyBuilder";
-import {MapLocationModel} from "@/models/map-location-model";
-import MapModel from "@/models/MapModel";
+import {MapLocationModel} from "@/a-game-scenes/location-scene/models/map-location-model";
+import MapModel from "@/a-game-scenes/silesia-world-scene/models/map-model";
 import {toKebabCase} from "@/utils/string-utils";
-import {MapProvider} from "@/providers/MapProvider";
+import {MapProvider} from "@/a-game-scenes/silesia-world-scene/providers/map-provider";
 import {HeroModel} from "@/models/HeroModel";
 import {Randomizer} from "@/utils/Randomizer";
 import {reactive} from 'vue';
 import {AnimalProvider} from "@/providers/creatures-provider/animal-provider";
 import {EnemyType} from "@/enums/EnemyType";
-import {HumanEnemiesProvider} from "@/providers/creatures-provider/human-enemies-provider";
+import {SkeletonProvider} from "@/providers/creatures-provider/skeleton-provider";
 
 interface MapLocationState {
     tiles: TileModel[];
@@ -57,16 +57,14 @@ export const useMapLocationStore = defineStore("map-location-store", {
         getMapsList(state) {
             return state.mapsList;
         },
-        getOldForestMap: (state) => (): MapModel | undefined => {
-            return state.mapsList.find((map) => map.name === 'Old Forest') as MapModel;
+        getSilesia: (state) => (): MapModel | undefined => {
+            return state.mapsList.find((map) => map.name === 'Silesia') as MapModel;
         },
     },
     actions: {
         initMapsList() {
             this.mapsList = [
-                MapProvider.getOldForest(),
-                MapProvider.getEvilTree(),
-                MapProvider.getMagicCircle(),
+                MapProvider.getSilesiaMap(),
             ];
 
             this.mapLocationName = "";
@@ -108,7 +106,7 @@ export const useMapLocationStore = defineStore("map-location-store", {
                 if (saved) {
                     const parsed = JSON.parse(saved);
                     this.locationStates[locationMap.name] = {
-                        tiles: parsed.tiles.map((t: any) => reactive(TileModel.mapToModel(t))),
+                        tiles: parsed.tiles.map((t: TileModel) => reactive(TileModel.mapToModel(t))),
                         isCleared: parsed.isMapLocationCleared,
                         boss: parsed.boss,
                     };
@@ -167,6 +165,29 @@ export const useMapLocationStore = defineStore("map-location-store", {
             return tiles;
         },
 
+        generatePodiumTiles(): TileModel[] {
+            const GRID_SIZE = 3;
+            const CENTER = {x: 1, y: 1};
+
+            const podiumTiles: TileModel[] = [];
+
+            for (let y = 0; y < GRID_SIZE; y++) {
+                for (let x = 0; x < GRID_SIZE; x++) {
+                    const index = y * GRID_SIZE + x;
+                    const t = new TileModel(index, {x, y});
+                    t.isInitial = true;
+                    t.backgroundSrc = '/images/map-location/camping-map-location/tile-background-500-500/ground-tile-background.png';
+                    podiumTiles.push(t);
+                }
+            }
+
+            const centerIndex = CENTER.y * GRID_SIZE + CENTER.x;
+            podiumTiles[centerIndex].isHeroHere = true;
+            podiumTiles[centerIndex].isInitial = false;
+
+            return podiumTiles;
+        },
+
         addHeroToTiles(tiles: TileModel[], hero: HeroModel) {
             tiles.forEach((tile: TileModel) => {
                 tile.isHeroHere = false;
@@ -194,9 +215,9 @@ export const useMapLocationStore = defineStore("map-location-store", {
             });
 
             if (nextTile.coordinates.x < currentTile.coordinates.x) {
-                hero.flippedImage = false; // turn Hero left
+                hero.flippedImage = false;
             } else if (nextTile.coordinates.x > currentTile.coordinates.x) {
-                hero.flippedImage = true; // turn Hero right
+                hero.flippedImage = true;
             }
 
             currentTile.isHeroHere = false;
@@ -205,6 +226,7 @@ export const useMapLocationStore = defineStore("map-location-store", {
 
             hero.currentTile = nextTile;
             hero.heroLocation = {...nextTile.coordinates};
+            hero.heroSteps++;
 
             this.removeAllItemsFromTile(nextTile);
             this.calculateReachableTiles(nextTile, this.tiles);
@@ -244,16 +266,18 @@ export const useMapLocationStore = defineStore("map-location-store", {
             const createdEnemies: EnemyModel[] = [];
             const enemyKindsList: EnemyType[] = [EnemyType.ANIMAL, EnemyType.WARRIOR]
             const animalsList: EnemyModel[] = AnimalProvider.getForestAnimals();
-            const humansList: EnemyModel[] = HumanEnemiesProvider.getHumansEnemies();
+            const skeletonsList: EnemyModel[] = SkeletonProvider.getSkeletons();
             let enemiesList: EnemyModel[];
 
-            const numberOfEnemiesOnTile = Math.floor(Math.random() * 3) + 1;
+            let numberOfEnemiesOnTile: number;
 
             const chosenKind = enemyKindsList[Math.floor(Math.random() * enemyKindsList.length)];
             if (chosenKind === EnemyType.ANIMAL) {
+                numberOfEnemiesOnTile = 1;
                 enemiesList = animalsList;
             } else {
-                enemiesList = humansList;
+                numberOfEnemiesOnTile = Math.floor(Math.random() * 3) + 1;
+                enemiesList = skeletonsList;
             }
 
             for (let i = 0; i < numberOfEnemiesOnTile; i++) {

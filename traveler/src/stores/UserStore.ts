@@ -6,7 +6,7 @@ import {useHeroStore} from '@/stores/HeroStore';
 import {useMapLocationStore} from '@/stores/map-location-store';
 import {useBagStore} from '@/stores/BagStore';
 import {useChestStore} from '@/stores/ChestStore';
-import MapModel from "@/models/MapModel";
+import MapModel from "@/a-game-scenes/silesia-world-scene/models/map-model";
 
 export const useUserStore = defineStore('user', {
     state: () => ({
@@ -47,17 +47,16 @@ export const useUserStore = defineStore('user', {
 
             const mapLocationStore = useMapLocationStore();
             const bagStore = useBagStore();
-            const chestStore = useChestStore();
             const heroStore = useHeroStore();
 
             mapLocationStore.initMapsList();
 
-            const oldForestMap: MapModel | undefined = mapLocationStore.mapsList.find(map => map.name === 'Old Forest') as MapModel;
+            const silesiaMap: MapModel | undefined = mapLocationStore.mapsList.find(map => map.name === 'Silesia') as MapModel;
 
-            if (oldForestMap) {
+            if (silesiaMap) {
                 try {
                     await Promise.all([
-                        mapLocationStore.resetAllMapLocations(oldForestMap),
+                        mapLocationStore.resetAllMapLocations(silesiaMap),
                         bagStore.resetBag(),
                     ]);
 
@@ -69,7 +68,7 @@ export const useUserStore = defineStore('user', {
                     console.error("Error during logout:", error);
                 }
             } else {
-                console.error('Old Forest map not found');
+                console.error('Silesia map not found');
             }
             heroStore.resetHero();
             localStorage.clear();

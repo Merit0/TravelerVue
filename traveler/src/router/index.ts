@@ -1,14 +1,9 @@
 import {createRouter, createWebHistory} from "vue-router";
 import {useUserStore} from '@/stores/UserStore';
-import LoginPage from "@/components/login-page.vue";
-import HomePage from "@/components/home-page.vue";
-import ForestEntranceMapLocation from "@/components/maps/old-forest/forest-entrance-map-location.vue";
-import MapsPage from "@/components/maps-page.vue";
-import CampPage from "@/components/camp-page.vue";
-import MountainHillMapLocation from "@/components/maps/old-forest/mountain-hill-map-location.vue";
-import ForestCaveMapLocation from "@/components/maps/old-forest/forest-cave-map-location.vue";
-import ForestPeakMapLocation from "@/components/maps/old-forest/forest-peak-map-location.vue";
-import ForestShadowsMapLocation from "@/components/maps/old-forest/forest-shadows-map-location.vue";
+import LoginPage from "@/a-game-scenes/login-scene/components/login-page.vue";
+import ForestLocation from "@/a-game-scenes/location-scene/components/forest-location.vue";
+import HomeLocation from "@/a-game-scenes/home-scene/components/home-location.vue";
+import HexWorldMap from "@/a-game-scenes/silesia-world-scene/hex-world-map.vue";
 
 const routes = [
     {path: '/', component: LoginPage},
@@ -19,49 +14,25 @@ const routes = [
     {
         path: "/home",
         name: "home-page",
-        component: HomePage,
+        component: HomeLocation,
         meta: {requiresAuth: true},
     },
     {
         path: '/camping',
         name: "camping-page",
-        component: CampPage,
+        component: HomeLocation,
         meta: {requiresAuth: true}
     },
     {
-        path: "/maps",
-        name: "maps-page",
-        component: MapsPage,
+        path: "/silesia",
+        name: "silesia-world",
+        component: HexWorldMap,
         meta: {requiresAuth: true}
     },
     {
-        path: "/forest-entrance",
-        name: "forest-entrance",
-        component: ForestEntranceMapLocation,
-        meta: {requiresAuth: true}
-    },
-    {
-        path: "/mountain-hill",
-        name: "mountain-hill",
-        component: MountainHillMapLocation,
-        meta: {requiresAuth: true}
-    },
-    {
-        path: "/forest-cave",
-        name: "forest-cave",
-        component: ForestCaveMapLocation,
-        meta: {requiresAuth: true}
-    },
-    {
-        path: "/forest-peak",
-        name: "forest-peak",
-        component: ForestPeakMapLocation,
-        meta: {requiresAuth: true}
-    },
-    {
-        path: "/forest-shadows",
-        name: "forest-shadows",
-        component: ForestShadowsMapLocation,
+        path: "/location/forest",
+        name: "Forest",
+        component: ForestLocation,
         meta: {requiresAuth: true}
     },
 ];

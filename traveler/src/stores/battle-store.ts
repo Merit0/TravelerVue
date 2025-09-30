@@ -1,5 +1,5 @@
 import {defineStore} from 'pinia';
-import TileModel from '@/models/TileModel';
+import TileModel from '@/a-game-scenes/silesia-world-scene/models/tile-model';
 import EnemyModel from '@/models/EnemyModel';
 import {useHeroStore} from './HeroStore';
 import {useDiceStore} from '@/stores/DiceStore';
@@ -20,7 +20,7 @@ interface BattleArena {
 
 export const useBattleStore = defineStore('battle-store', {
     state: (): BattleArena => ({
-        tiles: [],
+        tiles: [] as TileModel[],
         battleTile: null,
         battleTileId: null,
         enemies: [],
@@ -33,6 +33,7 @@ export const useBattleStore = defineStore('battle-store', {
 
     actions: {
         startBattleOnTile(tile: TileModel) {
+            tile.inBattle = true;
             const GRID_SIZE = 5;
             const CENTER = {x: 2, y: 2};
 

@@ -2,7 +2,7 @@ import {EnemyType} from "@/enums/EnemyType";
 import {IEnemy} from "@/abstraction/IEnemy";
 import {Randomizer} from "@/utils/Randomizer";
 import {LootItemModel} from "./LootItemModel";
-import {DiceFace} from "@/models/DiceModel";
+import {DiceFace} from "@/a-game-scenes/battlefield-scene/dice-roller/models/DiceModel";
 
 export default class EnemyModel implements IEnemy {
     name: string;

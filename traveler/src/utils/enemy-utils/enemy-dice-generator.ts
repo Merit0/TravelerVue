@@ -1,4 +1,4 @@
-import {DiceModel} from "@/models/DiceModel";
+import {DiceModel} from "@/a-game-scenes/battlefield-scene/dice-roller/models/DiceModel";
 import EnemyModel from "@/models/EnemyModel";
 
 export class EnemyDiceGenerator {

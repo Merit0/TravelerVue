@@ -1,7 +1,7 @@
 import EnemyModel from '@/models/EnemyModel';
 import {EnemyType} from '@/enums/EnemyType';
 import {LootItemModel} from '@/models/LootItemModel';
-import {DiceFace} from "@/models/DiceModel";
+import {DiceFace} from "@/a-game-scenes/battlefield-scene/dice-roller/models/DiceModel";
 
 interface IEnemyBuilder {
     enemyName(name: string): EnemyBuilder;

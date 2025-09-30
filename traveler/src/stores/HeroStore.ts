@@ -3,7 +3,7 @@ import { HeroModel } from "@/models/HeroModel";
 import { useUserStore } from "./UserStore";
 import * as Request from "@/api/Requests";
 import { IHero } from "@/abstraction/IHero";
-import TileModel from "@/models/TileModel";
+import TileModel from "@/a-game-scenes/silesia-world-scene/models/tile-model";
 
 export const useHeroStore = defineStore("hero", {
     state: () => ({
@@ -11,6 +11,8 @@ export const useHeroStore = defineStore("hero", {
         inventoryShown: false,
         heroPositionsByMap: {} as Record<string, any>,
         flippedMy: true,
+        heroMapTileBodyRotationAngle: 270,
+        heroTargetRotation: 270
     }),
 
     actions: {
@@ -34,7 +36,8 @@ export const useHeroStore = defineStore("hero", {
                 .setCurrentEnergy(hero.currentEnergy)
                 .setMaxEnergy(hero.maxEnergy)
                 .setStats(hero.available)
-                .setEquipment(hero.equipment);
+                .setEquipment(hero.equipment)
+                .setSteps(hero.heroSteps);
 
             return true;
         },
@@ -83,5 +86,13 @@ export const useHeroStore = defineStore("hero", {
             this.hero = new HeroModel();
             this.heroPositionsByMap = {};
         },
+
+        setTargetRotation(angle: number) {
+            this.heroTargetRotation = angle;
+        },
+        tickRotation() {
+            this.heroMapTileBodyRotationAngle +=
+                (this.heroTargetRotation - this.heroMapTileBodyRotationAngle);
+        }
     },
 });

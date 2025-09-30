@@ -1,5 +1,6 @@
-import { Equipment } from "@/models/Equipment";
-import TileModel, {ICoordinates} from "@/models/TileModel";
+import { EquipmentModel } from "@/a-game-scenes/inventory-scene/models/equipment-model";
+import TileModel, {ICoordinates} from "@/a-game-scenes/silesia-world-scene/models/tile-model";
+import {DiceModel} from "@/a-game-scenes/battlefield-scene/dice-roller/models/DiceModel";
 
 export interface IHero {
   name: string;
@@ -15,8 +16,11 @@ export interface IHero {
   id: number;
   imgPath: string;
   available: boolean;
-  equipment: Equipment;
+  equipment: EquipmentModel;
   currentTile: TileModel;
   heroLocation: ICoordinates;
+  heroSteps: number;
+  heroDices: DiceModel[]
   experienceCollector(): void;
+  getHeroDices(): DiceModel[];
 }

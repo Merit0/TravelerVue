@@ -1,6 +1,8 @@
 import {IHero} from "@/abstraction/IHero";
-import {Equipment} from "./Equipment";
-import TileModel, {ICoordinates} from "./TileModel";
+import {EquipmentModel} from "../a-game-scenes/inventory-scene/models/equipment-model";
+import TileModel, {ICoordinates} from "../a-game-scenes/silesia-world-scene/models/tile-model";
+import {DiceModel} from "@/a-game-scenes/battlefield-scene/dice-roller/models/DiceModel";
+
 
 export class HeroModel implements IHero {
     name: string;
@@ -16,23 +18,23 @@ export class HeroModel implements IHero {
     available: boolean;
     id: number;
     imgPath = "/images/heroes_150_150/hero-tile-image.png";
-    equipment: Equipment;
+    equipment: EquipmentModel;
     currentTile: TileModel;
     heroLocation: ICoordinates;
     flippedImage = false;
+    heroSteps: number;
+    heroDices: DiceModel[] = [];
 
     constructor() {
         this.maxHealth = 100;
         this.maxEnergy = 100;
+        this.heroSteps = 0;
     }
 
-    setFlipped(state: boolean) {
-        this.flippedImage = state;
-        return this;
-    }
-
-    getFlipped(): boolean {
-        return this.flippedImage;
+    getHeroDices(): DiceModel[] {
+        const actionFaces = ['sword', 'shield', 'energy'];
+        const diceWeights = [10, 2, 3]
+        return Array.from({length: 3}, () => new DiceModel(actionFaces, diceWeights));
     }
 
     public setName(name: string): HeroModel {
@@ -90,8 +92,13 @@ export class HeroModel implements IHero {
         return this;
     }
 
-    public setEquipment(equipment: Equipment): HeroModel {
+    public setEquipment(equipment: EquipmentModel): HeroModel {
         this.equipment = equipment;
+        return this;
+    }
+
+    public setSteps(steps: number): HeroModel {
+        this.heroSteps = steps;
         return this;
     }
 
@@ -105,6 +112,10 @@ export class HeroModel implements IHero {
 
     public getCurrentEnergy(): number {
         return this.currentEnergy;
+    }
+
+    public getHeroMyriads(): number {
+        return Math.round((this.heroSteps / 10) * 10) / 10;
     }
 
     public getMaxEnergy(): number {

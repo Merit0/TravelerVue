@@ -1,8 +1,8 @@
 import {defineStore} from "pinia";
 import {LootItemModel} from "@/models/LootItemModel";
 import EnemyModel from "@/models/EnemyModel";
-import TileModel from "@/models/TileModel";
-import {GraveModel} from "@/models/grave-model";
+import TileModel from "@/a-game-scenes/silesia-world-scene/models/tile-model";
+import {GraveModel} from "@/a-game-scenes/battlefield-scene/grave/models/grave-model";
 import {LootFactory} from "@/factory/loot-factory";
 import {EnemyType} from "@/enums/EnemyType";
 
