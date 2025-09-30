@@ -1,4 +1,4 @@
-import { Equipment } from "@/models/Equipment";
+import { EquipmentModel } from "@/a-game-scenes/inventory-scene/models/equipment-model";
 
 export interface Hero {
   name: string;
@@ -7,7 +7,7 @@ export interface Hero {
   id: number;
   kills: number;
   defense: number;
-  equipment: Equipment;
+  equipment: EquipmentModel;
 }
 
 export default Hero;

@@ -1,18 +1,18 @@
 import {defineStore} from "pinia";
-import TileModel from "@/models/TileModel";
+import TileModel from "@/a-game-scenes/silesia-world-scene/models/tile-model";
 import EnemyModel from "@/models/EnemyModel";
 import {useHeroStore} from "./HeroStore";
 import {EnemyBuilder} from "@/builders/EnemyBuilder";
-import {MapLocationModel} from "@/models/map-location-model";
-import MapModel from "@/models/MapModel";
+import {MapLocationModel} from "@/a-game-scenes/location-scene/models/map-location-model";
+import MapModel from "@/a-game-scenes/silesia-world-scene/models/map-model";
 import {toKebabCase} from "@/utils/string-utils";
-import {MapProvider} from "@/providers/MapProvider";
+import {MapProvider} from "@/a-game-scenes/silesia-world-scene/providers/map-provider";
 import {HeroModel} from "@/models/HeroModel";
 import {Randomizer} from "@/utils/Randomizer";
 import {reactive} from 'vue';
 import {AnimalProvider} from "@/providers/creatures-provider/animal-provider";
 import {EnemyType} from "@/enums/EnemyType";
-import {HumanEnemiesProvider} from "@/providers/creatures-provider/human-enemies-provider";
+import {SkeletonProvider} from "@/providers/creatures-provider/skeleton-provider";
 
 interface MapLocationState {
     tiles: TileModel[];
@@ -176,7 +176,7 @@ export const useMapLocationStore = defineStore("map-location-store", {
                     const index = y * GRID_SIZE + x;
                     const t = new TileModel(index, {x, y});
                     t.isInitial = true;
-                    t.backgroundSrc = '/images/map-location/camping-map-location/tile-background-500-500/ground-tile-background-2.png';
+                    t.backgroundSrc = '/images/map-location/camping-map-location/tile-background-500-500/ground-tile-background.png';
                     podiumTiles.push(t);
                 }
             }
@@ -266,16 +266,18 @@ export const useMapLocationStore = defineStore("map-location-store", {
             const createdEnemies: EnemyModel[] = [];
             const enemyKindsList: EnemyType[] = [EnemyType.ANIMAL, EnemyType.WARRIOR]
             const animalsList: EnemyModel[] = AnimalProvider.getForestAnimals();
-            const humansList: EnemyModel[] = HumanEnemiesProvider.getHumansEnemies();
+            const skeletonsList: EnemyModel[] = SkeletonProvider.getSkeletons();
             let enemiesList: EnemyModel[];
 
-            const numberOfEnemiesOnTile = Math.floor(Math.random() * 3) + 1;
+            let numberOfEnemiesOnTile: number;
 
             const chosenKind = enemyKindsList[Math.floor(Math.random() * enemyKindsList.length)];
             if (chosenKind === EnemyType.ANIMAL) {
+                numberOfEnemiesOnTile = 1;
                 enemiesList = animalsList;
             } else {
-                enemiesList = humansList;
+                numberOfEnemiesOnTile = Math.floor(Math.random() * 3) + 1;
+                enemiesList = skeletonsList;
             }
 
             for (let i = 0; i < numberOfEnemiesOnTile; i++) {

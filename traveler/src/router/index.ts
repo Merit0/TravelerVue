@@ -1,10 +1,9 @@
 import {createRouter, createWebHistory} from "vue-router";
 import {useUserStore} from '@/stores/UserStore';
-import LoginPage from "@/components/login-page.vue";
-import HomePage from "@/components/home-page.vue";
-import ForestLocation from "@/components/maps/silesia-map/forest-location.vue";
-import EntireWorld from "@/components/entire-world.vue";
-import CampPage from "@/components/camp-page.vue";
+import LoginPage from "@/a-game-scenes/login-scene/components/login-page.vue";
+import ForestLocation from "@/a-game-scenes/location-scene/components/forest-location.vue";
+import HomeLocation from "@/a-game-scenes/home-scene/components/home-location.vue";
+import HexWorldMap from "@/a-game-scenes/silesia-world-scene/hex-world-map.vue";
 
 const routes = [
     {path: '/', component: LoginPage},
@@ -15,23 +14,23 @@ const routes = [
     {
         path: "/home",
         name: "home-page",
-        component: HomePage,
+        component: HomeLocation,
         meta: {requiresAuth: true},
     },
     {
         path: '/camping',
         name: "camping-page",
-        component: CampPage,
+        component: HomeLocation,
         meta: {requiresAuth: true}
     },
     {
-        path: "/maps",
-        name: "maps-page",
-        component: EntireWorld,
+        path: "/silesia",
+        name: "silesia-world",
+        component: HexWorldMap,
         meta: {requiresAuth: true}
     },
     {
-        path: "/map/forest",
+        path: "/location/forest",
         name: "Forest",
         component: ForestLocation,
         meta: {requiresAuth: true}

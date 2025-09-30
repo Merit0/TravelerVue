@@ -1,6 +1,6 @@
 import {defineStore} from 'pinia';
-import {DicesHolderModel} from '@/models/DicesHolderModel';
-import {DiceFace, DiceModel} from "@/models/DiceModel";
+import {DicesHolderModel} from '@/a-game-scenes/battlefield-scene/dice-roller/models/DicesHolderModel';
+import {DiceFace, DiceModel} from "@/a-game-scenes/battlefield-scene/dice-roller/models/DiceModel";
 import {RollDiceTester} from "@/utils/roll-dice-tester";
 import {EnemyDiceGenerator} from "@/utils/enemy-utils/enemy-dice-generator";
 import EnemyModel from "@/models/EnemyModel";
