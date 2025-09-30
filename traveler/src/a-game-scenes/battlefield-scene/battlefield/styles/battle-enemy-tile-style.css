@@ -5,12 +5,11 @@
     background-position: center;
     background-size: cover;
     position: relative;
-    image-rendering: crisp-edges;
 }
 
 .enemy-stats-hover {
-    position: absolute;
-    bottom: 0;
+    position: relative;
+    bottom: -40%;
     left: 50%;
     transform: translateX(-50%);
     background: rgba(64, 27, 1, 0.51);
@@ -21,16 +20,15 @@
     font-weight: bold;
     white-space: nowrap;
     opacity: 0;
-    pointer-events: none;
     transition: opacity 0.2s ease;
     z-index: 12;
 }
 
-.battle-enemy-tile:hover .enemy-stats-hover {
+.battle-map-tile:hover .enemy-stats-hover {
     opacity: 1;
 }
 
-.battle-enemy-tile.dodged {
+.enemy-tile.dodged {
     animation: dodgeShake 0.6s ease-in-out;
 }
 

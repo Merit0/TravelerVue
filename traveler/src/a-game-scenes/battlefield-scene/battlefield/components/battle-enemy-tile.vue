@@ -1,10 +1,14 @@
 <template>
   <div
-      class="battle-initial-tile-view battle-map-tile"
+      class="battle-map-tile"
       :style="getTileBackgroundImage(tile)"
   >
+    <div class="damage-popup" v-if="damageValue">
+      -{{ damageValue }}
+    </div>
+    <div class="blood-splash" v-if="bloodSplash"/>
     <div
-        class="battle-enemy-tile"
+        class="initialTileView mapTile enemy-tile"
         :style="getEnemyImage(tile)"
         :class="{ 'dodged': wasDodged }"
     >
@@ -12,10 +16,6 @@
         ❤️ {{ enemy?.health }}
         ⚔️ {{ enemy?.attack }}
       </div>
-      <div class="damage-popup" v-if="damageValue">
-        -{{ damageValue }}
-      </div>
-      <div class="blood-splash" v-if="bloodSplash"/>
     </div>
   </div>
 </template>
@@ -53,6 +53,7 @@ const getTileBackgroundImage = (tile: TileModel) => {
 const getEnemyImage = (tile: TileModel) => {
   return {
     backgroundImage: `url(${tile.enemies[0].imgPath})`,
+    'background-size': '100% 100%'
   }
 };
 
