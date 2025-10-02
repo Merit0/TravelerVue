@@ -22,7 +22,7 @@ export class MapLocationProvider {
             {
                 name: 'Forest',
                 backgroundImagePath: `${this.LOCATION_CONTENT_IMAGES_PATH}tiles-grid-background.png`,
-                tileImage: `${this.LOCATION_CONTENT_IMAGES_PATH}tree-tile-image.png`,
+                tileImage: `${this.LOCATION_CONTENT_IMAGES_PATH}forest-tile-image.png`,
                 tileBackground: `${this.LOCATION_CONTENT_IMAGES_PATH}ground-tile-background.png`,
                 endPoint: 'forest',
                 boss: bosses[randIndex],

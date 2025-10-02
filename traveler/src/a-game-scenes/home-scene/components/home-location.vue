@@ -9,7 +9,7 @@
             :key="n"
             class="buildingTile tileBackground"
         ></div>
-        <div class="buildingTile initBuildingTile tileBackground" @click="openDressingRoom">
+        <div class="buildingTile initBuildingTile tileBackground">
           <div class="icon dressing-room-icon"/>
         </div>
         <div class="buildingTile initBuildingTile tileBackground" @click="openInventory">

@@ -11,10 +11,11 @@
         :class="{
         unreachable: !tile.isReachable,
         'reachable-tile': tile.isReachable && !tile.isHeroHere,
+        'sword-cursor': tile.isReachable,
       }"
     >
       <div class="enemy-body-tile-image">
-        <div class="podium-hero-image enemy-stand-base-top-view" />
+        <div class="podium-hero-image enemy-stand-base-top-view"/>
         <div
             class="podium-hero-image"
             :style="enemyStyle"
@@ -25,13 +26,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, computed } from "vue";
+import {defineComponent, PropType, computed} from "vue";
 import TileModel from "@/a-game-scenes/silesia-world-scene/models/tile-model";
 import EnemyModel from "@/models/EnemyModel";
-import { useBattleStore } from "@/stores/battle-store";
-import { useOverlayStore } from "@/stores/overlay-store";
-import { useDiceStore } from "@/stores/DiceStore";
-import { useHeroStore } from "@/stores/HeroStore";
+import {useBattleStore} from "@/stores/battle-store";
+import {useOverlayStore} from "@/stores/overlay-store";
+import {useDiceStore} from "@/stores/DiceStore";
+import {useHeroStore} from "@/stores/HeroStore";
 
 export default defineComponent({
   name: "enemy-tile",
@@ -107,17 +108,6 @@ export default defineComponent({
 <style>
 @import "@/a-game-scenes/location-scene/styles/animated-tile.css";
 
-.enemy-hero-image {
-  position: relative;
-  width: 500px;
-  height: 500px;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  pointer-events: none;
-}
-
-
 .enemy-body-tile-image {
   position: relative;
   width: 100%;
@@ -141,5 +131,9 @@ export default defineComponent({
 
 .enemy-stand-base-top-view {
   background-image: url("/images/podiums/brown-stand-base-top-view.png");
+}
+
+.enemy-button.sword-cursor {
+  cursor: url('../../../battlefield-scene/battlefield/assets/sword-cursor-100x100.png') 50 50, auto;
 }
 </style>
