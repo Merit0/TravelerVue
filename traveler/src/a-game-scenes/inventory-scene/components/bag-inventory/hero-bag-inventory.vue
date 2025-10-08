@@ -51,7 +51,7 @@ export default {
   height: 100%;
   background: #27171b;
   background-size: 100%, 100%;
-  z-index: 1;
+  z-index: 2;
 }
 
 .bag-title-container {

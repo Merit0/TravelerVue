@@ -62,7 +62,10 @@ export default {
       this.isShaking = true;
       setTimeout(() => {
         this.isShaking = false;
-        this.checkTile(tile);
+        if (this.heroStore.hero.currentEnergy > 0) {
+          this.heroStore.hero.useEnergy();
+          this.checkTile(tile);
+        }
       }, 1000);
     },
     async checkTile(tile: TileModel) {

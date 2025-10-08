@@ -88,11 +88,13 @@ export default {
 }
 
 .hero-content {
+  position: relative;
   display: flex;
   flex-direction: row;
   align-items: center;
   width: 100%;
   height: 75vh;
+  z-index: 1;
 }
 
 </style>
