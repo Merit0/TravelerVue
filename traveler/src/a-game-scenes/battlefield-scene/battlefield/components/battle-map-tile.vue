@@ -15,7 +15,7 @@
         :tile="tile"
     >
     </battle-grave-tile>
-    <div v-else class="battle-map-tile" :style="getTileBackgroundImage(tile)"/>
+    <div v-else class="mapTile" :style="getTileBackgroundImage(tile)"/>
   </transition>
 </template>
 
@@ -31,9 +31,15 @@ const props = defineProps<{
 }>();
 
 const getTileBackgroundImage = (tile: TileModel) => {
+  const forestTileImagesPath: string[] = [
+    '/src/a-game-scenes/battlefield-scene/battlefield/assets/forest-tiles/grass-tile-image.png',
+    '/src/a-game-scenes/battlefield-scene/battlefield/assets/forest-tiles/middle-grass-tile-image.png',
+    '/src/a-game-scenes/battlefield-scene/battlefield/assets/forest-tiles/grass-tile-image-2.png',
+    '/src/a-game-scenes/battlefield-scene/battlefield/assets/forest-tiles/soft-grass-tile-image-2.png',
+  ];
+  const randomTilePath: string = forestTileImagesPath[Math.floor(Math.random() * forestTileImagesPath.length)];
   return {
-    backgroundImage: `url(${tile.backgroundSrc})`,
-    'background-size': '100% 100%'
+    backgroundImage: `url(${randomTilePath})`,
   }
 }
 

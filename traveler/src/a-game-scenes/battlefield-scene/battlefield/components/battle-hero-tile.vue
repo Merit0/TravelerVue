@@ -1,6 +1,6 @@
 <template>
   <div
-      class="battle-map-tile"
+      class="mapTile"
       :style="getTileBackgroundImage(tile)"
   >
     <div class="damage-popup" v-if="damageValue">
@@ -32,12 +32,18 @@ const bloodSplash = computed(() => {
 });
 
 const getTileBackgroundImage = (tile: TileModel) => {
+  const forestTileImagesPath: string[] = [
+    '/src/a-game-scenes/battlefield-scene/battlefield/assets/forest-tiles/grass-tile-image.png',
+    '/src/a-game-scenes/battlefield-scene/battlefield/assets/forest-tiles/middle-grass-tile-image.png',
+    '/src/a-game-scenes/battlefield-scene/battlefield/assets/forest-tiles/grass-tile-image-2.png',
+    '/src/a-game-scenes/battlefield-scene/battlefield/assets/forest-tiles/soft-grass-tile-image-2.png',
+  ];
+  const randomTilePath: string = forestTileImagesPath[Math.floor(Math.random() * forestTileImagesPath.length)];
   return {
-    backgroundImage: `url(${tile.backgroundSrc})`,
+    backgroundImage: `url(${randomTilePath})`,
     'background-size': '100% 100%'
   }
 }
-
 </script>
 
 <style>

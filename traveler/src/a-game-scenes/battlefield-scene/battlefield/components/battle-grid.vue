@@ -37,8 +37,8 @@ const tiles = battleStore.tiles
 .battle-tiles-grid {
   position: relative;
   display: grid;
-  grid-template-columns: repeat(5, 10vh);
-  grid-template-rows: repeat(5, 10vh);
-  gap: 3px;
+  grid-template-columns: repeat(5, 14vh);
+  grid-template-rows: repeat(5, 14vh);
+  gap: 0.2rem;
 }
 </style>

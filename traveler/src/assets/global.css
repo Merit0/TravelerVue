@@ -38,6 +38,7 @@ button:focus {
     height: 14vh;
     aspect-ratio: 1 / 1;
     box-sizing: border-box;
+    background-size: 100% 100%;
     flex-shrink: 0;
     border-radius: 4px;
     justify-content: center;
