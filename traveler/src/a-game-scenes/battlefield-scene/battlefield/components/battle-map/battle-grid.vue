@@ -14,7 +14,7 @@
 import {useBattleStore} from '@/stores/battle-store'
 import TileModel from "@/a-game-scenes/silesia-world-scene/models/tile-model";
 import {defineProps} from "vue";
-import BattleMapTile from "@/a-game-scenes/battlefield-scene/battlefield/components/battle-map-tile.vue";
+import BattleMapTile from "@/a-game-scenes/battlefield-scene/battlefield/components/battle-map/battle-map-tile.vue";
 
 const props = defineProps<{
   tile: TileModel | null
@@ -26,19 +26,30 @@ const tiles = battleStore.tiles
 <style scoped>
 .battle-arena-wrapper {
   position: relative;
-  top: -1vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 25vw;
-  height: 51vh;
+  width: 100%;
+  height: 100%;
 }
 
 .battle-tiles-grid {
   position: relative;
   display: grid;
-  grid-template-columns: repeat(5, 14vh);
-  grid-template-rows: repeat(5, 14vh);
-  gap: 0.2rem;
+  grid-template-columns: repeat(5, 10vh);
+  grid-template-rows: repeat(5, 10vh);
+  gap: 0.3rem;
+}
+
+.battle-map-tile {
+  height: 10vh;
+  aspect-ratio: 1 / 1;
+  box-sizing: border-box;
+  background-size: 100% 100%;
+  flex-shrink: 0;
+  border-radius: 4px;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
 }
 </style>

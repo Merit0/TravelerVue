@@ -1,22 +1,20 @@
 .enemy-stats-hover {
     width: 100%;
+    top: 0;
     position: absolute;
-    bottom: -100%;
-    left: 10%;
-    transform: translateX(-50%);
     background: rgba(64, 27, 1, 0.51);
     color: #ffef8a;
-    padding: 0.3vh 0.8vh;
+    padding: 0.1vh 0.8vh;
     border-radius: 5px;
-    font-size: 5vh;
+    font-size: 1.2vh;
     font-weight: bold;
     white-space: nowrap;
     opacity: 0;
-    transition: opacity 0.2s ease;
-    z-index: 12;
+    transition: opacity 0.4s ease;
+    z-index: 15;
 }
 
-.enemy-body-tile-image:hover .enemy-stats-hover {
+.battle-enemy-tile:hover .enemy-stats-hover {
     opacity: 1;
 }
 

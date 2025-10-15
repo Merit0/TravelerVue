@@ -26,11 +26,9 @@ const battleStore = useBattleStore();
 }
 
 .battlefield-logger-container {
-  position: relative;
-  margin-top: 4%;
-  margin-bottom: 3%;
-  right: -58vh;
-  width: 18vw;
+  position: absolute;
+  right: 0;
+  width: 20vw;
   height: 71vh;
   background: rgb(64, 27, 1);
   border-radius: 5px;
@@ -40,7 +38,7 @@ const battleStore = useBattleStore();
   overflow-y: auto;
   font-family: 'Crimson Pro', cursive;
   font-size: 1.4vh;
-  z-index: 0;
+  z-index: 13;
   box-shadow: inset 0 0 5px rgb(0, 20, 115);
 }
 

@@ -1,6 +1,6 @@
 <template>
   <div
-      class="initialTileView mapTile"
+      class="initialTileView battle-map-tile"
       :style="getTileBackgroundImage(tile)"
   >
     <div class="grave-tile"

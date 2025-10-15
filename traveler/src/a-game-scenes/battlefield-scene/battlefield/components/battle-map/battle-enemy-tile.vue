@@ -1,7 +1,6 @@
 <template>
   <div
-      class="initialTileView mapTile"
-      :style="getTileBackgroundImage(tile)"
+      class="initialTileView battle-map-tile"
   >
     <div class="damage-popup" v-if="damageValue">
       -{{ damageValue }}
@@ -10,8 +9,12 @@
     <div class="battle-enemy-tile"
         :class="{ 'dodged': wasDodged }"
     >
+      <div class="enemy-stats-hover">
+        ❤️ {{ enemy?.health }}
+        ⚔️ {{ enemy?.attack }}
+      </div>
       <div
-          class="enemy-body-tile-image"
+          class="battle-body-tile-image"
       >
         <div class="podium-hero-image enemy-stand-base-top-view"/>
         <div
@@ -19,10 +22,6 @@
             :style="getEnemyImage(tile)"
         />
       </div>
-    </div>
-    <div class="enemy-stats-hover">
-      ❤️ {{ enemy?.health }}
-      ⚔️ {{ enemy?.attack }}
     </div>
   </div>
 </template>
@@ -50,19 +49,6 @@ const bloodSplash = computed(() => {
   return battleStore.bloodSplashTiles.includes(props.tile.id)
 });
 
-const getTileBackgroundImage = (tile: TileModel) => {
-  const forestTileImagesPath: string[] = [
-    '/src/a-game-scenes/battlefield-scene/battlefield/assets/forest-tiles/grass-tile-image.png',
-    '/src/a-game-scenes/battlefield-scene/battlefield/assets/forest-tiles/middle-grass-tile-image.png',
-    '/src/a-game-scenes/battlefield-scene/battlefield/assets/forest-tiles/grass-tile-image-2.png',
-    '/src/a-game-scenes/battlefield-scene/battlefield/assets/forest-tiles/soft-grass-tile-image-2.png',
-  ];
-  const randomTilePath: string = forestTileImagesPath[Math.floor(Math.random() * forestTileImagesPath.length)];
-  return {
-    backgroundImage: `url(${randomTilePath})`,
-  }
-}
-
 const getEnemyImage = (tile: TileModel) => {
   return {
     backgroundImage: `url(${tile.enemies[0].imgPath})`,
@@ -88,5 +74,17 @@ const getEnemyImage = (tile: TileModel) => {
 
 .battle-enemy-tile.dodged {
   animation: dodgeShake 0.6s ease-in-out;
+}
+
+.battle-body-tile-image {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: scale(0.25);
+  transform-origin: center center;
+  z-index: 10;
 }
 </style>
