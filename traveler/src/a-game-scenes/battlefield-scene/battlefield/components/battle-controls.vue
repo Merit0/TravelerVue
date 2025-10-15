@@ -85,6 +85,7 @@ const roll = async () => {
   const actualTargetsCount = Math.min(aliveEnemies.length, requestedTargetsCount);
 
   if (swordCount === 3) {
+    await battleStore.spinHero();
     attackEnemies(actualTargetsCount);
   } else if (collectEnergy === 3) {
     const energyBoostValue = 10;

@@ -10,7 +10,12 @@
         class="battle-hero-tile"
         @click="openInventory"
     >
-      <hero-top-view/>
+      <div
+          class="hero-rotator battle-hero-tile"
+          :class="{ spinning: battleStore.isHeroAttacking }"
+      >
+        <hero-top-view/>
+      </div>
     </div>
   </div>
 </template>
@@ -46,6 +51,20 @@ const openInventory = () => {
 <style scoped>
 @import "@/a-game-scenes/battlefield-scene/battlefield/styles/battlefield-map-tile-style.css";
 @import "@/a-game-scenes/battlefield-scene/battlefield/styles/battle-effects-style.css";
+
+.hero-rotator.spinning {
+  animation: hero-spin 0.5s linear;
+  will-change: transform;
+}
+
+@keyframes hero-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 
 .battle-hero-tile {
   width: 100%;

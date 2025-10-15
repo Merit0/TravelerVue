@@ -16,6 +16,8 @@ interface BattleArena {
     battleLog: string[];
     bloodSplashTiles: number[];
     missedEnemies: number[];
+    isHeroAttacking: boolean;
+    _attackLock: boolean,
 }
 
 export const useBattleStore = defineStore('battle-store', {
@@ -29,6 +31,8 @@ export const useBattleStore = defineStore('battle-store', {
         battleLog: [] as string[],
         bloodSplashTiles: [] as number[],
         missedEnemies: [] as number[],
+        isHeroAttacking: false,
+        _attackLock: false,
     }),
 
     actions: {
@@ -100,6 +104,16 @@ export const useBattleStore = defineStore('battle-store', {
             setTimeout(() => {
                 this.enemyAutoAttackLoop();
             }, 500);
+        },
+
+        async spinHero(durationMs = 1000) {
+            if (this._attackLock) return;
+            this._attackLock = true;
+            this.isHeroAttacking = true;
+            setTimeout(() => {
+                this.isHeroAttacking = false;
+                this._attackLock = false;
+            }, durationMs);
         },
 
         async enemyAutoAttackLoop() {
