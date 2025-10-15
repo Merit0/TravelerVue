@@ -1,8 +1,7 @@
 .enemy-stats-hover {
     width: 100%;
-    top: 0;
+    bottom: 0;
     position: absolute;
-    background: rgba(64, 27, 1, 0.51);
     color: #ffef8a;
     padding: 0.1vh 0.8vh;
     border-radius: 5px;
