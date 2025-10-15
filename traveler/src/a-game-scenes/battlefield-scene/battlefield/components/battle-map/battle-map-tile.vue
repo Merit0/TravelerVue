@@ -3,19 +3,22 @@
     <battle-enemy-tile
         v-if="tile.isEnemyHere && enemyAlive"
         :tile="tile"
+        :data-tile-id="tile.id"
     >
     </battle-enemy-tile>
     <battle-hero-tile
         v-else-if="tile.isHeroHere"
         :tile="tile"
+        :data-tile-id="tile.id"
     >
     </battle-hero-tile>
     <battle-grave-tile
         v-else-if="tile.isGrave"
         :tile="tile"
+        :data-tile-id="tile.id"
     >
     </battle-grave-tile>
-    <div v-else class="battle-map-tile"/>
+    <div v-else class="battle-map-tile" :data-tile-id="tile.id"/>
   </transition>
 </template>
 

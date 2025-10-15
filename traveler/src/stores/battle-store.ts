@@ -106,7 +106,7 @@ export const useBattleStore = defineStore('battle-store', {
             }, 500);
         },
 
-        async spinHero(durationMs = 1000) {
+        spinHero(durationMs = 1000) {
             if (this._attackLock) return;
             this._attackLock = true;
             this.isHeroAttacking = true;

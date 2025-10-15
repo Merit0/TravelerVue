@@ -37,6 +37,7 @@ import {useOverlayStore} from "@/stores/overlay-store";
 import {useDiceStore} from "@/stores/DiceStore";
 import TileModel from "@/a-game-scenes/silesia-world-scene/models/tile-model";
 import {useMapLocationStore} from "@/stores/map-location-store";
+import {throwWeapon} from "@/utils/projectile-utils";
 
 const battleStore = useBattleStore();
 const heroStore = useHeroStore();
@@ -85,8 +86,8 @@ const roll = async () => {
   const actualTargetsCount = Math.min(aliveEnemies.length, requestedTargetsCount);
 
   if (swordCount === 3) {
-    await battleStore.spinHero();
-    attackEnemies(actualTargetsCount);
+    battleStore.spinHero();
+    await attackEnemies(actualTargetsCount);
   } else if (collectEnergy === 3) {
     const energyBoostValue = 10;
     hero.collectEnergy(energyBoostValue);
@@ -125,10 +126,13 @@ const escapeBattle = () => {
   }
 }
 
-function attackEnemies(targetsNumber: number) {
+async function attackEnemies(targetsNumber: number) {
   const battleStore = useBattleStore();
   const heroStore = useHeroStore();
   const {hero} = heroStore;
+
+  const heroTile = battleStore.tiles.find(t => t.isHeroHere);
+  if (!heroTile) return;
 
   const battleTiles: TileModel[] = battleStore.tiles;
   if (!battleTiles || battleTiles.length === 0) return;
@@ -145,6 +149,8 @@ function attackEnemies(targetsNumber: number) {
   const shuffledTiles: TileModel[] = [...aliveEnemyTiles].sort(() => Math.random() - 0.5);
   const selectedTiles: TileModel[] = shuffledTiles.slice(0, targets);
   const unSelectedTiles = shuffledTiles.slice(targets);
+
+  await Promise.all(selectedTiles.map(t => throwWeapon(heroTile.id, t.id)));
 
   for (const tile of unSelectedTiles) {
     battleStore.triggerDodgeEffect(tile.id);
