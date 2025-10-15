@@ -7,7 +7,7 @@
     </div>
     <div class="blood-splash" v-if="bloodSplash"/>
     <div class="battle-enemy-tile"
-        :class="{ 'dodged': wasDodged }"
+         :class="{ 'dodged': wasDodged }"
     >
       <div class="enemy-stats-hover">
         ❤️ {{ enemy?.health }}
@@ -19,7 +19,7 @@
         <div class="podium-hero-image enemy-stand-base-top-view"/>
         <div
             class="podium-hero-image"
-            :style="getEnemyImage(tile)"
+            :style="enemyStyle"
         />
       </div>
     </div>
@@ -27,15 +27,14 @@
 </template>
 
 <script setup lang="ts">
-import {computed, defineProps} from 'vue';
+import { computed, defineProps } from 'vue';
 import TileModel from '@/a-game-scenes/silesia-world-scene/models/tile-model';
-import {useBattleStore} from "@/stores/battle-store";
+import { useBattleStore } from '@/stores/battle-store';
+import EnemyModel from '@/models/EnemyModel';
 
 const battleStore = useBattleStore();
 
-const props = defineProps<{
-  tile: TileModel
-}>();
+const props = defineProps<{ tile: TileModel }>();
 
 const enemy = computed(() => props.tile.enemies[0] || null);
 
@@ -43,18 +42,40 @@ const damageValue = computed(() => {
   return battleStore.damagePopups[props.tile.id] || null
 });
 
-const wasDodged = computed(() => battleStore.missedEnemies.includes(props.tile.id));
-
 const bloodSplash = computed(() => {
   return battleStore.bloodSplashTiles.includes(props.tile.id)
 });
 
-const getEnemyImage = (tile: TileModel) => {
-  return {
-    backgroundImage: `url(${tile.enemies[0].imgPath})`,
-  }
-};
+const wasDodged = computed(() => battleStore.missedEnemies.includes(props.tile.id));
 
+const heroBattleTile = computed<TileModel | null>(() => {
+  const tiles: TileModel[] = battleStore.tiles ?? [];
+  return tiles.find((tile: TileModel) => tile.isHeroHere) ?? null;
+});
+
+const firstAliveEnemy = computed<EnemyModel | null>(
+    () => props.tile.enemies.find(e => e.health > 0) ?? null
+);
+const enemyStyle = computed(() => {
+  if (!firstAliveEnemy.value || !heroBattleTile.value) return {};
+
+  const heroPos = heroBattleTile.value.coordinates;
+  const mePos   = props.tile.coordinates;
+
+  const dx = heroPos.x - mePos.x;
+  const dy = heroPos.y - mePos.y;
+  const deg = (Math.atan2(dy, dx) * 180) / Math.PI;
+
+  const OFFSET = 270;
+  const rotation = deg + OFFSET;
+
+  return {
+    backgroundImage: `url(${firstAliveEnemy.value.imgPath})`,
+    transform: `rotate(${rotation}deg)`,
+    transformOrigin: 'center center',
+    transition: 'transform 0.25s linear',
+  };
+});
 </script>
 
 <style scoped>
