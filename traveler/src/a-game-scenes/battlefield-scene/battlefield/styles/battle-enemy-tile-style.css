@@ -13,7 +13,7 @@
     z-index: 15;
 }
 
-.battle-enemy-tile:hover .enemy-stats-hover {
+.battle-grid-tile:hover .enemy-stats-hover {
     opacity: 1;
 }
 

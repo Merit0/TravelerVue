@@ -1,5 +1,5 @@
 function getTileCenterById(tileId: string | number) {
-    const el = document.querySelector<HTMLElement>(`.battle-map-tile[data-tile-id="${tileId}"]`);
+    const el = document.querySelector<HTMLElement>(`.battle-grid-tile[data-tile-id="${tileId}"]`);
     if (!el) return null;
     const r = el.getBoundingClientRect();
     return {x: r.left + r.width / 2, y: r.top + r.height / 2};

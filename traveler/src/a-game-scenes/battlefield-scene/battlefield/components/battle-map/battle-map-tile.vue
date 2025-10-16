@@ -38,13 +38,10 @@ const enemyAlive = computed(() => {
 });
 
 </script>
-<style scoped>
+<style>
 .battle-tile {
   width: 100%;
   height: 100%;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
   position: relative;
 }
 </style>

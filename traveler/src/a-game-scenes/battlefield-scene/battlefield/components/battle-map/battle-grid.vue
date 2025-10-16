@@ -23,7 +23,7 @@ const battleStore = useBattleStore()
 const tiles = battleStore.tiles
 </script>
 
-<style scoped>
+<style>
 .battle-arena-wrapper {
   position: relative;
   display: flex;

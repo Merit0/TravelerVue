@@ -83,17 +83,7 @@ const enemyStyle = computed(() => {
 @import "@/a-game-scenes/battlefield-scene/battlefield/styles/battle-enemy-tile-style.css";
 @import "@/a-game-scenes/battlefield-scene/battlefield/styles/battle-effects-style.css";
 
-.battle-enemy-tile {
-  width: 100%;
-  height: 100%;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  position: relative;
-  overflow: hidden;
-}
-
-.battle-enemy-tile.dodged {
+.battle-tile.dodged {
   animation: dodgeShake 0.6s ease-in-out;
 }
 

@@ -5,32 +5,32 @@
       :data-testid="testId"
   >
     <div
-        class="podium-hero-image stand-base-top-view"
+        class="tile-image-container stand-base-top-view"
         :data-testid="`${testId??'a'}-stand-base-top-view-id`"
     />
     <div
-        class="podium-hero-image base-hand-l-top-view breath"
+        class="tile-image-container base-hand-l-top-view breath"
         :data-testid="`${testId??'a'}-hand-l-top-view-id`"
     />
     <div
-        class="podium-hero-image breath"
+        class="tile-image-container breath"
         :data-testid="`${testId??'a'}-hand-r-top-view-id`"
         :class="{ 'base-hand-r-top-view' : !heroStore.hero.equipment.weapon }"
         :style="getItemTopViewImageStyle(heroStore.hero.equipment.weapon)"
     />
     <div
-        class="podium-hero-image breath"
+        class="tile-image-container breath"
         :data-testid="`${testId??'a'}-tors-top-view-id`"
         :class="{ 'base-armor-top-view': !heroStore.hero.equipment.armor }"
         :style="getItemTopViewImageStyle(heroStore.hero.equipment.armor)"
     />
     <div
-        class="podium-hero-image breath" v-if="heroStore.hero.equipment.shield"
+        class="tile-image-container breath" v-if="heroStore.hero.equipment.shield"
         :style="getItemTopViewImageStyle(heroStore.hero.equipment.shield)"
         :data-testid="`${testId??'a'}-shield-top-view-id`"
     />
     <div
-        class="podium-hero-image"
+        class="tile-image-container"
         :class="headClass"
         :data-testid="`${testId??'a'}-head-top-view-id`"
     />
@@ -122,7 +122,6 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-@import "@/a-game-scenes/inventory-scene/styles/hero-podium-style.css";
 @import "@/styles/hero-views-style/hero-top-view-style.css";
 
 </style>
