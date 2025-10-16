@@ -14,7 +14,11 @@
           class="hero-rotator battle-hero-tile"
           :class="{ spinning: battleStore.isHeroAttacking }"
       >
-        <hero-top-view/>
+        <hero-top-view
+            container="battle-hero-view"
+            scale="0.25"
+            test-id="battle-hero-top-view-container"
+        />
       </div>
     </div>
   </div>

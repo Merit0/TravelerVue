@@ -1,34 +1,53 @@
 <template>
   <div
-      class="battle-hero-body-tile-image"
-      :style="heroTransformStyle"
+      :class="container"
+      :style="topViewStyle"
+      :data-testid="testId"
   >
-    <div class="podium-hero-image stand-base-top-view"/>
-    <div class="podium-hero-image base-hand-l-top-view breath"/>
+    <div
+        class="podium-hero-image stand-base-top-view"
+        :data-testid="`${testId??'a'}-stand-base-top-view-id`"
+    />
+    <div
+        class="podium-hero-image base-hand-l-top-view breath"
+        :data-testid="`${testId??'a'}-hand-l-top-view-id`"
+    />
     <div
         class="podium-hero-image breath"
+        :data-testid="`${testId??'a'}-hand-r-top-view-id`"
         :class="{ 'base-hand-r-top-view' : !heroStore.hero.equipment.weapon }"
         :style="getItemTopViewImageStyle(heroStore.hero.equipment.weapon)"
     />
     <div
         class="podium-hero-image breath"
+        :data-testid="`${testId??'a'}-tors-top-view-id`"
         :class="{ 'base-armor-top-view': !heroStore.hero.equipment.armor }"
         :style="getItemTopViewImageStyle(heroStore.hero.equipment.armor)"
     />
-    <div class="podium-hero-image breath" v-if="heroStore.hero.equipment.shield"
-         :style="getItemTopViewImageStyle(heroStore.hero.equipment.shield)"/>
+    <div
+        class="podium-hero-image breath" v-if="heroStore.hero.equipment.shield"
+        :style="getItemTopViewImageStyle(heroStore.hero.equipment.shield)"
+        :data-testid="`${testId??'a'}-shield-top-view-id`"
+    />
     <div
         class="podium-hero-image"
         :class="headClass"
+        :data-testid="`${testId??'a'}-head-top-view-id`"
     />
   </div>
 </template>
 
 <script setup lang="ts">
 
-import {computed, onMounted, onUnmounted, ref} from "vue";
+import {computed, onMounted, onUnmounted, ref, defineProps} from "vue";
 import {useHeroStore} from "@/stores/HeroStore";
 import {LootItemModel} from "@/models/LootItemModel";
+
+const props = defineProps<{
+  container: string
+  scale?: string
+  testId: string
+}>();
 
 const heroStore = useHeroStore();
 const isIdle = ref(false);
@@ -53,16 +72,23 @@ const animate = () => {
   frameId = requestAnimationFrame(animate);
 };
 
-const heroTransformStyle = computed(() => ({
-  transform: `scale(0.25) rotate(${heroStore.heroMapTileBodyRotationAngle}deg)`,
+const topViewStyle = computed(() => ({
+  position: "relative",
+  width: "100%",
+  height: "100%",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  transform: `scale(${props.scale ? props.scale : '0.5'}) rotate(${heroStore.heroMapTileBodyRotationAngle}deg)`,
   transformOrigin: "center center",
+  zIndex: 10
 }));
 
 const updateRotation = (e: MouseEvent) => {
   if (isHoveringHero.value) return;
 
   const heroEl = document.querySelector(
-      ".battle-hero-body-tile-image"
+      `.${props.container}`
   ) as HTMLElement | null;
   if (!heroEl) return;
 
@@ -97,18 +123,6 @@ onUnmounted(() => {
 
 <style scoped>
 @import "@/a-game-scenes/inventory-scene/styles/hero-podium-style.css";
-
-.battle-hero-body-tile-image {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transform: scale(0.25);
-  transform-origin: center center;
-  z-index: 10;
-}
 
 .base-hand-l-top-view {
   background-image: url("/images/creatures_500_500/humans_500_500/hero-asmodei/body-parts/hand-l-top-view.png");
