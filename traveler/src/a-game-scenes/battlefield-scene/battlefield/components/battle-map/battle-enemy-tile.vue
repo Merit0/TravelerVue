@@ -1,12 +1,12 @@
 <template>
   <div
-      class="initialTileView battle-map-tile"
+      class="initialTileView battle-grid-tile"
   >
     <div class="damage-popup" v-if="damageValue">
       -{{ damageValue }}
     </div>
     <div class="blood-splash" v-if="bloodSplash"/>
-    <div class="battle-enemy-tile"
+    <div class="battle-tile"
          :class="{ 'dodged': wasDodged }"
     >
       <div class="enemy-stats-hover">

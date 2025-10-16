@@ -18,7 +18,7 @@
         :data-tile-id="tile.id"
     >
     </battle-grave-tile>
-    <div v-else class="battle-map-tile" :data-tile-id="tile.id"/>
+    <div v-else class="battle-grid-tile" :data-tile-id="tile.id"/>
   </transition>
 </template>
 
@@ -38,3 +38,13 @@ const enemyAlive = computed(() => {
 });
 
 </script>
+<style scoped>
+.battle-tile {
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  position: relative;
+}
+</style>

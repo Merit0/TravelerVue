@@ -1,17 +1,17 @@
 <template>
   <div
-      class="initialTileView battle-map-tile"
+      class="initialTileView battle-grid-tile"
   >
     <div class="damage-popup" v-if="damageValue">
       -{{ damageValue }}
     </div>
     <div class="blood-splash" v-if="bloodSplash"/>
     <div
-        class="battle-hero-tile"
+        class="battle-tile"
         @click="openInventory"
     >
       <div
-          class="hero-rotator battle-hero-tile"
+          class="hero-rotator battle-tile"
           :class="{ spinning: battleStore.isHeroAttacking }"
       >
         <hero-top-view
@@ -68,14 +68,5 @@ const openInventory = () => {
   to {
     transform: rotate(360deg);
   }
-}
-
-.battle-hero-tile {
-  width: 100%;
-  height: 100%;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  position: relative;
 }
 </style>

@@ -123,28 +123,6 @@ onUnmounted(() => {
 
 <style scoped>
 @import "@/a-game-scenes/inventory-scene/styles/hero-podium-style.css";
+@import "@/styles/hero-views-style/hero-top-view-style.css";
 
-.base-hand-l-top-view {
-  background-image: url("/images/creatures_500_500/humans_500_500/hero-asmodei/body-parts/hand-l-top-view.png");
-}
-
-.base-hand-r-top-view {
-  background-image: url("/images/creatures_500_500/humans_500_500/hero-asmodei/body-parts/hand-r-top-view.png");
-}
-
-.base-armor-top-view {
-  background-image: url("/images/creatures_500_500/humans_500_500/hero-asmodei/body-parts/base-torso-top-view.png");
-}
-
-.base-head-top-view {
-  background-image: url("/images/creatures_500_500/humans_500_500/hero-asmodei/body-parts/head-top-view.png");
-}
-
-.base-head-up-top-view {
-  background-image: url("/images/creatures_500_500/humans_500_500/hero-asmodei/body-parts/head-up-top-view.png");
-}
-
-.stand-base-top-view {
-  background-image: url("/images/podiums/stand-base-top-view.png");
-}
 </style>

@@ -41,7 +41,7 @@ const tiles = battleStore.tiles
   gap: 0.3rem;
 }
 
-.battle-map-tile {
+.battle-grid-tile {
   height: 10vh;
   aspect-ratio: 1 / 1;
   box-sizing: border-box;
