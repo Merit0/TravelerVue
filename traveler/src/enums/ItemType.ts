@@ -10,6 +10,7 @@ export enum ItemType {
   RING,
   NECKLACE,
   HEAL,
+  KEY,
   COIN,
   SKIN
 }

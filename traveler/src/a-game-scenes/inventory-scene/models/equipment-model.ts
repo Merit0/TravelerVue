@@ -22,5 +22,6 @@ export class EquipmentModel implements IEquipment {
     [ItemType.BELT]: "belt",
     [ItemType.PANTS]: "pants",
     [ItemType.HEAL]: null,
+    [ItemType.KEY]: null,
   };
 }

@@ -6,7 +6,7 @@
     ></div>
     <div
         class="bagItemImg"
-        :class="{ 'is-busy': animating }"
+        :class="{ 'is-busy': animating || !isEquipment(lootItem) }"
         :style="getItemStyle(lootItem)"
         @click="!animating && animateEquip(lootItem)"
         :ref="'item-' + lootItem.id"
@@ -52,8 +52,6 @@ export default {
       this.animating = true;
 
       try {
-        if (item.itemType === ItemType.SKIN) return;
-
         const itemEl = this.$refs['item-' + item.id] as HTMLElement;
         const heroImageEl = document.querySelector('.equipment-holder-hero-image') as HTMLElement;
         const itemRect = itemEl.getBoundingClientRect();
@@ -178,6 +176,10 @@ export default {
       if (!slot) return false;
       const equipped = hero.equipment[slot];
       return equipped ? equipped.value < item.value : true;
+    },
+
+    isEquipment(item: LootItemModel): boolean {
+      return (!(item.itemType === ItemType.SKIN || item.itemType === ItemType.KEY))
     }
   }
 };
