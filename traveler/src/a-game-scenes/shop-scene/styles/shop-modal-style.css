@@ -38,9 +38,9 @@
 }
 
 .refresh-price-container {
-    position: relative;
-    left: 1.2vw;
-    top: -2vh;
+    position: absolute;
+    left: 26vw;
+    top: 13vh;
     width: 4vw;
     height: 3vh;
     display: flex;
