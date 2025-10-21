@@ -13,6 +13,8 @@ import {reactive} from 'vue';
 import {AnimalProvider} from "@/providers/creatures-provider/animal-provider";
 import {EnemyType} from "@/enums/EnemyType";
 import {SkeletonProvider} from "@/providers/creatures-provider/skeleton-provider";
+import {DungeonModel} from "@/a-game-scenes/dungeon-scene/dungeon-model";
+import {DungeonProvider} from "@/a-game-scenes/dungeon-scene/dungeon-provider";
 
 interface MapLocationState {
     tiles: TileModel[];
@@ -115,6 +117,7 @@ export const useMapLocationStore = defineStore("map-location-store", {
                     this.addHeroToTiles(tiles, locationMap.hero);
                     this.addEnemiesToTiles(tiles, locationMap);
                     this.addBossOnTile(tiles, locationMap)
+                    this.addDungeonOnTile(tiles, locationMap)
                     this.locationStates[locationMap.name] = {
                         tiles,
                         isCleared: false,
@@ -163,6 +166,33 @@ export const useMapLocationStore = defineStore("map-location-store", {
             }
 
             return tiles;
+        },
+
+        generateDungeonTiles(locationMap: MapLocationModel, rows = 7, cols = 7): TileModel[] {
+            const dungeonTiles: TileModel[] = [];
+
+            const centerX = Math.floor(cols / 2);
+            const centerY = Math.floor(rows / 2);
+
+            for (let y = 0; y < rows; y++) {
+                for (let x = 0; x < cols; x++) {
+                    const index = y * cols + x;
+                    const tile = new TileModel(index, {x, y});
+
+                    tile.setImageSrc(locationMap.tileImage);
+                    tile.setBackgroundSrc(locationMap.tileBackgroundSrc);
+
+                    // герой стоїть у центрі
+                    tile.isHeroHere = x === centerX && y === centerY;
+
+                    // центральний тайл — стартовий
+                    tile.setIsInitial(x === centerX && y === centerY);
+
+                    dungeonTiles.push(tile);
+                }
+            }
+
+            return dungeonTiles;
         },
 
         generatePodiumTiles(): TileModel[] {
@@ -259,6 +289,16 @@ export const useMapLocationStore = defineStore("map-location-store", {
             const bossTile = validTiles[randomIndex];
             bossTile.enemies = [];
             bossTile.setEnemies([boss]);
+        },
+
+        addDungeonOnTile(tiles: TileModel[]) {
+            const dungeon: DungeonModel = DungeonProvider.getSkeletonCave();
+            const validTiles: TileModel[] = tiles.filter((tile: TileModel) => !tile.isHeroHere && !tile.isBlocked);
+            if (!validTiles.length) return;
+            const dungeonTileIndex: number = Math.floor(Math.random() * validTiles.length)
+            const dungeonTile: TileModel = validTiles[dungeonTileIndex];
+            dungeonTile.isDungeon = true;
+            dungeonTile.setDungeon(dungeon)
         },
 
         generateEnemies(id: number, enemyPowerModifierNumber: number): EnemyModel[] {

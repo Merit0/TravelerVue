@@ -13,6 +13,7 @@ interface IMapLocationBuilder {
     complexity(complexityLevel: Complexity): this;
     boss(bossModel: IEnemy): this;
     enemiesStatsModifier(modifierNumber: number): this;
+    dungeonName(dungeonName: string): this;
     build(): MapLocationModel;
 }
 
@@ -39,6 +40,11 @@ export class MapLocationBuilder implements IMapLocationBuilder {
 
     public enemiesStatsModifier(modifierNumber: number): this {
         this._mapLocation.enemyModifier = modifierNumber;
+        return this;
+    }
+
+    public dungeonName(dungeonName: string): this {
+        this._mapLocation.dungeonName = dungeonName;
         return this;
     }
 

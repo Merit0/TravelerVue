@@ -8,18 +8,18 @@
     <HeroDeathOverlay
         v-if="!heroStore.isAlive() && userStore.isUserLoggedIn"
     />
-    <hero-inventory />
-    <battlefield-overlay v-if="isBattleActive" />
+    <hero-inventory/>
+    <battlefield-overlay v-if="isBattleActive"/>
   </section>
 </template>
 
 <script setup lang="ts">
-import { onMounted, computed } from 'vue';
-import { useHeroStore } from '@/stores/HeroStore';
-import { useMapLocationStore } from '@/stores/map-location-store';
-import { useUserStore } from '@/stores/UserStore';
-import { useOverlayStore } from '@/stores/overlay-store';
-import { MapLocationModel } from '@/a-game-scenes/location-scene/models/map-location-model';
+import {onMounted, computed} from 'vue';
+import {useHeroStore} from '@/stores/HeroStore';
+import {useMapLocationStore} from '@/stores/map-location-store';
+import {useUserStore} from '@/stores/UserStore';
+import {useOverlayStore} from '@/stores/overlay-store';
+import {MapLocationModel} from '@/a-game-scenes/location-scene/models/map-location-model';
 import MapModel from '@/a-game-scenes/silesia-world-scene/models/map-model';
 
 import TilesGrid from '@/a-game-scenes/location-scene/components/tiles-grid.vue';
@@ -35,8 +35,8 @@ const overlayStore = useOverlayStore();
 const mapLocationName = 'Forest';
 mapLocationStore.initMapsList();
 
-  const silesia: MapModel = mapLocationStore.getSilesia();
-  const silesiaLocations: MapLocationModel[] = silesia.mapLocations;
+const silesia: MapModel = mapLocationStore.getSilesia();
+const silesiaLocations: MapLocationModel[] = silesia.mapLocations;
 const mapLocation: MapLocationModel = silesiaLocations.find(
     location => location.name === mapLocationName
 )!;

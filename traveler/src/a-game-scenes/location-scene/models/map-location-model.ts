@@ -15,10 +15,11 @@ export interface IMapLocation {
     readonly tileImage: string;
     readonly tileBackgroundSrc: string;
     readonly boss: EnemyModel;
+    readonly dungeonName: string;
 }
 
 export class MapLocationModel implements IMapLocation {
-    private _dungeonName: string;
+    private _locationName: string;
     private _tilesNumber: number;
     private _enemyModifier: number;
     private readonly _id: string;
@@ -29,6 +30,7 @@ export class MapLocationModel implements IMapLocation {
     private _complexity: Complexity;
     private _hero: IHero;
     private _bose: EnemyModel;
+    private _dungeonName: string;
 
     constructor() {
         this._id = uuid();
@@ -55,11 +57,19 @@ export class MapLocationModel implements IMapLocation {
     }
 
     get name(): string {
-        return this._dungeonName;
+        return this._locationName;
     }
 
     set name(name: string) {
-        this._dungeonName = name;
+        this._locationName = name;
+    }
+
+    get dungeonName(): string {
+        return this._dungeonName;
+    }
+
+    set dungeonName(dungeonName: string) {
+        this._dungeonName = dungeonName;
     }
 
     get tilesNumber(): number {

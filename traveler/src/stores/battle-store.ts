@@ -169,13 +169,17 @@ export const useBattleStore = defineStore('battle-store', {
                 const enemy = tile.enemies[0];
                 return enemy && enemy.health > 0;
             });
-            this.tiles.forEach(t => t.isHeroHere = false);
+            this.tiles.forEach((tile: TileModel) => tile.isHeroHere = false);
             if (this.battleTile) {
                 const battleTile = this.battleTile;
                 if (aliveEnemyTiles.length === 0) {
                     battleTile.enemies = [];
                     battleTile.isEnemyHere = false;
-                    mapLocationStore.moveHero(battleTile);
+                    if (!battleTile.isDungeon) {
+                        mapLocationStore.moveHero(battleTile);
+                    } else {
+                        return;
+                    }
                 } else {
                     if (this.previousHeroTileId !== null && mapLocation) {
                         const previousTile = mapLocation.tiles.find(t => t.id === this.previousHeroTileId);
@@ -228,7 +232,6 @@ export const useBattleStore = defineStore('battle-store', {
 
         logEvent(message: string) {
             this.battleLog.push(message);
-            // string limitation
             if (this.battleLog.length > 30) {
                 this.battleLog.shift();
             }

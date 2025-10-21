@@ -6,6 +6,7 @@ import {MapLocationModel} from "@/a-game-scenes/location-scene/models/map-locati
 
 export class MapLocationProvider {
     private static readonly LOCATION_CONTENT_IMAGES_PATH = '/src/a-game-scenes/location-scene/assets/'
+
     static getSilesiaLocations(): MapLocationModel[] {
         const bosses: EnemyModel[] = BossProvider.getBosses();
         const randIndex = Math.floor(Math.random() * bosses.length);
@@ -52,5 +53,55 @@ export class MapLocationProvider {
                 .build())
         });
         return mapLocationsList;
+    }
+
+    static getDungeonLocations(): MapLocationModel[] {
+        const dungeonMapsList: MapLocationModel[] = [];
+        const dungeonMaps: {
+            name: string,
+            backgroundImagePath: string,
+            tileImage: string,
+            tileBackground: string,
+            endPoint: string,
+            boss: EnemyModel,
+            enemiesStatsModifier: number
+            dungeonName: string
+        }[] = [
+            {
+                name: 'Skeleton Cave',
+                backgroundImagePath: `${this.LOCATION_CONTENT_IMAGES_PATH}tiles-grid-background.png`,
+                tileImage: `${this.LOCATION_CONTENT_IMAGES_PATH}forest-tile-image.png`,
+                tileBackground: `${this.LOCATION_CONTENT_IMAGES_PATH}ground-tile-background.png`,
+                endPoint: 'skeleton-cave',
+                boss: BossProvider.getSkeletonBoss(),
+                enemiesStatsModifier: 2,
+                dungeonName: 'Skeleton Cave',
+            }
+        ];
+        dungeonMaps.forEach((mapLocation: {
+            name: string,
+            backgroundImagePath: string,
+            chestImage: string,
+            tileImage: string,
+            tileBackground: string,
+            endPoint: string,
+            enemiesStatsModifier: number
+            boss: EnemyModel,
+            dungeonName: string
+        }) => {
+            dungeonMapsList.push(new MapLocationBuilder()
+                .name(mapLocation.name)
+                .tilesNumber(56)
+                .complexity(Complexity.EASY)
+                .tilesGridBackgroundImagePath(mapLocation.backgroundImagePath)
+                .tileImage(mapLocation.tileImage)
+                .tileBackground(mapLocation.tileBackground)
+                .endPoint(mapLocation.endPoint)
+                .boss(mapLocation.boss)
+                .enemiesStatsModifier(mapLocation.enemiesStatsModifier)
+                .dungeonName(mapLocation.dungeonName)
+                .build())
+        });
+        return dungeonMapsList;
     }
 }

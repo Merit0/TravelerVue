@@ -72,6 +72,10 @@ export default {
       if (!tile.isReachable) return;
       tile.isInitial = false;
 
+      if (tile.isDungeon) {
+        return;
+      }
+
       if (!tile.isEnemyHere) {
         this.mapLocationStore.moveHero(tile);
       }
