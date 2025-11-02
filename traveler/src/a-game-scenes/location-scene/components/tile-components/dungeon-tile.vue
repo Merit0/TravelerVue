@@ -27,6 +27,7 @@
 import {defineComponent, PropType, computed} from "vue";
 import TileModel from "@/a-game-scenes/silesia-world-scene/models/tile-model";
 import {DungeonModel} from "@/a-game-scenes/dungeon-scene/dungeon-model";
+import {useOverlayStore} from "@/stores/overlay-store";
 
 export default defineComponent({
   name: "enemy-tile",
@@ -55,7 +56,8 @@ export default defineComponent({
     });
 
     function discover() {
-      console.log('Opened Dungeon page!');
+      const overlayStore = useOverlayStore();
+      overlayStore.openOverlay('dungeon-preview');
     }
 
     return {

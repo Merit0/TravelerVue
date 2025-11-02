@@ -3,14 +3,13 @@
     <tiles-grid
         v-if="tilesShown && heroStore.isAlive()"
         :mapTiles="mapLocationStore.tiles"
-        :backgroundImageSrc="mapLocation.imgPath"
+        :backgroundImageSrc="dungeonMap.imgPath"
     />
     <HeroDeathOverlay
         v-if="!heroStore.isAlive() && userStore.isUserLoggedIn"
     />
     <hero-inventory/>
     <battlefield-overlay v-if="isBattleActive"/>
-    <dungeon-preview-overlay v-if="overlayStore.isOverlay('dungeon-preview')"/>
   </section>
 </template>
 
@@ -27,24 +26,23 @@ import TilesGrid from '@/a-game-scenes/location-scene/components/tiles-grid.vue'
 import HeroInventory from '../../inventory-scene/components/hero-inventory-overlay.vue';
 import HeroDeathOverlay from '@/a-game-scenes/hero-death-scene/components/hero-death-overlay.vue';
 import BattlefieldOverlay from '@/a-game-scenes/battlefield-scene/battlefield/components/battlefield-overlay.vue';
-import DungeonPreviewOverlay from "@/a-game-scenes/dungeon-scene/components/dungeon-preview-overlay.vue";
 
 const heroStore = useHeroStore();
 const userStore = useUserStore();
 const mapLocationStore = useMapLocationStore();
 const overlayStore = useOverlayStore();
 
-const mapLocationName = 'Forest';
+const dungeonLocationName = 'Fallen Bones';
 mapLocationStore.initMapsList();
 
-const silesia: MapModel = mapLocationStore.getSilesia();
-const silesiaLocations: MapLocationModel[] = silesia.mapLocations;
-const mapLocation: MapLocationModel = silesiaLocations.find(
-    location => location.name === mapLocationName
-)!;
+const underground: MapModel = mapLocationStore.getUnderground();
+const undergroundLocations: MapLocationModel[] = underground.mapLocations;
+const dungeonMap: MapLocationModel = undergroundLocations.find(
+    location => location.name === dungeonLocationName
+);
 
-mapLocation.hero = heroStore.hero;
-mapLocationStore.buildLocationMap(mapLocation);
+dungeonMap.hero = heroStore.hero;
+mapLocationStore.buildLocationMap(dungeonMap);
 
 const tilesShown = true;
 

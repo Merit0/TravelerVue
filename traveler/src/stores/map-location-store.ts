@@ -62,11 +62,15 @@ export const useMapLocationStore = defineStore("map-location-store", {
         getSilesia: (state) => (): MapModel | undefined => {
             return state.mapsList.find((map) => map.name === 'Silesia') as MapModel;
         },
+        getUnderground: (state) => (): MapModel | undefined => {
+            return state.mapsList.find((map) => map.name === 'Underground') as MapModel;
+        },
     },
     actions: {
         initMapsList() {
             this.mapsList = [
                 MapProvider.getSilesiaMap(),
+                MapProvider.getUndergroundMap(),
             ];
 
             this.mapLocationName = "";
@@ -114,10 +118,12 @@ export const useMapLocationStore = defineStore("map-location-store", {
                     };
                 } else {
                     const tiles = this.generateTiles(locationMap);
-                    this.addHeroToTiles(tiles, locationMap.hero);
-                    this.addEnemiesToTiles(tiles, locationMap);
+                    this.addHeroToTiles(tiles, locationMap.hero, locationMap.withCamping);
+                    // this.addEnemiesToTiles(tiles, locationMap);
                     this.addBossOnTile(tiles, locationMap)
-                    this.addDungeonOnTile(tiles, locationMap)
+                    if (locationMap.withCamping) {
+                        this.addDungeonOnTile(tiles, locationMap)
+                    }
                     this.locationStates[locationMap.name] = {
                         tiles,
                         isCleared: false,
@@ -131,34 +137,46 @@ export const useMapLocationStore = defineStore("map-location-store", {
 
         generateTiles(locationMap: MapLocationModel, rows = 7, cols = 13): TileModel[] {
             const tiles: TileModel[] = [];
-
+            let blockStartX: number;
+            let blockStartY: number;
+            let blockEndX: number;
+            let blockEndY: number;
             const centerX = Math.floor(cols / 2);
             const centerY = Math.floor(rows / 2);
+            if (locationMap.withCamping) {
+                blockStartX = centerX - 1;
+                blockStartY = centerY - 1;
 
-            const blockStartX = centerX - 1;
-            const blockStartY = centerY - 1;
+                blockEndX = centerX + 1;
+                blockEndY = centerY + 1;
 
-            const blockEndX = centerX + 1;
-            const blockEndY = centerY + 1;
+            }
 
             for (let y = 0; y < rows; y++) {
                 for (let x = 0; x < cols; x++) {
                     const index = y * cols + x;
                     const tile = new TileModel(index, {x, y});
-
-                    tile.setIsInitial(index !== 47); //hero start position tile
+                    if (locationMap.withCamping) {
+                        tile.setIsInitial(index !== 47); //hero start position tile
+                    } else {
+                        tile.setIsInitial(index !== 0);
+                    }
                     tile.setImageSrc(locationMap.tileImage);
                     tile.setBackgroundSrc(locationMap.tileBackgroundSrc);
                     tile.isHeroHere = false;
+                    let isInCampZone: boolean;
 
-                    const isInCampZone = x >= blockStartX && x <= blockEndX &&
-                        y >= blockStartY && y <= blockEndY;
+                    if (blockStartX) {
+                        isInCampZone = x >= blockStartX && x <= blockEndX &&
+                            y >= blockStartY && y <= blockEndY;
 
-                    if (isInCampZone) {
-                        tile.isBlocked = true;
-                        tile.setBackgroundSrc("")
-                        tile.setImageSrc("");
-                        tile.isReachable = false;
+                        if (isInCampZone) {
+                            tile.isBlocked = true;
+                            tile.setBackgroundSrc("")
+                            tile.setImageSrc("");
+                            tile.isReachable = false;
+                        }
+
                     }
 
                     tiles.push(tile);
@@ -166,33 +184,6 @@ export const useMapLocationStore = defineStore("map-location-store", {
             }
 
             return tiles;
-        },
-
-        generateDungeonTiles(locationMap: MapLocationModel, rows = 7, cols = 7): TileModel[] {
-            const dungeonTiles: TileModel[] = [];
-
-            const centerX = Math.floor(cols / 2);
-            const centerY = Math.floor(rows / 2);
-
-            for (let y = 0; y < rows; y++) {
-                for (let x = 0; x < cols; x++) {
-                    const index = y * cols + x;
-                    const tile = new TileModel(index, {x, y});
-
-                    tile.setImageSrc(locationMap.tileImage);
-                    tile.setBackgroundSrc(locationMap.tileBackgroundSrc);
-
-                    // герой стоїть у центрі
-                    tile.isHeroHere = x === centerX && y === centerY;
-
-                    // центральний тайл — стартовий
-                    tile.setIsInitial(x === centerX && y === centerY);
-
-                    dungeonTiles.push(tile);
-                }
-            }
-
-            return dungeonTiles;
         },
 
         generatePodiumTiles(): TileModel[] {
@@ -218,11 +209,12 @@ export const useMapLocationStore = defineStore("map-location-store", {
             return podiumTiles;
         },
 
-        addHeroToTiles(tiles: TileModel[], hero: HeroModel) {
+        addHeroToTiles(tiles: TileModel[], hero: HeroModel, isNearCamping = true) {
+            let startTile: TileModel;
             tiles.forEach((tile: TileModel) => {
                 tile.isHeroHere = false;
-            })
-            const startTile = tiles[47];
+            });
+            isNearCamping ? startTile = tiles[47] : startTile = tiles[0];
             startTile.isHeroHere = true;
             hero.currentTile = startTile;
             hero.heroLocation = {...startTile.coordinates};

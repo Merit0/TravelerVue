@@ -4,6 +4,7 @@ import LoginPage from "@/a-game-scenes/login-scene/components/login-page.vue";
 import ForestLocation from "@/a-game-scenes/location-scene/components/forest-location.vue";
 import HomeLocation from "@/a-game-scenes/home-scene/components/home-location.vue";
 import HexWorldMap from "@/a-game-scenes/silesia-world-scene/hex-world-map.vue";
+import DungeonMap from "@/a-game-scenes/dungeon-scene/components/dungeon-map.vue";
 
 const routes = [
     {path: '/', component: LoginPage},
@@ -33,6 +34,12 @@ const routes = [
         path: "/location/forest",
         name: "Forest",
         component: ForestLocation,
+        meta: {requiresAuth: true}
+    },
+    {
+        path: "/location/fallen-bones",
+        name: "Dungeon",
+        component: DungeonMap,
         meta: {requiresAuth: true}
     },
 ];
