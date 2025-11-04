@@ -4,6 +4,7 @@
         v-if="tilesShown && heroStore.isAlive()"
         :mapTiles="mapLocationStore.tiles"
         :backgroundImageSrc="mapLocation.imgPath"
+        :mapTilesSchema="mapLocation.mapTilesSchema"
     />
     <HeroDeathOverlay
         v-if="!heroStore.isAlive() && userStore.isUserLoggedIn"
@@ -34,7 +35,7 @@ const userStore = useUserStore();
 const mapLocationStore = useMapLocationStore();
 const overlayStore = useOverlayStore();
 
-const mapLocationName = 'Forest';
+const mapLocationName = 'Camping Forest';
 mapLocationStore.initMapsList();
 
 const silesia: MapModel = mapLocationStore.getSilesia();

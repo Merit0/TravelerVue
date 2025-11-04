@@ -4,6 +4,7 @@
         v-if="tilesShown && heroStore.isAlive()"
         :mapTiles="mapLocationStore.tiles"
         :backgroundImageSrc="dungeonMap.imgPath"
+        :mapTilesSchema="dungeonMap.mapTilesSchema"
     />
     <HeroDeathOverlay
         v-if="!heroStore.isAlive() && userStore.isUserLoggedIn"

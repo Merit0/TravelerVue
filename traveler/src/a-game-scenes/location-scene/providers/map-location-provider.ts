@@ -18,16 +18,22 @@ export class MapLocationProvider {
             tileBackground: string,
             endPoint: string,
             boss: EnemyModel,
-            enemiesStatsModifier: number
+            enemiesStatsModifier: number,
+            withCamping: boolean,
+            tilesSchema: { rows: number, columns: number },
+            heroStartPointTileIndex: number,
         }[] = [
             {
-                name: 'Forest',
+                name: 'Camping Forest',
                 backgroundImagePath: `${this.LOCATION_CONTENT_IMAGES_PATH}tiles-grid-background.png`,
                 tileImage: `${this.LOCATION_CONTENT_IMAGES_PATH}forest-tile-image.png`,
                 tileBackground: `${this.LOCATION_CONTENT_IMAGES_PATH}ground-tile-background.png`,
                 endPoint: 'forest',
                 boss: bosses[randIndex],
-                enemiesStatsModifier: 0
+                enemiesStatsModifier: 0,
+                withCamping: true,
+                tilesSchema: {rows: 7, columns: 13},
+                heroStartPointTileIndex: 47
             }
         ];
         mapLocations.forEach((mapLocation: {
@@ -37,8 +43,11 @@ export class MapLocationProvider {
             tileImage: string,
             tileBackground: string,
             endPoint: string,
-            enemiesStatsModifier: number
-            boss: EnemyModel
+            enemiesStatsModifier: number,
+            boss: EnemyModel,
+            withCamping: boolean,
+            tilesSchema: { rows: number, columns: number },
+            heroStartPointTileIndex: number,
         }) => {
             mapLocationsList.push(new MapLocationBuilder()
                 .name(mapLocation.name)
@@ -50,6 +59,9 @@ export class MapLocationProvider {
                 .endPoint(mapLocation.endPoint)
                 .boss(mapLocation.boss)
                 .enemiesStatsModifier(mapLocation.enemiesStatsModifier)
+                .withCamping(mapLocation.withCamping)
+                .mapTilesSchema(mapLocation.tilesSchema)
+                .startPointTileIndex(mapLocation.heroStartPointTileIndex)
                 .build())
         });
         return mapLocationsList;
@@ -65,17 +77,21 @@ export class MapLocationProvider {
             endPoint: string,
             boss: EnemyModel,
             enemiesStatsModifier: number
-            dungeonName: string
+            withCamping: boolean,
+            tilesSchema: { rows: number, columns: number },
+            heroStartPointTileIndex: number,
         }[] = [
             {
-                name: 'Skeleton Cave',
-                backgroundImagePath: `${this.LOCATION_CONTENT_IMAGES_PATH}tiles-grid-background.png`,
-                tileImage: `${this.LOCATION_CONTENT_IMAGES_PATH}forest-tile-image.png`,
-                tileBackground: `${this.LOCATION_CONTENT_IMAGES_PATH}ground-tile-background.png`,
-                endPoint: 'skeleton-cave',
+                name: 'Fallen Bones',
+                backgroundImagePath: `${this.LOCATION_CONTENT_IMAGES_PATH}dungeon-tiles-grid-background.png`,
+                tileImage: `${this.LOCATION_CONTENT_IMAGES_PATH}bones-tile-image.png`,
+                tileBackground: `${this.LOCATION_CONTENT_IMAGES_PATH}underground-tile-background.png`,
+                endPoint: 'fallen-bones',
                 boss: BossProvider.getSkeletonBoss(),
                 enemiesStatsModifier: 2,
-                dungeonName: 'Skeleton Cave',
+                withCamping: false,
+                tilesSchema: {rows: 7, columns: 7},
+                heroStartPointTileIndex: 1
             }
         ];
         dungeonMaps.forEach((mapLocation: {
@@ -87,7 +103,11 @@ export class MapLocationProvider {
             endPoint: string,
             enemiesStatsModifier: number
             boss: EnemyModel,
-            dungeonName: string
+            dungeonName: string,
+            withCamping: boolean,
+            heroStartPointTileIndex: number,
+            tilesSchema: { rows: number, columns: number },
+
         }) => {
             dungeonMapsList.push(new MapLocationBuilder()
                 .name(mapLocation.name)
@@ -100,6 +120,9 @@ export class MapLocationProvider {
                 .boss(mapLocation.boss)
                 .enemiesStatsModifier(mapLocation.enemiesStatsModifier)
                 .dungeonName(mapLocation.dungeonName)
+                .withCamping(mapLocation.withCamping)
+                .mapTilesSchema(mapLocation.tilesSchema)
+                .startPointTileIndex(mapLocation.heroStartPointTileIndex)
                 .build())
         });
         return dungeonMapsList;

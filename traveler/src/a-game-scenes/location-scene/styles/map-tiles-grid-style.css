@@ -8,19 +8,11 @@
     box-sizing: border-box;
     overflow: hidden;
     z-index: 0;
+    background-size: contain;
 }
 
 .scalableGridWrapper {
     transform: scale(1);
     transform-origin: top center;
     transition: transform 0.3s ease;
-}
-
-.tilesGrid {
-    display: grid;
-    grid-template-columns: repeat(13, 14vh);
-    grid-template-rows: repeat(7, 14vh);
-    gap: 3px;
-    position: relative;
-    padding: 1px;
 }

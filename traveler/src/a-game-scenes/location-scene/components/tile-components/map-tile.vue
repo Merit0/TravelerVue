@@ -4,7 +4,8 @@
   <enemy-tile :tile="tile"/>
   <hero-map-tile v-if="tile.isHeroHere" :tile="tile" :key="tile.id + '-' + tile.isHeroHere"/>
   <dungeon-tile v-if="tile.isDungeon && !tile.isInitial && !hasAliveEnemies" :tile="tile"/>
-  <camp-tile/>
+  <world-exit-tile v-if="!locationWithCamping && tile.isExit" :tile="tile"/>
+  <camp-tile v-if="locationWithCamping"/>
 </template>
 
 <script lang="ts">
@@ -19,6 +20,7 @@ import {useMapLocationStore} from '@/stores/map-location-store';
 import {PropType} from 'vue';
 import CampTile from "@/a-game-scenes/location-scene/components/tile-components/camp-tile.vue";
 import EnemyModel from "@/models/EnemyModel";
+import WorldExitTile from "@/a-game-scenes/location-scene/components/tile-components/world-exit-tile.vue";
 
 export default {
   name: 'map-tile',
@@ -29,6 +31,7 @@ export default {
     }
   },
   components: {
+    WorldExitTile,
     CampTile,
     EnemyTile,
     ReliefTile,
@@ -55,11 +58,15 @@ export default {
     hasAliveEnemies(): boolean {
       return !!this.firstAliveEnemy && this.tile.enemies.length > 0;
     },
+    locationWithCamping(): boolean {
+      return this.mapLocationStore.withCamping;
+    },
     isEmpty(): boolean {
       return !this.tile.isHeroHere &&
           !this.tile.isEnemyHere &&
           !this.tile.isInitial &&
-          !this.tile.isDungeon
+          !this.tile.isDungeon &&
+          !this.tile.isExit
     }
   },
   mounted() {

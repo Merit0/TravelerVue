@@ -28,6 +28,7 @@ export interface ITile {
     isEnemyHere: boolean;
     isBlocked: boolean;
     isDungeon: boolean;
+    isExit: boolean;
 }
 
 export class TileModel implements ITile {
@@ -48,6 +49,7 @@ export class TileModel implements ITile {
     isBlocked = false;
     isGrave = false;
     isDungeon = false;
+    isExit = false;
 
     constructor(id: number, coordinates: ICoordinates) {
         this.id = id;
@@ -64,6 +66,10 @@ export class TileModel implements ITile {
 
     setIsInitial(status: boolean) {
         this.isInitial = status;
+    }
+
+    setIsExit(status: boolean) {
+        this.isExit = status;
     }
 
     setDungeon(dungeonModel: DungeonModel) {

@@ -24,6 +24,7 @@ interface MapLocationState {
 
 interface IMapLocationState {
     mapLocationName: string;
+    withCamping: boolean;
     locationStates: Record<string, MapLocationState>;
     mapsList: MapModel[];
 }
@@ -32,6 +33,7 @@ export const useMapLocationStore = defineStore("map-location-store", {
     state: (): IMapLocationState => {
         return {
             mapLocationName: "",
+            withCamping: false,
             locationStates: {},
             mapsList: [] as MapModel[],
         };
@@ -105,6 +107,8 @@ export const useMapLocationStore = defineStore("map-location-store", {
         },
 
         buildLocationMap(locationMap: MapLocationModel) {
+            console.log('isCamping', locationMap.withCamping);
+            this.withCamping = locationMap.withCamping;
             const key = `${toKebabCase(locationMap.name)}-location-map`;
             const saved = localStorage.getItem(key);
 
@@ -119,7 +123,7 @@ export const useMapLocationStore = defineStore("map-location-store", {
                 } else {
                     const tiles = this.generateTiles(locationMap);
                     this.addHeroToTiles(tiles, locationMap.hero, locationMap.withCamping);
-                    // this.addEnemiesToTiles(tiles, locationMap);
+                    this.addEnemiesToTiles(tiles, locationMap);
                     this.addBossOnTile(tiles, locationMap)
                     if (locationMap.withCamping) {
                         this.addDungeonOnTile(tiles, locationMap)
@@ -135,31 +139,32 @@ export const useMapLocationStore = defineStore("map-location-store", {
             this.mapLocationName = locationMap.name;
         },
 
-        generateTiles(locationMap: MapLocationModel, rows = 7, cols = 13): TileModel[] {
+        generateTiles(locationMap: MapLocationModel): TileModel[] {
+            const tilesSchema: { rows: number, columns: number } =
+                locationMap.mapTilesSchema ? locationMap.mapTilesSchema : {rows: 5, columns: 5};
             const tiles: TileModel[] = [];
             let blockStartX: number;
             let blockStartY: number;
             let blockEndX: number;
             let blockEndY: number;
-            const centerX = Math.floor(cols / 2);
-            const centerY = Math.floor(rows / 2);
+            const centerX = Math.floor(tilesSchema.columns / 2);
+            const centerY = Math.floor(tilesSchema.rows / 2);
             if (locationMap.withCamping) {
                 blockStartX = centerX - 1;
                 blockStartY = centerY - 1;
 
                 blockEndX = centerX + 1;
                 blockEndY = centerY + 1;
-
             }
 
-            for (let y = 0; y < rows; y++) {
-                for (let x = 0; x < cols; x++) {
-                    const index = y * cols + x;
+            for (let y = 0; y < tilesSchema.rows; y++) {
+                for (let x = 0; x < tilesSchema.columns; x++) {
+                    const index = y * tilesSchema.columns + x;
                     const tile = new TileModel(index, {x, y});
-                    if (locationMap.withCamping) {
-                        tile.setIsInitial(index !== 47); //hero start position tile
-                    } else {
-                        tile.setIsInitial(index !== 0);
+                    tile.setIsInitial(index !== locationMap.heroStartPointTileIndex); //hero start position tile
+                    if(!locationMap.withCamping && index === 0) {
+                        tile.isExit = true;
+                        tile.setIsInitial(false);
                     }
                     tile.setImageSrc(locationMap.tileImage);
                     tile.setBackgroundSrc(locationMap.tileBackgroundSrc);
@@ -176,7 +181,6 @@ export const useMapLocationStore = defineStore("map-location-store", {
                             tile.setImageSrc("");
                             tile.isReachable = false;
                         }
-
                     }
 
                     tiles.push(tile);
@@ -214,7 +218,7 @@ export const useMapLocationStore = defineStore("map-location-store", {
             tiles.forEach((tile: TileModel) => {
                 tile.isHeroHere = false;
             });
-            isNearCamping ? startTile = tiles[47] : startTile = tiles[0];
+            isNearCamping ? startTile = tiles[47] : startTile = tiles[1];
             startTile.isHeroHere = true;
             hero.currentTile = startTile;
             hero.heroLocation = {...startTile.coordinates};
@@ -269,7 +273,8 @@ export const useMapLocationStore = defineStore("map-location-store", {
 
             const validTiles = tiles.filter(tile =>
                 !tile.isBlocked &&
-                !tile.isHeroHere
+                !tile.isHeroHere &&
+                !tile.isExit
             );
 
             if (validTiles.length === 0) {
