@@ -1,10 +1,8 @@
 <template>
   <div
-      class="mapTile"
+      class="mapTile exit-tile-style"
       @click="exitOnMap"
-      :style="getTileBackground(tile)"
   >
-    <div class="my-icon my-map-icon"/>
   </div>
 </template>
 
@@ -24,14 +22,7 @@ export default {
     }
   },
   methods: {
-    getTileBackground(tile: TileModel) {
-      return {
-        backgroundImage: `url(${tile.backgroundSrc})`,
-        'background-size': '100% 100%'
-      }
-    },
     exitOnMap() {
-      // router.push('/forest-entrance');
       const mapLocationStore = useMapLocationStore();
       mapLocationStore.resetMapLocation('Fallen Bones')
       router.push('/silesia');
@@ -41,17 +32,11 @@ export default {
 </script>
 
 <style scoped>
-.my-icon {
+
+.exit-tile-style {
   position: relative;
-  width: 100%;
-  height: 100%;
+  background-image: url("/src/a-game-scenes/location-scene/assets/stairs-to-bottom-tile-image.png");
   background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  flex-shrink: 0;
-  z-index: 2;
-}
-.my-map-icon {
-  background-image: url('/src/a-game-scenes/home-scene/assets/map-icon-image.png');
+  cursor: pointer;
 }
 </style>
