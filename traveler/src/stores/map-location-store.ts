@@ -10,9 +10,7 @@ import {MapProvider} from "@/a-game-scenes/silesia-world-scene/providers/map-pro
 import {HeroModel} from "@/models/HeroModel";
 import {Randomizer} from "@/utils/Randomizer";
 import {reactive} from 'vue';
-import {AnimalProvider} from "@/providers/creatures-provider/animal-provider";
 import {EnemyType} from "@/enums/EnemyType";
-import {SkeletonProvider} from "@/providers/creatures-provider/skeleton-provider";
 import {DungeonModel} from "@/a-game-scenes/dungeon-scene/dungeon-model";
 import {DungeonProvider} from "@/a-game-scenes/dungeon-scene/dungeon-provider";
 
