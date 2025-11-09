@@ -22,6 +22,7 @@ export interface IMapLocation {
     };
     readonly withCamping: boolean;
     readonly heroStartPointTileIndex: number;
+    readonly enemies: EnemyModel[];
 }
 
 export class MapLocationModel implements IMapLocation {
@@ -36,6 +37,7 @@ export class MapLocationModel implements IMapLocation {
     private _complexity: Complexity;
     private _hero: IHero;
     private _bose: EnemyModel;
+    private _enemies: EnemyModel[];
     private _dungeonName: string;
     private _mapTilesSchema = {rows: 5, columns: 5};
     private _withCamping = false;
@@ -160,5 +162,13 @@ export class MapLocationModel implements IMapLocation {
 
     set endPoint(endPointPath: string) {
         this._endPoint = endPointPath;
+    }
+
+    get enemies(): EnemyModel[] {
+        return this._enemies;
+    }
+
+    set enemies(enemies: EnemyModel[]) {
+        this._enemies = enemies;
     }
 }

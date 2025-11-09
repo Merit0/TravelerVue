@@ -61,6 +61,11 @@ export class MapLocationBuilder implements IMapLocationBuilder {
         return this;
     }
 
+    public enemies(enemiesModels: EnemyModel[]): this {
+        this._mapLocation.enemies = enemiesModels;
+        return this;
+    }
+
     public dungeonName(dungeonName: string): this {
         this._mapLocation.dungeonName = dungeonName;
         return this;

@@ -107,7 +107,6 @@ export const useMapLocationStore = defineStore("map-location-store", {
         },
 
         buildLocationMap(locationMap: MapLocationModel) {
-            console.log('isCamping', locationMap.withCamping);
             this.withCamping = locationMap.withCamping;
             const key = `${toKebabCase(locationMap.name)}-location-map`;
             const saved = localStorage.getItem(key);
@@ -162,7 +161,7 @@ export const useMapLocationStore = defineStore("map-location-store", {
                     const index = y * tilesSchema.columns + x;
                     const tile = new TileModel(index, {x, y});
                     tile.setIsInitial(index !== locationMap.heroStartPointTileIndex); //hero start position tile
-                    if(!locationMap.withCamping && index === 0) {
+                    if (!locationMap.withCamping && index === 0) {
                         tile.isExit = true;
                         tile.setIsInitial(false);
                     }
@@ -262,7 +261,7 @@ export const useMapLocationStore = defineStore("map-location-store", {
             tiles.forEach((tile, index) => {
                 if (tile.isBlocked || tile.isHeroHere) return;
 
-                const enemies = this.generateEnemies(index, locationMap.enemyModifier);
+                const enemies = this.generateEnemiesOnTile(index, locationMap);
                 tile.setEnemies(enemies);
             });
         },
@@ -274,7 +273,8 @@ export const useMapLocationStore = defineStore("map-location-store", {
             const validTiles = tiles.filter(tile =>
                 !tile.isBlocked &&
                 !tile.isHeroHere &&
-                !tile.isExit
+                !tile.isExit &&
+                !tile.isDungeon
             );
 
             if (validTiles.length === 0) {
@@ -298,39 +298,41 @@ export const useMapLocationStore = defineStore("map-location-store", {
             dungeonTile.setDungeon(dungeon)
         },
 
-        generateEnemies(id: number, enemyPowerModifierNumber: number): EnemyModel[] {
+        generateEnemiesOnTile(tileID: number, locationMap: MapLocationModel): EnemyModel[] {
             if (!Randomizer.getChance(20)) return [];
             const createdEnemies: EnemyModel[] = [];
             const enemyKindsList: EnemyType[] = [EnemyType.ANIMAL, EnemyType.WARRIOR]
-            const animalsList: EnemyModel[] = AnimalProvider.getForestAnimals();
-            const skeletonsList: EnemyModel[] = SkeletonProvider.getSkeletons();
-            let enemiesList: EnemyModel[];
+            const locationEnemiesList: EnemyModel[] = locationMap.enemies;
+            const animals = locationEnemiesList.filter(e => e.enemyType === EnemyType.ANIMAL);
+            let tileEnemies: EnemyModel[];
+            for (const animal of animals) {
+                const index = locationEnemiesList.indexOf(animal);
+                if (index !== -1) locationEnemiesList.splice(index, 1);
+            }
 
             let numberOfEnemiesOnTile: number;
 
             const chosenKind = enemyKindsList[Math.floor(Math.random() * enemyKindsList.length)];
-            if (chosenKind === EnemyType.ANIMAL) {
+            if (chosenKind === EnemyType.ANIMAL && animals.length) {
                 numberOfEnemiesOnTile = 1;
-                enemiesList = animalsList;
+                tileEnemies = animals;
             } else {
                 numberOfEnemiesOnTile = Math.floor(Math.random() * 3) + 1;
-                enemiesList = skeletonsList;
+                tileEnemies = locationEnemiesList;
             }
 
             for (let i = 0; i < numberOfEnemiesOnTile; i++) {
-                const randIndex = Math.floor(Math.random() * enemiesList.length);
-
-                const base = enemiesList[randIndex];
-
+                const randIndex = Math.floor(Math.random() * tileEnemies.length);
+                const base = tileEnemies[randIndex];
                 const enemy = new EnemyBuilder()
                     .enemyName(base.name)
                     .enemyType(base.enemyType)
                     .enemyImgPath(base.imgPath)
                     .enemyBackgroundSrc(base.enemyBackgroundColor)
-                    .powerModifierLvl(enemyPowerModifierNumber)
+                    .powerModifierLvl(locationMap.enemyModifier)
                     .build();
 
-                enemy.setId(id + i);
+                enemy.setId(tileID + i);
                 createdEnemies.push(enemy);
             }
             return createdEnemies;
