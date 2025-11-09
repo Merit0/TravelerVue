@@ -5,24 +5,17 @@ import {EnemyType} from "@/enums/EnemyType";
 export class SkeletonProvider {
     private static skeletonsImageRootFolder = '/images/creatures_500_500/skeletons';
 
-    public static getSkeletor(): EnemyModel {
+    public static getSkeleton(): EnemyModel {
         return new EnemyBuilder()
-            .enemyName('Skeletor')
+            .enemyName('Skeleton')
             .enemyType(EnemyType.WARRIOR)
-            .enemyImgPath(`${this.skeletonsImageRootFolder}/skeletor.png`)
-            .build();
-    }
-    public static getBossSkeleton(): EnemyModel {
-        return new EnemyBuilder()
-            .enemyName('Bone Caster')
-            .enemyType(EnemyType.BOSS)
-            .enemyImgPath(`${this.skeletonsImageRootFolder}/boss-skeleton.png`)
+            .enemyImgPath(`${this.skeletonsImageRootFolder}/skeleton.png`)
             .build();
     }
 
     public static getSkeletons(): EnemyModel[] {
         return Array.of(
-            this.getSkeletor(),
+            this.getSkeleton(),
         );
     }
 }

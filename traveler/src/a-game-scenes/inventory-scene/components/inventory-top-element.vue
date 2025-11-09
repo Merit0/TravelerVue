@@ -32,7 +32,7 @@ export default {
 <style>
 .top-plank-title-container {
   position: relative;
-  margin-top: 3%;
+  margin-top: 2%;
   width: 65vh;
   height: 50%;
   text-align: center;
@@ -60,10 +60,10 @@ export default {
 
 .top-component {
   position: absolute;
-  top: -5vh;
+  top: -6vh;
   left: -1%;
   width: 102%;
-  height: 20vh;
+  height: 18vh;
   display: flex;
   flex-direction: row;
   justify-content: space-between;

@@ -10,9 +10,9 @@ import {MapProvider} from "@/a-game-scenes/silesia-world-scene/providers/map-pro
 import {HeroModel} from "@/models/HeroModel";
 import {Randomizer} from "@/utils/Randomizer";
 import {reactive} from 'vue';
-import {AnimalProvider} from "@/providers/creatures-provider/animal-provider";
 import {EnemyType} from "@/enums/EnemyType";
-import {SkeletonProvider} from "@/providers/creatures-provider/skeleton-provider";
+import {DungeonModel} from "@/a-game-scenes/dungeon-scene/dungeon-model";
+import {DungeonProvider} from "@/a-game-scenes/dungeon-scene/dungeon-provider";
 
 interface MapLocationState {
     tiles: TileModel[];
@@ -22,6 +22,7 @@ interface MapLocationState {
 
 interface IMapLocationState {
     mapLocationName: string;
+    withCamping: boolean;
     locationStates: Record<string, MapLocationState>;
     mapsList: MapModel[];
 }
@@ -30,6 +31,7 @@ export const useMapLocationStore = defineStore("map-location-store", {
     state: (): IMapLocationState => {
         return {
             mapLocationName: "",
+            withCamping: false,
             locationStates: {},
             mapsList: [] as MapModel[],
         };
@@ -60,11 +62,15 @@ export const useMapLocationStore = defineStore("map-location-store", {
         getSilesia: (state) => (): MapModel | undefined => {
             return state.mapsList.find((map) => map.name === 'Silesia') as MapModel;
         },
+        getUnderground: (state) => (): MapModel | undefined => {
+            return state.mapsList.find((map) => map.name === 'Underground') as MapModel;
+        },
     },
     actions: {
         initMapsList() {
             this.mapsList = [
                 MapProvider.getSilesiaMap(),
+                MapProvider.getUndergroundMap(),
             ];
 
             this.mapLocationName = "";
@@ -99,6 +105,7 @@ export const useMapLocationStore = defineStore("map-location-store", {
         },
 
         buildLocationMap(locationMap: MapLocationModel) {
+            this.withCamping = locationMap.withCamping;
             const key = `${toKebabCase(locationMap.name)}-location-map`;
             const saved = localStorage.getItem(key);
 
@@ -112,9 +119,12 @@ export const useMapLocationStore = defineStore("map-location-store", {
                     };
                 } else {
                     const tiles = this.generateTiles(locationMap);
-                    this.addHeroToTiles(tiles, locationMap.hero);
+                    this.addHeroToTiles(tiles, locationMap.hero, locationMap.withCamping);
                     this.addEnemiesToTiles(tiles, locationMap);
                     this.addBossOnTile(tiles, locationMap)
+                    if (locationMap.withCamping) {
+                        this.addDungeonOnTile(tiles, locationMap)
+                    }
                     this.locationStates[locationMap.name] = {
                         tiles,
                         isCleared: false,
@@ -126,36 +136,48 @@ export const useMapLocationStore = defineStore("map-location-store", {
             this.mapLocationName = locationMap.name;
         },
 
-        generateTiles(locationMap: MapLocationModel, rows = 7, cols = 13): TileModel[] {
+        generateTiles(locationMap: MapLocationModel): TileModel[] {
+            const tilesSchema: { rows: number, columns: number } =
+                locationMap.mapTilesSchema ? locationMap.mapTilesSchema : {rows: 5, columns: 5};
             const tiles: TileModel[] = [];
+            let blockStartX: number;
+            let blockStartY: number;
+            let blockEndX: number;
+            let blockEndY: number;
+            const centerX = Math.floor(tilesSchema.columns / 2);
+            const centerY = Math.floor(tilesSchema.rows / 2);
+            if (locationMap.withCamping) {
+                blockStartX = centerX - 1;
+                blockStartY = centerY - 1;
 
-            const centerX = Math.floor(cols / 2);
-            const centerY = Math.floor(rows / 2);
+                blockEndX = centerX + 1;
+                blockEndY = centerY + 1;
+            }
 
-            const blockStartX = centerX - 1;
-            const blockStartY = centerY - 1;
-
-            const blockEndX = centerX + 1;
-            const blockEndY = centerY + 1;
-
-            for (let y = 0; y < rows; y++) {
-                for (let x = 0; x < cols; x++) {
-                    const index = y * cols + x;
+            for (let y = 0; y < tilesSchema.rows; y++) {
+                for (let x = 0; x < tilesSchema.columns; x++) {
+                    const index = y * tilesSchema.columns + x;
                     const tile = new TileModel(index, {x, y});
-
-                    tile.setIsInitial(index !== 47); //hero start position tile
+                    tile.setIsInitial(index !== locationMap.heroStartPointTileIndex); //hero start position tile
+                    if (!locationMap.withCamping && index === 0) {
+                        tile.isExit = true;
+                        tile.setIsInitial(false);
+                    }
                     tile.setImageSrc(locationMap.tileImage);
                     tile.setBackgroundSrc(locationMap.tileBackgroundSrc);
                     tile.isHeroHere = false;
+                    let isInCampZone: boolean;
 
-                    const isInCampZone = x >= blockStartX && x <= blockEndX &&
-                        y >= blockStartY && y <= blockEndY;
+                    if (blockStartX) {
+                        isInCampZone = x >= blockStartX && x <= blockEndX &&
+                            y >= blockStartY && y <= blockEndY;
 
-                    if (isInCampZone) {
-                        tile.isBlocked = true;
-                        tile.setBackgroundSrc("")
-                        tile.setImageSrc("");
-                        tile.isReachable = false;
+                        if (isInCampZone) {
+                            tile.isBlocked = true;
+                            tile.setBackgroundSrc("")
+                            tile.setImageSrc("");
+                            tile.isReachable = false;
+                        }
                     }
 
                     tiles.push(tile);
@@ -188,11 +210,12 @@ export const useMapLocationStore = defineStore("map-location-store", {
             return podiumTiles;
         },
 
-        addHeroToTiles(tiles: TileModel[], hero: HeroModel) {
+        addHeroToTiles(tiles: TileModel[], hero: HeroModel, isNearCamping = true) {
+            let startTile: TileModel;
             tiles.forEach((tile: TileModel) => {
                 tile.isHeroHere = false;
-            })
-            const startTile = tiles[47];
+            });
+            isNearCamping ? startTile = tiles[47] : startTile = tiles[1];
             startTile.isHeroHere = true;
             hero.currentTile = startTile;
             hero.heroLocation = {...startTile.coordinates};
@@ -236,7 +259,7 @@ export const useMapLocationStore = defineStore("map-location-store", {
             tiles.forEach((tile, index) => {
                 if (tile.isBlocked || tile.isHeroHere) return;
 
-                const enemies = this.generateEnemies(index, locationMap.enemyModifier);
+                const enemies = this.generateEnemiesOnTile(index, locationMap);
                 tile.setEnemies(enemies);
             });
         },
@@ -247,7 +270,9 @@ export const useMapLocationStore = defineStore("map-location-store", {
 
             const validTiles = tiles.filter(tile =>
                 !tile.isBlocked &&
-                !tile.isHeroHere
+                !tile.isHeroHere &&
+                !tile.isExit &&
+                !tile.isDungeon
             );
 
             if (validTiles.length === 0) {
@@ -261,41 +286,64 @@ export const useMapLocationStore = defineStore("map-location-store", {
             bossTile.setEnemies([boss]);
         },
 
-        generateEnemies(id: number, enemyPowerModifierNumber: number): EnemyModel[] {
+        addDungeonOnTile(tiles: TileModel[]) {
+            const dungeon: DungeonModel = DungeonProvider.getSkeletonCave();
+            const validTiles: TileModel[] = tiles.filter((tile: TileModel) => !tile.isHeroHere && !tile.isBlocked);
+            if (!validTiles.length) return;
+            const dungeonTileIndex: number = Math.floor(Math.random() * validTiles.length)
+            const dungeonTile: TileModel = validTiles[dungeonTileIndex];
+            dungeonTile.isDungeon = true;
+            dungeonTile.setDungeon(dungeon)
+        },
+
+        generateEnemiesOnTile(tileId: number, locationMap: MapLocationModel): EnemyModel[] {
             if (!Randomizer.getChance(20)) return [];
+
+            const baseEnemies = locationMap.enemies;
+            if (!baseEnemies.length) return [];
+
+            const animals = baseEnemies.filter(e => e.enemyType === EnemyType.ANIMAL);
+            const nonAnimals = baseEnemies.filter(e => e.enemyType !== EnemyType.ANIMAL);
+
+            const canSpawnAnimals = animals.length > 0;
+            const enemyKindsPool: EnemyType[] = canSpawnAnimals
+                ? [EnemyType.ANIMAL, EnemyType.WARRIOR]
+                : [EnemyType.WARRIOR];
+
+            const chosenKind = Randomizer.pickOne(enemyKindsPool);
+
+            const tilePool =
+                chosenKind === EnemyType.ANIMAL && canSpawnAnimals
+                    ? animals
+                    : nonAnimals.length
+                        ? nonAnimals
+                        : animals;
+
+            if (!tilePool.length) return [];
+
+            const numberOfEnemiesOnTile =
+                chosenKind === EnemyType.ANIMAL
+                    ? 1
+                    : Randomizer.getRandomIntInRange(1, 4);
+
             const createdEnemies: EnemyModel[] = [];
-            const enemyKindsList: EnemyType[] = [EnemyType.ANIMAL, EnemyType.WARRIOR]
-            const animalsList: EnemyModel[] = AnimalProvider.getForestAnimals();
-            const skeletonsList: EnemyModel[] = SkeletonProvider.getSkeletons();
-            let enemiesList: EnemyModel[];
-
-            let numberOfEnemiesOnTile: number;
-
-            const chosenKind = enemyKindsList[Math.floor(Math.random() * enemyKindsList.length)];
-            if (chosenKind === EnemyType.ANIMAL) {
-                numberOfEnemiesOnTile = 1;
-                enemiesList = animalsList;
-            } else {
-                numberOfEnemiesOnTile = Math.floor(Math.random() * 3) + 1;
-                enemiesList = skeletonsList;
-            }
 
             for (let i = 0; i < numberOfEnemiesOnTile; i++) {
-                const randIndex = Math.floor(Math.random() * enemiesList.length);
-
-                const base = enemiesList[randIndex];
+                const base = Randomizer.pickOne(tilePool);
+                if (!base) break;
 
                 const enemy = new EnemyBuilder()
                     .enemyName(base.name)
                     .enemyType(base.enemyType)
                     .enemyImgPath(base.imgPath)
                     .enemyBackgroundSrc(base.enemyBackgroundColor)
-                    .powerModifierLvl(enemyPowerModifierNumber)
+                    .powerModifierLvl(locationMap.enemyModifier)
                     .build();
 
-                enemy.setId(id + i);
+                enemy.setId(tileId + i);
                 createdEnemies.push(enemy);
             }
+
             return createdEnemies;
         },
 

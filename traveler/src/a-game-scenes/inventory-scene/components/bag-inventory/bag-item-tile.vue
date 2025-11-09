@@ -6,8 +6,9 @@
     ></div>
     <div
         class="bagItemImg"
+        :class="{ 'is-busy': animating || !isEquipment(lootItem) }"
         :style="getItemStyle(lootItem)"
-        @click="animateEquip(lootItem)"
+        @click="!animating && animateEquip(lootItem)"
         :ref="'item-' + lootItem.id"
     ></div>
     <div class="inventoryFrameImage"></div>
@@ -33,82 +34,95 @@ export default {
   data() {
     const bagStore = useBagStore();
     const heroStore = useHeroStore();
-    return {bagStore, hero: heroStore.hero};
+    return {
+      bagStore,
+      hero: heroStore.hero,
+      animating: false,
+    };
   },
   methods: {
     getItemStyle(lootItem: LootItemModel) {
       return {
         backgroundImage: `url(${lootItem.imgPath})`,
-      }
+      };
     },
+
     async animateEquip(item: LootItemModel) {
-      if (item.itemType === ItemType.SKIN) {
-        return;
-      }
-      const itemEl = this.$refs['item-' + item.id] as HTMLElement;
-      const heroImageEl = document.querySelector('.equipment-holder-hero-image') as HTMLElement;
-      const itemRect = itemEl.getBoundingClientRect();
-      const heroRect = heroImageEl.getBoundingClientRect();
+      if (this.animating) return;
+      this.animating = true;
 
-      const clone = itemEl.cloneNode(true) as HTMLElement;
-      document.body.appendChild(clone);
+      try {
+        const itemEl = this.$refs['item-' + item.id] as HTMLElement;
+        const heroImageEl = document.querySelector('.equipment-holder-hero-image') as HTMLElement;
+        const itemRect = itemEl.getBoundingClientRect();
+        const heroRect = heroImageEl.getBoundingClientRect();
 
-      Object.assign(clone.style, {
-        position: 'fixed',
-        top: itemRect.top + 'px',
-        left: itemRect.left + 'px',
-        width: itemRect.width + 'px',
-        height: itemRect.height + 'px',
-        transition: 'all 0.3s ease-in-out',
-        zIndex: '1000',
-        pointerEvents: 'none'
-      });
+        const clone = itemEl.cloneNode(true) as HTMLElement;
+        document.body.appendChild(clone);
 
-      requestAnimationFrame(() => {
         Object.assign(clone.style, {
-          top: heroRect.top + heroRect.height / 2 - itemRect.height / 2 + 'px',
-          left: heroRect.left + heroRect.width / 2 - itemRect.width / 2 + 'px',
-          transform: 'scale(1.2)',
-          opacity: '0.7'
+          position: 'fixed',
+          top: itemRect.top + 'px',
+          left: itemRect.left + 'px',
+          width: itemRect.width + 'px',
+          height: itemRect.height + 'px',
+          transition: 'all 0.3s ease-in-out',
+          zIndex: '1000',
+          pointerEvents: 'none'
         });
 
-        setTimeout(() => {
-          if (item.itemType === ItemType.HEAL) {
-            clone.style.transition = 'opacity 0.2s ease-in';
-            clone.style.opacity = '0';
-            setTimeout(() => {
-              document.body.removeChild(clone);
-              this.useItem(item);
-            }, 200);
-          } else {
-            const slotKey = ItemType[item.itemType].toLowerCase();
-            const slotEl = document.querySelector(`.equipment-slot[data-slot="${slotKey}"]`) as HTMLElement;
+        requestAnimationFrame(() => {
+          Object.assign(clone.style, {
+            top: heroRect.top + heroRect.height / 2 - itemRect.height / 2 + 'px',
+            left: heroRect.left + heroRect.width / 2 - itemRect.width / 2 + 'px',
+            transform: 'scale(1.2)',
+            opacity: '0.7'
+          });
 
-            if (!slotEl) {
-              document.body.removeChild(clone);
-              this.useItem(item);
-              return;
+          setTimeout(() => {
+            if (item.itemType === ItemType.HEAL) {
+              clone.style.transition = 'opacity 0.2s ease-in';
+              clone.style.opacity = '0';
+              setTimeout(() => {
+                document.body.removeChild(clone);
+                this.useItem(item);
+                this.animating = false;
+              }, 200);
+            } else {
+              const slotKey = ItemType[item.itemType].toLowerCase();
+              const slotEl = document.querySelector(`.equipment-slot[data-slot="${slotKey}"]`) as HTMLElement;
+
+              if (!slotEl) {
+                document.body.removeChild(clone);
+                this.useItem(item);
+                this.animating = false;
+                return;
+              }
+
+              const slotRect = slotEl.getBoundingClientRect();
+
+              clone.style.transition = 'top 0.3s, left 0.3s, transform 0.3s, opacity 0.3s';
+              Object.assign(clone.style, {
+                top: slotRect.top + 'px',
+                left: slotRect.left + 'px',
+                width: slotRect.width + 'px',
+                height: slotRect.height + 'px',
+                opacity: '0.4',
+                transform: 'scale(1.0)',
+              });
+
+              setTimeout(() => {
+                document.body.removeChild(clone);
+                this.useItem(item);
+                this.animating = false; // знімаємо лок
+              }, 400);
             }
-
-            const slotRect = slotEl.getBoundingClientRect();
-
-            clone.style.transition = 'top 0.3s, left 0.3s, transform 0.3s, opacity 0.3s';
-            Object.assign(clone.style, {
-              top: slotRect.top + 'px',
-              left: slotRect.left + 'px',
-              width: slotRect.width + 'px',
-              height: slotRect.height + 'px',
-              opacity: '0.4',
-              transform: 'scale(1.0)',
-            });
-
-            setTimeout(() => {
-              document.body.removeChild(clone);
-              this.useItem(item);
-            }, 400);
-          }
-        }, 300);
-      });
+          }, 300);
+        });
+      } catch (e) {
+        this.animating = false;
+        console.error(e);
+      }
     },
 
     useItem(item: LootItemModel) {
@@ -118,8 +132,8 @@ export default {
       const equip = (slotKey: keyof typeof hero.equipment, statKey: keyof typeof hero) => {
         if (hero.equipment[slotKey]) {
           bag.removeItem(item);
-          hero[statKey] -= hero.equipment[slotKey]!.value;
-          bag.putIn(hero.equipment[slotKey]!);
+          hero[statKey] -= hero?.equipment[slotKey]?.value;
+          bag.putIn(hero.equipment[slotKey]);
         } else {
           bag.removeItem(item);
         }
@@ -155,17 +169,20 @@ export default {
           break;
       }
     },
+
     verifyItemPower(item: LootItemModel): boolean {
       const hero = this.hero;
-
       const slot = EquipmentModel.slotMap[item.itemType];
       if (!slot) return false;
-
       const equipped = hero.equipment[slot];
       return equipped ? equipped.value < item.value : true;
+    },
+
+    isEquipment(item: LootItemModel): boolean {
+      return (!(item.itemType === ItemType.SKIN || item.itemType === ItemType.KEY))
     }
   }
-}
+};
 </script>
 
 <style>
@@ -190,6 +207,13 @@ export default {
   box-shadow: 0 0 10px rgba(255, 204, 69, 0.6);
   transform: scale(1.05);
   cursor: pointer;
+}
+
+.bagItemImg.is-busy {
+  pointer-events: none;
+  opacity: 0.8;
+  transform: none !important;
+  box-shadow: none !important;
 }
 
 .powerIdentifier {

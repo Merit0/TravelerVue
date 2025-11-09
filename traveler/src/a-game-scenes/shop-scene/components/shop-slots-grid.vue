@@ -11,23 +11,19 @@
 </template>
 
 <script lang="ts">
-import {LootItemModel} from "@/models/LootItemModel"
-import ShopSlot from "@/a-game-scenes/shop-scene/components/shop-slot.vue"
+import ShopSlot from "@/a-game-scenes/shop-scene/components/shop-slot.vue";
 import {useShopStore} from "@/stores/shop-store";
 
 export default {
   name: "shop-slots-grid",
   components: {ShopSlot},
-  data() {
-    const shopStore = useShopStore();
-    shopStore.initShopItems();
-    const itemsList: LootItemModel[] = shopStore.getShopItems();
-
-    return {
-      itemsList
-    };
+  computed: {
+    itemsList() {
+      const shop = useShopStore();
+      return shop.items;
+    },
   },
-}
+};
 </script>
 
 <style>

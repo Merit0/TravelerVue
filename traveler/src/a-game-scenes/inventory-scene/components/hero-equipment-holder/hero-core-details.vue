@@ -1,5 +1,5 @@
 <template>
-  <div class="hero-details-container">
+  <div class="hero-details-container"  @click="visitCamp">
     <div class="stat-row" v-for="(stat, index) in stats" :key="index">
       <span class="tooltip">{{ stat.tooltip }}</span>
       <div class="icon" :class="stat.iconClass"/>
@@ -23,12 +23,18 @@
 <script lang="ts">
 import {defineComponent, computed} from 'vue';
 import {useHeroStore} from '@/stores/HeroStore';
+import {useMapLocationStore} from "@/stores/map-location-store";
+import router from "@/router";
 
 export default defineComponent({
   name: 'hero-core-details',
   setup() {
     const {hero} = useHeroStore();
-
+    const visitCamp = () => {
+      const mapStore = useMapLocationStore();
+      mapStore.resetCurrentLocation();
+      router.push('/camping');
+    };
     const healthPercentage = computed(() => {
       if (!hero.maxHealth || hero.maxHealth === 0) return 0;
       return Math.min(100, Math.round((hero.currentHealth / hero.maxHealth) * 100));
@@ -58,7 +64,7 @@ export default defineComponent({
       },
     ]);
 
-    return {stats};
+    return {stats, visitCamp};
   }
 });
 </script>

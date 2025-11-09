@@ -8,6 +8,13 @@
     overflow: hidden;
 }
 
+.inventorySlotContainer.is-busy {
+    pointer-events: none;     /* не клікається під час анімації */
+    opacity: 0.85;            /* легкий візуальний стан "зайнято" */
+    transform: none !important;
+    box-shadow: none !important;
+}
+
 .inventoryFrameImage {
     position: absolute;
     width: 130%;

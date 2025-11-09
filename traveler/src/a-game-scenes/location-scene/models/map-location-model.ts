@@ -15,10 +15,18 @@ export interface IMapLocation {
     readonly tileImage: string;
     readonly tileBackgroundSrc: string;
     readonly boss: EnemyModel;
+    readonly dungeonName: string;
+    readonly mapTilesSchema: {
+        rows: number,
+        columns: number
+    };
+    readonly withCamping: boolean;
+    readonly heroStartPointTileIndex: number;
+    readonly enemies: EnemyModel[];
 }
 
 export class MapLocationModel implements IMapLocation {
-    private _dungeonName: string;
+    private _locationName: string;
     private _tilesNumber: number;
     private _enemyModifier: number;
     private readonly _id: string;
@@ -29,6 +37,11 @@ export class MapLocationModel implements IMapLocation {
     private _complexity: Complexity;
     private _hero: IHero;
     private _bose: EnemyModel;
+    private _enemies: EnemyModel[];
+    private _dungeonName: string;
+    private _mapTilesSchema = {rows: 5, columns: 5};
+    private _withCamping = false;
+    private _heroStartPointTileIndex = 0;
 
     constructor() {
         this._id = uuid();
@@ -46,6 +59,14 @@ export class MapLocationModel implements IMapLocation {
         this._tileImage = tileImagePath;
     }
 
+    get heroStartPointTileIndex(): number {
+        return this._heroStartPointTileIndex;
+    }
+
+    set heroStartPointTileIndex(tileIndex: number) {
+        this._heroStartPointTileIndex = tileIndex;
+    }
+
     get tileBackgroundSrc(): string {
         return this._tileBackgroundSrc;
     }
@@ -55,11 +76,36 @@ export class MapLocationModel implements IMapLocation {
     }
 
     get name(): string {
-        return this._dungeonName;
+        return this._locationName;
     }
 
     set name(name: string) {
-        this._dungeonName = name;
+        this._locationName = name;
+    }
+
+    get withCamping(): boolean {
+        return this._withCamping;
+    }
+
+    set withCamping(withCamping: boolean) {
+        this._withCamping = withCamping;
+    }
+
+    get mapTilesSchema(): { rows: number, columns: number } {
+        return this._mapTilesSchema;
+    }
+
+    set mapTilesSchema(schemaTiles: { rows: number, columns: number }) {
+        this._mapTilesSchema.rows = schemaTiles.rows;
+        this._mapTilesSchema.columns = schemaTiles.columns;
+    }
+
+    get dungeonName(): string {
+        return this._dungeonName;
+    }
+
+    set dungeonName(dungeonName: string) {
+        this._dungeonName = dungeonName;
     }
 
     get tilesNumber(): number {
@@ -116,5 +162,13 @@ export class MapLocationModel implements IMapLocation {
 
     set endPoint(endPointPath: string) {
         this._endPoint = endPointPath;
+    }
+
+    get enemies(): EnemyModel[] {
+        return this._enemies;
+    }
+
+    set enemies(enemies: EnemyModel[]) {
+        this._enemies = enemies;
     }
 }

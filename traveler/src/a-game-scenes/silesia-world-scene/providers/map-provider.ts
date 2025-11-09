@@ -12,4 +12,13 @@ export class MapProvider {
             .isLocked(false)
             .build();
     }
+
+    static getUndergroundMap(): MapModel {
+        return new MapBuilder()
+            .name("Underground")
+            .mapLocations(MapLocationProvider.getDungeonLocations())
+            .complexity(Complexity.HARD)
+            .isLocked(false)
+            .build();
+    }
 }

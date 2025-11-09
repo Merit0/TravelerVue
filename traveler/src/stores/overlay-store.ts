@@ -8,6 +8,7 @@ export type OverlayType = 'hero-dressing-room'
     | 'dialogue'
     | 'hero-inventory'
     | 'grave-inventory'
+    | 'dungeon-preview'
     | 'confirm-escape-battle';
 
 export const useOverlayStore = defineStore('overlay-store', {

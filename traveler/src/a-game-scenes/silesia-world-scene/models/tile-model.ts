@@ -1,8 +1,9 @@
-import {ChestModel} from "../../../models/ChestModel";
+import {ChestModel} from "@/models/ChestModel";
 import EnemyModel from "../../../models/EnemyModel";
-import {HeroModel} from "../../../models/HeroModel";
+import {HeroModel} from "@/models/HeroModel";
 import {GraveModel} from "@/a-game-scenes/battlefield-scene/grave/models/grave-model";
 import {LootItemModel} from "@/models/LootItemModel";
+import {DungeonModel} from "@/a-game-scenes/dungeon-scene/dungeon-model";
 
 export interface ICoordinates {
     x: number;
@@ -20,11 +21,14 @@ export interface ITile {
     hero?: HeroModel;
     chest?: ChestModel;
     grave?: GraveModel;
+    dungeon?: DungeonModel;
     coordinates: ICoordinates;
     isReachable: boolean;
     isHeroHere: boolean;
     isEnemyHere: boolean;
     isBlocked: boolean;
+    isDungeon: boolean;
+    isExit: boolean;
 }
 
 export class TileModel implements ITile {
@@ -37,12 +41,15 @@ export class TileModel implements ITile {
     inBattle = false;
     hero?: HeroModel;
     grave?: GraveModel;
+    dungeon: DungeonModel;
     coordinates: ICoordinates;
     isReachable = false;
     isHeroHere = false;
     isEnemyHere = false;
     isBlocked = false;
     isGrave = false;
+    isDungeon = false;
+    isExit = false;
 
     constructor(id: number, coordinates: ICoordinates) {
         this.id = id;
@@ -61,6 +68,14 @@ export class TileModel implements ITile {
         this.isInitial = status;
     }
 
+    setIsExit(status: boolean) {
+        this.isExit = status;
+    }
+
+    setDungeon(dungeonModel: DungeonModel) {
+        this.dungeon = dungeonModel;
+    }
+
     setEnemies(enemies: EnemyModel[]) {
         this.enemies = enemies;
         this.isEnemyHere = enemies.some(e => e.health > 0);
@@ -71,14 +86,10 @@ export class TileModel implements ITile {
     }
 
     get isEmpty(): boolean {
-        console.log(`🟡 [DEBUG] isEmpty called for tile ${this.id}`, {
-            hero: this.isHeroHere,
-            enemy: this.isEnemyHere,
-            initial: this.isInitial,
-        });
         return !this.isHeroHere &&
             !this.isEnemyHere &&
-            !this.isInitial;
+            !this.isInitial &&
+            !this.isDungeon;
     }
 
     static mapToModel(data: any): TileModel {

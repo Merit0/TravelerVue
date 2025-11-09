@@ -1,9 +1,11 @@
 <template>
   <relief-tile v-if="tile.isInitial" :tile="tile"/>
-  <empty-tile :tile="tile"/>
+  <empty-tile v-if="isEmpty" :tile="tile"/>
   <enemy-tile :tile="tile"/>
   <hero-map-tile v-if="tile.isHeroHere" :tile="tile" :key="tile.id + '-' + tile.isHeroHere"/>
-  <camp-tile/>
+  <dungeon-tile v-if="tile.isDungeon && !tile.isInitial && !hasAliveEnemies" :tile="tile"/>
+  <world-exit-tile v-if="!locationWithCamping && tile.isExit" :tile="tile"/>
+  <camp-tile v-if="locationWithCamping"/>
 </template>
 
 <script lang="ts">
@@ -11,12 +13,14 @@ import TileModel from '@/a-game-scenes/silesia-world-scene/models/tile-model';
 import EnemyTile from '@/a-game-scenes/location-scene/components/tile-components/enemy-tile.vue';
 import ReliefTile from '@/a-game-scenes/location-scene/components/tile-components/relief-tile.vue';
 import EmptyTile from '@/a-game-scenes/location-scene/components/tile-components/empty-tile.vue';
+import DungeonTile from '@/a-game-scenes/location-scene/components/tile-components/dungeon-tile.vue';
 import {useHeroStore} from '@/stores/HeroStore';
 import HeroTile from './hero-tile.vue';
 import {useMapLocationStore} from '@/stores/map-location-store';
 import {PropType} from 'vue';
 import CampTile from "@/a-game-scenes/location-scene/components/tile-components/camp-tile.vue";
 import EnemyModel from "@/models/EnemyModel";
+import WorldExitTile from "@/a-game-scenes/location-scene/components/tile-components/world-exit-tile.vue";
 
 export default {
   name: 'map-tile',
@@ -27,10 +31,12 @@ export default {
     }
   },
   components: {
+    WorldExitTile,
     CampTile,
-    EnemyTile: EnemyTile,
+    EnemyTile,
     ReliefTile,
-    EmptyTile: EmptyTile,
+    EmptyTile,
+    DungeonTile,
     HeroMapTile: HeroTile
   },
   data() {
@@ -47,10 +53,20 @@ export default {
   },
   computed: {
     firstAliveEnemy(): EnemyModel | null {
-      return this.tile.enemies.find((e) => e.health > 0) || null;
+      return this.tile.enemies.find((e: EnemyModel) => e.health > 0) || null;
     },
     hasAliveEnemies(): boolean {
       return !!this.firstAliveEnemy && this.tile.enemies.length > 0;
+    },
+    locationWithCamping(): boolean {
+      return this.mapLocationStore.withCamping;
+    },
+    isEmpty(): boolean {
+      return !this.tile.isHeroHere &&
+          !this.tile.isEnemyHere &&
+          !this.tile.isInitial &&
+          !this.tile.isDungeon &&
+          !this.tile.isExit
     }
   },
   mounted() {

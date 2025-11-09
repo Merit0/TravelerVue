@@ -3,10 +3,6 @@ import EnemyModel from "@/models/EnemyModel";
 import {AnimalProvider} from "@/providers/creatures-provider/animal-provider";
 
 export class Randomizer {
-    static getRandomAnimal(animalNamesList: string[]): EnemyModel {
-        const index = this.getRandomInt(animalNamesList.length);
-        return AnimalProvider.getForestAnimal(animalNamesList[index])
-    }
 
     static getRandomInt(max: number): number {
         return Math.floor(Math.random() * max);

@@ -11,25 +11,17 @@
     align-items: center;
 }
 
-.battle-area-container {
-    position: relative;
-    margin-top: 5%;
+.battlefield-overlay-content {
+    position: absolute;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 100%;
-    height: 80vh;
-    background-image: url("@/a-game-scenes/battlefield-scene/battlefield/assets/battlefield-background-image.png");
+    background-image: url("@/a-game-scenes/battlefield-scene/battlefield/assets/arena-place.png");
     background-repeat: no-repeat;
     background-position: center center;
     background-size: contain;
-    border-radius: 5%;
-}
-
-.battlefield-overlay-content {
-    position: absolute;
-    width: 40vw;
-    height: 92vh;
-    background-size: cover;
+    width: 58vw;
+    height: 100vh;
+    overflow: hidden;
 }

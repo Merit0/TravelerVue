@@ -25,10 +25,9 @@
 }
 
 .close-button-container {
-    position: absolute;
-    top: 2%;
+    position: absolute;;
     left: 88%;
-    width: 7vw;
+    width: 8vw;
     height: 6vh;
     align-content: center;
     z-index: 11;

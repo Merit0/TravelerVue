@@ -4,39 +4,42 @@
         v-if="tilesShown && heroStore.isAlive()"
         :mapTiles="mapLocationStore.tiles"
         :backgroundImageSrc="mapLocation.imgPath"
+        :mapTilesSchema="mapLocation.mapTilesSchema"
     />
     <HeroDeathOverlay
         v-if="!heroStore.isAlive() && userStore.isUserLoggedIn"
     />
-    <hero-inventory />
-    <battlefield-overlay v-if="isBattleActive" />
+    <hero-inventory/>
+    <battlefield-overlay v-if="isBattleActive"/>
+    <dungeon-preview-overlay v-if="overlayStore.isOverlay('dungeon-preview')"/>
   </section>
 </template>
 
 <script setup lang="ts">
-import { onMounted, computed } from 'vue';
-import { useHeroStore } from '@/stores/HeroStore';
-import { useMapLocationStore } from '@/stores/map-location-store';
-import { useUserStore } from '@/stores/UserStore';
-import { useOverlayStore } from '@/stores/overlay-store';
-import { MapLocationModel } from '@/a-game-scenes/location-scene/models/map-location-model';
+import {onMounted, computed} from 'vue';
+import {useHeroStore} from '@/stores/HeroStore';
+import {useMapLocationStore} from '@/stores/map-location-store';
+import {useUserStore} from '@/stores/UserStore';
+import {useOverlayStore} from '@/stores/overlay-store';
+import {MapLocationModel} from '@/a-game-scenes/location-scene/models/map-location-model';
 import MapModel from '@/a-game-scenes/silesia-world-scene/models/map-model';
 
 import TilesGrid from '@/a-game-scenes/location-scene/components/tiles-grid.vue';
 import HeroInventory from '../../inventory-scene/components/hero-inventory-overlay.vue';
 import HeroDeathOverlay from '@/a-game-scenes/hero-death-scene/components/hero-death-overlay.vue';
 import BattlefieldOverlay from '@/a-game-scenes/battlefield-scene/battlefield/components/battlefield-overlay.vue';
+import DungeonPreviewOverlay from "@/a-game-scenes/dungeon-scene/components/dungeon-preview-overlay.vue";
 
 const heroStore = useHeroStore();
 const userStore = useUserStore();
 const mapLocationStore = useMapLocationStore();
 const overlayStore = useOverlayStore();
 
-const mapLocationName = 'Forest';
+const mapLocationName = 'Camping Forest';
 mapLocationStore.initMapsList();
 
-  const silesia: MapModel = mapLocationStore.getSilesia();
-  const silesiaLocations: MapLocationModel[] = silesia.mapLocations;
+const silesia: MapModel = mapLocationStore.getSilesia();
+const silesiaLocations: MapLocationModel[] = silesia.mapLocations;
 const mapLocation: MapLocationModel = silesiaLocations.find(
     location => location.name === mapLocationName
 )!;

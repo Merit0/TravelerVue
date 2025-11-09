@@ -13,6 +13,10 @@ interface IMapLocationBuilder {
     complexity(complexityLevel: Complexity): this;
     boss(bossModel: IEnemy): this;
     enemiesStatsModifier(modifierNumber: number): this;
+    dungeonName(dungeonName: string): this;
+    withCamping(withCamping: boolean): this
+    mapTilesSchema(schema: { rows: number, columns: number }): this
+    startPointTileIndex(tileIndex: number): this;
     build(): MapLocationModel;
 }
 
@@ -39,6 +43,31 @@ export class MapLocationBuilder implements IMapLocationBuilder {
 
     public enemiesStatsModifier(modifierNumber: number): this {
         this._mapLocation.enemyModifier = modifierNumber;
+        return this;
+    }
+
+    public withCamping(withCamping: boolean): this {
+        this._mapLocation.withCamping = withCamping;
+        return this;
+    }
+
+    public mapTilesSchema(schema: { rows: number, columns: number }): this {
+        this._mapLocation.mapTilesSchema = schema;
+        return this;
+    }
+
+    public startPointTileIndex(tileIndex: number): this {
+        this._mapLocation.heroStartPointTileIndex = tileIndex;
+        return this;
+    }
+
+    public enemies(enemiesModels: EnemyModel[]): this {
+        this._mapLocation.enemies = enemiesModels;
+        return this;
+    }
+
+    public dungeonName(dungeonName: string): this {
+        this._mapLocation.dungeonName = dungeonName;
         return this;
     }
 
