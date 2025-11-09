@@ -41,7 +41,6 @@ export class EquipmentGroupProvider {
             ...WeaponProvider.getMyths(),
             // ShieldProvider.getDreadwallShield(),
             // HelmetProvider.getOblivorHelm(),
-            ArmorProvider.getStormhideArmor()
         ]
     }
 }

@@ -257,7 +257,7 @@ export const useMapLocationStore = defineStore("map-location-store", {
 
         addEnemiesToTiles(tiles: TileModel[], locationMap: MapLocationModel) {
             tiles.forEach((tile, index) => {
-                if (tile.isBlocked || tile.isHeroHere) return;
+                if (tile.isBlocked || tile.isHeroHere || tile.isDungeon) return;
 
                 const enemies = this.generateEnemiesOnTile(index, locationMap);
                 tile.setEnemies(enemies);

@@ -5,6 +5,7 @@ export interface IDropChance {
     coinChance: number;
     potionChance: number;
     itemDropChance: number;
+    keyDropChance?: number;
 }
 
 export type RarityChanceMap = Record<Rarity, number>;
@@ -16,7 +17,7 @@ export class DropChanceGenerator {
     public generate(): IDropChance {
         switch (this.enemyType) {
             case EnemyType.BOSS:
-                return {coinChance: 100, potionChance: 80, itemDropChance: 100};
+                return {coinChance: 100, potionChance: 80, itemDropChance: 100, keyDropChance: 100};
             case EnemyType.CHEEF:
                 return {coinChance: 90, potionChance: 50, itemDropChance: 80};
             case EnemyType.WARRIOR:

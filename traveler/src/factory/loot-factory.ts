@@ -8,6 +8,7 @@ import {DropChanceGenerator, IDropChance, RarityChanceMap} from "@/utils/drop-ch
 import {ElixirsProvider} from "@/providers/elixir-provider";
 import {AnimalLootGenerator} from "@/utils/enemy-utils/animal-loot-generator";
 import EnemyModel from "@/models/EnemyModel";
+import {DungeonKeyProvider} from "@/providers/dungeon-key-provider";
 
 export class LootFactory {
     static getLootFromEnemy(enemyModel: EnemyModel): LootItemModel[] {
@@ -22,6 +23,11 @@ export class LootFactory {
         const potionChance = dropChances.potionChance;
         if (Randomizer.roll(potionChance)) {
             loot.push(ElixirsProvider.getEnemyElixir(enemyModel.enemyType));
+        }
+
+        const keyChance = dropChances.keyDropChance;
+        if (Randomizer.roll(keyChance)) {
+            loot.push(DungeonKeyProvider.getGoldenKey());
         }
 
         const equipmentChance = dropChances.itemDropChance;
