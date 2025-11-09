@@ -296,32 +296,42 @@ export const useMapLocationStore = defineStore("map-location-store", {
             dungeonTile.setDungeon(dungeon)
         },
 
-        generateEnemiesOnTile(tileID: number, locationMap: MapLocationModel): EnemyModel[] {
+        generateEnemiesOnTile(tileId: number, locationMap: MapLocationModel): EnemyModel[] {
             if (!Randomizer.getChance(20)) return [];
+
+            const baseEnemies = locationMap.enemies;
+            if (!baseEnemies.length) return [];
+
+            const animals = baseEnemies.filter(e => e.enemyType === EnemyType.ANIMAL);
+            const nonAnimals = baseEnemies.filter(e => e.enemyType !== EnemyType.ANIMAL);
+
+            const canSpawnAnimals = animals.length > 0;
+            const enemyKindsPool: EnemyType[] = canSpawnAnimals
+                ? [EnemyType.ANIMAL, EnemyType.WARRIOR]
+                : [EnemyType.WARRIOR];
+
+            const chosenKind = Randomizer.pickOne(enemyKindsPool);
+
+            const tilePool =
+                chosenKind === EnemyType.ANIMAL && canSpawnAnimals
+                    ? animals
+                    : nonAnimals.length
+                        ? nonAnimals
+                        : animals;
+
+            if (!tilePool.length) return [];
+
+            const numberOfEnemiesOnTile =
+                chosenKind === EnemyType.ANIMAL
+                    ? 1
+                    : Randomizer.getRandomIntInRange(1, 4);
+
             const createdEnemies: EnemyModel[] = [];
-            const enemyKindsList: EnemyType[] = [EnemyType.ANIMAL, EnemyType.WARRIOR]
-            const locationEnemiesList: EnemyModel[] = locationMap.enemies;
-            const animals = locationEnemiesList.filter(e => e.enemyType === EnemyType.ANIMAL);
-            let tileEnemies: EnemyModel[];
-            for (const animal of animals) {
-                const index = locationEnemiesList.indexOf(animal);
-                if (index !== -1) locationEnemiesList.splice(index, 1);
-            }
-
-            let numberOfEnemiesOnTile: number;
-
-            const chosenKind = enemyKindsList[Math.floor(Math.random() * enemyKindsList.length)];
-            if (chosenKind === EnemyType.ANIMAL && animals.length) {
-                numberOfEnemiesOnTile = 1;
-                tileEnemies = animals;
-            } else {
-                numberOfEnemiesOnTile = Math.floor(Math.random() * 3) + 1;
-                tileEnemies = locationEnemiesList;
-            }
 
             for (let i = 0; i < numberOfEnemiesOnTile; i++) {
-                const randIndex = Math.floor(Math.random() * tileEnemies.length);
-                const base = tileEnemies[randIndex];
+                const base = Randomizer.pickOne(tilePool);
+                if (!base) break;
+
                 const enemy = new EnemyBuilder()
                     .enemyName(base.name)
                     .enemyType(base.enemyType)
@@ -330,9 +340,10 @@ export const useMapLocationStore = defineStore("map-location-store", {
                     .powerModifierLvl(locationMap.enemyModifier)
                     .build();
 
-                enemy.setId(tileID + i);
+                enemy.setId(tileId + i);
                 createdEnemies.push(enemy);
             }
+
             return createdEnemies;
         },
 
